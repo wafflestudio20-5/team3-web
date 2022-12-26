@@ -1,7 +1,7 @@
-import React from 'react';
+import EntryRoute from './routes';
 
 const App = () => {
-  return <div>3조 당근입니다.</div>;
+  return <EntryRoute />;
 };
 
 export default App;
