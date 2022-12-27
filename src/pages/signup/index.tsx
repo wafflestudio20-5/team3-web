@@ -32,6 +32,9 @@ const SignUpPage: React.FC = () => {
         placeholder="아이디를 입력해주세요"
         handleChange={onChange}
         isWithButton={true}
+        handleClick={() => {
+          console.log('Button Clicked!');
+        }}
       />
       <SignUpInputNormal
         label="password"
