@@ -1,14 +1,13 @@
 import { ChangeEventHandler } from 'react';
-import { COLOR_CARROT } from '../../constant';
-import ButtonNormal from '../button-normal/index';
-import { Input } from '../input-normal/input-normal.styled';
+import { COLOR_CARROT } from '../../../constant';
+import { Input } from '../../../components/input-normal/input-normal.styled';
 import {
   SignUpButton,
   SignUpInput,
   SignUpInputLeft,
   SignUpInputRight,
   SignUpInputWrapper,
-} from './sign-up-input-normal.styled';
+} from '../signup.styled';
 
 interface SignUpInputNormal {
   label: string;
