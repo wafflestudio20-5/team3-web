@@ -1,18 +1,27 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import Drawer from '../drawer';
+import Profile from './profile';
+import Navigation from './navigation';
+
+import { useDrawer } from '../../hooks/useDrawer';
+import { CategoryType } from '../../types/category';
+
 import * as S from './gnb.styled';
 import logoImg from '../../assets/logo.svg';
-import { CategoryType } from '../../types/category';
+import { ReactComponent as MenuIcon } from '../../assets/menu.svg';
 
 interface GnbProps {
   category: CategoryType;
 }
 
 // DESC: global navigation bar
-const Gnb: React.FC<GnbProps> = ({ category }: GnbProps) => {
-  // DESC: 회원가입 유무 판별, 추후 수정
-  const [user] = useState(false);
+const Gnb = ({ category }: GnbProps) => {
+  const { active, handleToggleDrawer } = useDrawer();
+
+  // DESC: 로그인 유무 판별, 추후 수정 user (type: UserType)
+  const [user] = useState(true);
   const [selected, setSelected] = useState({
     landing: false,
     market: false,
@@ -33,39 +42,33 @@ const Gnb: React.FC<GnbProps> = ({ category }: GnbProps) => {
       default:
         break;
     }
-  }, []);
+  }, [active]);
 
   return (
     <S.OuterWrapper>
-      <S.Wrapper>
-        <S.NavWrapper>
-          <Link to="/">
-            <S.LogoImg alt="gnb" src={logoImg} />
-          </Link>
+      <S.InnerWrapper>
+        <Link to="/">
+          <S.LogoImg alt="gnb" src={logoImg} />
+        </Link>
 
-          <Link to="/">
-            <S.Category selected={selected.landing}>소개</S.Category>
-          </Link>
-          <Link to="/">
-            <S.Category selected={selected.market}>중고거래</S.Category>
-          </Link>
-          <Link to="/">
-            <S.Category selected={selected.life}>동네생활</S.Category>
-          </Link>
-        </S.NavWrapper>
+        {/* DESC: for Desktop */}
+        <S.DesktopWrapper>
+          <Navigation user={user} selected={selected} />
+        </S.DesktopWrapper>
 
-        <S.AuthWrapper>
-          {user ? (
-            <Link to="/">
-              <S.RouteButton>나의 당근</S.RouteButton>
-            </Link>
-          ) : (
-            <Link to="/">
-              <S.RouteButton>로그인/회원가입</S.RouteButton>
-            </Link>
-          )}
-        </S.AuthWrapper>
-      </S.Wrapper>
+        {/* DESC: for Mobile */}
+        <S.MobileWrapper>
+          <S.MenuIconWrapper>
+            <MenuIcon onClick={handleToggleDrawer} />
+          </S.MenuIconWrapper>
+          <Drawer active={active} handleToggleDrawer={handleToggleDrawer}>
+            <>
+              <Profile user={user} />
+              <Navigation user={user} selected={selected} />
+            </>
+          </Drawer>
+        </S.MobileWrapper>
+      </S.InnerWrapper>
     </S.OuterWrapper>
   );
 };
