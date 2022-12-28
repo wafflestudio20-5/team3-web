@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react';
+import { ProfileInputLabel } from './components/ProfileInputLabel';
 import SignUpInputNormal, {
   SignUpButtonNormal,
 } from './components/SignUpInputNormal';
@@ -25,11 +26,11 @@ const SignUpPage: React.FC = () => {
     <Wrapper>
       <H1>회원가입</H1>
       <SignUpInputNormal
-        label="username"
-        valueName="id"
-        value={id}
+        label="email"
+        valueName="email"
+        value={email}
         required={true}
-        placeholder="아이디를 입력해주세요"
+        placeholder="이메일을 입력해주세요"
         handleChange={onChange}
         isWithButton={true}
         handleClick={() => {
@@ -61,20 +62,19 @@ const SignUpPage: React.FC = () => {
       )}
 
       <SignUpInputNormal
-        label="email"
-        valueName="email"
-        value={email}
+        label="username"
+        valueName="id"
+        value={id}
         required={true}
-        placeholder="이메일을 입력해주세요"
+        placeholder="사용하고자 하는 유저 이름을 입력해주세요"
         handleChange={onChange}
+        isWithButton={true}
+        handleClick={() => {
+          console.log('Button Clicked!');
+        }}
       />
-      <SignUpInputNormal
-        label="profile image"
-        valueName="img"
-        value={img}
-        placeholder="(선택) 프로필 사진의 주소를 입력해주세요"
-        handleChange={onChange}
-      />
+      <ProfileInputLabel img={img} handleChange={onChange}></ProfileInputLabel>
+
       {/* <SignUpInputNormal // location의 경우 이후 select를 이용하도록 수정
         valueName="location"
         value={location}
