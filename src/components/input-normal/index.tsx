@@ -7,7 +7,7 @@ interface InputNormal {
   handleChange: ChangeEventHandler<HTMLInputElement>;
 }
 
-const InputNormal: React.FC<InputNormal> = ({
+const InputNormal = ({
   placeholder,
   value,
   handleChange,

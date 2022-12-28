@@ -27,7 +27,7 @@ interface SignUpButtonNormal {
   handleClick?: () => void;
 }
 
-export const SignUpButtonNormal: React.FC<SignUpButtonNormal> = ({
+export const SignUpButtonNormal = ({
   text,
   bgColor,
   handleClick,
@@ -39,7 +39,7 @@ export const SignUpButtonNormal: React.FC<SignUpButtonNormal> = ({
   );
 };
 
-const SignUpInputNormal: React.FC<SignUpInputNormal> = ({
+const SignUpInputNormal = ({
   label,
   valueName,
   value,
