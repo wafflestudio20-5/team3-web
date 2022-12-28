@@ -2,7 +2,7 @@ import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 interface Input extends HTMLAttributes<HTMLInputElement> {
-  bgColor?: string;
+  placeholder?: string;
 }
 
 export const Input = styled.input<Input>(
