@@ -54,7 +54,7 @@ export const Category = styled.span<CategoryProps>(
   display: flex;
   align-items: center;
   width: auto;
-  margin-top: 8px;
+  margin-top: 2px;
   margin-right: 28px;
   font-weight: 500;
   font-size: 18px;
