@@ -1,12 +1,39 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import * as S from './gnb.styled';
 import logoImg from '../../assets/logo.svg';
+import { CategoryType } from '../../types/category';
+
+interface GnbProps {
+  category: CategoryType;
+}
 
 // DESC: global navigation bar
-const Gnb: React.FC = () => {
-  const [user, setUser] = useState(false);
+const Gnb: React.FC<GnbProps> = ({ category }: GnbProps) => {
+  // DESC: 회원가입 유무 판별, 추후 수정
+  const [user] = useState(false);
+  const [selected, setSelected] = useState({
+    landing: false,
+    market: false,
+    life: false,
+  });
+
+  useEffect(() => {
+    switch (category) {
+      case CategoryType.LANDING:
+        setSelected({ ...selected, landing: true });
+        break;
+      case CategoryType.MARKET:
+        setSelected({ ...selected, market: true });
+        break;
+      case CategoryType.LIFE:
+        setSelected({ ...selected, life: true });
+        break;
+      default:
+        break;
+    }
+  }, []);
 
   return (
     <S.OuterWrapper>
@@ -17,13 +44,13 @@ const Gnb: React.FC = () => {
           </Link>
 
           <Link to="/">
-            <S.Category>소개</S.Category>
+            <S.Category selected={selected.landing}>소개</S.Category>
           </Link>
           <Link to="/">
-            <S.Category>중고거래</S.Category>
+            <S.Category selected={selected.market}>중고거래</S.Category>
           </Link>
           <Link to="/">
-            <S.Category>동네생활</S.Category>
+            <S.Category selected={selected.life}>동네생활</S.Category>
           </Link>
         </S.NavWrapper>
 

@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 export const OuterWrapper = styled.div`
@@ -37,9 +38,14 @@ export const AuthWrapper = styled.div`
   align-items: center;
 `;
 
-export const Category = styled.span`
+interface CategoryProps extends HTMLAttributes<HTMLSpanElement> {
+  selected?: boolean;
+}
+
+export const Category = styled.span<CategoryProps>(
+  ({ selected }) => `
   font-size: 18px;
-  color: #4d5159;
+  color: ${selected ? '#ff6f0f' : '#4d5159'};;
   width: auto;
   display: flex;
   align-items: center;
@@ -51,7 +57,8 @@ export const Category = styled.span`
   &:hover {
     color: #ff6f0f;
   }
-`;
+`,
+);
 
 export const RouteButton = styled.button`
   padding: 8px 16px;
@@ -63,7 +70,7 @@ export const RouteButton = styled.button`
   transition: all 0.5s;
 
   &:hover {
-    background-color: rgba(0, 23, 88, 0.05);
+    background-color: rgba(0, 18, 68, 0.05);
     color: #555;
   }
 `;

@@ -1,11 +1,11 @@
 import Gnb from '../../components/gnb';
-
 import { Wrapper } from './home.styled';
+import { CategoryType } from '../../types/category';
 
 const HomePage: React.FC = () => {
   return (
     <Wrapper>
-      <Gnb />
+      <Gnb category={CategoryType.MARKET} />
     </Wrapper>
   );
 };
