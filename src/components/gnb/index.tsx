@@ -26,6 +26,7 @@ const Gnb = ({ category }: GnbProps) => {
     landing: false,
     market: false,
     life: false,
+    myPage: false,
   });
 
   useEffect(() => {
@@ -38,6 +39,9 @@ const Gnb = ({ category }: GnbProps) => {
         break;
       case CategoryType.LIFE:
         setSelected({ ...selected, life: true });
+        break;
+      case CategoryType.MYPAGE:
+        setSelected({ ...selected, myPage: true });
         break;
       default:
         break;
