@@ -8,7 +8,7 @@ interface NavigationProps {
     landing: boolean;
     market: boolean;
     life: boolean;
-    myPage: boolean;
+    profile: boolean;
   };
 }
 
@@ -34,7 +34,7 @@ const Navigation = ({ user, selected }: NavigationProps) => {
             <S.RouteButton>나의 와플</S.RouteButton>
           </Link>
         ) : (
-          <Link to="/signup">
+          <Link to="/login">
             <S.RouteButton>로그인/회원가입</S.RouteButton>
           </Link>
         )}
