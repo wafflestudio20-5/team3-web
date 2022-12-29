@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react';
+import { Postcode } from './components/Postcode';
 import { ProfileInputLabel } from './components/ProfileInputLabel';
 import SignUpInputNormal, {
   SignUpButtonNormal,
@@ -14,14 +15,17 @@ const SignUpPage: React.FC = () => {
     location: '',
     img: '',
   });
-  const { id, password, passwordConfirm, email, location, img } = inputs;
+  const { id, password, passwordConfirm, email, img } = inputs;
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setInputs({
       ...inputs,
       [name]: value,
     });
+    console.log(img);
+    console.log(location);
   };
+  const [location, setLocation] = useState('');
   return (
     <Wrapper>
       <H1>회원가입</H1>
@@ -82,6 +86,7 @@ const SignUpPage: React.FC = () => {
         placeholder="사는 지역을 선택해주세요"
         handleChange={onChange}
       /> */}
+      <Postcode setLocation={setLocation} />
       <SignUpButtonWrapper>
         <SignUpButtonNormal
           text="회원가입"
