@@ -85,15 +85,16 @@ export const Category = styled.span<CategoryProps>(
 `,
 );
 
-export const RouteButton = styled.button`
+export const Route = styled.span<CategoryProps>(
+  ({ selected }) => `
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 8px 16px;
-  background-color: #fff;
+  background-color: ${selected ? 'rgba(0, 18, 68, 0.05)' : '#fff'};
   border: 1px solid #d1d3d8;
   border-radius: 5px;
-  color: #000;
+  color: ${selected ? '#555' : '#000'};
   font-weight: 500;
   transition: all 0.5s;
 
@@ -118,4 +119,5 @@ export const RouteButton = styled.button`
   @media ${SM_SIZE} {
     font-size: 16px;
   }
-`;
+`,
+);
