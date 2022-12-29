@@ -6,7 +6,7 @@ interface ButtonNormal {
   handleClick: () => void;
 }
 
-const ButtonNormal: React.FC<ButtonNormal> = ({
+const ButtonNormal = ({
   text,
   bgColor,
   handleClick,

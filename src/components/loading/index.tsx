@@ -1,6 +1,6 @@
 import { Wrapper } from './loading.styled';
 
-const Loading: React.FC = () => {
+const Loading = () => {
   return <Wrapper>Loading...</Wrapper>;
 };
 
