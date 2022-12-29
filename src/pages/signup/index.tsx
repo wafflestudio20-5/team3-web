@@ -4,7 +4,7 @@ import SignUpInputNormal, {
 } from './components/SignUpInputNormal';
 import { H1, SignUpButtonWrapper, Span, Wrapper } from './signup.styled';
 
-const SignUpPage: React.FC = () => {
+const SignUpPage = () => {
   const [inputs, setInputs] = useState({
     id: '',
     password: '',

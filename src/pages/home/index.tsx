@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
+import Gnb from '../../components/gnb';
 import { Wrapper } from './home.styled';
+import { CategoryType } from '../../types/category';
 
-const HomePage: React.FC = () => {
+const HomePage = () => {
   return (
     <Wrapper>
+      <Gnb category={CategoryType.MARKET} />
       <a>홈페이지입니다</a>
       <Link to="/login">
         <a>로그인</a>
