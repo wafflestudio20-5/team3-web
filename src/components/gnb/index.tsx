@@ -1,23 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import Drawer from '../drawer';
 import Profile from './profile';
 import Navigation from './navigation';
 
 import { useDrawer } from '../../hooks/useDrawer';
-import { CategoryType } from '../../types/category';
 
 import * as S from './gnb.styled';
 import logoImg from '../../assets/logo.svg';
 import { ReactComponent as MenuIcon } from '../../assets/menu.svg';
 
-interface GnbProps {
-  category: CategoryType;
-}
-
 // DESC: global navigation bar
-const Gnb = ({ category }: GnbProps) => {
+const Gnb = () => {
+  const { pathname } = useLocation();
   const { active, handleToggleDrawer } = useDrawer();
 
   // DESC: 로그인 유무 판별, 추후 수정 user (type: UserType)
@@ -26,27 +22,27 @@ const Gnb = ({ category }: GnbProps) => {
     landing: false,
     market: false,
     life: false,
-    myPage: false,
+    profile: false,
   });
 
   useEffect(() => {
-    switch (category) {
-      case CategoryType.LANDING:
+    switch (pathname) {
+      case '/':
         setSelected({ ...selected, landing: true });
         break;
-      case CategoryType.MARKET:
+      case '/market': // TODO: 추후 수정
         setSelected({ ...selected, market: true });
         break;
-      case CategoryType.LIFE:
+      case '/life':
         setSelected({ ...selected, life: true });
         break;
-      case CategoryType.MYPAGE:
-        setSelected({ ...selected, myPage: true });
+      case '/profile':
+        setSelected({ ...selected, profile: true });
         break;
       default:
         break;
     }
-  }, [active]);
+  }, []);
 
   return (
     <S.OuterWrapper>

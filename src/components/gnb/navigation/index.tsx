@@ -8,7 +8,7 @@ interface NavigationProps {
     landing: boolean;
     market: boolean;
     life: boolean;
-    myPage: boolean;
+    profile: boolean;
   };
 }
 
@@ -31,7 +31,7 @@ const Navigation = ({ user, selected }: NavigationProps) => {
       <S.AuthWrapper>
         {user ? (
           <Link to="/profile/1">
-            <S.Route selected={selected.myPage}>나의 와플</S.Route>
+            <S.Route selected={selected.profile}>나의 와플</S.Route>
           </Link>
         ) : (
           <Link to="/login">
