@@ -1,4 +1,7 @@
 html,
 body {
   height: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
 }
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
