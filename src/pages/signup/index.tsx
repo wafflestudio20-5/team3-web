@@ -1,10 +1,21 @@
 import { ChangeEvent, useState } from 'react';
+import { COLOR_CARROT } from '../../constant';
 import { Postcode } from './components/Postcode';
 import { ProfileInputLabel } from './components/ProfileInputLabel';
 import SignUpInputNormal, {
   SignUpButtonNormal,
 } from './components/SignUpInputNormal';
-import { H1, SignUpButtonWrapper, Span, Wrapper } from './signup.styled';
+import {
+  H1,
+  PostcodeWrapper,
+  SignUpButtonWrapper,
+  SignUpInputLeft,
+  SignUpInputRight,
+  Span,
+  Wrapper,
+} from './signup.styled';
+
+import { useDaumPostcodePopup } from 'react-daum-postcode';
 
 const SignUpPage = () => {
   const [inputs, setInputs] = useState({
@@ -26,6 +37,36 @@ const SignUpPage = () => {
     console.log(location);
   };
   const [location, setLocation] = useState('');
+  const open = useDaumPostcodePopup();
+  const handleComplete = (data: any) => {
+    const userAddress = data.jibunAddress;
+
+    // if (data.addressType === 'R') {
+    //   if (data.sido !== '') {
+    //     // e.g. '서울'
+    //     userAddress += data.sido;
+    //   }
+    //   if (data.sigungu !== '') {
+    //     // e.g. '관악구'
+    //     userAddress += `, ${data.sigungu}`;
+    //   }
+    //   if (data.bname !== '') {
+    //     //e.g. '봉천동'
+    //     userAddress += `, ${data.bname}`;
+    //   }
+    //   if (data.zonecode !== '') {
+    //     //e.g. 08833
+    //     userAddress += `, ${data.zonecode}`;
+    //   }
+    // }
+
+    console.log(userAddress); // e.g. '서울 관악구 봉천동(08833)'
+    setLocation(userAddress);
+  };
+
+  const handleClick = () => {
+    open({ onComplete: handleComplete });
+  };
   return (
     <Wrapper>
       <H1>회원가입</H1>
@@ -37,6 +78,7 @@ const SignUpPage = () => {
         placeholder="이메일을 입력해주세요"
         handleChange={onChange}
         isWithButton={true}
+        buttonText="중복 확인"
         handleClick={() => {
           console.log('Button Clicked!');
         }}
@@ -72,12 +114,8 @@ const SignUpPage = () => {
         required={true}
         placeholder="사용하고자 하는 유저 이름을 입력해주세요"
         handleChange={onChange}
-        isWithButton={true}
-        handleClick={() => {
-          console.log('Button Clicked!');
-        }}
       />
-      <ProfileInputLabel img={img} handleChange={onChange}></ProfileInputLabel>
+      {/* <ProfileInputLabel img={img} handleChange={onChange}></ProfileInputLabel> */}
 
       {/* <SignUpInputNormal // location의 경우 이후 select를 이용하도록 수정
         valueName="location"
@@ -86,11 +124,26 @@ const SignUpPage = () => {
         placeholder="사는 지역을 선택해주세요"
         handleChange={onChange}
       /> */}
-      <Postcode setLocation={setLocation} />
+      {/* <PostcodeWrapper>
+        <span>내 동네 설정(선택): 내 동네를 설정하시겠어요?</span>
+        <Postcode setLocation={setLocation} />
+      </PostcodeWrapper> */}
+
+      <SignUpInputNormal
+        label="location"
+        valueName="location"
+        value={location}
+        placeholder="동네 이름을 검색해주세요"
+        isWithButton={true}
+        buttonText="동네 검색"
+        handleClick={handleClick}
+      />
+      {/* <Postcode setLocation={setLocation} /> */}
+
       <SignUpButtonWrapper>
         <SignUpButtonNormal
           text="회원가입"
-          bgColor="#FF6F0F"
+          bgColor={COLOR_CARROT}
           handleClick={() => {
             console.log('회원가입!'); // 이후 서버에 요청하도록 수정
           }}

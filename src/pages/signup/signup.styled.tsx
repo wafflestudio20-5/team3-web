@@ -82,3 +82,14 @@ export const ProfileImg = styled.img`
   height: 100px;
   border-radius: 50%;
 `;
+
+export const PostcodeWrapper = styled.div`
+  display: flex;
+  width: 80%;
+  max-width: 1200px;
+  margin-bottom: 20px;
+`;
+
+export const PostcodeButton = styled(Button)`
+  color: black;
+`;

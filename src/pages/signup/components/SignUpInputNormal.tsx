@@ -17,7 +17,8 @@ interface SignUpInputNormal {
   required?: boolean;
   placeholder: string;
   isWithButton?: boolean;
-  handleChange: ChangeEventHandler<HTMLInputElement>;
+  buttonText?: string;
+  handleChange?: ChangeEventHandler<HTMLInputElement>;
   handleClick?: () => void;
 }
 
@@ -47,6 +48,7 @@ const SignUpInputNormal = ({
   required = false,
   placeholder,
   isWithButton = false,
+  buttonText,
   handleChange,
   handleClick,
 }: SignUpInputNormal) => {
@@ -70,7 +72,7 @@ const SignUpInputNormal = ({
           {isWithButton && (
             <SignUpInputRight>
               <SignUpButtonNormal
-                text="중복확인"
+                text={buttonText ? buttonText : ''}
                 bgColor={COLOR_CARROT}
                 handleClick={handleClick}
               />

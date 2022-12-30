@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { PostcodeButton } from '../signup.styled';
 
 interface PostcodeProps {
   setLocation: Dispatch<SetStateAction<string>>;
@@ -26,7 +27,7 @@ export const Postcode = ({ setLocation }: PostcodeProps) => {
         userAddress += `, ${data.bname}`;
       }
       if (data.zonecode !== '') {
-        //e.g. 08833)
+        //e.g. 08833
         userAddress += `, ${data.zonecode}`;
       }
     }
@@ -40,8 +41,8 @@ export const Postcode = ({ setLocation }: PostcodeProps) => {
   };
 
   return (
-    <button type="button" onClick={handleClick}>
-      Open
-    </button>
+    <PostcodeButton type="button" onClick={handleClick}>
+      나의 동네 찾기
+    </PostcodeButton>
   );
 };
