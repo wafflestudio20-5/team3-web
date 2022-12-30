@@ -36,7 +36,7 @@ const Gnb = () => {
       case '/life':
         setSelected({ ...selected, life: true });
         break;
-      case '/profile/1': // TODO: /profile/number 꼴로 수정 
+      case '/profile/1': // TODO: /profile/id 꼴로 수정
         setSelected({ ...selected, profile: true });
         break;
       default:
