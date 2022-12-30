@@ -1,12 +1,10 @@
-import * as S from './profile.styled';
-
 import Gnb from '../../components/gnb';
-import { CategoryType } from '../../types/category';
+import * as S from './profile.styled';
 
 const ProfilePage = () => {
   return (
     <S.Wrapper>
-      <Gnb category={CategoryType.MYPAGE} />
+      <Gnb />
       프로필페이지
     </S.Wrapper>
   );
