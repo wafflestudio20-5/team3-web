@@ -6,7 +6,7 @@ import { Wrapper } from './home.styled';
 const HomePage = () => {
   // TODO: 테스트용 fetch
   useEffect(() => {
-    fetch('/profile/1')
+    fetch('/users/me')
       .then(response => response.json())
       .then(data => console.log(data));
   }, []);
