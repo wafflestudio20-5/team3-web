@@ -6,6 +6,7 @@ import {
   SignUpInput,
   SignUpInputLeft,
   SignUpInputRight,
+  SignUpInputSpan,
   SignUpInputWrapper,
 } from '../signup.styled';
 
@@ -16,6 +17,7 @@ interface SignUpInputNormal {
   type?: string;
   required?: boolean;
   placeholder: string;
+  validationText?: string;
   isWithButton?: boolean;
   buttonText?: string;
   handleChange?: ChangeEventHandler<HTMLInputElement>;
@@ -47,6 +49,7 @@ const SignUpInputNormal = ({
   type = 'text',
   required = false,
   placeholder,
+  validationText,
   isWithButton = false,
   buttonText,
   handleChange,
@@ -59,6 +62,7 @@ const SignUpInputNormal = ({
         {label}
         <SignUpInput>
           <SignUpInputLeft>
+            <SignUpInputSpan color="tomato">{validationText}</SignUpInputSpan>
             <Input
               name={valueName}
               placeholder={placeholder}

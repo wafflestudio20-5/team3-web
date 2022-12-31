@@ -16,6 +16,12 @@ import {
 } from './signup.styled';
 
 import { useDaumPostcodePopup } from 'react-daum-postcode';
+import {
+  authPassword,
+  validateEmail,
+  validatePassword,
+  validateUsername,
+} from './validAuthInput';
 
 const SignUpPage = () => {
   const [inputs, setInputs] = useState({
@@ -33,34 +39,14 @@ const SignUpPage = () => {
       ...inputs,
       [name]: value,
     });
-    console.log(img);
-    console.log(location);
   };
+
+  // DESC: 카카오 API를 사용하여 위치 관련 정보를 얻어내기
   const [location, setLocation] = useState('');
   const open = useDaumPostcodePopup();
   const handleComplete = (data: any) => {
     const userAddress = data.jibunAddress;
-
-    // if (data.addressType === 'R') {
-    //   if (data.sido !== '') {
-    //     // e.g. '서울'
-    //     userAddress += data.sido;
-    //   }
-    //   if (data.sigungu !== '') {
-    //     // e.g. '관악구'
-    //     userAddress += `, ${data.sigungu}`;
-    //   }
-    //   if (data.bname !== '') {
-    //     //e.g. '봉천동'
-    //     userAddress += `, ${data.bname}`;
-    //   }
-    //   if (data.zonecode !== '') {
-    //     //e.g. 08833
-    //     userAddress += `, ${data.zonecode}`;
-    //   }
-    // }
-
-    console.log(userAddress); // e.g. '서울 관악구 봉천동(08833)'
+    // console.log(userAddress); // e.g. '서울 관악구 봉천동(08833)'
     setLocation(userAddress);
   };
 
@@ -76,6 +62,7 @@ const SignUpPage = () => {
         value={email}
         required={true}
         placeholder="이메일을 입력해주세요"
+        validationText={validateEmail(email)}
         handleChange={onChange}
         isWithButton={true}
         buttonText="중복 확인"
@@ -90,6 +77,7 @@ const SignUpPage = () => {
         type="password"
         required={true}
         placeholder="비밀번호를 입력해주세요"
+        validationText={validatePassword(password)}
         handleChange={onChange}
       />
       <SignUpInputNormal
@@ -99,13 +87,9 @@ const SignUpPage = () => {
         type="password"
         required={true}
         placeholder="비밀번호를 한 번 더 입력해주세요"
+        validationText={authPassword(password, passwordConfirm)}
         handleChange={onChange}
       />
-      {passwordConfirm !== '' && password === passwordConfirm ? (
-        <Span color="blue">비밀번호가 일치합니다</Span>
-      ) : (
-        <Span color="tomato">비밀번호가 일치하지 않습니다</Span>
-      )}
 
       <SignUpInputNormal
         label="username"
@@ -113,6 +97,7 @@ const SignUpPage = () => {
         value={id}
         required={true}
         placeholder="사용하고자 하는 유저 이름을 입력해주세요"
+        validationText={validateUsername(id)}
         handleChange={onChange}
       />
       {/* <ProfileInputLabel img={img} handleChange={onChange}></ProfileInputLabel> */}

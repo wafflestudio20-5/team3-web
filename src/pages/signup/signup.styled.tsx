@@ -26,12 +26,24 @@ export const SignUpInput = styled.div`
 `;
 
 export const SignUpInputLeft = styled.div`
+  position: relative;
   flex: 9;
   margin-right: 20px;
   &:last-of-type {
     margin-right: 0px;
   }
 `;
+
+interface Span extends HTMLAttributes<HTMLSpanElement> {
+  color?: string;
+}
+
+export const SignUpInputSpan = styled.span<Span>(
+  ({ color }) => `position: absolute;
+  top: 45px;
+  left: 10px;
+  color: ${color || 'rgba(0,0,0)'};`,
+);
 
 export const SignUpInputRight = styled.div`
   flex: 1;
