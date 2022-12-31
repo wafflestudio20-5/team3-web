@@ -2,6 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
+// DESC: mock service worker
+import { worker } from './mocks/browser';
+if (process.env.NODE_ENV === 'development') {
+  worker.start();
+}
+
 // DESC: state management
 import store from './store';
 
