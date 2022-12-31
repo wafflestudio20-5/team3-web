@@ -1,7 +1,5 @@
 import * as S from './navigation-button.styled';
-import { ReactComponent as ChatIcon } from '../../../../assets/chat.svg';
-import { ReactComponent as DaangnIcon } from '../../../../assets/daangn.svg';
-import { ReactElement } from 'react';
+import { ReactComponent as ArrowIcon } from '../../../../assets/arrow-rightup.svg';
 
 interface NavigationButtonProps {
   img: string;
@@ -9,10 +7,18 @@ interface NavigationButtonProps {
   handleClick: () => void;
 }
 
-const NavigationButton = ({ img, text, handleClick }: NavigationButtonProps) => {
+const NavigationButton = ({
+  img,
+  text,
+  handleClick,
+}: NavigationButtonProps) => {
   return (
     <S.Wrapper onClick={handleClick}>
-      <S.SignatureIcon src={img} alt="img" />
+      <S.TitleWrapper>
+        <S.SignatureIcon src={img} alt="img" />
+        {text}
+      </S.TitleWrapper>
+      <ArrowIcon />
     </S.Wrapper>
   );
 };

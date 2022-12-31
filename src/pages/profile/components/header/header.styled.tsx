@@ -35,6 +35,13 @@ export const ChatBtn = styled.button`
   padding: 0 14px;
   border-radius: 10px;
   background: #ff6f0f;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: rgb(255, 92, 38);
+    box-shadow: 0 5px 10px #e9e9e9;
+    transform: translateY(-2px);
+  }
 `;
 
 export const Chat = styled.span`
