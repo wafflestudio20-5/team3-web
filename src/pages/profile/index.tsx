@@ -3,8 +3,11 @@ import { useNavigate } from 'react-router-dom';
 
 import Gnb from '../../components/gnb';
 import Header from './components/header';
+import NavigationButton from './components/navigation-button';
 
 import * as S from './profile.styled';
+
+import daangn from '../../assets/daangn.svg'
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -21,6 +24,7 @@ const ProfilePage = () => {
 
       <S.ContentWrapper>
         <Header username={username} handleClick={() => navigate('/')} />
+        <NavigationButton img={daangn} text={'판매내역'} handleClick={() => navigate('/')} />
       </S.ContentWrapper>
     </S.Wrapper>
   );
