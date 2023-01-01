@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import { Button } from '../../components/button-normal/button-normal.styled';
 
 export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   min-width: 360px;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 `;
 
 export const SignUpInputWrapper = styled.div`
@@ -26,8 +26,8 @@ export const SignUpInput = styled.div`
 `;
 
 export const SignUpInputLeft = styled.div`
-  position: relative;
   flex: 9;
+  position: relative;
   margin-right: 20px;
   &:last-of-type {
     margin-right: 0px;
@@ -51,9 +51,9 @@ export const SignUpInputRight = styled.div`
 `;
 
 export const SignUpButton = styled(Button)`
+  width: 100%;
   height: 50px;
   color: white;
-  width: 100%;
 `;
 
 export const SignUpButtonWrapper = styled.div`
@@ -71,9 +71,9 @@ interface Span extends HTMLAttributes<HTMLSpanElement> {
 
 export const Span = styled.span<Span>(
   ({ color }) => `
+  display: inline-block;,
 color: ${color || 'rgba(0,0,0,0)'};
-margin-top: -15px;
-display: inline-block;`,
+margin-top: -15px;`,
 );
 
 export const ProfileLabel = styled.label`

@@ -6,11 +6,9 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-
   width: 100%;
   height: 100vh;
-  min-width: 1160px;
-
+  min-width: 1200px;
   padding: 100px 200px;
 `;
 
@@ -22,14 +20,13 @@ export const Span = styled.span<Span>(
   ({ color }) => `
   margin-top: 20px;
   color: ${color || 'black'};
-font-size: 40px;
-font-weight: 600;`,
+    font-size: 40px;
+    font-weight: 600;`,
 );
 
 export const SendAgainWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-
   margin: 50px 40px;
 `;
 
@@ -42,7 +39,6 @@ export const Button = styled.button`
   width: 100%;
   height: 70px;
   margin-top: auto;
-
   border-radius: 10px;
   background-color: ${COLOR_CARROT};
   color: white;
