@@ -7,8 +7,8 @@ export const Wrapper = styled.div`
   flex-direction: column;
   position: relative;
   width: 100%;
-  height: 100vh;
   min-width: 1200px;
+  height: 100%;
   padding: 100px 200px;
 `;
 
