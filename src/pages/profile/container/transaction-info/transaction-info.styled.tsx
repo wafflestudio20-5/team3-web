@@ -52,3 +52,24 @@ export const LocationWrapper = styled.div`
   align-items: flex-start;
   width: 100%;
 `;
+
+export const LocationInnerWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-left: 10px;
+  margin-bottom: 6px;
+`;
+
+export const LocationText = styled.span`
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 21px;
+  color: #5d5d71;
+`;
+
+export const MapWrapper = styled.div`
+  width: 100%;
+  height: 132px;
+`;
