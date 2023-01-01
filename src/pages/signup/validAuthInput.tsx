@@ -1,10 +1,28 @@
+import axios from 'axios';
+
 export const validateEmail = (email: string) => {
   const reg =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
-  if (reg.test(email) === false) {
+  if (email === '') {
+    return '';
+  } else if (reg.test(email) === false) {
     return '올바르지 않은 형식의 이메일입니다.';
   } else {
-    return '사용 가능한 이메일입니다.';
+    axios
+      .get(
+        process.env.NODE_ENV === 'development'
+          ? '/hello'
+          : 'http://3.35.168.70/hello',
+      )
+      .then(res => console.log(res));
+    axios
+      .get(
+        process.env.NODE_ENV === 'development'
+          ? '/auth/checkEmail'
+          : 'http://3.35.168.70/auth/checkEmail',
+        { params: { email: email } },
+      )
+      .then(res => console.log(res));
   }
 };
 
@@ -36,6 +54,13 @@ export const validateUsername = (username: string) => {
   } else if (reg.test(username) === false) {
     return '유저명은 한글, 영어, 숫자 중 하나를 포함한 형태의 2~10자리여야 합니다.';
   } else {
-    return '사용가능한 유저명입니다.';
+    axios
+      .get(
+        process.env.NODE_ENV === 'development'
+          ? '/auth/checkUsername'
+          : 'http://3.35.168.70/auth/checkUsername',
+        { params: { username: 'dmad' } },
+      )
+      .then(res => console.log(res));
   }
 };
