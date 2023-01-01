@@ -2,6 +2,7 @@ import { ChangeEventHandler } from 'react';
 import { COLOR_CARROT } from '../../../constant';
 import { Input } from '../../../components/input-normal/input-normal.styled';
 import {
+  Label,
   SignUpButton,
   SignUpInput,
   SignUpInputLeft,
@@ -57,8 +58,8 @@ const SignUpInputNormal = ({
 }: SignUpInputNormal) => {
   return (
     <SignUpInputWrapper>
-      {required && '* '}
-      <label>
+      <Label>
+        {required && '* '}
         {label}
         <SignUpInput>
           <SignUpInputLeft>
@@ -83,7 +84,7 @@ const SignUpInputNormal = ({
             </SignUpInputRight>
           )}
         </SignUpInput>
-      </label>
+      </Label>
     </SignUpInputWrapper>
   );
 };

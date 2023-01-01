@@ -7,16 +7,22 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: auto;
   width: 100%;
   min-width: 360px;
-  height: 100vh;
+  margin-top: 20px;
 `;
 
 export const SignUpInputWrapper = styled.div`
   display: block;
   width: 80%;
   max-width: 1200px;
-  margin: 10px;
+  margin: 15px 10px;
+`;
+
+export const Label = styled.div`
+  font-size: 20px;
+  font-weight: 400;
 `;
 
 export const SignUpInput = styled.div`
