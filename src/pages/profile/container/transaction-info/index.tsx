@@ -22,7 +22,7 @@ const TxInfo = () => {
 
       <S.TempWrapper>
         <TxTitle text="와플온도" />
-        <TemperatureBar temperature={36.5} />
+        <TemperatureBar temperature={37.5} />
       </S.TempWrapper>
 
       <S.LocationWrapper>

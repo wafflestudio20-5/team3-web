@@ -20,10 +20,13 @@ interface TemperatureBarProps {
 }
 
 const TemperatureBar = ({ temperature }: TemperatureBarProps) => {
+  const [width, setWidth] = useState(temperature);
   const [barColor, setBarColor] = useState('#EEEEEE');
   const [tempIcon, setTempIcon] = useState(COLOR_MANNER_DEFAULT);
 
   useEffect(() => {
+    setWidth(temperature);
+
     if (temperature < 36.5) {
       setTempIcon(level1Icon);
       setBarColor(COLOR_MANNER_LEVEL_1);
@@ -55,7 +58,7 @@ const TemperatureBar = ({ temperature }: TemperatureBarProps) => {
 
       {/* ProgressBar */}
       <S.ProgressBg />
-      <S.ProgressTemp width={temperature} bgColor={barColor} />
+      <S.ProgressTemp width={width} bgColor={barColor} />
     </S.Wrapper>
   );
 };
