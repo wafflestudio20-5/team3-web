@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import TxTitle from '../../components/tx-title';
+import TemperatureBar from '../../components/temperature-bar';
 
 import * as S from './transaction-info.styled';
 import { ReactComponent as TxInfoIcon } from '../../../../assets/txinfo-icon.svg';
@@ -21,12 +22,11 @@ const TxInfo = () => {
 
       <S.TempWrapper>
         <TxTitle text="와플온도" />
-
+        <TemperatureBar temperature={36.5} />
       </S.TempWrapper>
 
       <S.LocationWrapper>
         <TxTitle text={`${username}의 동네`} />
-        
       </S.LocationWrapper>
     </S.Wrapper>
   );
