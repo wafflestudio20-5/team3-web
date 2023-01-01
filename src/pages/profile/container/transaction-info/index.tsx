@@ -45,9 +45,9 @@ const TxInfo = () => {
                 handleClick={() => setEditLocation(true)}
               />
             </S.LocationInnerWrapper>
-            {/* <S.MapWrapper>
+            <S.MapWrapper>
               <Map />
-            </S.MapWrapper> */}
+            </S.MapWrapper>
           </>
         ) : (
           <EditLocation

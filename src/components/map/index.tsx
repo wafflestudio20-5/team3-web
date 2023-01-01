@@ -1,23 +1,27 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Wrapper } from './map.styled';
 
 const Map = () => {
   // TODO: 타입 정리
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { kakao }: any = window;
-
   const mapRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const container = mapRef.current;
-    const options = {
-      center: new kakao.maps.LatLng(33.450701, 126.570667),
-      level: 3,
-    };
 
-    // 지도 객체 생성하기
-    const map = new kakao.maps.Map(container, options);
-    console.log(map);
+  const initMap = useCallback(() => {
+    if (mapRef.current) {
+      const map = new kakao.maps.Map(mapRef.current, {
+        center: new kakao.maps.LatLng(37.5173319258532, 127.047377408384),
+        level: 3,
+      });
+      // TODO: 확인용 콘솔, 제거
+      console.log(map);
+    }
   }, []);
+
+  useEffect(() => {
+    if (kakao) {
+      initMap();
+    }
+  }, [initMap]);
 
   return (
     <>
