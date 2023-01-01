@@ -1,19 +1,9 @@
 import { ChangeEvent, useState } from 'react';
 import { COLOR_CARROT } from '../../constant';
-import { Postcode } from './components/Postcode';
-import { ProfileInputLabel } from './components/ProfileInputLabel';
 import SignUpInputNormal, {
   SignUpButtonNormal,
 } from './components/SignUpInputNormal';
-import {
-  H1,
-  PostcodeWrapper,
-  SignUpButtonWrapper,
-  SignUpInputLeft,
-  SignUpInputRight,
-  Span,
-  Wrapper,
-} from './signup.styled';
+import { H1, SignUpButtonWrapper, Wrapper } from './signup.styled';
 
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import {
