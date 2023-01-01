@@ -25,7 +25,8 @@ const UserInfo = () => {
     // TODO: 요청 성공시 데이터 set
     setUsername('lerrybe');
     setEmail('kyewl97@snu.ac.kr');
-  }, []);
+    console.log('다시 얻어오기');
+  }, [editUserInfo]);
 
   return (
     <S.Wrapper>

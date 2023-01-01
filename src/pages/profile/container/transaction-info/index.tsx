@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import Map from '../../../../components/map';
 import TxTitle from '../../components/tx-title';
 import TemperatureBar from '../../components/temperature-bar';
 
@@ -27,6 +28,7 @@ const TxInfo = () => {
 
       <S.LocationWrapper>
         <TxTitle text={`${username}의 동네`} />
+        <Map />
       </S.LocationWrapper>
     </S.Wrapper>
   );
