@@ -40,7 +40,7 @@ interface Span extends HTMLAttributes<HTMLSpanElement> {
 
 export const SignUpInputSpan = styled.span<Span>(
   ({ color }) => `position: absolute;
-  top: 45px;
+  top: 50px;
   left: 10px;
   color: ${color || 'rgba(0,0,0)'};`,
 );
