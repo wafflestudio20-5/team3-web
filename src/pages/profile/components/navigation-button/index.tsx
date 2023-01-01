@@ -1,5 +1,5 @@
 import * as S from './navigation-button.styled';
-import { ReactComponent as ArrowIcon } from '../../../../assets/arrow-rightup.svg';
+import arrowIcon from '../../../../assets/arrow-rightup.svg';
 
 interface NavigationButtonProps {
   img: string;
@@ -18,7 +18,7 @@ const NavigationButton = ({
         <S.SignatureIcon src={img} alt="img" />
         {text}
       </S.TitleWrapper>
-      <ArrowIcon />
+      <S.ArrowIcon src={arrowIcon} alt="img" />
     </S.Wrapper>
   );
 };

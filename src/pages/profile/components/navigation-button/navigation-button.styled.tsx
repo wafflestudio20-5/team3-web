@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { MD_SIZE } from '../../../../constant/breakpoint';
 
 export const Wrapper = styled.button`
   display: flex;
@@ -17,15 +18,36 @@ export const Wrapper = styled.button`
     box-shadow: 0 5px 10px #f1f1f1;
     transform: translateY(-2px);
   }
+
+  @media ${MD_SIZE} {
+    width: 162px;
+    height: 50px;
+    padding: 0 16px 0 18px;
+  }
 `;
 
 export const TitleWrapper = styled.div`
   display: flex;
+  align-items: center;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 16px;
   color: #212124;
 `;
 
 export const SignatureIcon = styled.img`
   margin-right: 8px;
+  margin-top: 1px;
+
+  @media ${MD_SIZE} {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+  }
+`;
+
+export const ArrowIcon = styled.img`
+  @media ${MD_SIZE} {
+    width: 16px;
+    height: 16px;
+  }
 `;

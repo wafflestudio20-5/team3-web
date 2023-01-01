@@ -12,7 +12,7 @@ const Header = ({ username, handleClick }: HeaderProps) => {
     <S.Wrapper>
       <S.TitleBox>
         <DaangnIcon />
-        <S.Title>{`${username}'s Waffle`}</S.Title>
+        <S.Title>{username && `${username}'s Waffle`}</S.Title>
       </S.TitleBox>
       <S.ChatBtn onClick={handleClick}>
         <ChatIcon />

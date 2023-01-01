@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { MD_SIZE } from '../../../../constant/breakpoint';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -6,6 +7,10 @@ export const Wrapper = styled.div`
   width: 100%;
   height: 44px;
   margin-bottom: 36px;
+
+  @media ${MD_SIZE} {
+    width: 342px;
+  }
 `;
 
 export const TitleBox = styled.div`
