@@ -37,7 +37,7 @@ const EditLocation = ({
     <S.Wrapper>
       <S.InputWrapper>
         <S.Input value={currLocation} onChange={handleChange} />
-        <S.SearchButton onClick={() => console.log('주소검색')}>
+        <S.SearchButton onClick={() => alert('카카오 주소검색 활용')}>
           주소 검색
         </S.SearchButton>
       </S.InputWrapper>

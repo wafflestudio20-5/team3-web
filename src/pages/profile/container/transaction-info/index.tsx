@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import Map from '../../../../components/map';
+import ProfileMap from '../../../../components/profile-map';
 import TxTitle from '../../components/tx-title';
 import ButtonSm from '../../components/button-sm';
 import EditLocation from '../../components/edit-location';
@@ -46,7 +46,7 @@ const TxInfo = () => {
               />
             </S.LocationInnerWrapper>
             <S.MapWrapper>
-              <Map />
+              <ProfileMap location={'서울 관악구 봉천동 869-6'} />
             </S.MapWrapper>
           </>
         ) : (

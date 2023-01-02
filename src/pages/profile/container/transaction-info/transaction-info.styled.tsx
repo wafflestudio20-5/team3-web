@@ -72,4 +72,5 @@ export const LocationText = styled.span`
 export const MapWrapper = styled.div`
   width: 100%;
   height: 132px;
+  border-radius: 10px;
 `;
