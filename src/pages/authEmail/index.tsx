@@ -32,8 +32,8 @@ export const AuthEmail = () => {
           <SendAgainSpan>인증 메일을 받지 못하셨나요?</SendAgainSpan>
           <SendAgainButton>인증 메일 다시 보내기</SendAgainButton>
         </SendAgainWrapper>
+        <Button>인증 완료</Button>
       </Wrapper>
-      <Button>인증 완료</Button>
     </>
   );
 };
