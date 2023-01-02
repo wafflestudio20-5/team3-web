@@ -1,14 +1,38 @@
 import { rest } from 'msw';
 // const API_URL = 'localhost:8080';
 
-import { mockUser } from '../data/users';
+import { mockUser1, mockUserMe, mockModifiedUserMe } from '../data/users';
 
-// DESC: src/mocks/api/... -> 카테고리별 요청 핸들러
 export const usersAPI = [
-  // DESC: 요청 method, 요쳥 주소, 요청 data, 응답 (status, delay, 응답받는 데이터 등) 설정 가능
   rest.get(`/users/me`, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.delay(3000), ctx.json(mockUser));
+    // CASE 1: 액세스 토큰 없는 경우, code - 401
+    if (!req.headers.get('Authorization')) {
+      return res(ctx.status(401), ctx.delay(3000));
+    }
+    // CASE 2: 정상 케이스
+    return res(ctx.status(200), ctx.delay(3000), ctx.json(mockUserMe));
   }),
 
-  // other...
+  rest.get(`/users/${1}`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.delay(3000), ctx.json(mockUser1));
+  }),
+
+  rest.patch(`/users/me`, (req, res, ctx) => {
+    // CASE 1: 액세스 토큰 없는 경우, code - 401
+    if (!req.headers.get('Authorization')) {
+      return res(ctx.status(401), ctx.delay(3000));
+    }
+    // CASE 2: 정상 케이스
+    return res(ctx.status(200), ctx.delay(3000), ctx.json(mockModifiedUserMe));
+  }),
+
+  rest.put(`/users/me/password`, (req, res, ctx) => {
+    // CASE 1: 액세스 토큰 없는 경우, code - 401
+    if (!req.headers.get('Authorization')) {
+      return res(ctx.status(401), ctx.delay(3000));
+    }
+
+    // CASE 2: 정상 케이스
+    return res(ctx.status(200), ctx.delay(3000));
+  }),
 ];
