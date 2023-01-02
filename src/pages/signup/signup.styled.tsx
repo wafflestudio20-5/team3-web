@@ -48,7 +48,8 @@ export const SignUpInputSpan = styled.span<Span>(
   ({ color }) => `position: absolute;
   top: 50px;
   left: 10px;
-  color: ${color || 'rgba(0,0,0)'};`,
+  color: ${color || 'rgba(0,0,0)'};
+  font-size: 16px;`,
 );
 
 export const SignUpInputRight = styled.div`

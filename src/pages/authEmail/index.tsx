@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom';
 import Gnb from '../../components/gnb';
 import { COLOR_CARROT } from '../../constant';
 import {
@@ -9,18 +10,18 @@ import {
   Wrapper,
 } from './authEmail.styled';
 
-interface AuthEmailProps {
-  email?: string;
-}
+// interface AuthEmailProps {
+//   email?: string;
+// }
 
-export const AuthEmail = ({ email }: AuthEmailProps) => {
+export const AuthEmail = () => {
+  const { email } = useParams();
   return (
     <>
       <Gnb />
       <Wrapper>
         <Span>
-          입력하신 이메일{' '}
-          <Span color={COLOR_CARROT}>{email || 'waffle@naver.com'}</Span> (으)로
+          입력하신 이메일 <Span color={COLOR_CARROT}>{email}</Span> (으)로
           <br /> 인증 메일을 보내드렸어요.
         </Span>
         <Span>
@@ -31,8 +32,8 @@ export const AuthEmail = ({ email }: AuthEmailProps) => {
           <SendAgainSpan>인증 메일을 받지 못하셨나요?</SendAgainSpan>
           <SendAgainButton>인증 메일 다시 보내기</SendAgainButton>
         </SendAgainWrapper>
-        <Button>인증 완료</Button>
       </Wrapper>
+      <Button>인증 완료</Button>
     </>
   );
 };

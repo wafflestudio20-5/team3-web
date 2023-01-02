@@ -37,8 +37,10 @@ const SignUpPage = () => {
   const [location, setLocation] = useState('');
   const open = useDaumPostcodePopup();
   const handleComplete = (data: any) => {
-    const userAddress = data.jibunAddress;
-    // console.log(userAddress); // e.g. '서울 관악구 봉천동(08833)'
+    // console.log(data);
+    const userAddress =
+      data.jibunAddress === '' ? data.autoJibunAddress : data.jibunAddress;
+    // console.log(userAddress); //
     setLocation(userAddress);
   };
 
@@ -128,7 +130,7 @@ const SignUpPage = () => {
             handleClick={() => {
               // TODO: validation 먼저 한 번 해주기
               console.log('회원가입!'); // 이후 서버에 요청하도록 수정
-              navigate('/signup/authEmail');
+              navigate(`/signup/authEmail/${email}`);
             }}
           />
         </SignUpButtonWrapper>

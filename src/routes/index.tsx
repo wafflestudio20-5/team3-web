@@ -17,7 +17,7 @@ function EntryRoute() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/kakao" element={<KaKaoLogin />} />
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/signup/authEmail" element={<AuthEmail />} />
+        <Route path="/signup/authEmail/:email" element={<AuthEmail />} />
       </Routes>
     </BrowserRouter>
   );
