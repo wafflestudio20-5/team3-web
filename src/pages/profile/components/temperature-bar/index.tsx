@@ -16,7 +16,7 @@ import {
 } from '../../../../constant';
 
 interface TemperatureBarProps {
-  temperature: number;
+  temperature: number | null;
 }
 
 const TemperatureBar = ({ temperature }: TemperatureBarProps) => {
@@ -25,20 +25,22 @@ const TemperatureBar = ({ temperature }: TemperatureBarProps) => {
   const [tempIcon, setTempIcon] = useState(COLOR_MANNER_DEFAULT);
 
   useEffect(() => {
-    setWidth(temperature);
+    if (temperature) {
+      setWidth(temperature);
 
-    if (temperature < 36.5) {
-      setTempIcon(level1Icon);
-      setBarColor(COLOR_MANNER_LEVEL_1);
-    } else if (36.5 <= temperature && temperature < 40.0) {
-      setTempIcon(level2Icon);
-      setBarColor(COLOR_MANNER_LEVEL_2);
-    } else if (40.0 <= temperature && temperature < 50.0) {
-      setTempIcon(level3Icon);
-      setBarColor(COLOR_MANNER_LEVEL_3);
-    } else if (50.0 <= temperature) {
-      setTempIcon(level4Icon);
-      setBarColor(COLOR_MANNER_LEVEL_4);
+      if (temperature < 36.5) {
+        setTempIcon(level1Icon);
+        setBarColor(COLOR_MANNER_LEVEL_1);
+      } else if (36.5 <= temperature && temperature < 40.0) {
+        setTempIcon(level2Icon);
+        setBarColor(COLOR_MANNER_LEVEL_2);
+      } else if (40.0 <= temperature && temperature < 50.0) {
+        setTempIcon(level3Icon);
+        setBarColor(COLOR_MANNER_LEVEL_3);
+      } else if (50.0 <= temperature) {
+        setTempIcon(level4Icon);
+        setBarColor(COLOR_MANNER_LEVEL_4);
+      }
     }
   }, [temperature]);
 

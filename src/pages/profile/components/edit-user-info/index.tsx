@@ -2,6 +2,8 @@ import { ChangeEvent, useCallback, useRef, useState } from 'react';
 
 import ButtonMd from '../button-md';
 
+import { requestUpdateMyInfo } from '../../../../api/users';
+
 import * as S from './edit-user-info.styled';
 import defaultImg from '../../../../assets/default-profile.png';
 import { ReactComponent as CameraIcon } from '../../../../assets/camera.svg';
@@ -9,8 +11,8 @@ import { ReactComponent as CameraIcon } from '../../../../assets/camera.svg';
 // DESC: null 관리 -> 상위 컴포넌트에서
 interface EditUserInfoProps {
   img: string | null;
-  username: string;
-  location: string;
+  username: string | null;
+  location: string | null;
   handleClose: (set: boolean) => void;
 }
 
@@ -23,6 +25,9 @@ const EditUserInfo = ({
   const imgRef = useRef<HTMLInputElement | null>(null);
   const [currImg, setCurrImg] = useState<string | null>(img);
   const [currUsername, setCurrUsername] = useState(username);
+
+  // TODO: 토큰 가져오기 (with useSelector)
+  const accessToken = 'sampleToken';
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setCurrUsername(e.target.value);
@@ -43,12 +48,22 @@ const EditUserInfo = ({
   }, []);
 
   const handleSubmit = useCallback(() => {
-    console.log('유저정보 수정 요청', currUsername, location, currImg);
+    // TODO: userInfo validation
+
     // TODO: 요청시 담아서 보냄
     // TODO: /users/me PATCH API 호출
-
-    // TODO: 요청 성공시 false
-    handleClose(false);
+    (async () => {
+      const res = await requestUpdateMyInfo(
+        accessToken,
+        currUsername,
+        location,
+        currImg,
+      );
+      if (res) {
+        // TODO: 요청 성공시 false
+        handleClose(false);
+      }
+    })();
   }, [currUsername, currImg]);
 
   return (
@@ -71,7 +86,7 @@ const EditUserInfo = ({
             </S.IconWrapper>
           </S.Label>
         </S.ImagePositionWrapper>
-        <S.Input value={currUsername} onChange={handleChange} />
+        <S.Input value={currUsername || ''} onChange={handleChange} />
       </S.InputWrapper>
 
       <S.ButtonWrapper>

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Map, Circle, MapMarker } from 'react-kakao-maps-sdk';
 
 interface ProfileMapProps {
-  location: string;
+  location: string | null;
 }
 
 const ProfileMap = ({ location }: ProfileMapProps) => {
@@ -43,6 +43,7 @@ const ProfileMap = ({ location }: ProfileMapProps) => {
       level={5}
       onCreate={setDefaultMap}
     >
+      {/* TODO: Area 적용 버그잡기 */}
       <Circle
         center={{ lat: mapLocation.y, lng: mapLocation.x }}
         radius={120}

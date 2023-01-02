@@ -42,7 +42,7 @@ export const ProgressBg = styled.div`
 `;
 
 interface DivProps extends HTMLAttributes<HTMLDivElement> {
-  width?: number;
+  width: number | null;
   bgColor?: string;
 }
 

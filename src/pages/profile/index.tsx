@@ -7,6 +7,8 @@ import UserInfo from './container/user-info';
 import TxInfo from './container/transaction-info';
 import NavigationButton from './components/navigation-button';
 
+import { requestMyInfo } from '../../api/users';
+
 import * as S from './profile.styled';
 import buyIcon from '../../assets/buy-icon.svg';
 import lifeIcon from '../../assets/life-icon.svg';
@@ -19,11 +21,18 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState<string | null>(null);
 
-  // TODO: 토큰 가져오기
-  // TODO: API 호출, GET /users/me
-  // TODO: 요청 실패시 에러 처리 (프로필 페이지 접근 X)
+  // TODO: 토큰 가져오기 (with useSelector)
+  const accessToken = 'sampleToken';
+
   useEffect(() => {
-    setUsername('lerrybe');
+    // TODO: API 호출, GET /users/me
+    // TODO: 요청 실패시 에러 처리 (프로필 페이지 접근 X), 에러 처리 쉬운 쪽으로 API 함수 작성
+    (async () => {
+      const res = await requestMyInfo(accessToken);
+      if (res) {
+        setUsername(res?.data?.username);
+      }
+    })();
   }, []);
 
   return (

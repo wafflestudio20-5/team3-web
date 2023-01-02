@@ -3,7 +3,7 @@ import * as S from './button-md.styled';
 interface ButtonMdProps {
   img?: string;
   text: string;
-  handleClick: () => void; // TODO: type 수정
+  handleClick: () => void;
 }
 
 const ButtonMd = ({ img, text, handleClick }: ButtonMdProps) => {

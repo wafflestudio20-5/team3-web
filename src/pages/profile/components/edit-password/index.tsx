@@ -1,4 +1,5 @@
 import { ChangeEvent, useCallback, useState } from 'react';
+import { requestUpdateMPassword } from '../../../../api/users';
 
 import ButtonMd from '../button-md';
 import * as S from './edit-password.styled';
@@ -14,6 +15,9 @@ const EditPassword = ({ handleClose }: EditPasswordProps) => {
     newPwConfirm: '',
   });
 
+  // TODO: 토큰 가져오기 (with useSelector)
+  const accessToken = 'sampleToken';
+
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const { value, name } = e.target;
@@ -26,18 +30,22 @@ const EditPassword = ({ handleClose }: EditPasswordProps) => {
   );
 
   const handleSubmit = useCallback(() => {
-    console.log(
-      '비밀번호 요청',
-      values?.pw,
-      values?.newPw,
-      values?.newPwConfirm,
-    );
     // TODO: newPw와 newPwConfirm 검증
+
     // TODO: 요청시에는 values에 있는거 담아서 보냄
     // TODO: PUT /users/me/password
-
-    // TODO: 요청 성공시 false
-    handleClose(false);
+    (async () => {
+      const res = await requestUpdateMPassword(
+        accessToken,
+        values?.pw,
+        values?.newPw,
+        values?.newPwConfirm,
+      );
+      if (res) {
+        // TODO: 요청 성공시 false
+        handleClose(false);
+      }
+    })();
   }, [values?.pw, values?.newPw, values?.newPwConfirm]);
 
   return (

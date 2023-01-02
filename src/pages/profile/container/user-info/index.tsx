@@ -5,28 +5,41 @@ import EditPassword from '../../components/edit-password';
 import ProfileImage from '../../components/profile-image';
 import EditUserInfo from '../../components/edit-user-info';
 
+import { requestMyInfo } from '../../../../api/users';
+
 import * as S from './user-info.styled';
 import addIcon from '../../../../assets/add-icon.svg';
 import EditMdIcon from '../../../../assets/edit-middle-icon.svg';
 import { ReactComponent as UserInfoIcon } from '../../../../assets/userinfo-icon.svg';
 
-// TODO: 혹은 위에서 요청받은거 props로 내려받아도 괜찮을 듯
 const UserInfo = () => {
   const [editPassword, setEditPassword] = useState(false);
   const [editUserInfo, setEditUserInfo] = useState(false);
 
-  // TODO: 유저정보, 추후 데이터 맞춰서 객체로 수정
+  // TODO: 객체 묶기
+  const [img, setImg] = useState<string | null>(null);
+  const [temp, setTemp] = useState<number | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
+  const [location, setLocation] = useState<string | null>(null);
+
+  // TODO: 토큰 가져오기 (with useSelector)
+  const accessToken = 'sampleToken';
 
   useEffect(() => {
-    // TODO: API 호출 GET /users/me
-    // TODO: 요청 실패시 에러 처리 (프로필 페이지 접근 X)
-    // TODO: 요청 성공시 데이터 set
-    setUsername('lerrybe');
-    setEmail('kyewl97@snu.ac.kr');
-    console.log('다시 얻어오기');
-  }, [editUserInfo]);
+    // TODO: API 호출, GET /users/me
+    // TODO: 요청 실패시 에러 처리 (프로필 페이지 접근 X), 에러 처리 쉬운 쪽으로 API 함수 작성
+    (async () => {
+      const res = await requestMyInfo(accessToken);
+      if (res) {
+        setImg(res?.data?.img);
+        setEmail(res?.data?.email);
+        setTemp(res?.data?.temperature);
+        setUsername(res?.data?.username);
+        setLocation(res?.data?.location);
+      }
+    })();
+  }, [editUserInfo, editPassword]);
 
   return (
     <S.Wrapper>
@@ -36,7 +49,7 @@ const UserInfo = () => {
       </S.Header>
       {!editUserInfo && !editPassword && (
         <>
-          <ProfileImage temperature={38.5} profileImg={undefined} />
+          <ProfileImage temperature={temp} profileImg={img} />
 
           <S.NameInfoWrapper>
             <S.Username>{username}</S.Username>
@@ -58,10 +71,12 @@ const UserInfo = () => {
         </>
       )}
       {editUserInfo && (
+        // TODO: 로딩 안되어있으면 로딩 컴포넌트로 안 보이게
         <EditUserInfo
-          img={null}
-          username={'lerrybe'}
-          location={'서울 관악구 봉천동'}
+          img={img}
+          // TODO: 아래에서 null 가능하게 받기, 기본 타입은 무조건 <타입 | null> 초기화 null로
+          username={username}
+          location={location}
           handleClose={setEditUserInfo}
         />
       )}

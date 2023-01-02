@@ -3,7 +3,7 @@ import * as S from './button-sm.styled';
 interface ButtonSmProps {
   img?: string;
   text: string;
-  handleClick: () => void; // TODO: type 수정
+  handleClick: () => void;
 }
 
 const ButtonSm = ({ img, text, handleClick }: ButtonSmProps) => {

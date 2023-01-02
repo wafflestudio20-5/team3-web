@@ -1,4 +1,5 @@
 import { ChangeEvent, useCallback, useState } from 'react';
+import { requestUpdateMyInfo } from '../../../../api/users';
 
 import ButtonMd from '../button-md';
 
@@ -7,8 +8,8 @@ import * as S from './edit-location.styled';
 // DESC: null 관리 -> 상위 컴포넌트에서
 interface EditLocationProps {
   img: string | null;
-  username: string;
-  location: string;
+  username: string | null;
+  location: string | null;
   handleClose: (set: boolean) => void;
 }
 
@@ -20,23 +21,37 @@ const EditLocation = ({
 }: EditLocationProps) => {
   const [currLocation, setCurrLocation] = useState(location);
 
+  // TODO: 토큰 가져오기 (with useSelector)
+  const accessToken = 'sampleToken';
+
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setCurrLocation(e.target.value);
   }, []);
 
   const handleSubmit = useCallback(() => {
-    console.log('유저정보 수정 요청', img, username, currLocation);
+    // TODO: location validation
+
     // TODO: 요청시 담아서 보냄
     // TODO: /users/me PATCH API 호출
-
-    // TODO: 요청 성공시 false
-    handleClose(false);
+    // TODO: 에러처리
+    (async () => {
+      const res = await requestUpdateMyInfo(
+        accessToken,
+        username,
+        currLocation,
+        img,
+      );
+      if (res) {
+        // TODO: 요청 성공시 false
+        handleClose(false);
+      }
+    })();
   }, [currLocation]);
 
   return (
     <S.Wrapper>
       <S.InputWrapper>
-        <S.Input value={currLocation} onChange={handleChange} />
+        <S.Input value={currLocation || ''} onChange={handleChange} />
         <S.SearchButton onClick={() => alert('카카오 주소검색 활용')}>
           주소 검색
         </S.SearchButton>

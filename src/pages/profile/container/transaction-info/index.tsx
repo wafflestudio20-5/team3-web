@@ -1,24 +1,40 @@
 import { useEffect, useState } from 'react';
 
-import ProfileMap from '../../../../components/profile-map';
 import TxTitle from '../../components/tx-title';
 import ButtonSm from '../../components/button-sm';
 import EditLocation from '../../components/edit-location';
+import ProfileMap from '../../../../components/profile-map';
 import TemperatureBar from '../../components/temperature-bar';
+
+import { requestMyInfo } from '../../../../api/users';
 
 import * as S from './transaction-info.styled';
 import EditSmIcon from '../../../../assets/edit-small-icon.svg';
 import { ReactComponent as TxInfoIcon } from '../../../../assets/txinfo-icon.svg';
 
 const TxInfo = () => {
-  const [username, setUsername] = useState<string>('');
+  // TODO: 객체 묶기
+  const [temp, setTemp] = useState<number | null>(null);
+  const [img, setImg] = useState<string | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
+  const [location, setLocation] = useState<string | null>(null);
   const [editLocation, setEditLocation] = useState(false);
 
+  // TODO: 토큰 가져오기 (with useSelector)
+  const accessToken = 'sampleToken';
+
   useEffect(() => {
-    // API 호출
-    // 지도 위치는 훅으로 표현!!!!!!
-    setUsername('lerrybe');
-    console.log('refetch Location');
+    // TODO: API 호출, GET /users/me
+    // TODO: 요청 실패시 에러 처리 (프로필 페이지 접근 X), 에러 처리 쉬운 쪽으로 API 함수 작성
+    (async () => {
+      const res = await requestMyInfo(accessToken);
+      if (res) {
+        setImg(res?.data?.img);
+        setTemp(res?.data?.temperature);
+        setUsername(res?.data?.username);
+        setLocation(res?.data?.location);
+      }
+    })();
   }, [editLocation]);
 
   return (
@@ -30,7 +46,7 @@ const TxInfo = () => {
 
       <S.TempWrapper>
         <TxTitle text="와플온도" />
-        <TemperatureBar temperature={37.5} />
+        <TemperatureBar temperature={temp} />
       </S.TempWrapper>
 
       <S.LocationWrapper>
@@ -38,7 +54,7 @@ const TxInfo = () => {
         {!editLocation ? (
           <>
             <S.LocationInnerWrapper>
-              <S.LocationText>{`* ${`서울 관악구 봉천동`}`}</S.LocationText>
+              <S.LocationText>{`* ${location}`}</S.LocationText>
               <ButtonSm
                 img={EditSmIcon}
                 text={'동네 변경'}
@@ -46,14 +62,14 @@ const TxInfo = () => {
               />
             </S.LocationInnerWrapper>
             <S.MapWrapper>
-              <ProfileMap location={'서울 관악구 봉천동 869-6'} />
+              <ProfileMap location={location} />
             </S.MapWrapper>
           </>
         ) : (
           <EditLocation
-            img={null}
-            username={'lerrybe'}
-            location={'서울 관악구 봉천동'}
+            img={img}
+            username={username}
+            location={location}
             handleClose={setEditLocation}
           />
         )}
