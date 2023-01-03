@@ -55,3 +55,41 @@ export const Chat = styled.span`
   font-size: 16px;
   font-weight: 500;
 `;
+
+export const SkeletonTitleBox = styled.div`
+  @keyframes wave {
+    100% {
+      background: rgba(240, 240, 240, 0.519);
+    }
+    50% {
+      background: rgba(183, 183, 183, 0.3);
+    }
+    0% {
+      background: rgba(240, 240, 240, 0.519);
+    }
+  }
+  animation: wave 2s ease-in-out infinite;
+
+  width: 210px;
+  height: 44px;
+  border-radius: 10px;
+`;
+
+export const SkeletonChatBox = styled.div`
+  @keyframes wave {
+    100% {
+      background: rgba(240, 240, 240, 0.519);
+    }
+    50% {
+      background: rgba(183, 183, 183, 0.3);
+    }
+    0% {
+      background: rgba(240, 240, 240, 0.519);
+    }
+  }
+  animation: wave 2s ease-in-out infinite;
+
+  width: 120px;
+  height: 44px;
+  border-radius: 10px;
+`;

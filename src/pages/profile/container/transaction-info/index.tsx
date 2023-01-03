@@ -13,6 +13,8 @@ import EditSmIcon from '../../../../assets/edit-small-icon.svg';
 import { ReactComponent as TxInfoIcon } from '../../../../assets/txinfo-icon.svg';
 
 const TxInfo = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
   // TODO: 객체 묶기
   const [temp, setTemp] = useState<number | null>(null);
   const [img, setImg] = useState<string | null>(null);
@@ -33,6 +35,8 @@ const TxInfo = () => {
         setTemp(res?.data?.temperature);
         setUsername(res?.data?.username);
         setLocation(res?.data?.location);
+
+        setIsLoading(false);
       }
     })();
   }, [editLocation]);
@@ -46,24 +50,34 @@ const TxInfo = () => {
 
       <S.TempWrapper>
         <TxTitle text="와플온도" />
-        <TemperatureBar temperature={temp} />
+        {!isLoading ? (
+          <TemperatureBar temperature={temp} />
+        ) : (
+          <S.SkeletonTemp />
+        )}
       </S.TempWrapper>
 
       <S.LocationWrapper>
-        <TxTitle text={`${username}의 동네`} />
+        <TxTitle text="와플동네" />
         {!editLocation ? (
           <>
-            <S.LocationInnerWrapper>
-              <S.LocationText>{`* ${location}`}</S.LocationText>
-              <ButtonSm
-                img={EditSmIcon}
-                text={'동네 변경'}
-                handleClick={() => setEditLocation(true)}
-              />
-            </S.LocationInnerWrapper>
-            <S.MapWrapper>
-              <ProfileMap location={location} />
-            </S.MapWrapper>
+            {!isLoading ? (
+              <>
+                <S.LocationInnerWrapper>
+                  <S.LocationText>{`* ${location}`}</S.LocationText>
+                  <ButtonSm
+                    img={EditSmIcon}
+                    text={'동네 변경'}
+                    handleClick={() => setEditLocation(true)}
+                  />
+                </S.LocationInnerWrapper>
+                <S.MapWrapper>
+                  <ProfileMap location={location} />
+                </S.MapWrapper>
+              </>
+            ) : (
+              <S.SkeletonMap />
+            )}
           </>
         ) : (
           <EditLocation

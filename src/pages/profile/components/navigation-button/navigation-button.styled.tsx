@@ -51,3 +51,27 @@ export const ArrowIcon = styled.img`
     height: 16px;
   }
 `;
+
+export const SkeletonButton = styled.div`
+  @keyframes wave {
+    100% {
+      background: rgba(240, 240, 240, 0.519);
+    }
+    50% {
+      background: rgba(183, 183, 183, 0.3);
+    }
+    0% {
+      background: rgba(240, 240, 240, 0.519);
+    }
+  }
+  animation: wave 2s ease-in-out infinite;
+
+  width: 220px;
+  height: 66px;
+  border-radius: 6px;
+
+  @media ${MD_SIZE} {
+    width: 162px;
+    height: 50px;
+  }
+`;

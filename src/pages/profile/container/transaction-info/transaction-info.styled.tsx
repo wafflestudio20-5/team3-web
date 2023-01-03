@@ -74,3 +74,39 @@ export const MapWrapper = styled.div`
   height: 132px;
   border-radius: 10px;
 `;
+
+export const SkeletonTemp = styled.div`
+  @keyframes wave {
+    100% {
+      background: rgba(240, 240, 240, 0.519);
+    }
+    50% {
+      background: rgba(183, 183, 183, 0.3);
+    }
+    0% {
+      background: rgba(240, 240, 240, 0.519);
+    }
+  }
+  animation: wave 2s ease-in-out infinite;
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+`;
+
+export const SkeletonMap = styled.div`
+  @keyframes wave {
+    100% {
+      background: rgba(240, 240, 240, 0.519);
+    }
+    50% {
+      background: rgba(183, 183, 183, 0.3);
+    }
+    0% {
+      background: rgba(240, 240, 240, 0.519);
+    }
+  }
+  animation: wave 2s ease-in-out infinite;
+  width: 100%;
+  height: 174px;
+  border-radius: 10px;
+`;

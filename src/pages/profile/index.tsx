@@ -19,6 +19,7 @@ import mannerCommentIcon from '../../assets/manner-comment-icon.svg';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const [username, setUsername] = useState<string | null>(null);
 
   // TODO: 토큰 가져오기 (with useSelector)
@@ -31,6 +32,7 @@ const ProfilePage = () => {
       const res = await requestMyInfo(accessToken);
       if (res) {
         setUsername(res?.data?.username);
+        setIsLoading(false);
       }
     })();
   }, []);
@@ -40,7 +42,11 @@ const ProfilePage = () => {
       <Gnb />
       <S.ContentWrapper>
         {/* TODO: My chats 이동, 혹은 채팅 띄우기 */}
-        <Header username={username} handleClick={() => navigate('/')} />
+        <Header
+          username={username}
+          handleClick={() => navigate('/')}
+          isLoading={isLoading}
+        />
         <S.InfoWrapper>
           <UserInfo />
           <TxInfo />
@@ -49,31 +55,37 @@ const ProfilePage = () => {
         {/* TODO: 적절한 페이지로 이동 */}
         <S.NavigationWrapper>
           <NavigationButton
+            isLoading={isLoading}
             img={sellIcon}
             text="판매내역"
             handleClick={() => navigate('/')}
           />
           <NavigationButton
+            isLoading={isLoading}
             img={buyIcon}
             text="구매내역"
             handleClick={() => navigate('/')}
           />
           <NavigationButton
+            isLoading={isLoading}
             img={likeIcon}
             text="찜한 상품"
             handleClick={() => navigate('/')}
           />
           <NavigationButton
+            isLoading={isLoading}
             img={reviewIcon}
             text="거래후기"
             handleClick={() => navigate('/')}
           />
           <NavigationButton
+            isLoading={isLoading}
             img={mannerCommentIcon}
             text="매너평가"
             handleClick={() => navigate('/')}
           />
           <NavigationButton
+            isLoading={isLoading}
             img={lifeIcon}
             text="동네생활"
             handleClick={() => navigate('/')}

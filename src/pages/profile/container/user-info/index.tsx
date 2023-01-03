@@ -13,6 +13,7 @@ import EditMdIcon from '../../../../assets/edit-middle-icon.svg';
 import { ReactComponent as UserInfoIcon } from '../../../../assets/userinfo-icon.svg';
 
 const UserInfo = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [editPassword, setEditPassword] = useState(false);
   const [editUserInfo, setEditUserInfo] = useState(false);
 
@@ -37,6 +38,8 @@ const UserInfo = () => {
         setTemp(res?.data?.temperature);
         setUsername(res?.data?.username);
         setLocation(res?.data?.location);
+
+        setIsLoading(false);
       }
     })();
   }, [editUserInfo, editPassword]);
@@ -49,32 +52,41 @@ const UserInfo = () => {
       </S.Header>
       {!editUserInfo && !editPassword && (
         <>
-          <ProfileImage temperature={temp} profileImg={img} />
+          {!isLoading ? (
+            <>
+              <ProfileImage temperature={temp} profileImg={img} />
 
-          <S.NameInfoWrapper>
-            <S.Username>{username}</S.Username>
-            <S.Email>{email}</S.Email>
-          </S.NameInfoWrapper>
+              <S.NameInfoWrapper>
+                <S.Username>{username}</S.Username>
+                <S.Email>{email}</S.Email>
+              </S.NameInfoWrapper>
 
-          <S.ButtonWrapper>
-            <ButtonMd
-              img={addIcon}
-              text={'내 프로필 수정'}
-              handleClick={() => setEditUserInfo(true)}
-            />
-            <ButtonMd
-              img={EditMdIcon}
-              text={'비밀번호 변경'}
-              handleClick={() => setEditPassword(true)}
-            />
-          </S.ButtonWrapper>
+              <S.ButtonWrapper>
+                <ButtonMd
+                  img={addIcon}
+                  text={'내 프로필 수정'}
+                  handleClick={() => setEditUserInfo(true)}
+                />
+                <ButtonMd
+                  img={EditMdIcon}
+                  text={'비밀번호 변경'}
+                  handleClick={() => setEditPassword(true)}
+                />
+              </S.ButtonWrapper>
+            </>
+          ) : (
+            <>
+              <S.SkeletonImg />
+              <S.SkeletonUsername />
+              <S.SkeletonEmail />
+              <S.SkeletonButton />
+            </>
+          )}
         </>
       )}
       {editUserInfo && (
-        // TODO: 로딩 안되어있으면 로딩 컴포넌트로 안 보이게
         <EditUserInfo
           img={img}
-          // TODO: 아래에서 null 가능하게 받기, 기본 타입은 무조건 <타입 | null> 초기화 null로
           username={username}
           location={location}
           handleClose={setEditUserInfo}
