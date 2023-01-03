@@ -2,19 +2,19 @@ import axios from 'axios';
 
 export const validateEmail = (email: string) => {
   const reg =
-    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
+    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
   if (email === '') {
     return '';
   } else if (reg.test(email) === false) {
     return '올바르지 않은 형식의 이메일입니다.';
   } else {
-    axios
-      .get(
-        process.env.NODE_ENV === 'development'
-          ? '/hello'
-          : 'http://3.35.168.70/hello',
-      )
-      .then(res => console.log(res));
+    // axios
+    //   .get(
+    //     process.env.NODE_ENV === 'development'
+    //       ? '/hello'
+    //       : 'http://3.35.168.70/hello',
+    //   )
+    //   .then(res => console.log(res));
     axios
       .get(
         process.env.NODE_ENV === 'development'
@@ -48,7 +48,7 @@ export const authPassword = (password: string, passwordConfirm: string) => {
 };
 
 export const validateUsername = (username: string) => {
-  const reg = /^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{1,10}$/;
+  const reg = /^([a-zA-Z0-9가-힣]){2,10}$/;
   if (username === '') {
     return '';
   } else if (reg.test(username) === false) {

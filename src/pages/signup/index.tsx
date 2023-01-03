@@ -117,6 +117,7 @@ const SignUpPage = () => {
           valueName="location"
           value={location}
           placeholder="동네 이름을 검색해주세요"
+          isReadOnly={true}
           isWithButton={true}
           buttonText="동네 검색"
           handleClick={handleClick}

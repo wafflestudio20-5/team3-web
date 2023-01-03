@@ -20,6 +20,7 @@ interface SignUpInputNormal {
   placeholder: string;
   validationText?: string;
   isWithButton?: boolean;
+  isReadOnly?: boolean;
   buttonText?: string;
   handleChange?: ChangeEventHandler<HTMLInputElement>;
   handleClick?: () => void;
@@ -52,6 +53,7 @@ const SignUpInputNormal = ({
   placeholder,
   validationText,
   isWithButton = false,
+  isReadOnly = false,
   buttonText,
   handleChange,
   handleClick,
@@ -70,6 +72,7 @@ const SignUpInputNormal = ({
               type={type}
               required={required}
               value={value}
+              readOnly={isReadOnly}
               onChange={handleChange}
             />
           </SignUpInputLeft>
