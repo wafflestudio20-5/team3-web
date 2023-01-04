@@ -6,16 +6,11 @@ import SignUpInputNormal, {
 import { H1, SignUpButtonWrapper, Wrapper } from './signup.styled';
 
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import {
-  authPassword,
-  validAllInputs,
-  validateEmail,
-  validatePassword,
-  validateUsername,
-} from './validAuthInput';
+import * as V from '../../utils/validateUserInfo';
 import { useNavigate } from 'react-router-dom';
 import Gnb from '../../components/gnb';
 import axios from 'axios';
+import { randomPassword } from '../../utils/randomPassword';
 
 const SignUpPage = () => {
   const [inputs, setInputs] = useState({
@@ -118,6 +113,13 @@ const SignUpPage = () => {
     <>
       <Gnb />
       <Wrapper>
+        <button
+          onClick={() => {
+            console.log(randomPassword());
+          }}
+        >
+          난수 생성
+        </button>
         <H1>회원가입</H1>
         <SignUpInputNormal
           label="email"
@@ -125,7 +127,7 @@ const SignUpPage = () => {
           value={email}
           required={true}
           placeholder="이메일을 입력해주세요"
-          validationText={validateEmail(email)}
+          validationText={V.valEmailToMsg(email)}
           handleChange={onChange}
           isWithButton={true}
           buttonText="중복 확인"
@@ -140,7 +142,7 @@ const SignUpPage = () => {
           type="password"
           required={true}
           placeholder="비밀번호를 입력해주세요"
-          validationText={validatePassword(password)}
+          validationText={V.valPasswordToMsg(password)}
           handleChange={onChange}
         />
         <SignUpInputNormal
@@ -150,7 +152,7 @@ const SignUpPage = () => {
           type="password"
           required={true}
           placeholder="비밀번호를 한 번 더 입력해주세요"
-          validationText={authPassword(password, passwordConfirm)}
+          validationText={V.confirmPasswordToMsg(password, passwordConfirm)}
           handleChange={onChange}
         />
         <SignUpInputNormal
@@ -159,7 +161,7 @@ const SignUpPage = () => {
           value={username}
           required={true}
           placeholder="사용하고자 하는 유저 이름을 입력해주세요"
-          validationText={validateUsername(username)}
+          validationText={V.valUsernameToMsg(username)}
           handleChange={onChange}
           isWithButton={true}
           buttonText="중복 확인"
@@ -195,7 +197,7 @@ const SignUpPage = () => {
             text="회원가입"
             bgColor={COLOR_CARROT}
             disabled={
-              !validAllInputs(email, password, passwordConfirm, username)
+              !V.validAllInputs(email, password, passwordConfirm, username)
             }
             handleClick={() => {
               if (isEmailUnique && isUsernameUnique) {
