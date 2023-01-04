@@ -33,7 +33,7 @@ export const validAllInputs = (
 
 // DESC: 위의 함수를 이용한 부가적인 함수,
 // 회원가입 input 입력시 형식에 맞지 않다면 메세지를 string 형식으로 return 해줌
-export const valEmailToMsg = (email: string) => {
+export const valEmailToMsg = (email: string): string => {
   if (email === '') {
     return '';
   } else if (!valEmail(email)) {
@@ -43,7 +43,7 @@ export const valEmailToMsg = (email: string) => {
   }
 };
 
-export const valPasswordToMsg = (password: string) => {
+export const valPasswordToMsg = (password: string): string => {
   if (password === '') {
     return '';
   } else if (!valPassword(password)) {
@@ -56,7 +56,7 @@ export const valPasswordToMsg = (password: string) => {
 export const confirmPasswordToMsg = (
   password: string,
   passwordConfirm: string,
-) => {
+): string => {
   if (passwordConfirm === '') {
     return '';
   } else if (password === passwordConfirm) {
@@ -66,7 +66,7 @@ export const confirmPasswordToMsg = (
   }
 };
 
-export const valUsernameToMsg = (username: string) => {
+export const valUsernameToMsg = (username: string): string => {
   if (username === '') {
     return '';
   } else if (!valUsername(username)) {
