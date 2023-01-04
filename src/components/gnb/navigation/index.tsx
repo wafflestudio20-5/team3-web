@@ -30,12 +30,12 @@ const Navigation = ({ user, selected }: NavigationProps) => {
 
       <S.AuthWrapper>
         {user ? (
-          <Link to="/">
-            <S.RouteButton>나의 와플</S.RouteButton>
+          <Link to="/profile/1">
+            <S.Route selected={selected.profile}>나의 와플</S.Route>
           </Link>
         ) : (
           <Link to="/login">
-            <S.RouteButton>로그인/회원가입</S.RouteButton>
+            <S.Route>로그인/회원가입</S.Route>
           </Link>
         )}
       </S.AuthWrapper>
