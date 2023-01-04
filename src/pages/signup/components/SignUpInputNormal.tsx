@@ -29,16 +29,18 @@ interface SignUpInputNormal {
 interface SignUpButtonNormal {
   text: string;
   bgColor?: string;
+  disabled?: boolean;
   handleClick?: () => void;
 }
 
 export const SignUpButtonNormal = ({
   text,
   bgColor,
+  disabled = false,
   handleClick,
 }: SignUpButtonNormal) => {
   return (
-    <SignUpButton onClick={handleClick} bgColor={bgColor}>
+    <SignUpButton onClick={handleClick} bgColor={bgColor} disabled={disabled}>
       {text}
     </SignUpButton>
   );

@@ -8,29 +8,94 @@ import { H1, SignUpButtonWrapper, Wrapper } from './signup.styled';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import {
   authPassword,
+  validAllInputs,
   validateEmail,
   validatePassword,
   validateUsername,
 } from './validAuthInput';
 import { useNavigate } from 'react-router-dom';
 import Gnb from '../../components/gnb';
+import axios from 'axios';
 
 const SignUpPage = () => {
   const [inputs, setInputs] = useState({
-    id: '',
+    email: '',
     password: '',
     passwordConfirm: '',
-    email: '',
+    username: '',
     location: '',
-    img: '',
   });
-  const { id, password, passwordConfirm, email, img } = inputs;
+  const { email, password, passwordConfirm, username } = inputs;
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setInputs({
       ...inputs,
       [name]: value,
     });
+  };
+
+  const [isEmailUnique, setIsEmailUnique] = useState(false);
+  const [isUsernameUnique, setIsUsernameUnique] = useState(false);
+
+  const checkEmail = (email: string) => {
+    axios
+      .get(
+        process.env.NODE_ENV === 'development'
+          ? '/auth/checkEmail'
+          : 'http://3.35.168.70/auth/checkEmail',
+        { params: { email: email } },
+      )
+      .then(res => {
+        console.log(res);
+        if (res.data) {
+          // console.log('중복 없음 블록 실행');
+          alert('사용가능한 이메일입니다.');
+          setIsEmailUnique(true);
+        } else {
+          alert('이미 동일한 이메일이 있습니다.');
+        }
+      });
+  };
+
+  const checkUsername = (username: string) => {
+    axios
+      .get(
+        process.env.NODE_ENV === 'development'
+          ? '/auth/checkUsername'
+          : 'http://3.35.168.70/auth/checkUsername',
+        { params: { username: username } },
+      )
+      .then(res => {
+        // console.log(res);
+        if (res.data) {
+          alert('사용가능한 닉네임입니다.');
+          setIsUsernameUnique(true);
+        } else {
+          alert('이미 동일한 닉네임이 있습니다.');
+        }
+      });
+  };
+
+  const postUser = (
+    email: string,
+    password: string,
+    username: string,
+    location?: string,
+  ) => {
+    axios
+      .post(
+        process.env.NODE_ENV === 'development'
+          ? '/auth/signup'
+          : 'http://3.35.168.70/auth/signup',
+        {
+          email: email,
+          password: password,
+          username: username,
+          location: location,
+        },
+      )
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   };
 
   // DESC: 카카오 API를 사용하여 위치 관련 정보를 얻어내기
@@ -65,7 +130,7 @@ const SignUpPage = () => {
           isWithButton={true}
           buttonText="중복 확인"
           handleClick={() => {
-            console.log('Button Clicked!');
+            checkEmail(email);
           }}
         />
         <SignUpInputNormal
@@ -88,18 +153,21 @@ const SignUpPage = () => {
           validationText={authPassword(password, passwordConfirm)}
           handleChange={onChange}
         />
-
         <SignUpInputNormal
           label="username"
-          valueName="id"
-          value={id}
+          valueName="username"
+          value={username}
           required={true}
           placeholder="사용하고자 하는 유저 이름을 입력해주세요"
-          validationText={validateUsername(id)}
+          validationText={validateUsername(username)}
           handleChange={onChange}
+          isWithButton={true}
+          buttonText="중복 확인"
+          handleClick={() => {
+            checkUsername(username);
+          }}
         />
         {/* <ProfileInputLabel img={img} handleChange={onChange}></ProfileInputLabel> */}
-
         {/* <SignUpInputNormal // location의 경우 이후 select를 이용하도록 수정
         valueName="location"
         value={location}
@@ -111,7 +179,6 @@ const SignUpPage = () => {
         <span>내 동네 설정(선택): 내 동네를 설정하시겠어요?</span>
         <Postcode setLocation={setLocation} />
       </PostcodeWrapper> */}
-
         <SignUpInputNormal
           label="location"
           valueName="location"
@@ -123,15 +190,20 @@ const SignUpPage = () => {
           handleClick={handleClick}
         />
         {/* <Postcode setLocation={setLocation} /> */}
-
         <SignUpButtonWrapper>
           <SignUpButtonNormal
             text="회원가입"
             bgColor={COLOR_CARROT}
+            disabled={
+              !validAllInputs(email, password, passwordConfirm, username)
+            }
             handleClick={() => {
-              // TODO: validation 먼저 한 번 해주기
-              console.log('회원가입!'); // 이후 서버에 요청하도록 수정
-              navigate(`/signup/authEmail/${email}`);
+              if (isEmailUnique && isUsernameUnique) {
+                postUser(email, password, username, location);
+                navigate(`/signup/authEmail/${email}`);
+              } else {
+                alert('이메일과 닉네임 중복 여부를 확인해주세요.');
+              }
             }}
           />
         </SignUpButtonWrapper>
