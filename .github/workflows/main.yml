@@ -24,9 +24,13 @@ jobs:
         run: yarn
 
       - name: Build
-        run: yarn build
         env:
           CI: ""
+          REACT_APP_KAKAO_REST_API_KEY: ${{ secrets.REACT_APP_KAKAO_REST_API_KEY }}
+          REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}
+          REACT_APP_GOOGLE_SECRET_KEY: ${{ secrets.REACT_APP_GOOGLE_SECRET_KEY }}
+          REACT_APP_KAKAOMAP_API_KEY: ${{ secrets.REACT_APP_KAKAOMAP_API_KEY }}
+        run: yarn build
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
