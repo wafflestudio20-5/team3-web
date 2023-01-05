@@ -1,6 +1,7 @@
+//DESC: 이메일 인증, 추후 백엔드 api 확인되면 지울 페이지
+
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import Gnb from '../../components/gnb';
 import { COLOR_CARROT } from '../../constant';
 import {
   Button,

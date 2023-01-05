@@ -1,15 +1,6 @@
 import { ChangeEventHandler } from 'react';
 import { COLOR_CARROT } from '../../../constant';
-import {
-  Label,
-  Input,
-  SignUpButton,
-  SignUpInput,
-  SignUpInputLeft,
-  SignUpInputRight,
-  SignUpInputSpan,
-  SignUpInputWrapper,
-} from '../signup.styled';
+import * as S from '../signup.styled';
 
 interface SignUpInputNormal {
   label: string;
@@ -40,9 +31,9 @@ export const SignUpButtonNormal = ({
   handleClick,
 }: SignUpButtonNormal) => {
   return (
-    <SignUpButton onClick={handleClick} bgColor={bgColor} disabled={disabled}>
+    <S.SignUpButton onClick={handleClick} bgColor={bgColor} disabled={disabled}>
       {text}
-    </SignUpButton>
+    </S.SignUpButton>
   );
 };
 
@@ -61,14 +52,16 @@ const SignUpInputNormal = ({
   handleClick,
 }: SignUpInputNormal) => {
   return (
-    <SignUpInputWrapper>
-      <Label>
+    <S.SignUpInputWrapper>
+      <S.Label>
         {required && '* '}
         {label}
-        <SignUpInput>
-          <SignUpInputLeft>
-            <SignUpInputSpan color="tomato">{validationText}</SignUpInputSpan>
-            <Input
+        <S.SignUpInput>
+          <S.SignUpInputLeft>
+            <S.SignUpInputSpan color="tomato">
+              {validationText}
+            </S.SignUpInputSpan>
+            <S.Input
               name={valueName}
               placeholder={placeholder}
               type={type}
@@ -77,20 +70,20 @@ const SignUpInputNormal = ({
               readOnly={isReadOnly}
               onChange={handleChange}
             />
-          </SignUpInputLeft>
+          </S.SignUpInputLeft>
 
           {isWithButton && (
-            <SignUpInputRight>
+            <S.SignUpInputRight>
               <SignUpButtonNormal
                 text={buttonText ? buttonText : ''}
                 bgColor={COLOR_CARROT}
                 handleClick={handleClick}
               />
-            </SignUpInputRight>
+            </S.SignUpInputRight>
           )}
-        </SignUpInput>
-      </Label>
-    </SignUpInputWrapper>
+        </S.SignUpInput>
+      </S.Label>
+    </S.SignUpInputWrapper>
   );
 };
 

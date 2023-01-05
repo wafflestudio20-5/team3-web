@@ -1,26 +1,23 @@
 import { ChangeEvent, useState } from 'react';
-import { COLOR_CARROT } from '../../constant';
+import { useNavigate } from 'react-router-dom';
+
 import SignUpInputNormal, {
   SignUpButtonNormal,
 } from './components/SignUpInputNormal';
-import {
-  H1,
-  InformSpan,
-  InformWrapper,
-  SignUpButtonWrapper,
-  Wrapper,
-} from './signup.styled';
 
-import { useDaumPostcodePopup } from 'react-daum-postcode';
-import * as V from '../../utils/validateUserInfo';
-import { useNavigate } from 'react-router-dom';
 import {
   requestCheckEmail,
   requestCheckUsername,
   requestSignUpUser,
 } from '../../api/auth';
+import * as V from '../../utils/validateUserInfo';
+
+import * as S from './signup.styled';
+import { COLOR_CARROT } from '../../constant';
+import { useDaumPostcodePopup } from 'react-daum-postcode';
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     email: '',
     password: '',
@@ -35,10 +32,8 @@ const SignUpPage = () => {
       [name]: value,
     });
   };
-
   const [isEmailUnique, setIsEmailUnique] = useState(false);
   const [isUsernameUnique, setIsUsernameUnique] = useState(false);
-  const navigate = useNavigate();
 
   const checkEmail = async () => {
     const res = (await requestCheckEmail(email)) as any;
@@ -50,7 +45,6 @@ const SignUpPage = () => {
     }
     // TODO: 에러처리
   };
-
   const checkUsername = async () => {
     const res = (await requestCheckUsername(username)) as any;
     if (res.data) {
@@ -61,7 +55,6 @@ const SignUpPage = () => {
     }
     // TODO: 에러처리
   };
-
   const signInUser = async () => {
     const res = await requestSignUpUser(email, password, username, location);
     // TODO: 응답 바탕으로 로그인 처리(이후 회원가입 플로우에 따라 달라짐)
@@ -76,7 +69,6 @@ const SignUpPage = () => {
       data.jibunAddress === '' ? data.autoJibunAddress : data.jibunAddress;
     setLocation(userAddress);
   };
-
   // DESC: 이 함수를 버튼에 붙여주면 됩니다
   const handleClick = () => {
     open({ onComplete: handleComplete });
@@ -84,14 +76,14 @@ const SignUpPage = () => {
 
   return (
     <>
-      <Wrapper>
-        <H1>회원가입</H1>
-        <InformWrapper>
-          <InformSpan>- * 는 필수 입력 항목임을 나타냅니다.</InformSpan>
-          <InformSpan>
+      <S.Wrapper>
+        <S.H1>회원가입</S.H1>
+        <S.InformWrapper>
+          <S.InformSpan>- * 는 필수 입력 항목임을 나타냅니다.</S.InformSpan>
+          <S.InformSpan>
             - 이메일 인증 버튼 클릭 시 입력한 이메일로 인증 메일이 전송됩니다.
-          </InformSpan>
-        </InformWrapper>
+          </S.InformSpan>
+        </S.InformWrapper>
         <SignUpInputNormal
           label="email"
           valueName="email"
@@ -149,7 +141,7 @@ const SignUpPage = () => {
           handleClick={handleClick}
         />
 
-        <SignUpButtonWrapper>
+        <S.SignUpButtonWrapper>
           <SignUpButtonNormal
             text="회원가입"
             bgColor={COLOR_CARROT}
@@ -165,14 +157,14 @@ const SignUpPage = () => {
               }
             }}
           />
-        </SignUpButtonWrapper>
+        </S.SignUpButtonWrapper>
         {/* DESC: /component 에 있는 Postcode 컴포넌트 사용 예시
         <Postcode
           text="동네"
           setLocation={setLocation}
           bgColor={COLOR_CARROT}
         /> */}
-      </Wrapper>
+      </S.Wrapper>
     </>
   );
 };
