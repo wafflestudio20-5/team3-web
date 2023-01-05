@@ -80,7 +80,6 @@ const SignUpPage = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Gnb />
       <Wrapper>
         <H1>회원가입</H1>
         <SignUpInputNormal
@@ -92,7 +91,8 @@ const SignUpPage = () => {
           validationText={V.valEmailToMsg(email)}
           handleChange={onChange}
           isWithButton={true}
-          buttonText="중복 확인"
+          buttonText="이메일 인증"
+          // TODO: 변경된 회원가입 플로우에 따라 이 버튼으로 중복체크 & 메일 인증 되도록 바꿔주기
           handleClick={checkEmail}
         />
         <SignUpInputNormal
@@ -156,7 +156,12 @@ const SignUpPage = () => {
             }}
           />
         </SignUpButtonWrapper>
-        <Postcode text="동네" setLocation={setLocation} />
+        {/* DESC: /component 에 있는 Postcode 컴포넌트 사용 예시
+        <Postcode
+          text="동네"
+          setLocation={setLocation}
+          bgColor={COLOR_CARROT}
+        /> */}
       </Wrapper>
     </>
   );

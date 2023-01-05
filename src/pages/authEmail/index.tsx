@@ -20,12 +20,9 @@ export const AuthEmail = () => {
   const navigate = useNavigate();
   const checkEmailVerified = (email?: string) => {
     axios
-      .get(
-        process.env.NODE_ENV === 'development'
-          ? '/auth/checkEmailVerified'
-          : 'http://3.35.168.70/auth/checkEmailVerified',
-        { params: { email: email } },
-      )
+      .get('http://3.35.168.70/auth/checkEmailVerified', {
+        params: { email: email },
+      })
       .then(res => {
         console.log(res);
         if (res.data) {
@@ -40,12 +37,9 @@ export const AuthEmail = () => {
 
   const sendVerificationEmail = (email?: string) => {
     axios
-      .get(
-        process.env.NODE_ENV === 'development'
-          ? '/auth/sendVerificationEmail'
-          : 'http://3.35.168.70/auth/sendVerificationEmail',
-        { params: { email: email } },
-      )
+      .get('http://3.35.168.70/auth/sendVerificationEmail', {
+        params: { email: email },
+      })
       .then(res => {
         console.log(res);
         alert(`${email}로 인증 메일이 전송되었습니다.`);
@@ -54,7 +48,6 @@ export const AuthEmail = () => {
   };
   return (
     <>
-      <Gnb />
       <Wrapper>
         <Span>
           입력하신 이메일 <Span color={COLOR_CARROT}>{email}</Span> (으)로
