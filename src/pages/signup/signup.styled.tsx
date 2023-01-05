@@ -82,14 +82,3 @@ export const Span = styled.span<Span>(
 color: ${color || 'rgba(0,0,0,0)'};
 margin-top: -15px;`,
 );
-
-export const PostcodeWrapper = styled.div`
-  display: flex;
-  width: 80%;
-  max-width: 1200px;
-  margin-bottom: 20px;
-`;
-
-export const PostcodeButton = styled(Button)`
-  color: black;
-`;

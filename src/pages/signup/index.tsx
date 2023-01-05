@@ -14,7 +14,7 @@ import {
   requestCheckUsername,
   requestSignUpUser,
 } from '../../api/auth';
-import { Postcode } from './components/Postcode';
+import { Postcode } from '../../components/button-postcode';
 
 const SignUpPage = () => {
   const [inputs, setInputs] = useState({
@@ -156,7 +156,7 @@ const SignUpPage = () => {
             }}
           />
         </SignUpButtonWrapper>
-        <Postcode setLocation={setLocation} />
+        <Postcode text="동네" setLocation={setLocation} />
       </Wrapper>
     </>
   );
