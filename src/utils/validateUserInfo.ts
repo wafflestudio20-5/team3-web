@@ -32,7 +32,7 @@ export const validAllInputs = (
 };
 
 // DESC: 위의 함수를 이용한 부가적인 함수,
-// 회원가입 input 입력시 형식에 맞지 않다면 메세지를 string 형식으로 return 해줌
+// 회원가입 input 입력시 형식에 맞지 않다면 메세지를 string 형식으로 return
 export const valEmailToMsg = (email: string): string => {
   if (email === '') {
     return '';

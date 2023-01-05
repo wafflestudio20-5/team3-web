@@ -9,13 +9,12 @@ import { useDaumPostcodePopup } from 'react-daum-postcode';
 import * as V from '../../utils/validateUserInfo';
 import { useNavigate } from 'react-router-dom';
 import Gnb from '../../components/gnb';
-import axios from 'axios';
-import { randomPassword } from '../../utils/randomPassword';
 import {
   requestCheckEmail,
   requestCheckUsername,
   requestSignUpUser,
 } from '../../api/auth';
+import { Postcode } from './components/Postcode';
 
 const SignUpPage = () => {
   const [inputs, setInputs] = useState({
@@ -157,6 +156,7 @@ const SignUpPage = () => {
             }}
           />
         </SignUpButtonWrapper>
+        <Postcode setLocation={setLocation} />
       </Wrapper>
     </>
   );

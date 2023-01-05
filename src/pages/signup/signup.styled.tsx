@@ -83,25 +83,6 @@ color: ${color || 'rgba(0,0,0,0)'};
 margin-top: -15px;`,
 );
 
-export const ProfileLabel = styled.label`
-  display: inline-block;
-  margin: 5px 0 20px 0;
-  font-weight: bold;
-  font-size: 13px;
-  color: #0095f6;
-  cursor: pointer;
-`;
-
-export const ProfileInput = styled.input`
-  display: none;
-`;
-
-export const ProfileImg = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-`;
-
 export const PostcodeWrapper = styled.div`
   display: flex;
   width: 80%;
