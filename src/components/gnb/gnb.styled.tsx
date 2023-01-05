@@ -16,7 +16,7 @@ export const InnerWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1100px;
+  max-width: 1056px;
   height: 100%;
   padding: 0 30px;
 `;

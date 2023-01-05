@@ -5,7 +5,7 @@ import ErrorPage from '../pages/error';
 import LoginPage from '../pages/login';
 import KaKaoLogin from '../pages/login/kakao';
 import SignUpPage from '../pages/signup';
-import { AuthEmail } from '../pages/authEmail';
+import ProfilePage from '../pages/profile';
 
 // DESC: 라우팅 관리를 위한 EntryRoute
 function EntryRoute() {
@@ -17,7 +17,7 @@ function EntryRoute() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/kakao" element={<KaKaoLogin />} />
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/signup/authEmail/:email" element={<AuthEmail />} />
+        <Route path="/profile/:id" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );
