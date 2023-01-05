@@ -3,18 +3,22 @@ import { COLOR_CARROT } from '../../constant';
 import SignUpInputNormal, {
   SignUpButtonNormal,
 } from './components/SignUpInputNormal';
-import { H1, SignUpButtonWrapper, Wrapper } from './signup.styled';
+import {
+  H1,
+  InformSpan,
+  InformWrapper,
+  SignUpButtonWrapper,
+  Wrapper,
+} from './signup.styled';
 
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import * as V from '../../utils/validateUserInfo';
 import { useNavigate } from 'react-router-dom';
-import Gnb from '../../components/gnb';
 import {
   requestCheckEmail,
   requestCheckUsername,
   requestSignUpUser,
 } from '../../api/auth';
-import { Postcode } from '../../components/button-postcode';
 
 const SignUpPage = () => {
   const [inputs, setInputs] = useState({
@@ -34,6 +38,7 @@ const SignUpPage = () => {
 
   const [isEmailUnique, setIsEmailUnique] = useState(false);
   const [isUsernameUnique, setIsUsernameUnique] = useState(false);
+  const navigate = useNavigate();
 
   const checkEmail = async () => {
     const res = (await requestCheckEmail(email)) as any;
@@ -77,11 +82,16 @@ const SignUpPage = () => {
     open({ onComplete: handleComplete });
   };
 
-  const navigate = useNavigate();
   return (
     <>
       <Wrapper>
         <H1>회원가입</H1>
+        <InformWrapper>
+          <InformSpan>- * 는 필수 입력 항목임을 나타냅니다.</InformSpan>
+          <InformSpan>
+            - 이메일 인증 버튼 클릭 시 입력한 이메일로 인증 메일이 전송됩니다.
+          </InformSpan>
+        </InformWrapper>
         <SignUpInputNormal
           label="email"
           valueName="email"

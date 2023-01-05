@@ -1,8 +1,8 @@
 import { ChangeEventHandler } from 'react';
 import { COLOR_CARROT } from '../../../constant';
-import { Input } from '../../../components/input-normal/input-normal.styled';
 import {
   Label,
+  Input,
   SignUpButton,
   SignUpInput,
   SignUpInputLeft,
