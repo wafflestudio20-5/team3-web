@@ -1,17 +1,10 @@
 import axios from 'axios';
-
-// export const requestMyInfo = async (token: string) => {
-//     // TODO: url('/users/me')
-//     try {
-//       return await axios.get<User>('/users/me', { headers: auth(token) });
-//     } catch (e) {
-//       return null;
-//     }
-//   };
+import { BASE_URL } from '../constant';
+import { LoginRequest } from '../types/auth';
 
 export const requestCheckEmail = async (email: string) => {
   try {
-    return await axios.get('http://3.35.168.70/auth/checkEmail', {
+    return await axios.get(`${BASE_URL}/auth/checkEmail`, {
       params: { email: email },
     });
   } catch (e) {
@@ -21,7 +14,7 @@ export const requestCheckEmail = async (email: string) => {
 
 export const requestCheckUsername = async (username: string) => {
   try {
-    return await axios.get('http://3.35.168.70/auth/checkUsername', {
+    return await axios.get(`${BASE_URL}/auth/checkUsername`, {
       params: { username: username },
     });
   } catch (e) {
@@ -29,14 +22,14 @@ export const requestCheckUsername = async (username: string) => {
   }
 };
 
-export const requestSignUpUser = async (
-  email: string,
-  password: string,
-  username: string,
-  location?: string,
-) => {
+export const requestSignUpUser = async ({
+  email,
+  password,
+  username,
+  location,
+}: LoginRequest) => {
   try {
-    return await axios.post('http://3.35.168.70/auth/signup', {
+    return await axios.post(`${BASE_URL}/auth/signup`, {
       email: email,
       password: password,
       username: username,

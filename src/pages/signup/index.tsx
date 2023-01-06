@@ -56,7 +56,12 @@ const SignUpPage = () => {
     // TODO: 에러처리
   };
   const signInUser = async () => {
-    const res = await requestSignUpUser(email, password, username, location);
+    const res = await requestSignUpUser({
+      email,
+      password,
+      username,
+      location,
+    });
     // TODO: 응답 바탕으로 로그인 처리(이후 회원가입 플로우에 따라 달라짐)
   };
 
