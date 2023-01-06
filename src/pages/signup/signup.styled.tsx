@@ -118,3 +118,22 @@ export const Span = styled.span<Span>(
 color: ${color || 'rgba(0,0,0,0)'};
 margin-top: -15px;`,
 );
+
+export const EmailVerificationWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  padding: 0px 10px;
+`;
+
+export const EmailVerificationSpan = styled.span<Span>(
+  ({ color }) => `
+color: ${color || 'rgba(0,0,0,0)'};
+font-size: 16px;
+`,
+);
+
+export const EmailVerificationSpanWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

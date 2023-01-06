@@ -16,6 +16,7 @@ import {
 //   email?: string;
 // }
 
+// TODO: 이메일 인증 부분 회원가입 페이지에 합치기(api로 옮기고 버튼에 붙여주기)
 export const AuthEmail = () => {
   const { email } = useParams();
   const navigate = useNavigate();
