@@ -32,9 +32,15 @@ const LoginPage: React.FC = () => {
 
   // 백엔드와의 통신을 위한 테스트 api call
   const test = () => {
-    axios.get('http://3.35.168.70/hello').then(res => {
-      console.log(res);
-    });
+    axios
+      .get(
+        process.env.NODE_ENV === 'development'
+          ? '/'
+          : "'http://3.35.168.70/hello'",
+      )
+      .then(res => {
+        console.log(res);
+      });
   };
 
   return (

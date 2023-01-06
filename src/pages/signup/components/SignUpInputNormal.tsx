@@ -1,13 +1,6 @@
 import { ChangeEventHandler } from 'react';
 import { COLOR_CARROT } from '../../../constant';
-import { Input } from '../../../components/input-normal/input-normal.styled';
-import {
-  SignUpButton,
-  SignUpInput,
-  SignUpInputLeft,
-  SignUpInputRight,
-  SignUpInputWrapper,
-} from '../signup.styled';
+import * as S from '../signup.styled';
 
 interface SignUpInputNormal {
   label: string;
@@ -16,26 +9,31 @@ interface SignUpInputNormal {
   type?: string;
   required?: boolean;
   placeholder: string;
+  validationText?: string;
   isWithButton?: boolean;
-  handleChange: ChangeEventHandler<HTMLInputElement>;
+  isReadOnly?: boolean;
+  buttonText?: string;
+  handleChange?: ChangeEventHandler<HTMLInputElement>;
   handleClick?: () => void;
 }
 
 interface SignUpButtonNormal {
   text: string;
   bgColor?: string;
+  disabled?: boolean;
   handleClick?: () => void;
 }
 
 export const SignUpButtonNormal = ({
   text,
   bgColor,
+  disabled = false,
   handleClick,
 }: SignUpButtonNormal) => {
   return (
-    <SignUpButton onClick={handleClick} bgColor={bgColor}>
+    <S.SignUpButton onClick={handleClick} bgColor={bgColor} disabled={disabled}>
       {text}
-    </SignUpButton>
+    </S.SignUpButton>
   );
 };
 
@@ -46,39 +44,46 @@ const SignUpInputNormal = ({
   type = 'text',
   required = false,
   placeholder,
+  validationText,
   isWithButton = false,
+  isReadOnly = false,
+  buttonText,
   handleChange,
   handleClick,
 }: SignUpInputNormal) => {
   return (
-    <SignUpInputWrapper>
-      {required && '* '}
-      <label>
+    <S.SignUpInputWrapper>
+      <S.Label>
+        {required && '* '}
         {label}
-        <SignUpInput>
-          <SignUpInputLeft>
-            <Input
+        <S.SignUpInput>
+          <S.SignUpInputLeft>
+            <S.SignUpInputSpan color="tomato">
+              {validationText}
+            </S.SignUpInputSpan>
+            <S.Input
               name={valueName}
               placeholder={placeholder}
               type={type}
               required={required}
               value={value}
+              readOnly={isReadOnly}
               onChange={handleChange}
             />
-          </SignUpInputLeft>
+          </S.SignUpInputLeft>
 
           {isWithButton && (
-            <SignUpInputRight>
+            <S.SignUpInputRight>
               <SignUpButtonNormal
-                text="중복확인"
+                text={buttonText ? buttonText : ''}
                 bgColor={COLOR_CARROT}
                 handleClick={handleClick}
               />
-            </SignUpInputRight>
+            </S.SignUpInputRight>
           )}
-        </SignUpInput>
-      </label>
-    </SignUpInputWrapper>
+        </S.SignUpInput>
+      </S.Label>
+    </S.SignUpInputWrapper>
   );
 };
 
