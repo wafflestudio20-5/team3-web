@@ -7,20 +7,20 @@ interface Input extends HTMLAttributes<HTMLInputElement> {
 
 export const Input = styled.input<Input>(
   ({ placeholder }) => `
-  background-color: rgba(0, 0, 0, 0.1);
+  display: block;
+  width: 100%;
+  height: 50px;
+  padding: 5px 10px;
+  margin-right: 10px;
   border: 1px solid rgba(0, 0, 0, 0);
   border-radius: 5px;
-  padding: 5px 10px;
-  display: block;
-  height: 50px;
-  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
   font-weight: 400;
   font-size: 15px;
   line-height: 20px;
-  margin-right: 10px;
+  placeholder: ${placeholder};
   &:last-of-type {
     margin-right: 0px;
   }
-  placeholder: ${placeholder};
 `,
 );
