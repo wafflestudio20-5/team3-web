@@ -32,12 +32,9 @@ jobs:
           REACT_APP_KAKAOMAP_API_KEY: ${{ secrets.REACT_APP_KAKAOMAP_API_KEY }}
         run: yarn build
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-1
-
-      - name: Deploy to S3
+      - name: S3 Deploy
         run: aws s3 sync build/ s3://waffle-market-03 --delete
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ap-northeast-1
