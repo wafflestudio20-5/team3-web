@@ -16,7 +16,7 @@ const KaKaoLogin = () => {
       if (res.message === 'Request failed with status code 404') {
         const email: string = res.response.data.email;
         navigate('/signup', {
-          state: { isSocialLoginProp: true, email: email },
+          state: { isSocialLoginProp: true, emailSocial: email },
         });
       } else if (res.data.user) {
         console.log('haha');
