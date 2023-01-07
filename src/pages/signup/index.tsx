@@ -15,6 +15,7 @@ import * as V from '../../utils/validateUserInfo';
 import * as S from './signup.styled';
 import { COLOR_CARROT } from '../../constant';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { getCoordinate } from '../../utils/map';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -83,6 +84,7 @@ const SignUpPage = () => {
   // DESC: 이메일 인증 기능을 회원가입 페이지에서 구현
   const [isEmailAuthButtonOpen, setIsEmailAuthButtonOpen] = useState(false);
 
+  console.log(getCoordinate(location));
   return (
     <>
       <S.Wrapper>
