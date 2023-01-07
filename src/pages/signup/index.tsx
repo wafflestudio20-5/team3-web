@@ -1,5 +1,5 @@
-import { ChangeEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { ChangeEvent, useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import SignUpInputNormal, {
   SignUpButtonNormal,
@@ -17,6 +17,19 @@ import { COLOR_CARROT } from '../../constant';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 
 const SignUpPage = () => {
+  /* 소셜로그인으로부터 링크를 타고 넘어온 prop (소셜 여부, 이메일) */
+  const { isSocialLoginProp, emailSocial } = useLocation().state;
+  const [isSocialLogin, setIsSocialLogin] = useState(isSocialLoginProp);
+  const [isEmailAuthed, setIsEmailAuthed] = useState(false);
+
+  useEffect(() => {
+    if (isSocialLogin) {
+      setIsEmailAuthed(true);
+    }
+  }, [isSocialLogin]);
+
+  console.log(isSocialLoginProp, emailSocial);
+
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     email: '',
