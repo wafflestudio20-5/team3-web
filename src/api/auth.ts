@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BASE_URL } from '../constant';
-import { LoginRequest } from '../types/auth';
+import { LoginRequest, LoginInput } from '../types/auth';
 
 export const requestCheckEmail = async (email: string) => {
   try {
@@ -35,6 +35,34 @@ export const requestSignUpUser = async ({
       username: username,
       location: location,
     });
+  } catch (e) {
+    return e;
+  }
+};
+
+export const requestLogin = async ({ email, password }: LoginInput) => {
+  try {
+    return await axios.post(`${BASE_URL}/auth/login`, {
+      email: email,
+      password: password,
+    });
+  } catch (e) {
+    return e;
+  }
+};
+
+export const requestGoogleLogin = async (email: string | null) => {
+  try {
+    return await axios.post(`${BASE_URL}/google/login/`, { email: email });
+  } catch (e) {
+    return e;
+  }
+};
+
+export const requestKakaoLogin = async (code: string | null) => {
+  try {
+    console.log(code)
+    return await axios.get(`${BASE_URL}/kakao/lgoin?code=${code}`);
   } catch (e) {
     return e;
   }

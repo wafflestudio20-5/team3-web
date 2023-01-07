@@ -5,3 +5,8 @@ export interface LoginRequest {
   username: string;
   location?: string;
 }
+
+export interface LoginInput {
+  email: string;
+  password: string;
+}
