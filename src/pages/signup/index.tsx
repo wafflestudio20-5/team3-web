@@ -40,6 +40,7 @@ const SignUpPage = () => {
     if (res.data) {
       alert('사용가능한 이메일입니다.');
       setIsEmailUnique(true);
+      setIsEmailAuthButtonOpen(true);
     } else {
       alert('이미 동일한 이메일이 있습니다.');
     }
@@ -79,16 +80,13 @@ const SignUpPage = () => {
     open({ onComplete: handleComplete });
   };
 
+  // DESC: 이메일 인증 기능을 회원가입 페이지에서 구현
+  const [isEmailAuthButtonOpen, setIsEmailAuthButtonOpen] = useState(false);
+
   return (
     <>
       <S.Wrapper>
         <S.H1>회원가입</S.H1>
-        <S.InformWrapper>
-          <S.InformSpan>- * 는 필수 입력 항목임을 나타냅니다.</S.InformSpan>
-          <S.InformSpan>
-            - 이메일 인증 버튼 클릭 시 입력한 이메일로 인증 메일이 전송됩니다.
-          </S.InformSpan>
-        </S.InformWrapper>
         <SignUpInputNormal
           label="email"
           valueName="email"
@@ -102,6 +100,13 @@ const SignUpPage = () => {
           // TODO: 변경된 회원가입 플로우에 따라 이 버튼으로 중복체크 & 메일 인증 되도록 바꿔주기
           handleClick={checkEmail}
         />
+        {isEmailAuthButtonOpen && (
+          <S.EmailAuthWrapper>
+            <S.P>{email} 로 인증 메일을 전송하였습니다.</S.P>
+            <S.P>메일 다시 보내기</S.P>
+            <S.P>인증 완료</S.P>
+          </S.EmailAuthWrapper>
+        )}
         <SignUpInputNormal
           label="password"
           valueName="password"
