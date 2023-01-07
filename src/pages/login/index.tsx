@@ -70,7 +70,7 @@ const LoginPage = () => {
     if (response.message === 'Request failed with status code 404') {
       const emailFromServer: string = response.response.data.email;
       navigate('/signup', {
-        state: { isSocialLoginProp: true, email: emailFromServer },
+        state: { isSocialLoginProp: true, emailSocial: emailFromServer },
       });
     } else if (response.data.user) {
       // setUser(res.data.user)
