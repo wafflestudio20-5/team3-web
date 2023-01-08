@@ -16,20 +16,32 @@ import * as S from './signup.styled';
 import { COLOR_CARROT } from '../../constant';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { getCoordinate } from '../../utils/map';
+import { randomPassword } from '../../utils/randomPassword';
 
 const SignUpPage = () => {
-  /* 소셜로그인으로부터 링크를 타고 넘어온 prop (소셜 여부, 이메일) */
-  const { isSocialLoginProp, emailSocial } = useLocation().state;
+  let isSocialLoginProp, emailSocial;
+  if (useLocation().state === null) {
+    // 일반 로그인의 경우
+    isSocialLoginProp = false;
+    emailSocial = '';
+  } else {
+    // 소셜 로그인의 경우
+    /* 소셜로그인으로부터 링크를 타고 넘어온 prop (소셜 여부, 이메일) */
+    isSocialLoginProp = useLocation().state.isSocialLoginProp;
+    emailSocial = useLocation().state.emailSocial;
+  }
+
   const [isSocialLogin, setIsSocialLogin] = useState(isSocialLoginProp);
   const [isEmailAuthed, setIsEmailAuthed] = useState(false);
+  const [passwordSocial, setPasswordSocial] = useState('');
 
   useEffect(() => {
     if (isSocialLogin) {
       setIsEmailAuthed(true);
+      setPasswordSocial(randomPassword());
+      setIsEmailUnique(true);
     }
   }, [isSocialLogin]);
-
-  console.log(isSocialLoginProp, emailSocial);
 
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
@@ -97,7 +109,6 @@ const SignUpPage = () => {
   // DESC: 이메일 인증 기능을 회원가입 페이지에서 구현
   const [isEmailAuthButtonOpen, setIsEmailAuthButtonOpen] = useState(false);
 
-  console.log(getCoordinate(location));
   return (
     <>
       <S.Wrapper>
@@ -105,12 +116,14 @@ const SignUpPage = () => {
         <SignUpInputNormal
           label="email"
           valueName="email"
-          value={email}
+          value={isSocialLogin ? emailSocial : email}
+          color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
           required={true}
           placeholder="이메일을 입력해주세요"
           validationText={V.valEmailToMsg(email)}
           handleChange={onChange}
-          isWithButton={true}
+          isWithButton={!isSocialLogin}
+          isReadOnly={isSocialLogin}
           buttonText="이메일 인증"
           // TODO: 변경된 회원가입 플로우에 따라 이 버튼으로 중복체크 & 메일 인증 되도록 바꿔주기
           handleClick={checkEmail}
@@ -125,22 +138,26 @@ const SignUpPage = () => {
         <SignUpInputNormal
           label="password"
           valueName="password"
-          value={password}
+          value={isSocialLogin ? passwordSocial : password}
+          color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
           type="password"
           required={true}
           placeholder="비밀번호를 입력해주세요"
           validationText={V.valPasswordToMsg(password)}
           handleChange={onChange}
+          isReadOnly={isSocialLogin}
         />
         <SignUpInputNormal
           label="password confirmation"
           valueName="passwordConfirm"
-          value={passwordConfirm}
+          value={isSocialLogin ? passwordSocial : passwordConfirm}
+          color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
           type="password"
           required={true}
           placeholder="비밀번호를 한 번 더 입력해주세요"
           validationText={V.confirmPasswordToMsg(password, passwordConfirm)}
           handleChange={onChange}
+          isReadOnly={isSocialLogin}
         />
         <SignUpInputNormal
           label="username"
@@ -183,12 +200,6 @@ const SignUpPage = () => {
             }}
           />
         </S.SignUpButtonWrapper>
-        {/* DESC: /component 에 있는 Postcode 컴포넌트 사용 예시
-        <Postcode
-          text="동네"
-          setLocation={setLocation}
-          bgColor={COLOR_CARROT}
-        /> */}
       </S.Wrapper>
     </>
   );
