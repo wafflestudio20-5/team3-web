@@ -43,24 +43,6 @@ export const SignUpInput = styled.div`
   margin: 10px 0px;
 `;
 
-export const Input = styled.input`
-  width: 100%;
-  height: 50px;
-  padding: 10px 0px;
-  border: none;
-  border-bottom: 1px solid #ccc;
-  background-color: transparent;
-  font-size: 18px;
-
-  transition: border-bottom 0s ease-out 0s;
-
-  &:focus {
-    outline: none;
-    border-bottom: 1px solid ${COLOR_CARROT};
-    transition-duration: 0.5s;
-  }
-`;
-
 export const SignUpInputLeft = styled.div`
   flex: 9;
   position: relative;
