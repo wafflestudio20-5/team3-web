@@ -23,7 +23,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const SignUpPage = () => {
-  let isSocialLoginProp, emailSocial;
+  let isSocialLoginProp: boolean, emailSocial: string;
   if (useLocation().state === null) {
     // 일반 로그인의 경우
     isSocialLoginProp = false;
@@ -44,14 +44,6 @@ const SignUpPage = () => {
   // DESC: 이메일 인증 기능을 회원가입 페이지에서 구현
   const [isEmailAuthButtonOpen, setIsEmailAuthButtonOpen] = useState(false);
 
-  useEffect(() => {
-    if (isSocialLogin) {
-      setIsEmailAuthed(true);
-      setPasswordSocial(randomPassword());
-      setIsEmailUnique(true);
-    }
-  }, [isSocialLogin]);
-
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     email: '',
@@ -67,6 +59,20 @@ const SignUpPage = () => {
       [name]: value,
     });
   };
+
+  useEffect(() => {
+    if (isSocialLogin) {
+      setIsEmailAuthed(true);
+      const passwordSocial: string = randomPassword();
+      setInputs({
+        ...inputs,
+        email: emailSocial,
+        password: passwordSocial,
+        passwordConfirm: passwordSocial,
+      });
+      setIsEmailUnique(true);
+    }
+  }, [isSocialLogin]);
 
   const checkEmail = async () => {
     if (V.valEmail(email)) {
@@ -136,7 +142,7 @@ const SignUpPage = () => {
         <SignUpInputNormal
           label="email"
           valueName="email"
-          value={isSocialLogin ? emailSocial : email}
+          value={email}
           color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
           required={true}
           placeholder="이메일을 입력해주세요"
@@ -162,7 +168,7 @@ const SignUpPage = () => {
         <SignUpInputNormal
           label="password"
           valueName="password"
-          value={isSocialLogin ? passwordSocial : password}
+          value={password}
           color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
           type="password"
           required={true}
@@ -174,7 +180,7 @@ const SignUpPage = () => {
         <SignUpInputNormal
           label="password confirmation"
           valueName="passwordConfirm"
-          value={isSocialLogin ? passwordSocial : passwordConfirm}
+          value={passwordConfirm}
           color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
           type="password"
           required={true}
