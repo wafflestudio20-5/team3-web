@@ -1,4 +1,5 @@
-import { ChangeEvent, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useDaumPostcodePopup } from 'react-daum-postcode';
 import axios from 'axios';
 
 import ButtonMd from '../button-md';
@@ -20,15 +21,20 @@ interface EditLocationProps {
 
 const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
   const dispatch = useAppDispatch();
-  const [currLocation, setCurrLocation] = useState(location);
+  const open = useDaumPostcodePopup();
+  const [currLocation, setCurrLocation] = useState(location || '');
 
-  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setCurrLocation(e.target.value);
-  }, []);
+  const handleComplete = (data: any) => {
+    const userAddress =
+      data.jibunAddress === '' ? data.autoJibunAddress : data.jibunAddress;
+    setCurrLocation(userAddress);
+  };
+
+  const handleClick = () => {
+    open({ onComplete: handleComplete });
+  };
 
   const handleSubmit = useCallback(() => {
-    // TODO: location validation
-
     // DESC: API 호출 후 dispatch
     dispatch(postLocation({ accessToken, currLocation }))
       .unwrap()
@@ -50,10 +56,8 @@ const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
   return (
     <S.Wrapper>
       <S.InputWrapper>
-        <S.Input value={currLocation || ''} onChange={handleChange} />
-        <S.SearchButton onClick={() => alert('카카오 주소검색 활용')}>
-          주소 검색
-        </S.SearchButton>
+        <S.Input value={currLocation} readOnly />
+        <S.SearchButton onClick={handleClick}>주소 검색</S.SearchButton>
       </S.InputWrapper>
 
       <S.ButtonWrapper>
