@@ -1,11 +1,13 @@
 import { ChangeEventHandler } from 'react';
 import { COLOR_CARROT } from '../../../constant';
 import * as S from '../signup.styled';
+import { InputNormal } from './input';
 
 interface SignUpInputNormal {
   label: string;
   valueName: string;
   value: string;
+  color?: string;
   type?: string;
   required?: boolean;
   placeholder: string;
@@ -41,6 +43,7 @@ const SignUpInputNormal = ({
   label,
   valueName,
   value,
+  color = 'black',
   type = 'text',
   required = false,
   placeholder,
@@ -61,14 +64,15 @@ const SignUpInputNormal = ({
             <S.SignUpInputSpan color="tomato">
               {validationText}
             </S.SignUpInputSpan>
-            <S.Input
+            <InputNormal
               name={valueName}
               placeholder={placeholder}
               type={type}
               required={required}
               value={value}
-              readOnly={isReadOnly}
-              onChange={handleChange}
+              color={color}
+              isReadOnly={isReadOnly}
+              handleChange={handleChange}
             />
           </S.SignUpInputLeft>
 

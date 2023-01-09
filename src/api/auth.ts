@@ -12,6 +12,26 @@ export const requestCheckEmail = async (email: string) => {
   }
 };
 
+export const requestSendEmail = async (email: string) => {
+  try {
+    return await axios.get(`${BASE_URL}/auth/sendVerificationEmail`, {
+      params: { email: email },
+    });
+  } catch (e) {
+    return e;
+  }
+};
+
+export const requestAuthEmail = async (email: string) => {
+  try {
+    return await axios.get(`${BASE_URL}/auth/checkEmailVerified`, {
+      params: { email: email },
+    });
+  } catch (e) {
+    return e;
+  }
+};
+
 export const requestCheckUsername = async (username: string) => {
   try {
     return await axios.get(`${BASE_URL}/auth/checkUsername`, {
@@ -61,7 +81,7 @@ export const requestGoogleLogin = async (email: string | null) => {
 
 export const requestKakaoLogin = async (code: string | null) => {
   try {
-    console.log(code)
+    console.log(code);
     return await axios.get(`${BASE_URL}/kakao/lgoin?code=${code}`);
   } catch (e) {
     return e;

@@ -27,7 +27,7 @@ export const InformSpan = styled.span`
 
 export const SignUpInputWrapper = styled.div`
   display: block;
-  width: 80%;
+  width: 100%;
   max-width: 1200px;
   margin: 15px 10px;
 `;
@@ -77,7 +77,6 @@ interface Span extends HTMLAttributes<HTMLSpanElement> {
 export const SignUpInputSpan = styled.span<Span>(
   ({ color }) => `position: absolute;
   top: 50px;
-  left: 10px;
   color: ${color || 'rgba(0,0,0)'};
   font-size: 16px;`,
 );
@@ -119,21 +118,18 @@ color: ${color || 'rgba(0,0,0,0)'};
 margin-top: -15px;`,
 );
 
-export const EmailVerificationWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 80%;
-  padding: 0px 10px;
+export const P = styled.p`
+  font-size: 18px;
+  font-weight: 400;
 `;
 
-export const EmailVerificationSpan = styled.span<Span>(
-  ({ color }) => `
-color: ${color || 'rgba(0,0,0,0)'};
-font-size: 16px;
-`,
-);
-
-export const EmailVerificationSpanWrapper = styled.div`
+export const EmailAuthWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+`;
+
+export const EmailPWrapper = styled.div`
+  display: flex;
 `;
