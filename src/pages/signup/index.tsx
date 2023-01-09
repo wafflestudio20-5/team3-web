@@ -6,6 +6,8 @@ import SignUpInputNormal, {
 } from './components/SignUpInputNormal';
 
 import {
+  requestAuthEmail,
+  requestSendEmail,
   requestCheckEmail,
   requestCheckUsername,
   requestSignUpUser,
@@ -15,20 +17,32 @@ import * as V from '../../utils/validateUserInfo';
 import * as S from './signup.styled';
 import { COLOR_CARROT } from '../../constant';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { getCoordinate } from '../../utils/map';
+import { randomPassword } from '../../utils/randomPassword';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUpPage = () => {
-  /* 소셜로그인으로부터 링크를 타고 넘어온 prop (소셜 여부, 이메일) */
-  const { isSocialLoginProp, emailSocial } = useLocation().state;
+  let isSocialLoginProp: boolean, emailSocial: string;
+  if (useLocation().state === null) {
+    // 일반 로그인의 경우
+    isSocialLoginProp = false;
+    emailSocial = '';
+  } else {
+    // 소셜 로그인의 경우
+    /* 소셜로그인으로부터 링크를 타고 넘어온 prop (소셜 여부, 이메일) */
+    isSocialLoginProp = useLocation().state.isSocialLoginProp;
+    emailSocial = useLocation().state.emailSocial;
+  }
+
   const [isSocialLogin, setIsSocialLogin] = useState(isSocialLoginProp);
+  const [passwordSocial, setPasswordSocial] = useState('');
+
   const [isEmailAuthed, setIsEmailAuthed] = useState(false);
-
-  useEffect(() => {
-    if (isSocialLogin) {
-      setIsEmailAuthed(true);
-    }
-  }, [isSocialLogin]);
-
-  console.log(isSocialLoginProp, emailSocial);
+  const [isEmailUnique, setIsEmailUnique] = useState(false);
+  const [isUsernameUnique, setIsUsernameUnique] = useState(false);
+  // DESC: 이메일 인증 기능을 회원가입 페이지에서 구현
+  const [isEmailAuthButtonOpen, setIsEmailAuthButtonOpen] = useState(false);
 
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
@@ -45,30 +59,58 @@ const SignUpPage = () => {
       [name]: value,
     });
   };
-  const [isEmailUnique, setIsEmailUnique] = useState(false);
-  const [isUsernameUnique, setIsUsernameUnique] = useState(false);
+
+  useEffect(() => {
+    if (isSocialLogin) {
+      setIsEmailAuthed(true);
+      const passwordSocial: string = randomPassword();
+      setInputs({
+        ...inputs,
+        email: emailSocial,
+        password: passwordSocial,
+        passwordConfirm: passwordSocial,
+      });
+      setIsEmailUnique(true);
+    }
+  }, [isSocialLogin]);
 
   const checkEmail = async () => {
-    const res = (await requestCheckEmail(email)) as any;
-    if (res.data) {
-      alert('사용가능한 이메일입니다.');
-      setIsEmailUnique(true);
+    if (V.valEmail(email)) {
+      const res = (await requestCheckEmail(email)) as any;
+      // 사용가능한(중복되지 않는) 이메일인 경우
+      if (res.data) {
+        setIsEmailUnique(true);
+        setIsEmailAuthButtonOpen(true);
+        requestSendEmail(email); // 인증 이메일 전송
+      } else {
+        toast('이미 동일한 이메일이 있습니다.');
+      }
     } else {
-      alert('이미 동일한 이메일이 있습니다.');
+      toast('올바르지 않은 형식의 이메일입니다.');
     }
-    // TODO: 에러처리
   };
+
+  const authEmail = async () => {
+    const res = (await requestAuthEmail(email)) as any;
+    // 사용가능한(중복되지 않는) 이메일인 경우
+    if (res.data) {
+      toast('이메일 인증이 완료되었습니다.');
+      setIsEmailAuthed(true);
+    } else {
+      toast('이메일 인증에 실패하였습니다. 다시 인증해주세요.');
+    }
+  };
+
   const checkUsername = async () => {
     const res = (await requestCheckUsername(username)) as any;
     if (res.data) {
-      alert('사용가능한 닉네임입니다.');
+      toast('사용가능한 닉네임입니다.');
       setIsUsernameUnique(true);
     } else {
-      alert('이미 동일한 닉네임이 있습니다.');
+      toast('이미 동일한 닉네임이 있습니다.');
     }
-    // TODO: 에러처리
   };
-  const signInUser = async () => {
+  const signUpUser = async () => {
     const res = await requestSignUpUser({
       email,
       password,
@@ -76,6 +118,7 @@ const SignUpPage = () => {
       location,
     });
     // TODO: 응답 바탕으로 로그인 처리(이후 회원가입 플로우에 따라 달라짐)
+    console.log(res);
   };
 
   const [location, setLocation] = useState('');
@@ -96,44 +139,55 @@ const SignUpPage = () => {
     <>
       <S.Wrapper>
         <S.H1>회원가입</S.H1>
-        <S.InformWrapper>
-          <S.InformSpan>- * 는 필수 입력 항목임을 나타냅니다.</S.InformSpan>
-          <S.InformSpan>
-            - 이메일 인증 버튼 클릭 시 입력한 이메일로 인증 메일이 전송됩니다.
-          </S.InformSpan>
-        </S.InformWrapper>
         <SignUpInputNormal
           label="email"
           valueName="email"
           value={email}
+          color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
           required={true}
           placeholder="이메일을 입력해주세요"
           validationText={V.valEmailToMsg(email)}
-          handleChange={onChange}
-          isWithButton={true}
+          handleChange={e => {
+            onChange(e);
+            setIsEmailAuthButtonOpen(false);
+            setIsEmailUnique(false);
+          }}
+          isWithButton={!isSocialLogin}
+          isReadOnly={isSocialLogin}
           buttonText="이메일 인증"
           // TODO: 변경된 회원가입 플로우에 따라 이 버튼으로 중복체크 & 메일 인증 되도록 바꿔주기
           handleClick={checkEmail}
         />
+        {isEmailAuthButtonOpen && (
+          <S.EmailAuthWrapper>
+            <S.P>{email} 로 인증 메일을 전송하였습니다.</S.P>
+            <S.P onClick={checkEmail}>메일 다시 보내기</S.P>
+            <S.P onClick={authEmail}>인증 완료</S.P>
+          </S.EmailAuthWrapper>
+        )}
         <SignUpInputNormal
           label="password"
           valueName="password"
           value={password}
+          color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
           type="password"
           required={true}
           placeholder="비밀번호를 입력해주세요"
           validationText={V.valPasswordToMsg(password)}
           handleChange={onChange}
+          isReadOnly={isSocialLogin}
         />
         <SignUpInputNormal
           label="password confirmation"
           valueName="passwordConfirm"
           value={passwordConfirm}
+          color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
           type="password"
           required={true}
           placeholder="비밀번호를 한 번 더 입력해주세요"
           validationText={V.confirmPasswordToMsg(password, passwordConfirm)}
           handleChange={onChange}
+          isReadOnly={isSocialLogin}
         />
         <SignUpInputNormal
           label="username"
@@ -142,7 +196,10 @@ const SignUpPage = () => {
           required={true}
           placeholder="사용하고자 하는 유저 이름을 입력해주세요"
           validationText={V.valUsernameToMsg(username)}
-          handleChange={onChange}
+          handleChange={e => {
+            onChange(e);
+            setIsUsernameUnique(false);
+          }}
           isWithButton={true}
           buttonText="중복 확인"
           handleClick={checkUsername}
@@ -168,21 +225,15 @@ const SignUpPage = () => {
             }
             handleClick={() => {
               if (isEmailUnique && isUsernameUnique) {
-                signInUser();
-                navigate(`/signup/authEmail/${email}`);
+                signUpUser();
               } else {
                 alert('이메일과 닉네임 중복 여부를 확인해주세요.');
               }
             }}
           />
         </S.SignUpButtonWrapper>
-        {/* DESC: /component 에 있는 Postcode 컴포넌트 사용 예시
-        <Postcode
-          text="동네"
-          setLocation={setLocation}
-          bgColor={COLOR_CARROT}
-        /> */}
       </S.Wrapper>
+      <ToastContainer />
     </>
   );
 };
