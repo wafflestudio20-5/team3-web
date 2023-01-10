@@ -82,23 +82,21 @@ const ChatContainer = () => {
     <Dialog
       to={{
         id: 2,
-        username: '난 받는 사람',
-        email: 'kjhoon0330@snu.ac.kr',
+        username: 'fluentmin',
+        email: 'lerrybe@snu.ac.kr',
         location: '서울 관악구 봉천동',
         temperature: 40.8,
-        imgUrl:
-          'https://pbs.twimg.com/profile_images/1463023431684079616/ghuPttFw_400x400.jpg',
+        imgUrl: 'https://avatars.githubusercontent.com/u/91964707?v=4',
         createdAt: new Date(),
         updatedAt: new Date(),
       }}
       from={{
         id: 1,
-        username: '난 보내는 사람',
-        email: 'lerry597@snu.ac.kr',
+        username: 'roddywhite',
+        email: 'roddywhite@snu.ac.kr',
         location: '서울 관악구 봉천동',
         temperature: 37.5,
-        imgUrl:
-          'https://pbs.twimg.com/profile_images/1463023431684079616/ghuPttFw_400x400.jpg',
+        imgUrl: 'https://avatars.githubusercontent.com/u/109863663?v=4',
         createdAt: new Date(),
         updatedAt: new Date(),
       }}
