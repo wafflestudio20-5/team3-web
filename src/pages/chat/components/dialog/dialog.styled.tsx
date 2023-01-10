@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   align-items: flex-end;
   max-width: 711px;
   width: 100%;
+  min-width: 360px;
   font-family: -apple-system, Noto Sans, sans-serif, Apple Color Emoji;
 `;
 
@@ -103,7 +104,7 @@ export const FromMessageBox = styled.span`
   padding: 10px 14px;
   width: auto;
   height: auto;
-  max-width: 484px;
+  max-width: 80%;
   word-break: break-word;
   white-space: pre-wrap;
   font-size: 14px;
@@ -118,7 +119,7 @@ export const ToMessageBox = styled.span`
   display: inline-flex;
   margin: 0px;
   padding: 10px 14px;
-  max-width: 484px;
+  max-width: 80%;
   word-break: break-word;
   white-space: pre-wrap;
   font-size: 14px;
@@ -150,9 +151,9 @@ export const MessageDate = styled.div`
 `;
 
 export const TextareaWrapper = styled.div`
-  width: calc(100% - 16px);
+  width: calc(100% - 24px);
   height: 125px;
-  margin: 16px 0 16px 16px;
+  margin: 16px 8px 16px 16px;
   box-sizing: border-box;
   border: 1px solid #212124;
   border-radius: 8px;
