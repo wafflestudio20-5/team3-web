@@ -1,8 +1,7 @@
 import { rest } from 'msw';
-// const API_URL = 'localhost:8080';
-
 import { mockUser1, mockUserMe, mockModifiedUserMe } from '../data/users';
 
+// TODO: will be removed
 export const usersAPI = [
   rest.get(`/users/me`, (req, res, ctx) => {
     // CASE 1: 액세스 토큰 없는 경우, code - 401

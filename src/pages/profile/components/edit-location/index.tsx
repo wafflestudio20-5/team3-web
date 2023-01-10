@@ -1,64 +1,70 @@
-import { ChangeEvent, useCallback, useState } from 'react';
-import { requestUpdateMyInfo } from '../../../../api/users';
+import { useCallback, useState } from 'react';
+import { useDaumPostcodePopup } from 'react-daum-postcode';
+import axios from 'axios';
 
 import ButtonMd from '../button-md';
 
+import { useAppDispatch } from '../../../../store/hooks';
+import { postLocation } from '../../../../store/slices/usersSlice';
+import { SetEditType, EditType } from '../../../../types/users';
+
 import * as S from './edit-location.styled';
 
-// DESC: null 관리 -> 상위 컴포넌트에서
+// TODO: 토큰 가져오기 (with useSelector)
+import { accessToken } from '../../../../constant';
+
 interface EditLocationProps {
-  img: string | null;
-  username: string | null;
+  edit: EditType;
   location: string | null;
-  handleClose: (set: boolean) => void;
+  handleClose: SetEditType;
 }
 
-const EditLocation = ({
-  img,
-  username,
-  location,
-  handleClose,
-}: EditLocationProps) => {
-  const [currLocation, setCurrLocation] = useState(location);
+const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
+  const dispatch = useAppDispatch();
+  const open = useDaumPostcodePopup();
+  const [currLocation, setCurrLocation] = useState(location || '');
 
-  // TODO: 토큰 가져오기 (with useSelector)
-  const accessToken = 'sampleToken';
+  const handleComplete = (data: any) => {
+    const userAddress =
+      data.jibunAddress === '' ? data.autoJibunAddress : data.jibunAddress;
+    setCurrLocation(userAddress);
+  };
 
-  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setCurrLocation(e.target.value);
-  }, []);
+  const handleClick = useCallback(() => {
+    open({ onComplete: handleComplete });
+  }, [open, handleComplete]);
 
   const handleSubmit = useCallback(() => {
-    // TODO: location validation
-
-    // TODO: 요청시 담아서 보냄
-    // TODO: /users/me PATCH API 호출
-    // TODO: 에러처리
-    (async () => {
-      const res = await requestUpdateMyInfo(
-        accessToken,
-        username,
-        currLocation,
-        img,
-      );
-      if (res) {
-        // TODO: 요청 성공시 false
-        handleClose(false);
-      }
-    })();
+    // DESC: API 호출 후 dispatch
+    dispatch(postLocation({ accessToken, currLocation }))
+      .unwrap()
+      .then(() => {
+        handleClose({ ...edit, location: false });
+      })
+      .catch(err => {
+        // TODO: 컴포넌트단에서 케이스별 에러처리
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 401) {
+            console.log(err.response?.data.error);
+            // alert 후 로그인 페이지로 redirect
+          }
+          // ...
+        }
+      });
   }, [currLocation]);
 
   return (
     <S.Wrapper>
       <S.InputWrapper>
-        <S.Input value={currLocation || ''} onChange={handleChange} />
-        <S.SearchButton onClick={() => alert('카카오 주소검색 활용')}>
-          주소 검색
-        </S.SearchButton>
+        <S.Input value={currLocation} readOnly />
+        <S.SearchButton onClick={handleClick}>주소 검색</S.SearchButton>
       </S.InputWrapper>
 
       <S.ButtonWrapper>
-        <ButtonMd text="취소" handleClick={() => handleClose(false)} />
+        <ButtonMd
+          text="취소"
+          handleClick={() => handleClose({ ...edit, location: false })}
+        />
         <ButtonMd text="변경" handleClick={handleSubmit} />
       </S.ButtonWrapper>
     </S.Wrapper>
