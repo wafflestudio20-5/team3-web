@@ -30,9 +30,9 @@ const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
     setCurrLocation(userAddress);
   };
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     open({ onComplete: handleComplete });
-  };
+  }, [open, handleComplete]);
 
   const handleSubmit = useCallback(() => {
     // DESC: API 호출 후 dispatch
