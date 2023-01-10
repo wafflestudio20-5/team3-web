@@ -1,25 +1,25 @@
 import { ChangeEvent, useCallback, useRef, useState } from 'react';
-
 import ButtonMd from '../button-md';
-
-import { requestUpdateMyInfo } from '../../../../api/users';
+import { SetEditType, EditType } from '../../../../types/users';
 
 import * as S from './edit-user-info.styled';
 import defaultImg from '../../../../assets/default-profile.png';
 import { ReactComponent as CameraIcon } from '../../../../assets/camera.svg';
 
-// DESC: null 관리 -> 상위 컴포넌트에서
+// TODO: 토큰 가져오기 (with useSelector)
+import { accessToken } from '../../../../constant';
+
 interface EditUserInfoProps {
   img: string | null;
   username: string | null;
-  location: string | null;
-  handleClose: (set: boolean) => void;
+  edit: EditType;
+  handleClose: SetEditType;
 }
 
 const EditUserInfo = ({
   img,
   username,
-  location,
+  edit,
   handleClose,
 }: EditUserInfoProps) => {
   const imgRef = useRef<HTMLInputElement | null>(null);
@@ -27,13 +27,13 @@ const EditUserInfo = ({
   const [currUsername, setCurrUsername] = useState(username);
 
   // TODO: 토큰 가져오기 (with useSelector)
-  const accessToken = 'sampleToken';
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setCurrUsername(e.target.value);
   }, []);
 
   const handleSaveImg = useCallback(() => {
+    // TODO: 파일 업로드 부분으로 변경
     if (imgRef && imgRef.current && imgRef.current.files) {
       const file = imgRef.current.files[0];
       const reader = new FileReader();
@@ -49,21 +49,7 @@ const EditUserInfo = ({
 
   const handleSubmit = useCallback(() => {
     // TODO: userInfo validation
-
-    // TODO: 요청시 담아서 보냄
-    // TODO: /users/me PATCH API 호출
-    (async () => {
-      const res = await requestUpdateMyInfo(
-        accessToken,
-        currUsername,
-        location,
-        currImg,
-      );
-      if (res) {
-        // TODO: 요청 성공시 false
-        handleClose(false);
-      }
-    })();
+    // TODO: username 수정부분과 img 수정 부분 뜯어질 예정
   }, [currUsername, currImg]);
 
   return (
@@ -90,7 +76,10 @@ const EditUserInfo = ({
       </S.InputWrapper>
 
       <S.ButtonWrapper>
-        <ButtonMd text="취소" handleClick={() => handleClose(false)} />
+        <ButtonMd
+          text="취소"
+          handleClick={() => handleClose({ ...edit, username: false })}
+        />
         <ButtonMd text="변경" handleClick={handleSubmit} />
       </S.ButtonWrapper>
     </S.Wrapper>
