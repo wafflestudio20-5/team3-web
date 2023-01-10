@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect } from 'react';
+import { ChangeEvent, useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import SignUpInputNormal, {
@@ -131,9 +131,9 @@ const SignUpPage = () => {
     setLocation(userAddress);
   };
   // DESC: 이 함수를 버튼에 붙여주면 됩니다
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     open({ onComplete: handleComplete });
-  };
+  }, [open, handleComplete]);
 
   return (
     <>
