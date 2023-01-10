@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import Gnb from '../../components/gnb';
 import Header from './components/header';
@@ -7,7 +8,8 @@ import UserInfo from './container/user-info';
 import TxInfo from './container/transaction-info';
 import NavigationButton from './components/navigation-button';
 
-import { requestMyInfo } from '../../api/users';
+import { getMe } from '../../store/slices/usersSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import * as S from './profile.styled';
 import buyIcon from '../../assets/buy-icon.svg';
@@ -17,25 +19,40 @@ import sellIcon from '../../assets/sell-icon.svg';
 import reviewIcon from '../../assets/review-icon.svg';
 import mannerCommentIcon from '../../assets/manner-comment-icon.svg';
 
+// TODO: 임시 토큰
+import { accessToken } from '../../constant';
+
 const ProfilePage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [username, setUsername] = useState<string | null>(null);
+  const [edit, setEdit] = useState({
+    img: false,
+    username: false,
+    password: false,
+    location: false,
+  });
 
+  const dispatch = useAppDispatch();
+  const users = useAppSelector(state => state.users);
   // TODO: 토큰 가져오기 (with useSelector)
-  const accessToken = 'sampleToken';
 
   useEffect(() => {
-    // TODO: API 호출, GET /users/me
-    // TODO: 요청 실패시 에러 처리 (프로필 페이지 접근 X), 에러 처리 쉬운 쪽으로 API 함수 작성
-    (async () => {
-      const res = await requestMyInfo(accessToken);
-      if (res) {
-        setUsername(res?.data?.username);
+    dispatch(getMe(accessToken))
+      .unwrap()
+      .then(() => {
         setIsLoading(false);
-      }
-    })();
-  }, []);
+      })
+      .catch(err => {
+        // TODO: 컴포넌트단에서 케이스별 에러처리
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 401) {
+            console.log(err.response?.data.error);
+            // alert 후 로그인 페이지로 redirect
+          }
+          // ...
+        }
+      });
+  }, [edit.img, edit.username, edit.password, edit.location]);
 
   return (
     <S.Wrapper>
@@ -43,13 +60,23 @@ const ProfilePage = () => {
       <S.ContentWrapper>
         {/* TODO: My chats 이동, 혹은 채팅 띄우기 */}
         <Header
-          username={username}
+          username={users.me?.username || null}
           handleClick={() => navigate('/')}
           isLoading={isLoading}
         />
         <S.InfoWrapper>
-          <UserInfo />
-          <TxInfo />
+          <UserInfo
+            me={users.me || null}
+            edit={edit}
+            isLoading={isLoading}
+            setEdit={setEdit}
+          />
+          <TxInfo
+            me={users.me || null}
+            edit={edit}
+            isLoading={isLoading}
+            setEdit={setEdit}
+          />
         </S.InfoWrapper>
 
         {/* TODO: 적절한 페이지로 이동 */}
