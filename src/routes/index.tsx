@@ -19,7 +19,7 @@ function EntryRoute() {
         <Route path="/login/kakao" element={<KaKaoLogin />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/profile/:id" element={<ProfilePage />} />
-        <Route path="/trade-post/:id" element={<TradePostPage />} />
+        <Route path="/tradepost/:id" element={<TradePostPage />} />
       </Routes>
     </BrowserRouter>
   );
