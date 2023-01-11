@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   height: auto;
+  min-width: 360px;
 `;
 
 export const ContentWrapper = styled.div`
@@ -22,4 +23,12 @@ export const ContentWrapper = styled.div`
   @media ${SM_to_MD_SIZE} {
     padding: 40px 10px;
   }
+`;
+
+export const SampleImg = styled.img`
+  width: 100%;
+  height: 36vh;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  object-fit: cover;
 `;
