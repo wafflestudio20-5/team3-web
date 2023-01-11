@@ -7,6 +7,7 @@ import KaKaoLogin from '../pages/login/kakao';
 import SignUpPage from '../pages/signup';
 import ProfilePage from '../pages/profile';
 import ChatPage from '../pages/chat';
+import { NeighborhoodLanding } from '../pages/neighborhoodLanding';
 
 // DESC: 라우팅 관리를 위한 EntryRoute
 function EntryRoute() {
@@ -20,6 +21,7 @@ function EntryRoute() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/profile/:id" element={<ProfilePage />} />
         <Route path="/chat/:id" element={<ChatPage />} />
+        <Route path="/neighborhood" element={<NeighborhoodLanding />} />
       </Routes>
     </BrowserRouter>
   );
