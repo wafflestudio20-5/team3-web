@@ -1,7 +1,7 @@
 import { ChangeEventHandler } from 'react';
 import { COLOR_CARROT } from '../../../constant';
 import * as S from '../signup.styled';
-import { InputNormal } from './Input';
+import { InputNormal } from './input';
 
 interface SignUpInputNormal {
   label: string;
