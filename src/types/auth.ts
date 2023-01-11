@@ -4,9 +4,15 @@ export interface LoginRequest {
   password: string;
   username: string;
   location?: string;
+  coordinate?: Coordinate;
 }
 
 export interface LoginInput {
   email: string;
   password: string;
+}
+
+export interface Coordinate {
+  lat: number;
+  lng: number;
 }
