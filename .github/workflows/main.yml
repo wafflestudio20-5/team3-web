@@ -39,5 +39,5 @@ jobs:
         run: |
           aws s3 cp \
             --recursive \
-            --region ap-northeast-1 \
-            build s3://waffle-market-03
+            --region ap-northeast-2 \
+            build s3://waffle-market
