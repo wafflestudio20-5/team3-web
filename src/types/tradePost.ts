@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// TODO: 백엔드와 타입 합의 후 타입정보 수정
+
 export enum TradeStatusType {
   TRADING = 'TRADING',
   RESERVATION = 'RESERVATION',
