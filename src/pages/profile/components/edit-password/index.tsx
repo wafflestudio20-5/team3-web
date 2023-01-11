@@ -1,14 +1,18 @@
 import { ChangeEvent, useCallback, useState } from 'react';
-import { requestUpdateMPassword } from '../../../../api/users';
 
 import ButtonMd from '../button-md';
+import { SetEditType, EditType } from '../../../../types/users';
+
 import * as S from './edit-password.styled';
 
+import { accessToken } from '../../../../constant';
+
 interface EditPasswordProps {
-  handleClose: (set: boolean) => void;
+  edit: EditType;
+  handleClose: SetEditType;
 }
 
-const EditPassword = ({ handleClose }: EditPasswordProps) => {
+const EditPassword = ({ edit, handleClose }: EditPasswordProps) => {
   const [values, setValues] = useState({
     pw: '',
     newPw: '',
@@ -16,7 +20,6 @@ const EditPassword = ({ handleClose }: EditPasswordProps) => {
   });
 
   // TODO: 토큰 가져오기 (with useSelector)
-  const accessToken = 'sampleToken';
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,21 +34,8 @@ const EditPassword = ({ handleClose }: EditPasswordProps) => {
 
   const handleSubmit = useCallback(() => {
     // TODO: newPw와 newPwConfirm 검증
+    // TODO: PATCH /users/me/password dispatch
 
-    // TODO: 요청시에는 values에 있는거 담아서 보냄
-    // TODO: PUT /users/me/password
-    (async () => {
-      const res = await requestUpdateMPassword(
-        accessToken,
-        values?.pw,
-        values?.newPw,
-        values?.newPwConfirm,
-      );
-      if (res) {
-        // TODO: 요청 성공시 false
-        handleClose(false);
-      }
-    })();
   }, [values?.pw, values?.newPw, values?.newPwConfirm]);
 
   return (
@@ -79,7 +69,7 @@ const EditPassword = ({ handleClose }: EditPasswordProps) => {
       />
 
       <S.ButtonWrapper>
-        <ButtonMd text="취소" handleClick={() => handleClose(false)} />
+        <ButtonMd text="취소" handleClick={() => handleClose({ ...edit, password: false })} />
         <ButtonMd text="변경" handleClick={handleSubmit} />
       </S.ButtonWrapper>
     </S.Wrapper>

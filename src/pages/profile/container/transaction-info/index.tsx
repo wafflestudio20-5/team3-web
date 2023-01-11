@@ -1,46 +1,23 @@
-import { useEffect, useState } from 'react';
-
 import TxTitle from '../../components/tx-title';
 import ButtonSm from '../../components/button-sm';
 import EditLocation from '../../components/edit-location';
 import ProfileMap from '../../../../components/profile-map';
 import TemperatureBar from '../../components/temperature-bar';
 
-import { requestMyInfo } from '../../../../api/users';
+import { SetEditType, User, EditType } from '../../../../types/users';
 
 import * as S from './transaction-info.styled';
 import EditSmIcon from '../../../../assets/edit-small-icon.svg';
 import { ReactComponent as TxInfoIcon } from '../../../../assets/txinfo-icon.svg';
 
-const TxInfo = () => {
-  const [isLoading, setIsLoading] = useState(true);
+interface TxInfoProps {
+  me: User | null;
+  edit: EditType;
+  isLoading: boolean;
+  setEdit: SetEditType;
+}
 
-  // TODO: 객체 묶기
-  const [temp, setTemp] = useState<number | null>(null);
-  const [img, setImg] = useState<string | null>(null);
-  const [username, setUsername] = useState<string | null>(null);
-  const [location, setLocation] = useState<string | null>(null);
-  const [editLocation, setEditLocation] = useState(false);
-
-  // TODO: 토큰 가져오기 (with useSelector)
-  const accessToken = 'sampleToken';
-
-  useEffect(() => {
-    // TODO: API 호출, GET /users/me
-    // TODO: 요청 실패시 에러 처리 (프로필 페이지 접근 X), 에러 처리 쉬운 쪽으로 API 함수 작성
-    (async () => {
-      const res = await requestMyInfo(accessToken);
-      if (res) {
-        setImg(res?.data?.img);
-        setTemp(res?.data?.temperature);
-        setUsername(res?.data?.username);
-        setLocation(res?.data?.location);
-
-        setIsLoading(false);
-      }
-    })();
-  }, [editLocation]);
-
+const TxInfo = ({ me, edit, isLoading, setEdit }: TxInfoProps) => {
   return (
     <S.Wrapper>
       <S.Header>
@@ -51,7 +28,7 @@ const TxInfo = () => {
       <S.TempWrapper>
         <TxTitle text="와플온도" />
         {!isLoading ? (
-          <TemperatureBar temperature={temp} />
+          <TemperatureBar temperature={me?.temperature || null} />
         ) : (
           <S.SkeletonTemp />
         )}
@@ -59,20 +36,20 @@ const TxInfo = () => {
 
       <S.LocationWrapper>
         <TxTitle text="와플동네" />
-        {!editLocation ? (
+        {!edit.location ? (
           <>
             {!isLoading ? (
               <>
                 <S.LocationInnerWrapper>
-                  <S.LocationText>{`* ${location}`}</S.LocationText>
+                  <S.LocationText>{`* ${me?.location || null}`}</S.LocationText>
                   <ButtonSm
                     img={EditSmIcon}
                     text={'동네 변경'}
-                    handleClick={() => setEditLocation(true)}
+                    handleClick={() => setEdit({ ...edit, location: true })}
                   />
                 </S.LocationInnerWrapper>
                 <S.MapWrapper>
-                  <ProfileMap location={location} />
+                  <ProfileMap location={me?.location || null} />
                 </S.MapWrapper>
               </>
             ) : (
@@ -81,10 +58,9 @@ const TxInfo = () => {
           </>
         ) : (
           <EditLocation
-            img={img}
-            username={username}
-            location={location}
-            handleClose={setEditLocation}
+            edit={edit}
+            location={me?.location || null}
+            handleClose={setEdit}
           />
         )}
       </S.LocationWrapper>

@@ -1,41 +1,30 @@
 import axios from 'axios';
-import { auth, url } from '.';
+import { auth } from '.';
+import { BASE_URL } from '../constant';
 import { User } from '../types/users';
 
-export const requestMyInfo = async (token: string) => {
-  // TODO: url('/users/me')
-  try {
-    return await axios.get<User>('/users/me', { headers: auth(token) });
-  } catch (e) {
-    return null;
-  }
+// DESC: users에서 API 요청시 실제 쓰이지 않음, 후에 삭제 예정
+export const requestMyInfo = (token: string) => {
+  return axios.get<User>(`${BASE_URL}/users/me`, {
+    headers: auth(token),
+  });
 };
 
-export const requestUserInfo = async (userId: number) => {
-  // TODO: url(`/users/${userId}`)
-  try {
-    return await axios.get<User>(`/users/${userId}`);
-  } catch (e) {
-    return null;
-  }
+export const requestUserInfo = (userId: number) => {
+  return axios.get<User>(`${BASE_URL}/users/${userId}`);
 };
 
-export const requestUpdateMyInfo = async (
+export const requestUpdateMyInfo = (
   token: string,
   username: string | null,
   location: string | null,
   imgUrl: string | null,
 ) => {
-  // TODO: url('/users/me')
-  try {
-    return await axios.patch<User>(
-      '/users/me',
-      { username, location, imgUrl },
-      { headers: auth(token) },
-    );
-  } catch (e) {
-    return null;
-  }
+  return axios.patch<User>(
+    `${BASE_URL}/users/me`,
+    { username, location, imgUrl },
+    { headers: auth(token) },
+  );
 };
 
 export const requestUpdateMPassword = async (
@@ -44,14 +33,9 @@ export const requestUpdateMPassword = async (
   newPassword: string,
   newPasswordConfirm: string,
 ) => {
-  try {
-    // TODO: url('/users/me/password')
-    return await axios.put<User>(
-      '/users/me/password',
-      { password, newPassword, newPasswordConfirm },
-      { headers: auth(token) },
-    );
-  } catch (e) {
-    return null;
-  }
+  return axios.put<User>(
+    `${BASE_URL}/users/me/password`,
+    { password, newPassword, newPasswordConfirm },
+    { headers: auth(token) },
+  );
 };
