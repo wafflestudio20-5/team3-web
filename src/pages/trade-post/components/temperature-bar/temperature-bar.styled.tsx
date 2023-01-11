@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   position: relative;
-  width: 122px;
+  width: 100px;
   height: 30px;
 `;
 
@@ -50,9 +50,10 @@ export const ProgressTemp = styled.div<DivProps>(
 
 export const CurrentTempWrapper = styled.div`
   display: flex;
+  justify-content: flex-end;
   position: absolute;
-  width: 122px;
-  left: 48px;
+  width: 100px;
+  right: 0;
   top: 0;
 `;
 
@@ -64,22 +65,22 @@ export const CurrentTempText = styled.span<SpanProps>(
   ({ color }) => `
   margin-right: 6px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 21px;
   color: ${color || '#000'};
 `,
 );
 
 export const CurrentIcon = styled.img`
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   margin-top: 2px;
 `;
 
 export const MannerTemp = styled.div`
   display: flex;
   justify-content: flex-end;
-  width: 122px;
+  width: 100px;
   margin-top: 4px;
   font-weight: 400;
   font-size: 12px;
