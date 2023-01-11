@@ -6,7 +6,7 @@ export type User = {
   email: string;
   location: string;
   temperature: number;
-  imgUrl: string;
+  imgUrl: string | null;
   createdAt: Date;
   updatedAt: Date;
 };
