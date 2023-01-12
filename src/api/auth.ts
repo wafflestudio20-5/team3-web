@@ -46,6 +46,7 @@ export const requestSignUpUser = async ({
   email,
   password,
   username,
+  isEmailAuthed,
   location,
   coordinate,
 }: LoginRequest) => {
@@ -54,6 +55,7 @@ export const requestSignUpUser = async ({
       email: email,
       password: password,
       username: username,
+      isEmailAuthed: isEmailAuthed,
       location: location,
       coordinate: JSON.stringify(coordinate),
     });

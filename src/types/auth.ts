@@ -3,6 +3,7 @@ export interface LoginRequest {
   email: string;
   password: string;
   username: string;
+  isEmailAuthed: boolean;
   location?: string;
   coordinate?: Coordinate;
 }

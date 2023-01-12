@@ -37,7 +37,6 @@ const SignUpPage = () => {
   }
 
   const [isSocialLogin, setIsSocialLogin] = useState(isSocialLoginProp);
-  const [passwordSocial, setPasswordSocial] = useState('');
 
   const [isEmailAuthed, setIsEmailAuthed] = useState(false);
   const [isEmailUnique, setIsEmailUnique] = useState(false);
@@ -114,17 +113,24 @@ const SignUpPage = () => {
       toast('이미 동일한 닉네임이 있습니다.');
     }
   };
+
   const signUpUser = async () => {
-    const coordinate: Coordinate = getCoordinate(location);
-    const res = await requestSignUpUser({
+    // TODO: coordinate(좌표) 처리,
+    // const coordinate = getCoordinate(location); // 에러 발생(Invalid hook call)
+    const coordinate = { lat: 77.777777, lng: 77.77777 }; // 임시 데이터
+    const res = (await requestSignUpUser({
       email,
       password,
       username,
+      isEmailAuthed,
       location,
       coordinate,
-    });
-    // TODO: 응답 바탕으로 로그인 처리(이후 회원가입 플로우에 따라 달라짐)
-    console.log(res);
+    })) as any;
+    if (res.status === 200) {
+      // TODO: 액세스 토큰 처리, 유저 로그인 상태 redux에 action으로 반영하기
+      alert('회원가입에 성공하였습니다'); // 로그인 페이지로 넘어가기 전에 사용자에게 알려주기
+      navigate('/login');
+    }
   };
 
   const [location, setLocation] = useState('');
