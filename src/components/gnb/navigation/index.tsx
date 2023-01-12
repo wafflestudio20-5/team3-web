@@ -20,7 +20,7 @@ const Navigation = ({ user, selected }: NavigationProps) => {
         <Link to="/">
           <S.Category selected={selected.landing}>소개</S.Category>
         </Link>
-        <Link to="/">
+        <Link to="/market">
           <S.Category selected={selected.market}>중고거래</S.Category>
         </Link>
         <Link to="/">
