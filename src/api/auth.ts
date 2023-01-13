@@ -22,10 +22,10 @@ export const requestSendEmail = async (email: string) => {
   }
 };
 
-export const requestAuthEmail = async (email: string) => {
+export const requestVerifyEmail = async (email: string, code: string) => {
   try {
-    return await axios.get(`${BASE_URL}/auth/checkEmailVerified`, {
-      params: { email: email },
+    return await axios.get(`${BASE_URL}/auth/verifyEmail`, {
+      params: { email: email, code: code },
     });
   } catch (e) {
     return e;
@@ -46,14 +46,18 @@ export const requestSignUpUser = async ({
   email,
   password,
   username,
+  isEmailAuthed,
   location,
+  coordinate,
 }: LoginRequest) => {
   try {
     return await axios.post(`${BASE_URL}/auth/signup`, {
       email: email,
       password: password,
       username: username,
+      isEmailAuthed: isEmailAuthed,
       location: location,
+      coordinate: JSON.stringify(coordinate),
     });
   } catch (e) {
     return e;

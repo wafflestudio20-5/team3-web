@@ -8,6 +8,7 @@ import ProfilePage from '../pages/profile';
 import MarketPage from '../pages/market';
 import TradePostPage from '../pages/trade-post';
 import ChatPage from '../pages/chat';
+import { NeighborhoodLanding } from '../pages/neighborhoodLanding';
 
 // DESC: 라우팅 관리를 위한 EntryRoute
 function EntryRoute() {
@@ -22,6 +23,7 @@ function EntryRoute() {
         <Route path="/market" element={<MarketPage />} />
         <Route path="/tradepost/:id" element={<TradePostPage />} />
         <Route path="/chat/:id" element={<ChatPage />} />
+        <Route path="/neighborhood" element={<NeighborhoodLanding />} />
       </Routes>
     </BrowserRouter>
   );
