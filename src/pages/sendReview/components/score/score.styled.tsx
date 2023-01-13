@@ -13,7 +13,7 @@ export const Img = styled.img`
   width: 120px;
   height: 120px;
   border: 0px solid transparent;
-  border-radius: 16px;
+  border-radius: 40px;
 
   @media ${MD_SIZE} {
     width: 100px;
