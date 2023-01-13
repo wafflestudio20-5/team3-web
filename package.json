@@ -37,9 +37,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint:fix": "eslint src --ext ts,tsx . --fix",
-    "deploy:kyj": "aws s3 sync ./build s3://waffle-market-03 --profile=lerrybe",
-    "deploy:bmh": "aws s3 sync ./build s3://waffle-market-03 --profile=roddywhite",
-    "deploy:ycm": "aws s3 sync ./build s3://waffle-market-03 --profile=fluentmin"
+    "deploy:kyj": "aws s3 sync ./build s3://waffle-market --profile=lerrybe",
+    "deploy:bmh": "aws s3 sync ./build s3://waffle-market --profile=roddywhite",
+    "deploy:ycm": "aws s3 sync ./build s3://waffle-market --profile=fluentmin"
   },
   "eslintConfig": {
     "extends": [

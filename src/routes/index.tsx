@@ -4,8 +4,8 @@ import HomePage from '../pages/home';
 import ErrorPage from '../pages/error';
 import LoginPage from '../pages/login';
 import KaKaoLogin from '../pages/login/kakao';
-import SignUpPage from '../pages/signup';
 import ProfilePage from '../pages/profile';
+import MarketPage from '../pages/market';
 import TradePostPage from '../pages/trade-post';
 import ChatPage from '../pages/chat';
 
@@ -18,8 +18,8 @@ function EntryRoute() {
         <Route path="/*" element={<ErrorPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/kakao" element={<KaKaoLogin />} />
-        <Route path="/signup" element={<SignUpPage />} />
         <Route path="/profile/:id" element={<ProfilePage />} />
+        <Route path="/market" element={<MarketPage />} />
         <Route path="/tradepost/:id" element={<TradePostPage />} />
         <Route path="/chat/:id" element={<ChatPage />} />
       </Routes>
