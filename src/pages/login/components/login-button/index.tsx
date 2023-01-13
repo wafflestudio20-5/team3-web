@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { Button, Img, Span } from './login-button.styled';
 
 interface LoginButton {
@@ -9,7 +8,7 @@ interface LoginButton {
   handleClick?: () => void;
 }
 
-const LoginButton: React.FC<LoginButton> = ({
+const LoginButton = ({
   img,
   text,
   color,
