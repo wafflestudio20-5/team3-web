@@ -1,12 +1,18 @@
 import * as S from './product.styled';
 
-const Product = () => {
+interface Product {
+  img: string;
+  title: string;
+  neighbor: string;
+}
+
+const Product = ({ img, title, neighbor }: Product) => {
   return (
     <S.Wrapper>
-      <S.Img />
+      <S.Img src={img} />
       <S.Info>
-        <S.Title>징거버거 와플</S.Title>
-        <S.Neighbor>거래한 이웃: 자흔</S.Neighbor>
+        <S.Title>{title}</S.Title>
+        <S.Neighbor>거래한 이웃: {neighbor}</S.Neighbor>
       </S.Info>
     </S.Wrapper>
   );
