@@ -6,6 +6,7 @@ import LoginPage from '../pages/login';
 import KaKaoLogin from '../pages/login/kakao';
 import ProfilePage from '../pages/profile';
 import MarketPage from '../pages/market';
+import TradePostPage from '../pages/trade-post';
 import ChatPage from '../pages/chat';
 
 // DESC: 라우팅 관리를 위한 EntryRoute
@@ -19,6 +20,7 @@ function EntryRoute() {
         <Route path="/login/kakao" element={<KaKaoLogin />} />
         <Route path="/profile/:id" element={<ProfilePage />} />
         <Route path="/market" element={<MarketPage />} />
+        <Route path="/tradepost/:id" element={<TradePostPage />} />
         <Route path="/chat/:id" element={<ChatPage />} />
       </Routes>
     </BrowserRouter>
