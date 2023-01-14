@@ -1,4 +1,8 @@
 import { requestNeighborhood } from '../../api/neighborhood';
+import Gnb from '../../components/gnb';
+import { NeighborContainer } from './components/neighbor-contatiner';
+import { ShortCut } from './components/neighbor-shortcut';
+import { Wrapper } from './neighbor.styled';
 
 export const NeighborhoodLanding = () => {
   const handleClick = async () => {
@@ -6,5 +10,11 @@ export const NeighborhoodLanding = () => {
     // 사용가능한(중복되지 않는) 이메일인 경우
     console.log(res);
   };
-  return <button onClick={handleClick}>이거 클릭해봐요!</button>;
+
+  return (
+    <Wrapper>
+      <Gnb />
+      <NeighborContainer />
+    </Wrapper>
+  );
 };
