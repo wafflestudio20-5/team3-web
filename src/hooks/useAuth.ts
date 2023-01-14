@@ -17,7 +17,7 @@ export const useAuth = () => {
   useEffect(() => {
     if (!accessToken) {
       // TODO: 후에 postLogin -> getRefresh()로 바꿔주기
-      dispatch(postLogin({ email: '456@naver.com', password: 'rlawhkgns123!' }))
+      dispatch(postLogin({ email: '123@naver.com', password: 'rlawhkgns123!' }))
         .unwrap()
         .then(res => {
           // TODO: 얻어오는 정보 확인해서 토큰 뽑아주기
