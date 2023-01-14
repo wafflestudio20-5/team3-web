@@ -9,6 +9,7 @@ import MarketPage from '../pages/market';
 import TradePostPage from '../pages/trade-post';
 import ChatPage from '../pages/chat';
 import { NeighborhoodLanding } from '../pages/neighborhoodLanding';
+import SignUpPage from '../pages/signup';
 
 // DESC: 라우팅 관리를 위한 EntryRoute
 function EntryRoute() {
@@ -19,6 +20,7 @@ function EntryRoute() {
         <Route path="/*" element={<ErrorPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/kakao" element={<KaKaoLogin />} />
+        <Route path="/signup" element={<SignUpPage />} />
         <Route path="/profile/:id" element={<ProfilePage />} />
         <Route path="/market" element={<MarketPage />} />
         <Route path="/tradepost/:id" element={<TradePostPage />} />
