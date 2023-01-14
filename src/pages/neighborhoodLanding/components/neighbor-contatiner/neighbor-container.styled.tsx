@@ -9,20 +9,9 @@ export const Container = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
-`;
-
-export const ShortcutContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  position: relative;
-  width: 70vw;
-  height: 80vh;
   margin-top: 20px;
-  padding: 20px;
-  border: 0.5px solid rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  padding: 0px 20vw;
+
   overflow: auto;
 
   @media ${MD_SIZE} {
