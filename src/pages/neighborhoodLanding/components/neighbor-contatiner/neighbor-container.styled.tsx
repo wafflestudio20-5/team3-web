@@ -1,6 +1,17 @@
 import styled from 'styled-components';
+import { MD_SIZE } from '../../../../constant/breakpoint';
 
 export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+`;
+
+export const ShortcutContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -13,6 +24,10 @@ export const Container = styled.div`
   border: 0.5px solid rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   overflow: auto;
+
+  @media ${MD_SIZE} {
+    width: 100vw;
+  }
 `;
 
 export const TopTextWrapper = styled.div`
@@ -24,6 +39,10 @@ export const TopTextWrapper = styled.div`
 
 export const TopText = styled.span`
   font-size: 24px;
+
+  @media ${MD_SIZE} {
+    font-size: 30px;
+  }
 `;
 
 export const MoreTextWrapper = styled.div`
