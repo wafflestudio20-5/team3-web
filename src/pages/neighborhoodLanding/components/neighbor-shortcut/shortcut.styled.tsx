@@ -33,15 +33,17 @@ export const Location = styled.span`
   color: rgba(0, 0, 0, 0.5);
 `;
 
-export const LikeIconWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
+export const IconImg = styled.img`
+  width: 30px;
+  height: 30px;
 `;
 
-export const LikeSpan = styled.span`
-  margin-left: 5px;
+export const IconsContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100px;
+`;
+
+export const CountSpan = styled.span`
+  margin: 0px 5px;
 `;
