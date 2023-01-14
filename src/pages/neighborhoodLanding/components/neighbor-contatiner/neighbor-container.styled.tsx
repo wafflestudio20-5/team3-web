@@ -15,7 +15,7 @@ export const Container = styled.div`
   overflow: auto;
 
   @media ${MD_SIZE} {
-    width: 100vw;
+    padding: 0px 5px;
   }
 `;
 
