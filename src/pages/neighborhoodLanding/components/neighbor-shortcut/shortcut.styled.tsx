@@ -33,6 +33,7 @@ export const Location = styled.span`
   color: rgba(0, 0, 0, 0.5);
 `;
 
+
 export const IconImg = styled.img`
   width: 30px;
   height: 30px;
@@ -46,4 +47,5 @@ export const IconsContainer = styled.div`
 
 export const CountSpan = styled.span`
   margin: 0px 5px;
+
 `;
