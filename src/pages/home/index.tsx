@@ -10,6 +10,7 @@ const HomePage = () => {
       <Link to="/signup">회원가입</Link>
       <Link to="/tradepost/1">중고거래 상세페이지</Link>
       <Link to="/chat/1">채팅하기</Link>
+      <Link to="/neighborhood">동네생활</Link>
     </Wrapper>
   );
 };
