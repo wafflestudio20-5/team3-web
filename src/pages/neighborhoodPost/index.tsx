@@ -2,6 +2,7 @@ import Gnb from '../../components/gnb';
 import { LONG_TEXT } from '../../constant';
 import { User } from '../../types/users';
 import { Comment } from './components/comment';
+import { CommentLikeCount } from './components/comment-like-count';
 import { Description } from './components/desc-container';
 import { WriterInfo } from './components/writer-info';
 import { Container } from './neighbor-post-styled';
@@ -38,6 +39,7 @@ export const NeighborhoodPostPage = () => {
           modifiedAt={new Date()}
           viewCount={120}
         />
+        <CommentLikeCount commentCount={2} likeCount={1} />
         <Comment user={writer} content="안녕하세요" modifiedAt={new Date()} />
         <Comment user={writer2} content="반가워요" modifiedAt={new Date()} />
       </Container>
