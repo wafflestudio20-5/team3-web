@@ -34,5 +34,6 @@ export const Content = styled.div`
 `;
 
 export const Date = styled.span`
-  font-size: 16px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.3);
 `;
