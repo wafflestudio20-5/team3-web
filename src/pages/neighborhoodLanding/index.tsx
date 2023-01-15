@@ -1,7 +1,6 @@
 import { requestNeighborhood } from '../../api/neighborhood';
 import Gnb from '../../components/gnb';
 import { NeighborContainer } from './components/neighbor-contatiner';
-import { ShortCut } from './components/neighbor-shortcut';
 import { Wrapper } from './neighbor.styled';
 
 export const NeighborhoodLanding = () => {
@@ -14,6 +13,7 @@ export const NeighborhoodLanding = () => {
   return (
     <Wrapper>
       <Gnb />
+      <button onClick={handleClick}>서버 버튼</button>
       <NeighborContainer />
     </Wrapper>
   );

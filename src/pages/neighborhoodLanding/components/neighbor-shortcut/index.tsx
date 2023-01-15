@@ -1,6 +1,7 @@
 import * as S from './shortcut.styled';
 import LikeIcon from '../../../../assets/like-icon.svg';
 import CommentIcon from '../../../../assets/comment-icon.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface ShortCutProps {
   id?: number;
@@ -18,8 +19,12 @@ export const ShortCut = ({
   likeCount = 0,
   commentCount = 0,
 }: ShortCutProps) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/neighborhood/${id}`);
+  };
   return (
-    <S.Container>
+    <S.Container onClick={handleClick}>
       <S.ContentP>{content}</S.ContentP>
 
       <S.FooterWrapper>
