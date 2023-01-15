@@ -5,7 +5,7 @@ import { BASE_URL } from '../../constant';
 import { LoginInput } from '../../types/auth';
 
 export const postLogin = createAsyncThunk(
-  'users/postLogin',
+  'session/postLogin',
   async ({ email, password }: LoginInput, { rejectWithValue }) => {
     try {
       const res = await axios.post(`${BASE_URL}/auth/login`, {
@@ -14,7 +14,6 @@ export const postLogin = createAsyncThunk(
       });
       return res.data;
     } catch (err) {
-      // DESC: 컴포넌트쪽에서 에러처리할 수 있게 에러 export
       return rejectWithValue(err);
     }
   },
@@ -32,13 +31,10 @@ const initialState: sessionSliceState = {
 export const sessionSlice = createSlice({
   name: 'session',
   initialState,
-  reducers: {
-    // 비동기 아닌 부분
-  },
+  reducers: {},
   extraReducers: builder => {
     builder.addCase(postLogin.fulfilled, (state, action) => {
-      // action.payload에 뭐 담겨오는지 확인하시고 맞게 적어주시면 될듯 합니다..!
-      state.accessToken = action.payload;
+      state.accessToken = action.payload.accessToken;
     });
   },
 });
