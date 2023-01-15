@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+
 import { MD_SIZE } from '../../../../constant/breakpoint';
+
 
 export const Container = styled.div`
   display: flex;
@@ -7,6 +9,7 @@ export const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   position: relative;
+
   width: 100vw;
   height: 100vh;
   margin-top: 20px;
@@ -17,6 +20,7 @@ export const Container = styled.div`
   @media ${MD_SIZE} {
     padding: 0px 5px;
   }
+
 `;
 
 export const TopTextWrapper = styled.div`
@@ -29,9 +33,11 @@ export const TopTextWrapper = styled.div`
 export const TopText = styled.span`
   font-size: 24px;
 
+
   @media ${MD_SIZE} {
     font-size: 30px;
   }
+
 `;
 
 export const MoreTextWrapper = styled.div`

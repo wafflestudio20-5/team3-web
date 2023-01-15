@@ -15,6 +15,7 @@ export const NeighborContainer = () => {
         <ShortCut
           content="2내용내용내용"
           location="주소주소주소"
+
           likeCount={7}
         />
         <ShortCut
@@ -28,6 +29,7 @@ export const NeighborContainer = () => {
           likeCount={3}
           commentCount={10}
         />
+
         <ShortCut content="5내용내용내용" location="주소주소주소" />
         <ShortCut content="6내용내용내용" location="주소주소주소" />
         <ShortCut content="7내용내용내용" location="주소주소주소" />
