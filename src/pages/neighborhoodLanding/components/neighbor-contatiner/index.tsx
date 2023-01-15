@@ -1,10 +1,8 @@
+import { LONG_TEXT } from '../../../../constant';
 import { ShortCut } from '../neighbor-shortcut';
 import * as S from './neighbor-container.styled';
 
 export const NeighborContainer = () => {
-  const LONG_TEXT =
-    '엄청 긴 텍스트! 엄청 긴 텍스트! 엄청 긴 텍스트! 엄청 긴 텍스트! 엄청 긴 텍스트! 엄청 긴 텍스트! 엄청 긴 텍스트! 엄청 긴 텍스트! 엄청 긴 텍스트! 엄청 긴 텍스트! 엄청 긴 텍스트! 엄청 긴 텍스트! 엄청 긴 텍스트! 엄청 긴 텍스트! 엄청 긴 텍스트! 엄청 긴 텍스트! ';
-
   return (
     <>
       <S.Container>
@@ -15,7 +13,6 @@ export const NeighborContainer = () => {
         <ShortCut
           content="2내용내용내용"
           location="주소주소주소"
-
           likeCount={7}
         />
         <ShortCut
