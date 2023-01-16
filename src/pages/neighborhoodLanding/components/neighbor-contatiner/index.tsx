@@ -1,8 +1,16 @@
+import { useState } from 'react';
 import { LONG_TEXT } from '../../../../constant';
+import { AddButton } from '../../../../components/add-button';
+import { AddModal } from '../add-modal';
+import ModalWrapper from '../modal-wrapper';
 import { ShortCut } from '../neighbor-shortcut';
 import * as S from './neighbor-container.styled';
 
 export const NeighborContainer = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleModalClose = () => {
+    setIsModalOpen(prev => !prev);
+  };
   return (
     <>
       <S.Container>
@@ -34,7 +42,17 @@ export const NeighborContainer = () => {
         <S.MoreTextWrapper>
           <S.MoreText>더보기</S.MoreText>
         </S.MoreTextWrapper>
+        <AddButton
+          handleClick={() => {
+            setIsModalOpen(prev => !prev);
+          }}
+        />
       </S.Container>
+      {isModalOpen && (
+        <ModalWrapper handleClose={handleModalClose}>
+          <AddModal handleClose={handleModalClose} />
+        </ModalWrapper>
+      )}
     </>
   );
 };
