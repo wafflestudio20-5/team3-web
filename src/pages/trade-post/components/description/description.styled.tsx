@@ -15,7 +15,39 @@ export const OptionWrapper = styled.div`
   width: 100%;
 `;
 
-export const ChatWrapper = styled.div``;
+export const ChatWrapper = styled.div`
+  display: flex;
+`;
+
+export const Edit = styled.button`
+  width: 40px;
+  height: 40px;
+  background-color: rgba(243, 243, 243, 0.684);
+  padding: 0 12px;
+  margin-right: 8px;
+  font-size: 14px;
+  border-radius: 50%;
+`;
+
+export const Like = styled.button`
+  width: 40px;
+  height: 40px;
+  background-color: rgba(243, 243, 243, 0.684);
+  padding: 0 12px;
+  margin-right: 8px;
+  font-size: 14px;
+  border-radius: 50%;
+`;
+
+export const LikeIcon = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
+export const EditIcon = styled.img`
+  width: 100%;
+  height: 100%;
+`;
 
 export const TradeStatus = styled.span`
   display: flex;
@@ -105,4 +137,22 @@ export const TitleImg = styled.img`
 export const DetailText = styled.span`
   word-break: break-word;
   white-space: pre-wrap;
+`;
+
+export const Header = styled.h1`
+  margin: 5px 10px;
+  font-size: 16px;
+  font-weight: 600;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 15px;
+`;
+
+export const DefaultAnnounce = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  font-size: 14px;
+  color: #757575;
 `;

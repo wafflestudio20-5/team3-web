@@ -24,11 +24,3 @@ export const ContentWrapper = styled.div`
     padding: 40px 10px;
   }
 `;
-
-export const SampleImg = styled.img`
-  width: 100%;
-  height: 36vh;
-  border-radius: 10px;
-  margin-bottom: 30px;
-  object-fit: cover;
-`;

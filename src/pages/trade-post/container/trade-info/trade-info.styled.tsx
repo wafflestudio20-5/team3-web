@@ -72,3 +72,11 @@ export const TempWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
+
+export const SampleImg = styled.img`
+  width: 100%;
+  height: 36vh;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  object-fit: cover;
+`;

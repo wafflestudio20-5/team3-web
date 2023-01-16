@@ -1,54 +1,53 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import Description from '../../components/description';
 import ProfileImage from '../../components/profile-image';
 import TemperatureBar from '../../components/temperature-bar';
 
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { getTradePost } from '../../../../store/slices/tradePostSlice';
+
 import * as S from './trade-info.styled';
 import { ReactComponent as TradeInfoIcon } from '../../../../assets/txinfo-icon.svg';
 
-// TODO: 임시 토큰
-// import { accessToken } from '../../../../constant';
-
 const TradeInfo = () => {
   const navigate = useNavigate();
-
-  // const [isLoading, setIsLoading] = useState(true);
-  // const dispatch = useAppDispatch();
-  // const seller = useAppSelector(state => state.seller);
-  // const accessToken = useAppSelector(state => state.accessToken);
+  const dispatch = useAppDispatch();
+  const [dataLoading, setDataLoading] = useState(true);
+  const { seller } = useAppSelector(state => state.tradePost);
+  const { accessToken } = useAppSelector(state => state.session);
 
   useEffect(() => {
-    // dispatch(getTradePost(accessToken, postNumber))
-    //   .unwrap()
-    //   .then(() => {
-    //     setIsLoading(false);
-    //   })
-    //   .catch(err => {
-    //     // TODO: 컴포넌트단에서 케이스별 에러처리
-    //     if (axios.isAxiosError(err)) {
-    //       if (err.response?.status === 401) {
-    //         console.log(err.response?.data.error);
-    //         // alert 후 로그인 페이지로 redirect
-    //       }
-    //       // ...
-    //     }
-    //   });
-  }, []);
+    if (accessToken) {
+      dispatch(getTradePost({ accessToken, postId: 1 }))
+        .unwrap()
+        .then(() => {
+          setDataLoading(false);
+        })
+        .catch(err => {
+          // TODO: 컴포넌트단에서 케이스별 에러처리
+          if (axios.isAxiosError(err)) {
+            if (err.response?.status === 401) {
+              console.log(err.response?.data.error);
+            }
+          }
+        });
+    }
+  }, [accessToken]);
 
-  const [seller] = useState({
-    id: 1,
-    username: 'lerry',
-    email: '123@gmail.com',
-    location: '서울 관악구 봉천동',
-    temperature: 37.8,
-    imgUrl:
-      'https://i.ytimg.com/vi/HJ6mfzCh1_A/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCXouyVg57RxkROo4Fo2EMluMFXAA',
-  });
+  // DESC: 데이터 로드에 대한 에러처리, 로딩 컴포넌트 만들기
+  if (dataLoading) {
+    return <div>데이터 로딩 중...</div>;
+  }
 
   return (
     <S.Wrapper>
+      <S.SampleImg
+        src="https://dnvefa72aowie.cloudfront.net/origin/article/202008/2F22EE23018C3A490E6C3596917934B9B2C80A2958862C4BE49A54BE0AFA6953.jpg?q=95&s=1440x1440&t=inside"
+        alt="img"
+      />
       <S.Header>
         <TradeInfoIcon />
         <S.Title>Trade Info</S.Title>
@@ -58,7 +57,7 @@ const TradeInfo = () => {
         <S.InfoWrapper onClick={() => navigate('/')}>
           <ProfileImage
             temperature={seller?.temperature || null}
-            profileImg={seller?.imgUrl}
+            profileImg={seller?.imgUrl || null}
           />
           <S.NameWrapper>
             <S.Username>{seller?.username || null}</S.Username>

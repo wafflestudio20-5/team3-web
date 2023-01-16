@@ -2,21 +2,23 @@ import Gnb from '../../components/gnb';
 import TradeInfo from './container/trade-info';
 import OtherTrades from './container/other-trades';
 
+import { useAuth } from '../../hooks/useAuth';
+
 import * as S from './trade-post.styled';
 
 const TradePostPage = () => {
-  // const accessToken = useAppSelector(state => state.accessToken);
-  // TODO: 없을 때 이전 페이지로
+  const { sessionLoading } = useAuth();
+
+  // DESC: session (로그인 여부, 유효한 토큰)에 따른 로딩 컴포넌트
+  // TODO: 컴포넌트 만들기
+  if (sessionLoading) {
+    return <div>로딩 중...</div>;
+  }
 
   return (
     <S.Wrapper>
       <Gnb />
       <S.ContentWrapper>
-        {/* TODO: 캐러샐 슬라이더 구현 */}
-        <S.SampleImg
-          src="https://dnvefa72aowie.cloudfront.net/origin/article/202008/2F22EE23018C3A490E6C3596917934B9B2C80A2958862C4BE49A54BE0AFA6953.jpg?q=95&s=1440x1440&t=inside"
-          alt="img"
-        />
         <TradeInfo />
         <OtherTrades />
       </S.ContentWrapper>
