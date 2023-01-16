@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 import 'moment/locale/ko';
+import { toast } from 'react-toastify';
 
 import Button from '../button';
 import Candidate from '../candidate';
@@ -27,6 +28,7 @@ import daangn from '../../../../assets/marker.png';
 import editPost from '../../../../assets/edit-post.svg';
 import likeFill from '../../../../assets/like-fill.svg';
 import likeBlank from '../../../../assets/like-blank.svg';
+import { redirectWithMsg } from '../../../../utils/errors';
 
 const Description = () => {
   const navigate = useNavigate();
@@ -65,10 +67,18 @@ const Description = () => {
           setCandidatesLoading(false);
         })
         .catch(err => {
-          // TODO: 컴포넌트단에서 케이스별 에러처리
           if (axios.isAxiosError(err)) {
-            if (err.response?.status === 401) {
-              console.log(err.response?.data.error);
+            if (err.response?.status === 404) {
+              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+            } else if (err.response?.status === 401) {
+              // TODO: refresh 후 재요청
+              redirectWithMsg(2, err.response?.data.error, () =>
+                navigate('/login'),
+              );
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
             }
           }
         });
@@ -91,10 +101,20 @@ const Description = () => {
             // setCandidatesLoading(false);
           })
           .catch(err => {
-            // TODO: 컴포넌트단에서 케이스별 에러처리
             if (axios.isAxiosError(err)) {
-              if (err.response?.status === 401) {
-                console.log(err.response?.data.error);
+              if (err.response?.status === 404) {
+                redirectWithMsg(2, err.response?.data.error, () =>
+                  navigate(-1),
+                );
+              } else if (err.response?.status === 401) {
+                // TODO: refresh 후 재요청
+                redirectWithMsg(2, err.response?.data.error, () =>
+                  navigate('/login'),
+                );
+              } else {
+                redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                  navigate('/'),
+                );
               }
             }
           });
@@ -112,10 +132,20 @@ const Description = () => {
           // setCandidatesLoading(false);
         })
         .catch(err => {
-          // TODO: 컴포넌트단에서 케이스별 에러처리
           if (axios.isAxiosError(err)) {
-            if (err.response?.status === 401) {
-              console.log(err.response?.data.error);
+            if (err.response?.status === 404) {
+              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+            } else if (err.response?.status === 401) {
+              // TODO: refresh 후 재요청
+              redirectWithMsg(2, err.response?.data.error, () =>
+                navigate('/login'),
+              );
+            } else if (err.response?.status === 400) {
+              toast.error(err.response?.data.error);
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
             }
           }
         });
@@ -131,19 +161,32 @@ const Description = () => {
           // setCandidatesLoading(false);
         })
         .catch(err => {
-          // TODO: 컴포넌트단에서 케이스별 에러처리
           if (axios.isAxiosError(err)) {
-            if (err.response?.status === 401) {
-              console.log(err.response?.data.error);
+            if (err.response?.status === 404) {
+              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+            } else if (err.response?.status === 403) {
+              // TODO: refresh 후 재요청
+              redirectWithMsg(2, err.response?.data.error, () =>
+                navigate('/login'),
+              );
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
             }
           }
         });
     }
   }, [accessToken, tradePost, tradeStatus]);
 
-  const handleSellerGetChat = useCallback((candidate: any) => {
-    navigate(`/chat/messages/${candidate.roomUUID}/${candidate.id}`);
-  }, []);
+  const handleSellerGetChat = useCallback(
+    (candidate: any) => {
+      if (candidate) {
+        navigate(`/chat/messages/${candidate.roomUUID}/${candidate.id}`);
+      }
+    },
+    [candidates],
+  );
 
   const handleBuyerGetChat = useCallback(() => {
     if (accessToken && tradePost) {
@@ -154,10 +197,20 @@ const Description = () => {
           navigate(`/chat/messages/${res.roomUUID}/${tradePost.seller?.id}`);
         })
         .catch(err => {
-          // TODO: 컴포넌트단에서 케이스별 에러처리
           if (axios.isAxiosError(err)) {
-            if (err.response?.status === 401) {
-              console.log(err.response?.data.error);
+            if (err.response?.status === 404) {
+              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+            } else if (err.response?.status === 401) {
+              // TODO: refresh 후 재요청
+              redirectWithMsg(2, err.response?.data.error, () =>
+                navigate('/login'),
+              );
+            } else if (err.response?.status === 400) {
+              toast.error(err.response?.data.error);
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
             }
           }
         });

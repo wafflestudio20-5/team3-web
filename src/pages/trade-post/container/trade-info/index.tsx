@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
+import Spinner from '../../../../components/spinner';
 import Description from '../../components/description';
 import ProfileImage from '../../components/profile-image';
 import TemperatureBar from '../../components/temperature-bar';
 
-import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { redirectWithMsg } from '../../../../utils/errors';
 import { getTradePost } from '../../../../store/slices/tradePostSlice';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 import * as S from './trade-info.styled';
 import { ReactComponent as TradeInfoIcon } from '../../../../assets/txinfo-icon.svg';
@@ -15,32 +17,39 @@ import { ReactComponent as TradeInfoIcon } from '../../../../assets/txinfo-icon.
 const TradeInfo = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const postId = Number(useParams().id);
   const [dataLoading, setDataLoading] = useState(true);
   const { seller } = useAppSelector(state => state.tradePost);
   const { accessToken } = useAppSelector(state => state.session);
 
   useEffect(() => {
-    if (accessToken) {
-      // TODO: 목록에서 useParams로 가져오기
-      dispatch(getTradePost({ accessToken, postId: 1 }))
+    if (accessToken && postId) {
+      dispatch(getTradePost({ accessToken, postId }))
         .unwrap()
         .then(() => {
           setDataLoading(false);
         })
         .catch(err => {
-          // TODO: 컴포넌트단에서 케이스별 에러처리
           if (axios.isAxiosError(err)) {
-            if (err.response?.status === 401) {
-              console.log(err.response?.data.error);
+            if (err.response?.status === 404) {
+              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+            } else if (err.response?.status === 401) {
+              // TODO: refresh 후 재요청
+              redirectWithMsg(2, err.response?.data.error, () =>
+                navigate('/login'),
+              );
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
             }
           }
         });
     }
-  }, [accessToken]);
+  }, [accessToken, postId]);
 
-  // DESC: 데이터 로드에 대한 에러처리, 로딩 컴포넌트 만들기
   if (dataLoading) {
-    return <div>데이터 로딩 중...</div>;
+    return <Spinner />;
   }
 
   return (
