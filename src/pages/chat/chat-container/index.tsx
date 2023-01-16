@@ -1,15 +1,31 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Client } from '@stomp/stompjs';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 import Dialog from '../components/dialog';
+import Spinner from '../../../components/spinner';
+
+import { redirectWithMsg } from '../../../utils/errors';
+import { getChats } from '../../../store/slices/chatSlice';
 import { ChatMessageType, SubBodyType } from '../../../types/chat';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 const ChatContainer = () => {
+  const navigate = useNavigate();
+  const roomUUID = useParams().UUID;
+  const uid = Number(useParams().uid);
+
+  const { me } = useAppSelector(state => state.users);
+  const { you } = useAppSelector(state => state.chat);
+  const { accessToken } = useAppSelector(state => state.session);
+
   // TODO: client 타입 정보
   const client = useRef<any>({});
+  const dispatch = useAppDispatch();
+
   const [message, setMessage] = useState<string>('');
-  const [senderId, setSenderId] = useState<number>(1); // props로 가져오기
-  const [roomUUID, setRoomUUID] = useState<string>('abcd'); // props로 가져오기
   const [chatMessages, setChatMessages] = useState<ChatMessageType[]>([]);
 
   useEffect(() => {
@@ -17,10 +33,38 @@ const ChatContainer = () => {
     return () => disconnect();
   }, [chatMessages]);
 
+  useEffect(() => {
+    if (roomUUID && uid && accessToken) {
+      dispatch(getChats({ accessToken, isBuyer: true, roomUUID, uid }))
+        .unwrap()
+        .then(res => {
+          setChatMessages(res.chatHistories);
+        })
+        .catch(err => {
+          if (axios.isAxiosError(err)) {
+            if (err.response?.status === 404) {
+              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+            } else if (err.response?.status === 401) {
+              // TODO: refresh 후 재요청
+              redirectWithMsg(2, err.response?.data.error, () =>
+                navigate('/login'),
+              );
+            } else if (err.response?.status === 400) {
+              toast.error(err.response?.data.error);
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
+            }
+          }
+        });
+    }
+  }, []);
+
   const connect = () => {
     // DESC: client 객체 만들기
     client.current = new Client({
-      brokerURL: 'ws://localhost:8080/ws-stomp',
+      brokerURL: 'ws://3.37.61.115/ws-stomp',
       debug: function (str) {
         console.log(str);
       },
@@ -62,7 +106,6 @@ const ChatContainer = () => {
     if (!client.current.connected) return;
     if (!message.trim()) return;
     if (message.length > 255) return;
-
     const curr = new Date();
     const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
 
@@ -71,35 +114,21 @@ const ChatContainer = () => {
       body: JSON.stringify({
         roomUUID,
         message,
-        senderId,
+        senderId: me?.id,
         createdAt: new Date(curr.getTime() + KR_TIME_DIFF),
       }),
     });
     setMessage('');
   };
 
+  if (!roomUUID || !uid || !me) {
+    return <Spinner />;
+  }
+
   return (
     <Dialog
-      to={{
-        id: 2,
-        username: 'fluentmin',
-        email: 'lerrybe@snu.ac.kr',
-        location: '서울 관악구 봉천동',
-        temperature: 40.8,
-        imgUrl: 'https://avatars.githubusercontent.com/u/91964707?v=4',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }}
-      from={{
-        id: 1,
-        username: 'roddywhite',
-        email: 'roddywhite@snu.ac.kr',
-        location: '서울 관악구 봉천동',
-        temperature: 37.5,
-        imgUrl: 'https://avatars.githubusercontent.com/u/109863663?v=4',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }}
+      to={you}
+      from={me}
       product={null}
       message={message}
       publish={publish}
