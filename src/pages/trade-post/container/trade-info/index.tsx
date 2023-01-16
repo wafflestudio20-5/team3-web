@@ -16,12 +16,12 @@ const TradeInfo = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [dataLoading, setDataLoading] = useState(true);
-  const { seller } = useAppSelector(state => state.tradePost);
+  const { seller, tradePost } = useAppSelector(state => state.tradePost);
   const { accessToken } = useAppSelector(state => state.session);
 
   useEffect(() => {
-    if (accessToken) {
-      dispatch(getTradePost({ accessToken, postId: 1 }))
+    if (accessToken && tradePost) {
+      dispatch(getTradePost({ accessToken, postId: tradePost?.postId }))
         .unwrap()
         .then(() => {
           setDataLoading(false);
@@ -35,7 +35,7 @@ const TradeInfo = () => {
           }
         });
     }
-  }, [accessToken]);
+  }, [accessToken, tradePost]);
 
   // DESC: 데이터 로드에 대한 에러처리, 로딩 컴포넌트 만들기
   if (dataLoading) {
