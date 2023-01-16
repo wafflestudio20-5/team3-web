@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 import 'moment/locale/ko';
@@ -28,6 +29,7 @@ import likeFill from '../../../../assets/like-fill.svg';
 import likeBlank from '../../../../assets/like-blank.svg';
 
 const Description = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -139,19 +141,17 @@ const Description = () => {
     }
   }, [accessToken, tradePost, tradeStatus]);
 
-  // TODO
-  const handleSellerGetChat = useCallback(() => {
-    console.log('seller 채팅 메시지 얻기, 채팅방 입장');
-  }, [accessToken]);
+  const handleSellerGetChat = useCallback((candidate: any) => {
+    navigate(`/chat/messages/${candidate.roomUUID}/${candidate.id}`);
+  }, []);
 
-  // TODO
   const handleBuyerGetChat = useCallback(() => {
-    console.log('buyer 채팅 메시지 얻기, 채팅방 입장');
     if (accessToken && tradePost) {
       dispatch(getUUID({ accessToken, postId: tradePost.postId }))
         .unwrap()
-        .then(() => {
-          console.log();
+        .then((res: { roomUUID: string }) => {
+          // DESC: 채팅 이동
+          navigate(`/chat/messages/${res.roomUUID}/${tradePost.seller?.id}`);
         })
         .catch(err => {
           // TODO: 컴포넌트단에서 케이스별 에러처리
@@ -233,7 +233,7 @@ const Description = () => {
                   status={tradeStatus}
                   imgUrl={buyer?.imgUrl}
                   username={buyer?.username}
-                  handleChatStart={handleSellerGetChat}
+                  handleChatStart={() => handleSellerGetChat(buyer)}
                   handleSetReservation={handleSetConfirmation}
                 />
               )}
@@ -249,7 +249,7 @@ const Description = () => {
                           status={tradeStatus}
                           imgUrl={candidate?.imgUrl}
                           username={candidate?.username}
-                          handleChatStart={handleSellerGetChat}
+                          handleChatStart={() => handleSellerGetChat(candidate)}
                           handleSetReservation={() =>
                             handleSetReservation(candidate?.id)
                           }
