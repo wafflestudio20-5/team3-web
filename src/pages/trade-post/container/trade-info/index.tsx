@@ -31,13 +31,13 @@ const TradeInfo = () => {
           if (axios.isAxiosError(err)) {
             if (err.response?.status === 401) {
               console.log(err.response?.data.error);
-              // alert 후 로그인 페이지로 redirect
             }
           }
         });
     }
   }, [accessToken]);
 
+  // DESC: 데이터 로드에 대한 에러처리, 로딩 컴포넌트 만들기
   if (dataLoading) {
     return <div>데이터 로딩 중...</div>;
   }

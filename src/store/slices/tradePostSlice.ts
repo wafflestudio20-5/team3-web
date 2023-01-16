@@ -127,8 +127,7 @@ export const getReservation = createAsyncThunk(
   ) => {
     try {
       // TODO: 타입 수정
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const res = await axios.get<any>(
+      const res = await axios.get(
         `${BASE_URL}/tradepost/${postId}/reservation`,
         {
           headers: auth(accessToken),
@@ -187,8 +186,8 @@ interface tradePostSliceState {
   seller: TxUser | null;
   buyer: TxUser | null;
   tradePost: TradePostType | null;
-  candidates: any;
-  tradeStatus: any;
+  candidates: any; // TODO: 타입 정보 수정
+  tradeStatus: any; // TODO: 타입 정보 수정
   isLiked: boolean;
 }
 const initialState: tradePostSliceState = {
@@ -210,24 +209,24 @@ export const tradePostSlice = createSlice({
       state.seller = action.payload.seller as TxUser;
       state.buyer = action.payload.buyer as TxUser;
       state.tradePost = action.payload as TradePostType;
-      state.tradeStatus = action.payload.tradeStatus as any;
+      state.tradeStatus = action.payload.tradeStatus;
     });
     builder.addCase(getReservation.fulfilled, (state, action) => {
       console.log(action.payload);
       console.log(action.payload);
       state.buyer = action.payload.buyer as TxUser;
-      state.candidates = action.payload.candidates as any;
-      state.tradeStatus = action.payload.tradeStatus as any;
+      state.candidates = action.payload.candidates;
+      state.tradeStatus = action.payload.tradeStatus;
     });
     builder.addCase(postReservation.fulfilled, (state, action) => {
       state.buyer = action.payload.buyer as TxUser;
-      state.candidates = action.payload.candidates as any;
-      state.tradeStatus = action.payload.tradeStatus as any;
+      state.candidates = action.payload.candidates;
+      state.tradeStatus = action.payload.tradeStatus;
     });
     builder.addCase(postConfirmation.fulfilled, (state, action) => {
       state.buyer = action.payload.buyer as TxUser;
-      state.candidates = action.payload.candidates as any;
-      state.tradeStatus = action.payload.tradeStatus as any;
+      state.candidates = action.payload.candidates;
+      state.tradeStatus = action.payload.tradeStatus;
     });
     builder.addCase(postLike.fulfilled, state => {
       state.isLiked = !state.isLiked;

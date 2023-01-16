@@ -153,7 +153,6 @@ export const DefaultAnnounce = styled.div`
   align-items: center;
   width: 100%;
   height: 100px;
-
   font-size: 14px;
   color: #757575;
 `;

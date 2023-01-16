@@ -30,12 +30,6 @@ export const Wrapper = styled.button<Button>(
 `,
 );
 
-export const Img = styled.img`
-  width: 18px;
-  height: 18px;
-  margin-right: 4px;
-`;
-
 export const Text = styled.span`
   font-size: 13px;
   line-height: 21px;

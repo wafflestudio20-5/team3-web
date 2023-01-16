@@ -1,8 +1,8 @@
-import { TradeStatusType } from '../../../../types/tradePost';
 import * as S from './candidate.styled';
+import { TradeStatusType } from '../../../../types/tradePost';
 
-import tradeComplete from '../../../../assets/trade-complete.png';
 import defaultImg from '../../../../assets/default-profile.png';
+import tradeComplete from '../../../../assets/trade-complete.png';
 
 interface CandidateProps {
   imgUrl?: string | null;
@@ -54,7 +54,6 @@ const Candidate = ({
                 {'예약하기'}
               </S.TradingButton>
             )}
-
             <S.ChatButton onClick={handleChatStart}>채팅하기</S.ChatButton>
           </>
         )}
