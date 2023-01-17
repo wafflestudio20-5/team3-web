@@ -5,6 +5,7 @@ import Drawer from '../drawer';
 import Profile from './profile';
 import Navigation from './navigation';
 
+import { useAuth } from '../../hooks/useAuth';
 import { useDrawer } from '../../hooks/useDrawer';
 
 import * as S from './gnb.styled';
@@ -13,11 +14,11 @@ import { ReactComponent as MenuIcon } from '../../assets/menu.svg';
 
 // DESC: global navigation bar
 const Gnb = () => {
+  const { me } = useAuth();
   const { pathname } = useLocation();
   const { active, handleToggleDrawer } = useDrawer();
 
-  // DESC: 로그인 유무 판별, 추후 수정 user (type: UserType)
-  const [user] = useState(true);
+  const [isMe, setIsMe] = useState(false);
   const [selected, setSelected] = useState({
     landing: false,
     market: false,
@@ -30,19 +31,25 @@ const Gnb = () => {
       case '/':
         setSelected({ ...selected, landing: true });
         break;
-      case '/market': // TODO: 추후 수정
+      case '/market':
         setSelected({ ...selected, market: true });
         break;
-      case '/life':
+      case '/neighborhood':
         setSelected({ ...selected, life: true });
         break;
-      case '/profile/1': // TODO: /profile/id 꼴로 수정
+      case '/profile/me':
         setSelected({ ...selected, profile: true });
         break;
       default:
         break;
     }
   }, []);
+
+  useEffect(() => {
+    if (me) {
+      setIsMe(true);
+    }
+  }, [me]);
 
   return (
     <S.OuterWrapper>
@@ -53,7 +60,7 @@ const Gnb = () => {
 
         {/* DESC: for Desktop */}
         <S.DesktopWrapper>
-          <Navigation user={user} selected={selected} />
+          <Navigation isMe={isMe} selected={selected} />
         </S.DesktopWrapper>
 
         {/* DESC: for Mobile */}
@@ -63,8 +70,8 @@ const Gnb = () => {
           </S.MenuIconWrapper>
           <Drawer active={active} handleToggleDrawer={handleToggleDrawer}>
             <>
-              <Profile user={user} />
-              <Navigation user={user} selected={selected} />
+              <Profile user={me} />
+              <Navigation isMe={isMe} selected={selected} />
             </>
           </Drawer>
         </S.MobileWrapper>

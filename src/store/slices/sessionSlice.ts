@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { BASE_URL } from '../../constant';
 import { LoginInput } from '../../types/auth';
-import { saveItem } from '../../utils/storage';
+import { clearItem, saveItem } from '../../utils/storage';
 
 export const postLogin = createAsyncThunk(
   'session/postLogin',
@@ -46,7 +46,12 @@ const initialState: sessionSliceState = {
 export const sessionSlice = createSlice({
   name: 'session',
   initialState,
-  reducers: {},
+  reducers: {
+    logout: state => {
+      state.accessToken = null;
+      clearItem('refreshToken');
+    },
+  },
   extraReducers: builder => {
     builder.addCase(postLogin.fulfilled, (state, action) => {
       state.accessToken = action.payload.accessToken;

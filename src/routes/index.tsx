@@ -23,7 +23,8 @@ function EntryRoute() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/kakao" element={<KaKaoLogin />} />
         <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/profile/:id" element={<ProfilePage />} />
+        <Route path="/profile/me" element={<ProfilePage />} />
+        {/* <Route path="/profile/:id" element={<ProfilePage />} /> */}
         <Route path="/market" element={<MarketPage />} />
         <Route path="/review" element={<SendReview />} />
         <Route path="/tradepost/:id" element={<TradePostPage />} />
