@@ -5,8 +5,8 @@ import Drawer from '../drawer';
 import Profile from './profile';
 import Navigation from './navigation';
 
-import { useAuth } from '../../hooks/useAuth';
 import { useDrawer } from '../../hooks/useDrawer';
+import { useAppSelector } from '../../store/hooks';
 
 import * as S from './gnb.styled';
 import logoImg from '../../assets/logo.svg';
@@ -14,17 +14,23 @@ import { ReactComponent as MenuIcon } from '../../assets/menu.svg';
 
 // DESC: global navigation bar
 const Gnb = () => {
-  const { me } = useAuth();
   const { pathname } = useLocation();
-  const { active, handleToggleDrawer } = useDrawer();
-
   const [isMe, setIsMe] = useState(false);
+  const { active, handleToggleDrawer } = useDrawer();
+  const { me } = useAppSelector(state => state.users);
+
   const [selected, setSelected] = useState({
     landing: false,
     market: false,
     life: false,
     profile: false,
   });
+
+  useEffect(() => {
+    if (me) {
+      setIsMe(true);
+    }
+  }, [me]);
 
   useEffect(() => {
     switch (pathname) {
@@ -45,12 +51,6 @@ const Gnb = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (me) {
-      setIsMe(true);
-    }
-  }, [me]);
-
   return (
     <S.OuterWrapper>
       <S.InnerWrapper>
@@ -70,7 +70,7 @@ const Gnb = () => {
           </S.MenuIconWrapper>
           <Drawer active={active} handleToggleDrawer={handleToggleDrawer}>
             <>
-              <Profile user={me} />
+              <Profile user={null} />
               <Navigation isMe={isMe} selected={selected} />
             </>
           </Drawer>
