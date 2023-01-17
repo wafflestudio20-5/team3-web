@@ -212,8 +212,6 @@ export const tradePostSlice = createSlice({
       state.tradeStatus = action.payload.tradeStatus;
     });
     builder.addCase(getReservation.fulfilled, (state, action) => {
-      console.log(action.payload);
-      console.log(action.payload);
       state.buyer = action.payload.buyer as TxUser;
       state.candidates = action.payload.candidates;
       state.tradeStatus = action.payload.tradeStatus;

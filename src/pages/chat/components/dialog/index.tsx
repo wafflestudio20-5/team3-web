@@ -1,14 +1,14 @@
 import { useRef, useCallback, useEffect } from 'react';
 import Moment from 'react-moment';
 
-import { User } from '../../../../types/users';
 import { ChatMessageType } from '../../../../types/chat';
 
 import * as S from './dialog.styled';
+import defaultImg from '../../../../assets/default-profile.png';
 
 interface DialogProps {
-  to: User;
-  from: User;
+  to: any;
+  from: any;
   product: any; // TODO: 상품정보, 수정
   message: string;
   publish: (msg: string) => void;
@@ -40,12 +40,12 @@ const Dialog = ({
   return (
     <S.Wrapper>
       <S.Header>
-        <S.ProfileImg src={to?.imgUrl || undefined} alt="profile" />
+        <S.ProfileImg src={to?.imgUrl || defaultImg} alt="profile" />
         <S.Username>{to?.username}</S.Username>
         <S.Temperature>{`${to?.temperature}°C`}</S.Temperature>
       </S.Header>
 
-      <S.Product>-----상품 들어갈 부분-----</S.Product>
+      <S.Product></S.Product>
 
       <S.MessageWrapper ref={scrollRef}>
         {chatMessages && chatMessages.length > 0 && (
@@ -58,7 +58,9 @@ const Dialog = ({
                 {_chatMessage.senderId === from?.id ? (
                   <S.FromMessageContainer>
                     <S.MessageDate>
-                      <Moment format="hh:mm">{_chatMessage.createdAt}</Moment>
+                      <Moment format="hh:mm, M월D일">
+                        {_chatMessage.createdAt}
+                      </Moment>
                     </S.MessageDate>
                     <S.FromMessageBox>{_chatMessage.message}</S.FromMessageBox>
                   </S.FromMessageContainer>
@@ -66,11 +68,13 @@ const Dialog = ({
                   <S.ToMessageContainer>
                     <S.ToMessageProfile
                       alt="profile"
-                      src={to?.imgUrl || undefined}
+                      src={to?.imgUrl || defaultImg}
                     />
                     <S.ToMessageBox>{_chatMessage.message}</S.ToMessageBox>
                     <S.MessageDate>
-                      <Moment format="hh:mm">{_chatMessage.createdAt}</Moment>
+                      <Moment format="hh:mm, M월D일">
+                        {_chatMessage.createdAt}
+                      </Moment>
                     </S.MessageDate>
                   </S.ToMessageContainer>
                 )}

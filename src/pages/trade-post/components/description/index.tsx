@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 import 'moment/locale/ko';
+import { toast } from 'react-toastify';
 
 import Button from '../button';
 import Candidate from '../candidate';
@@ -26,8 +28,10 @@ import daangn from '../../../../assets/marker.png';
 import editPost from '../../../../assets/edit-post.svg';
 import likeFill from '../../../../assets/like-fill.svg';
 import likeBlank from '../../../../assets/like-blank.svg';
+import { redirectWithMsg } from '../../../../utils/errors';
 
 const Description = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -63,10 +67,18 @@ const Description = () => {
           setCandidatesLoading(false);
         })
         .catch(err => {
-          // TODO: 컴포넌트단에서 케이스별 에러처리
           if (axios.isAxiosError(err)) {
-            if (err.response?.status === 401) {
-              console.log(err.response?.data.error);
+            if (err.response?.status === 404) {
+              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+            } else if (err.response?.status === 401) {
+              // TODO: refresh 후 재요청
+              redirectWithMsg(2, err.response?.data.error, () =>
+                navigate('/login'),
+              );
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
             }
           }
         });
@@ -89,10 +101,20 @@ const Description = () => {
             // setCandidatesLoading(false);
           })
           .catch(err => {
-            // TODO: 컴포넌트단에서 케이스별 에러처리
             if (axios.isAxiosError(err)) {
-              if (err.response?.status === 401) {
-                console.log(err.response?.data.error);
+              if (err.response?.status === 404) {
+                redirectWithMsg(2, err.response?.data.error, () =>
+                  navigate(-1),
+                );
+              } else if (err.response?.status === 401) {
+                // TODO: refresh 후 재요청
+                redirectWithMsg(2, err.response?.data.error, () =>
+                  navigate('/login'),
+                );
+              } else {
+                redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                  navigate('/'),
+                );
               }
             }
           });
@@ -110,10 +132,20 @@ const Description = () => {
           // setCandidatesLoading(false);
         })
         .catch(err => {
-          // TODO: 컴포넌트단에서 케이스별 에러처리
           if (axios.isAxiosError(err)) {
-            if (err.response?.status === 401) {
-              console.log(err.response?.data.error);
+            if (err.response?.status === 404) {
+              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+            } else if (err.response?.status === 401) {
+              // TODO: refresh 후 재요청
+              redirectWithMsg(2, err.response?.data.error, () =>
+                navigate('/login'),
+              );
+            } else if (err.response?.status === 400) {
+              toast.error(err.response?.data.error);
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
             }
           }
         });
@@ -129,35 +161,56 @@ const Description = () => {
           // setCandidatesLoading(false);
         })
         .catch(err => {
-          // TODO: 컴포넌트단에서 케이스별 에러처리
           if (axios.isAxiosError(err)) {
-            if (err.response?.status === 401) {
-              console.log(err.response?.data.error);
+            if (err.response?.status === 404) {
+              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+            } else if (err.response?.status === 403) {
+              // TODO: refresh 후 재요청
+              redirectWithMsg(2, err.response?.data.error, () =>
+                navigate('/login'),
+              );
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
             }
           }
         });
     }
   }, [accessToken, tradePost, tradeStatus]);
 
-  // TODO
-  const handleSellerGetChat = useCallback(() => {
-    console.log('seller 채팅 메시지 얻기, 채팅방 입장');
-  }, [accessToken]);
+  const handleSellerGetChat = useCallback(
+    (candidate: any) => {
+      if (candidate) {
+        navigate(`/chat/messages/${candidate.roomUUID}/${candidate.id}`);
+      }
+    },
+    [candidates],
+  );
 
-  // TODO
   const handleBuyerGetChat = useCallback(() => {
-    console.log('buyer 채팅 메시지 얻기, 채팅방 입장');
     if (accessToken && tradePost) {
       dispatch(getUUID({ accessToken, postId: tradePost.postId }))
         .unwrap()
-        .then(() => {
-          console.log();
+        .then((res: { roomUUID: string }) => {
+          // DESC: 채팅 이동
+          navigate(`/chat/messages/${res.roomUUID}/${tradePost.seller?.id}`);
         })
         .catch(err => {
-          // TODO: 컴포넌트단에서 케이스별 에러처리
           if (axios.isAxiosError(err)) {
-            if (err.response?.status === 401) {
-              console.log(err.response?.data.error);
+            if (err.response?.status === 404) {
+              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+            } else if (err.response?.status === 401) {
+              // TODO: refresh 후 재요청
+              redirectWithMsg(2, err.response?.data.error, () =>
+                navigate('/login'),
+              );
+            } else if (err.response?.status === 400) {
+              toast.error(err.response?.data.error);
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
             }
           }
         });
@@ -233,7 +286,7 @@ const Description = () => {
                   status={tradeStatus}
                   imgUrl={buyer?.imgUrl}
                   username={buyer?.username}
-                  handleChatStart={handleSellerGetChat}
+                  handleChatStart={() => handleSellerGetChat(buyer)}
                   handleSetReservation={handleSetConfirmation}
                 />
               )}
@@ -249,7 +302,7 @@ const Description = () => {
                           status={tradeStatus}
                           imgUrl={candidate?.imgUrl}
                           username={candidate?.username}
-                          handleChatStart={handleSellerGetChat}
+                          handleChatStart={() => handleSellerGetChat(candidate)}
                           handleSetReservation={() =>
                             handleSetReservation(candidate?.id)
                           }
