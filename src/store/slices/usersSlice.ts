@@ -19,6 +19,18 @@ export const getMe = createAsyncThunk(
   },
 );
 
+export const getUser = createAsyncThunk(
+  'users/getUser',
+  async (userId: number, { rejectWithValue }) => {
+    try {
+      const res = await axios.get<User>(`${BASE_URL}/users/${userId}`);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 export const postLocation = createAsyncThunk(
   'users/postLocation',
   async (
@@ -114,6 +126,9 @@ export const usersSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(getMe.fulfilled, (state, action) => {
       state.me = action.payload as User;
+    });
+    builder.addCase(getUser.fulfilled, (state, action) => {
+      state.currentUser = action.payload as User;
     });
     builder.addCase(postLocation.fulfilled, (state, action) => {
       state.me = action.payload;
