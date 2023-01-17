@@ -5,8 +5,11 @@ import Drawer from '../drawer';
 import Profile from './profile';
 import Navigation from './navigation';
 
+import { loadItem } from '../../utils/storage';
 import { useDrawer } from '../../hooks/useDrawer';
-import { useAppSelector } from '../../store/hooks';
+import { getMe } from '../../store/slices/usersSlice';
+import { postRefresh } from '../../store/slices/sessionSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import * as S from './gnb.styled';
 import logoImg from '../../assets/logo.svg';
@@ -16,8 +19,11 @@ import { ReactComponent as MenuIcon } from '../../assets/menu.svg';
 const Gnb = () => {
   const { pathname } = useLocation();
   const [isMe, setIsMe] = useState(false);
+
+  const dispatch = useAppDispatch();
   const { active, handleToggleDrawer } = useDrawer();
   const { me } = useAppSelector(state => state.users);
+  const { accessToken } = useAppSelector(state => state.session);
 
   const [selected, setSelected] = useState({
     landing: false,
@@ -31,6 +37,19 @@ const Gnb = () => {
       setIsMe(true);
     }
   }, [me]);
+
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(getMe(accessToken));
+    } else {
+      const refreshToken = loadItem('refreshToken');
+      if (refreshToken) {
+        dispatch(postRefresh(refreshToken))
+          .unwrap()
+          .then(res => dispatch(getMe(res.accessToken)));
+      }
+    }
+  }, [accessToken]);
 
   useEffect(() => {
     switch (pathname) {
@@ -70,7 +89,7 @@ const Gnb = () => {
           </S.MenuIconWrapper>
           <Drawer active={active} handleToggleDrawer={handleToggleDrawer}>
             <>
-              <Profile user={null} />
+              <Profile user={me} />
               <Navigation isMe={isMe} selected={selected} />
             </>
           </Drawer>
