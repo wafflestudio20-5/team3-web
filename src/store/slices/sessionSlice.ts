@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { BASE_URL } from '../../constant';
 import { LoginInput } from '../../types/auth';
+import { saveItem } from '../../utils/storage';
 
 export const postLogin = createAsyncThunk(
   'session/postLogin',
@@ -11,6 +12,20 @@ export const postLogin = createAsyncThunk(
       const res = await axios.post(`${BASE_URL}/auth/login`, {
         email: email,
         password: password,
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+export const postRefresh = createAsyncThunk(
+  'session/postRefresh',
+  async (refreshToken: string, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(`${BASE_URL}/auth/refresh`, {
+        refreshToken,
       });
       return res.data;
     } catch (err) {
@@ -35,6 +50,11 @@ export const sessionSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(postLogin.fulfilled, (state, action) => {
       state.accessToken = action.payload.accessToken;
+      saveItem('refreshToken', action.payload.refreshToken);
+    });
+    builder.addCase(postRefresh.fulfilled, (state, action) => {
+      state.accessToken = action.payload.accessToken;
+      saveItem('refreshToken', action.payload.refreshToken);
     });
   },
 });

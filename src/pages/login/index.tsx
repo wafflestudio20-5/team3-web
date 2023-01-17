@@ -11,8 +11,16 @@ import waffle from '../../assets/waffle.svg';
 import profile from '../../assets/profile.svg';
 import google from '../../assets/google.svg';
 
+// DESC: 추가
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useAppDispatch } from '../../store/hooks';
+import { redirectWithMsg } from '../../utils/errors';
+import { postLogin } from '../../store/slices/sessionSlice';
+
 const LoginPage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   /* DESC: 일반 로그인 */
   const [inputs, setInputs] = useState({
@@ -29,17 +37,40 @@ const LoginPage = () => {
   };
 
   const login = async () => {
-    const res: any = await requestLogin(inputs);
-    if (res.data) {
-      console.log(res);
-      // setUser(res.data.user)
-    } else {
-      window.alert(res.message);
-    }
+    // const res: any = await requestLogin(inputs);
+    // if (res.data) {
+    //   console.log(res);
+    //   // setUser(res.data.user)
+    // } else {
+    //   window.alert(res.message);
+    // }
+
+    // 🥕 DESC: 추가
+    dispatch(postLogin(inputs))
+      .unwrap()
+      .then(res => {
+        toast.success(`${res.user?.username}님, 환영합니다!`);
+        navigate('/');
+      })
+      .catch(err => {
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 403) {
+            // 이메일, 비밀번호 잘못됨
+            toast.error(err.response?.data.error);
+          } else if (err.response?.status === 400) {
+            // error: 이메일 인증이 필요합니다. 적절한 처리
+          } else {
+            redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+              navigate('/'),
+            );
+          }
+        }
+      });
   };
 
   /* DESC: 카카오 로그인하기 - 외부 링크로 이동해 동의하면 redirect page 쿼리로 인가코드 보내줌 */
-  const KAKAO_REDIRECT_URI = 'http://waffle-market.s3-website.ap-northeast-2.amazonaws.com/login/kakao';
+  const KAKAO_REDIRECT_URI =
+    'http://waffle-market.s3-website.ap-northeast-2.amazonaws.com/login/kakao';
   // const KAKAO_REDIRECT_URI = 'http://localhost:3000/login/kakao';
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
   const linkToKakao = () => {

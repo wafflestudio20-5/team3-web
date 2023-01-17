@@ -1,42 +1,62 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
+import { redirectWithMsg } from '../utils/errors';
 import { getMe } from '../store/slices/usersSlice';
-import { postLogin } from '../store/slices/sessionSlice';
+import { clearItem, loadItem } from '../utils/storage';
+import { postRefresh } from '../store/slices/sessionSlice';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { useNavigate } from 'react-router-dom';
 
 export const useAuth = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [sessionLoading, setSessionLoading] = useState(true);
+
   const { me } = useAppSelector(state => state.users);
   const { accessToken } = useAppSelector(state => state.session);
-  const [sessionLoading, setSessionLoading] = useState(true);
-  // const [errorStatus, setErrorStatus] = useState(0);
 
   useEffect(() => {
     if (!accessToken) {
-      // TODO: 후에 postLogin -> getRefresh()로 바꿔주기
-      dispatch(postLogin({ email: '123@naver.com', password: 'rlawhkgns123!' }))
-        .unwrap()
-        .then(res => {
-          // TODO: 얻어오는 정보 확인해서 토큰 뽑아주기
-          dispatch(getMe(res.accessToken))
-            .unwrap()
-            .then(() => {
-              setSessionLoading(false);
-            })
-            .catch(err => {
-              console.log(err);
-              // TODO: 케이스 따라 적절한 에러코드 setting
-            });
-        })
-        .catch(err => {
-          if (axios.isAxiosError(err)) {
-            // TODO: 케이스 따라 적절한 에러코드 setting
-            navigate('/login');
-          }
-        });
+      const refreshToken = loadItem('refreshToken');
+      if (refreshToken) {
+        dispatch(postRefresh(refreshToken))
+          .unwrap()
+          .then(res => {
+            dispatch(getMe(res.accessToken))
+              .unwrap()
+              .then(() => {
+                setSessionLoading(false);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          })
+          .catch(err => {
+            if (axios.isAxiosError(err)) {
+              if (err.response?.status === 403) {
+                toast.error(err.response?.data.error);
+                clearItem('refreshToken');
+                navigate('/');
+              } else if (err.response?.status === 401) {
+                redirectWithMsg(2, err.response?.data.error, () =>
+                  navigate('/login'),
+                );
+              } else if (err.response?.status === 404) {
+                redirectWithMsg(2, err.response?.data.error, () =>
+                  navigate('/'),
+                );
+              } else {
+                redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                  navigate('/'),
+                );
+              }
+            }
+          });
+      } else {
+        navigate('/login');
+      }
     } else {
       dispatch(getMe(accessToken))
         .unwrap()
@@ -44,28 +64,44 @@ export const useAuth = () => {
           setSessionLoading(false);
         })
         .catch(() => {
-          // TODO: 후에 postLogin -> getRefresh()로 바꿔주기
-          dispatch(
-            postLogin({ email: '123@naver.com', password: 'rlawhkgns123!' }),
-          )
-            .unwrap()
-            .then(res => {
-              // TODO: 얻어오는 정보 확인해서 토큰 뽑아주기
-              dispatch(getMe(res.accessToken))
-                .unwrap()
-                .then(() => {
-                  setSessionLoading(false);
-                })
-                .catch(err => {
-                  console.log(err);
-                  // TODO: 케이스 따라 적절한 에러코드 setting
-                });
-            })
-            .catch(err => {
-              if (axios.isAxiosError(err)) {
-                // TODO: 케이스 따라 적절한 에러코드 setting
-              }
-            });
+          const refreshToken = loadItem('refreshToken');
+          if (refreshToken) {
+            dispatch(postRefresh(refreshToken))
+              .unwrap()
+              .then(res => {
+                dispatch(getMe(res.accessToken))
+                  .unwrap()
+                  .then(() => {
+                    setSessionLoading(false);
+                  })
+                  .catch(err => {
+                    console.log(err);
+                  });
+              })
+              .catch(err => {
+                if (axios.isAxiosError(err)) {
+                  if (err.response?.status === 403) {
+                    toast.error(err.response?.data.error);
+                    clearItem('refreshToken');
+                    navigate('/');
+                  } else if (err.response?.status === 401) {
+                    redirectWithMsg(2, err.response?.data.error, () =>
+                      navigate('/login'),
+                    );
+                  } else if (err.response?.status === 404) {
+                    redirectWithMsg(2, err.response?.data.error, () =>
+                      navigate('/'),
+                    );
+                  } else {
+                    redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                      navigate('/'),
+                    );
+                  }
+                }
+              });
+          } else {
+            navigate('/login');
+          }
         });
     }
   }, []);
@@ -73,7 +109,6 @@ export const useAuth = () => {
   return {
     me,
     accessToken,
-    // errorStatus,
     sessionLoading,
   };
 };
