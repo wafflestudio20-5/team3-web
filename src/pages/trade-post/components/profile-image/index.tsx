@@ -12,7 +12,7 @@ interface ProfileImageProps {
 const ProfileImage = ({ temperature, profileImg }: ProfileImageProps) => {
   return (
     <S.PositionWrapper>
-      <S.ProflieImg src={profileImg ? profileImg : defaultImg} alt="profile" />
+      <S.ProflieImg src={profileImg || defaultImg} alt="profile" />
       {temperature && temperature > BADGE_THRESHOLD ? (
         <S.BadgeWrapper>
           <S.BadgeInnerWrapper>

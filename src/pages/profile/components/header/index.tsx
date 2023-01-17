@@ -3,9 +3,9 @@ import { ReactComponent as ChatIcon } from '../../../../assets/chat.svg';
 import { ReactComponent as DaangnIcon } from '../../../../assets/daangn.svg';
 
 interface HeaderProps {
+  isLoading: boolean;
   username: string | null;
   handleClick: () => void;
-  isLoading: boolean;
 }
 
 const Header = ({ username, handleClick, isLoading }: HeaderProps) => {
