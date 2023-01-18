@@ -20,6 +20,21 @@ export const postLogin = createAsyncThunk(
   },
 );
 
+export const postGoogleLogin = createAsyncThunk(
+  'session/googlePostLogin',
+  async (email: string, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(`${BASE_URL}/google/login`, {
+        email: email,
+      });
+      console.log(res)
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 export const postRefresh = createAsyncThunk(
   'session/postRefresh',
   async (refreshToken: string, { rejectWithValue }) => {
