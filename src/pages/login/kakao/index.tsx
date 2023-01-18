@@ -1,39 +1,50 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { requestKakaoLogin } from '../../../api/auth';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import { postKakaoLogin } from '../../../store/slices/sessionSlice';
+import { useAppDispatch } from '../../../store/hooks';
+import { redirectWithMsg } from '../../../utils/errors';
 
 const KaKaoLogin = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const url = new URL(window.location.href);
   const code = url.searchParams.get('code');
   console.log(code);
 
+  const loginKakao = async (code: string | null) => {
+    dispatch(postKakaoLogin(code))
+      .unwrap()
+      .then(res => {
+        console.log(res.user);
+        toast.success(`${res.user?.username}님, 환영합니다!`);
+        navigate('/');
+      })
+      .catch(err => {
+        if (axios.isAxiosError(err)) {
+          if (err.response?.data.email) {
+            redirectWithMsg(2, '회원가입이 필요합니다.', () =>
+              navigate('/signup', {
+                state: {
+                  isSocialLoginProp: true,
+                  emailSocial: err.response?.data.email,
+                },
+              }),
+            );
+          } else {
+            redirectWithMsg(1, '요청을 수행할 수 없습니다.', () =>
+              navigate('/'),
+            );
+          }
+        }
+      });
+  };
+
   useEffect(() => {
-    axios
-    .get(`http://3.35.168.70/kakao/login/?code=${code}`)
-    .then(res => {
-      console.log(res);
-    })
-    .catch(err => {
-      throw err;
-    });    
-    // async () => {
-    //   console.log('시작')
-    //   const res: any = await requestKakaoLogin(code);
-    //   console.log(res);
-    //   if (res.message === 'Request failed with status code 404') {
-    //     const email: string = res.response.data.email;
-    //     navigate('/signup', {
-    //       state: { isSocialLoginProp: true, emailSocial: email },
-    //     });
-    //   } else if (res.data.user) {
-    //     console.log('haha');
-    //     // setUser(res.data.user)
-    //   } else {
-    //     window.alert(res.message);
-    //   }
-    // };
+    const code = url.searchParams.get('code');
+    loginKakao(code);
   }, []);
   return <div>로딩중입니다... 곧 로그인이 완료됩니다...</div>;
 };
