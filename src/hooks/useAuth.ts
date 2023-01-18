@@ -41,7 +41,7 @@ export const useAuth = () => {
                 navigate('/');
               } else if (err.response?.status === 401) {
                 redirectWithMsg(2, err.response?.data.error, () =>
-                  navigate('/login'),
+                  navigate('/'),
                 );
               } else if (err.response?.status === 404) {
                 redirectWithMsg(2, err.response?.data.error, () =>
@@ -55,7 +55,7 @@ export const useAuth = () => {
             }
           });
       } else {
-        navigate('/login');
+        navigate('/');
       }
     } else {
       dispatch(getMe(accessToken))
@@ -86,7 +86,7 @@ export const useAuth = () => {
                     navigate('/');
                   } else if (err.response?.status === 401) {
                     redirectWithMsg(2, err.response?.data.error, () =>
-                      navigate('/login'),
+                      navigate('/'),
                     );
                   } else if (err.response?.status === 404) {
                     redirectWithMsg(2, err.response?.data.error, () =>
@@ -100,7 +100,7 @@ export const useAuth = () => {
                 }
               });
           } else {
-            navigate('/login');
+            navigate('/');
           }
         });
     }
