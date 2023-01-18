@@ -66,6 +66,11 @@ const SignUpPage = () => {
     });
   };
 
+  // DESC: 랜덤 닉네임 설정
+  // axios
+  //   .get('https://nickname.hwanmoo.kr/?format=text&count=1&max_length=10&')
+  //   .then(res => console.log(res));
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -91,6 +96,7 @@ const SignUpPage = () => {
         setIsEmailUnique(true);
         setIsEmailAuthButtonOpen(true);
         requestSendEmail(email); // 인증 이메일 전송
+        toast(`${email}로 인증 메일을 전송하였습니다.`);
       } else {
         // console.log(res);
         toast('이미 동일한 이메일이 있습니다.');
