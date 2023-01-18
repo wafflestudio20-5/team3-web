@@ -102,9 +102,7 @@ const LoginPage = () => {
   };
 
   /* DESC: 구글 로그인 - gapi로 client(waffle-market) initialize(초기화) */
-  // const googleClientId: any = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-  const googleClientId =
-    '547362877836-u20226u1tkodpjvd7gs8sf21sa3g96lf.apps.googleusercontent.com';
+  const googleClientId: any = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const GOOGLE_REDIRECT_URI = 'http://localhost:3000/login/google';
   // const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email`;
   // const linkToGoogle = () => {
