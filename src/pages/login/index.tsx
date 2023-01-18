@@ -11,8 +11,16 @@ import waffle from '../../assets/waffle.svg';
 import profile from '../../assets/profile.svg';
 import google from '../../assets/google.svg';
 
+// DESC: 추가
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useAppDispatch } from '../../store/hooks';
+import { redirectWithMsg } from '../../utils/errors';
+import { postLogin, postGoogleLogin } from '../../store/slices/sessionSlice';
+
 const LoginPage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   /* DESC: 일반 로그인 */
   const [inputs, setInputs] = useState({
@@ -29,18 +37,66 @@ const LoginPage = () => {
   };
 
   const login = async () => {
-    const res: any = await requestLogin(inputs);
-    if (res.data) {
-      console.log(res);
-      // setUser(res.data.user)
-    } else {
-      window.alert(res.message);
-    }
+    // const res: any = await requestLogin(inputs);
+    // if (res.data) {
+    //   console.log(res);
+    //   // setUser(res.data.user)
+    // } else {
+    //   window.alert(res.message);
+    // }
+
+    // 🥕 DESC: 추가
+    dispatch(postLogin(inputs))
+      .unwrap()
+      .then(res => {
+        toast.success(`${res.user?.username}님, 환영합니다!`);
+        navigate('/');
+      })
+      .catch(err => {
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 403) {
+            // 이메일, 비밀번호 잘못됨
+            toast.error(err.response?.data.error);
+          } else if (err.response?.status === 400) {
+            // error: 이메일 인증이 필요합니다. 적절한 처리
+          } else {
+            redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+              navigate('/'),
+            );
+          }
+        }
+      });
+  };
+
+  const loginGoogle = async (email: string) => {
+    dispatch(postGoogleLogin(email))
+      .unwrap()
+      .then(res => {
+        console.log(res.user);
+        toast.success(`${res.user?.username}님, 환영합니다!`);
+        navigate('/');
+      })
+      .catch(err => {
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 404) {
+            redirectWithMsg(2, '회원가입이 필요합니다.', () =>
+              navigate('/signup', {
+                state: { isSocialLoginProp: true, emailSocial: email },
+              }),
+            );
+          } else {
+            redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+              navigate('/'),
+            );
+          }
+        }
+      });
   };
 
   /* DESC: 카카오 로그인하기 - 외부 링크로 이동해 동의하면 redirect page 쿼리로 인가코드 보내줌 */
-  const KAKAO_REDIRECT_URI = 'http://waffle-market.s3-website.ap-northeast-2.amazonaws.com/login/kakao';
-  // const KAKAO_REDIRECT_URI = 'http://localhost:3000/login/kakao';
+  // const KAKAO_REDIRECT_URI =
+  //   'http://waffle-market.s3-website.ap-northeast-2.amazonaws.com/login/kakao';
+  const KAKAO_REDIRECT_URI = 'http://localhost:3000/login/kakao';
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
   const linkToKakao = () => {
     window.location.href = KAKAO_AUTH_URL;
@@ -66,22 +122,12 @@ const LoginPage = () => {
     // 성공하면 email, 이름, tokenId 모두 전달해줌
     console.log('success:', res);
     const emailFromGoogle: string = res.profileObj.email;
-    const response: any = await requestGoogleLogin(emailFromGoogle);
+    const response: any = loginGoogle(emailFromGoogle);
     console.log(response);
-    if (response.message === 'Request failed with status code 404') {
-      const emailFromServer: string = response.response.data.email;
-      navigate('/signup', {
-        state: { isSocialLoginProp: true, emailSocial: emailFromServer },
-      });
-    } else if (response.data.user) {
-      // setUser(res.data.user)
-    } else {
-      window.alert(response.message);
-    }
   };
   const onFailure = (err: any) => {
     console.log('failed:', err);
-    window.alert('구글 로그인 실패');
+    toast('다시 시도해주세요');
   };
 
   return (

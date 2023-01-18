@@ -105,9 +105,13 @@ export const postLike = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.post(`${BASE_URL}/tradepost/${postId}/like`, {
-        headers: auth(accessToken),
-      });
+      const res = await axios.post(
+        `${BASE_URL}/tradepost/${postId}/like`,
+        {},
+        {
+          headers: auth(accessToken),
+        },
+      );
       return res.data;
     } catch (err) {
       return rejectWithValue(err);
@@ -123,8 +127,7 @@ export const getReservation = createAsyncThunk(
   ) => {
     try {
       // TODO: 타입 수정
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const res = await axios.get<any>(
+      const res = await axios.get(
         `${BASE_URL}/tradepost/${postId}/reservation`,
         {
           headers: auth(accessToken),
@@ -150,25 +153,9 @@ export const postReservation = createAsyncThunk(
     try {
       const res = await axios.post(
         `${BASE_URL}/tradepost/${postId}/reservation/${userId}`,
+        {},
         { headers: auth(accessToken) },
       );
-      return res.data;
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  },
-);
-
-export const postCancelReservation = createAsyncThunk(
-  'tradePost/postCancelReservation',
-  async (
-    { accessToken, postId }: { accessToken: string; postId: number },
-    { rejectWithValue },
-  ) => {
-    try {
-      const res = await axios.post(`${BASE_URL}/tradepost/${postId}/cancel`, {
-        headers: auth(accessToken),
-      });
       return res.data;
     } catch (err) {
       return rejectWithValue(err);
@@ -185,6 +172,7 @@ export const postConfirmation = createAsyncThunk(
     try {
       const res = await axios.post(
         `${BASE_URL}/tradepost/${postId}/confirmation`,
+        {},
         { headers: auth(accessToken) },
       );
       return res.data;
@@ -194,32 +182,55 @@ export const postConfirmation = createAsyncThunk(
   },
 );
 
-// DESC: slice 초기값과 타입
 interface tradePostSliceState {
   seller: TxUser | null;
   buyer: TxUser | null;
   tradePost: TradePostType | null;
+  candidates: any; // TODO: 타입 정보 수정
+  tradeStatus: any; // TODO: 타입 정보 수정
+  isLiked: boolean;
 }
 const initialState: tradePostSliceState = {
   seller: null,
   buyer: null,
   tradePost: null,
+  candidates: [],
+  tradeStatus: null,
+  isLiked: false,
 };
 
-// DESC: slice 부분
 export const tradePostSlice = createSlice({
   name: 'tradePost',
   initialState,
   reducers: {},
   extraReducers: builder => {
     builder.addCase(getTradePost.fulfilled, (state, action) => {
+      state.isLiked = action.payload.isLiked as boolean;
       state.seller = action.payload.seller as TxUser;
       state.buyer = action.payload.buyer as TxUser;
       state.tradePost = action.payload as TradePostType;
+      state.tradeStatus = action.payload.tradeStatus;
     });
-    // TODO: Response 데이터 확정 -> addCase 추가하기
+    builder.addCase(getReservation.fulfilled, (state, action) => {
+      state.buyer = action.payload.buyer as TxUser;
+      state.candidates = action.payload.candidates;
+      state.tradeStatus = action.payload.tradeStatus;
+    });
+    builder.addCase(postReservation.fulfilled, (state, action) => {
+      state.buyer = action.payload.buyer as TxUser;
+      state.candidates = action.payload.candidates;
+      state.tradeStatus = action.payload.tradeStatus;
+    });
+    builder.addCase(postConfirmation.fulfilled, (state, action) => {
+      state.buyer = action.payload.buyer as TxUser;
+      state.candidates = action.payload.candidates;
+      state.tradeStatus = action.payload.tradeStatus;
+    });
+    builder.addCase(postLike.fulfilled, state => {
+      state.isLiked = !state.isLiked;
+    });
   },
 });
 
-export const usersActions = tradePostSlice.actions;
+export const tradePostActions = tradePostSlice.actions;
 export default tradePostSlice.reducer;

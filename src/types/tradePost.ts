@@ -35,4 +35,5 @@ export type TxUser = {
   location: string;
   temperature: number;
   imgUrl: string | null;
+  roomUUID: string;
 };

@@ -256,6 +256,8 @@ const SignUpPage = () => {
             handleClick={() => {
               if (isEmailUnique && isUsernameUnique) {
                 signUpUser();
+              } else if (isSocialLogin) {
+                signUpUser();
               } else {
                 alert('이메일과 닉네임 중복 여부를 확인해주세요.');
               }

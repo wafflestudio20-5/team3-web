@@ -1,6 +1,6 @@
 import { TradeStatusType } from '../types/tradePost';
 
-export const getTradeStatusKo = (status: string) => {
+export const getTradeStatusKo = (status?: TradeStatusType) => {
   if (status === TradeStatusType.TRADING) {
     return '판매 중';
   } else if (status === TradeStatusType.RESERVATION) {
