@@ -130,6 +130,8 @@ const SignUpPage = () => {
       // TODO: 액세스 토큰 처리, 유저 로그인 상태 redux에 action으로 반영하기
       alert('회원가입에 성공하였습니다'); // 로그인 페이지로 넘어가기 전에 사용자에게 알려주기
       navigate('/login');
+    } else {
+      toast('회원가입에 실패하였습니다.');
     }
   };
 
