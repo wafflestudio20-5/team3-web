@@ -85,7 +85,7 @@ export const Category = styled.span<CategoryProps>(
 `,
 );
 
-export const Route = styled.span<CategoryProps>(
+export const Login = styled.span<CategoryProps>(
   ({ selected }) => `
   display: flex;
   justify-content: center;
@@ -121,3 +121,37 @@ export const Route = styled.span<CategoryProps>(
   }
 `,
 );
+
+export const Profile = styled(Login)`
+  @media ${MD_SIZE} {
+    padding: 7px 8px;
+
+    &:hover {
+      background-color: rgba(0, 18, 68, 0.05);
+    }
+  }
+`;
+
+export const RouteWrapper = styled.div`
+  margin-left: 10px;
+  display: flex;
+
+  @media ${MD_SIZE} {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
+
+export const Logout = styled(Login)`
+margin-left: 8px;
+
+  @media ${MD_SIZE} {
+    padding: 7px 8px;
+    margin-top: 12px;
+    margin-left: 0px;
+
+    &:hover {
+      background-color: rgba(0, 18, 68, 0.05);
+    }
+  }
+`;

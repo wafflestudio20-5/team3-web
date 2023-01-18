@@ -1,4 +1,7 @@
-import { Link } from 'react-router-dom';
+import Section1 from './section1';
+import Section2 from './section2';
+import Section3 from './section3';
+import Section4 from './section4';
 import Gnb from '../../components/gnb';
 import { Wrapper } from './home.styled';
 
@@ -6,9 +9,10 @@ const HomePage = () => {
   return (
     <Wrapper>
       <Gnb />
-      <Link to="/login">로그인</Link>
-      <Link to="/signup">회원가입</Link>
-      <Link to="/chat/1">채팅하기</Link>
+      <Section1 />
+      <Section2 />
+      <Section3 />
+      <Section4 />
     </Wrapper>
   );
 };

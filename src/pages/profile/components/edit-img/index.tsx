@@ -2,35 +2,21 @@ import { ChangeEvent, useCallback, useRef, useState } from 'react';
 import ButtonMd from '../button-md';
 import { SetEditType, EditType } from '../../../../types/users';
 
-import * as S from './edit-user-info.styled';
+import * as S from './edit-img.styled';
 import defaultImg from '../../../../assets/default-profile.png';
 import { ReactComponent as CameraIcon } from '../../../../assets/camera.svg';
 
-// TODO: 토큰 가져오기 (with useSelector)
-import { accessToken } from '../../../../constant';
-
-interface EditUserInfoProps {
-  img: string | null;
-  username: string | null;
+interface EditImgProps {
   edit: EditType;
+  img: string | null;
   handleClose: SetEditType;
 }
 
-const EditUserInfo = ({
-  img,
-  username,
-  edit,
-  handleClose,
-}: EditUserInfoProps) => {
+const EditImg = ({ img, edit, handleClose }: EditImgProps) => {
   const imgRef = useRef<HTMLInputElement | null>(null);
   const [currImg, setCurrImg] = useState<string | null>(img);
-  const [currUsername, setCurrUsername] = useState(username);
 
   // TODO: 토큰 가져오기 (with useSelector)
-
-  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setCurrUsername(e.target.value);
-  }, []);
 
   const handleSaveImg = useCallback(() => {
     // TODO: 파일 업로드 부분으로 변경
@@ -50,7 +36,7 @@ const EditUserInfo = ({
   const handleSubmit = useCallback(() => {
     // TODO: userInfo validation
     // TODO: username 수정부분과 img 수정 부분 뜯어질 예정
-  }, [currUsername, currImg]);
+  }, [currImg]);
 
   return (
     <S.Wrapper>
@@ -72,13 +58,12 @@ const EditUserInfo = ({
             </S.IconWrapper>
           </S.Label>
         </S.ImagePositionWrapper>
-        <S.Input value={currUsername || ''} onChange={handleChange} />
       </S.InputWrapper>
 
       <S.ButtonWrapper>
         <ButtonMd
           text="취소"
-          handleClick={() => handleClose({ ...edit, username: false })}
+          handleClick={() => handleClose({ ...edit, img: false })}
         />
         <ButtonMd text="변경" handleClick={handleSubmit} />
       </S.ButtonWrapper>
@@ -86,4 +71,4 @@ const EditUserInfo = ({
   );
 };
 
-export default EditUserInfo;
+export default EditImg;

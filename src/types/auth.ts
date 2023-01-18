@@ -3,10 +3,17 @@ export interface LoginRequest {
   email: string;
   password: string;
   username: string;
+  isEmailAuthed: boolean;
   location?: string;
+  coordinate?: Coordinate;
 }
 
 export interface LoginInput {
   email: string;
   password: string;
+}
+
+export interface Coordinate {
+  lat: number;
+  lng: number;
 }

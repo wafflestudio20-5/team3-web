@@ -1,9 +1,12 @@
+import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../../store/hooks';
+import { sessionActions } from '../../../store/slices/sessionSlice';
+
 import * as S from './navigation.styled';
 
 interface NavigationProps {
-  // TODO: 유저 인터페이스 따라 타입 수정하기 user: UserType
-  user: boolean;
+  isMe: boolean;
   selected: {
     landing: boolean;
     market: boolean;
@@ -12,15 +15,21 @@ interface NavigationProps {
   };
 }
 
-const Navigation = ({ user, selected }: NavigationProps) => {
-  // TODO: 라우팅 추가, user 유무 검증 수정
+const Navigation = ({ isMe, selected }: NavigationProps) => {
+  const dispatch = useAppDispatch();
+
+  const handleLogout = useCallback(() => {
+    dispatch(sessionActions.logout());
+    window.location.href = '/';
+  }, []);
+
   return (
     <S.NavWrapper>
       <S.CategoryWrapper>
         <Link to="/">
           <S.Category selected={selected.landing}>소개</S.Category>
         </Link>
-        <Link to="/">
+        <Link to="/market">
           <S.Category selected={selected.market}>중고거래</S.Category>
         </Link>
         <Link to="/">
@@ -29,13 +38,18 @@ const Navigation = ({ user, selected }: NavigationProps) => {
       </S.CategoryWrapper>
 
       <S.AuthWrapper>
-        {user ? (
-          <Link to="/profile/1">
-            <S.Route selected={selected.profile}>나의 와플</S.Route>
-          </Link>
+        {isMe ? (
+          <>
+            <S.RouteWrapper>
+              <Link to="/profile/me">
+                <S.Profile selected={selected.profile}>나의 와플</S.Profile>
+              </Link>
+              <S.Logout onClick={handleLogout}>로그아웃</S.Logout>
+            </S.RouteWrapper>
+          </>
         ) : (
           <Link to="/login">
-            <S.Route>로그인/회원가입</S.Route>
+            <S.Login>로그인/회원가입</S.Login>
           </Link>
         )}
       </S.AuthWrapper>

@@ -1,7 +1,8 @@
+import EditImg from '../../components/edit-img';
 import ButtonMd from '../../components/button-md';
 import EditPassword from '../../components/edit-password';
 import ProfileImage from '../../components/profile-image';
-import EditUserInfo from '../../components/edit-user-info';
+import EditUsername from '../../components/edit-username';
 
 import { EditType, SetEditType, User } from '../../../../types/users';
 
@@ -24,11 +25,12 @@ const UserInfo = ({ me, edit, isLoading, setEdit }: UserInfoProps) => {
         <UserInfoIcon />
         <S.Title>User Info</S.Title>
       </S.Header>
-      {!edit.username && !edit.password && (
+      {!edit.username && !edit.password && !edit.img && (
         <>
           {!isLoading ? (
             <>
               <ProfileImage
+                setEdit={() => setEdit({ ...edit, img: true })}
                 temperature={me?.temperature || null}
                 profileImg={me?.imgUrl || null}
               />
@@ -41,7 +43,7 @@ const UserInfo = ({ me, edit, isLoading, setEdit }: UserInfoProps) => {
               <S.ButtonWrapper>
                 <ButtonMd
                   img={addIcon}
-                  text={'내 프로필 수정'}
+                  text={'내 닉네임 수정'}
                   handleClick={() => setEdit({ ...edit, username: true })}
                 />
                 <ButtonMd
@@ -62,9 +64,16 @@ const UserInfo = ({ me, edit, isLoading, setEdit }: UserInfoProps) => {
         </>
       )}
       {edit.username && (
-        <EditUserInfo
+        <EditUsername
           img={me?.imgUrl || null}
           username={me?.username || null}
+          edit={edit}
+          handleClose={setEdit}
+        />
+      )}
+      {edit.img && (
+        <EditImg
+          img={me?.imgUrl || null}
           edit={edit}
           handleClose={setEdit}
         />

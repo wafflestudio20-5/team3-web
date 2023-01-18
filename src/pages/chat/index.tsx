@@ -1,13 +1,24 @@
 import Gnb from '../../components/gnb';
 import ChatContainer from './chat-container';
+import Spinner from '../../components/spinner';
 
-import { Wrapper } from './chat.styled';
+import { useAuth } from '../../hooks/useAuth';
+
+import { ChatWrapper, Wrapper } from './chat.styled';
 
 const ChatPage = () => {
+  const { sessionLoading } = useAuth();
+
+  if (sessionLoading) {
+    return <Spinner />;
+  }
+
   return (
     <Wrapper>
       <Gnb />
-      <ChatContainer />
+      <ChatWrapper>
+        <ChatContainer />
+      </ChatWrapper>
     </Wrapper>
   );
 };

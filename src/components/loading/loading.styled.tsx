@@ -1,12 +1,26 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  width: 100%;
-  height: 50%;
+  min-width: 360px;
+  min-height: 100%;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 30px;
-  font-weight: 700;
-  color: #f0975d;
+  flex-direction: column;
+`;
+
+export const LoadingGif = styled.img`
+  width: 100px;
+  height: 100px;
+`;
+
+export const LoadingAnnounce = styled.h3`
+  font-family: 'KyoboHand';
+  font-size: 16px;
+  color: #FF6F0F;
+  margin-left: 10px;
 `;
