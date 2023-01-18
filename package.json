@@ -40,7 +40,10 @@
     "lint:fix": "eslint src --ext ts,tsx . --fix",
     "deploy:kyj": "aws s3 sync ./build s3://waffle-market --profile=lerrybe",
     "deploy:bmh": "aws s3 sync ./build s3://waffle-market --profile=roddywhite",
-    "deploy:ycm": "aws s3 sync ./build s3://waffle-market --profile=fluentmin"
+    "deploy:ycm": "aws s3 sync ./build s3://waffle-market --profile=fluentmin",
+    "deploy:kyj:dev": "aws s3 sync ./build s3://waffle-market-dev --profile=lerrybe",
+    "deploy:bmh:dev": "aws s3 sync ./build s3://waffle-market-dev --profile=roddywhite",
+    "deploy:ycm:dev": "aws s3 sync ./build s3://waffle-market-dev --profile=fluentmin"
   },
   "eslintConfig": {
     "extends": [
