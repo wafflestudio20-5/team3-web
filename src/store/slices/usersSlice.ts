@@ -14,7 +14,18 @@ export const getMe = createAsyncThunk(
       });
       return res.data;
     } catch (err) {
-      // DESC: 컴포넌트쪽에서 에러처리할 수 있게 에러 export
+      return rejectWithValue(err);
+    }
+  },
+);
+
+export const getUser = createAsyncThunk(
+  'users/getUser',
+  async (userId: number, { rejectWithValue }) => {
+    try {
+      const res = await axios.get<User>(`${BASE_URL}/users/${userId}`);
+      return res.data;
+    } catch (err) {
       return rejectWithValue(err);
     }
   },
@@ -31,13 +42,9 @@ export const postLocation = createAsyncThunk(
   ) => {
     try {
       const res = await axios.patch<User>(
-        // TODO: API 분리시 요청 수정
-        `${BASE_URL}/users/me`,
+        `${BASE_URL}/users/me/location`,
         {
           location: currLocation,
-          imgUrl:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxUUpKQJH9FMYS68t64Zs4COpToFcDC8nYUQ&usqp=CAU',
-          username: 'yeji',
         },
         { headers: auth(accessToken) },
       );
@@ -48,13 +55,61 @@ export const postLocation = createAsyncThunk(
   },
 );
 
-// TODO: postUsername API
+export const postUsername = createAsyncThunk(
+  'users/postUsername',
+  async (
+    {
+      accessToken,
+      currUsername,
+    }: { accessToken: string; currUsername: string | null },
+    { rejectWithValue },
+  ) => {
+    try {
+      const res = await axios.patch<User>(
+        `${BASE_URL}/users/me/username`,
+        {
+          username: currUsername,
+        },
+        { headers: auth(accessToken) },
+      );
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+export const postPassword = createAsyncThunk(
+  'users/postPassword',
+  async (
+    {
+      accessToken,
+      values,
+    }: {
+      accessToken: string;
+      values: { pw: string; newPw: string; newPwConfirm: string };
+    },
+    { rejectWithValue },
+  ) => {
+    try {
+      const res = await axios.patch<User>(
+        `${BASE_URL}/users/me/password`,
+        {
+          password: values.pw,
+          newPassword: values.newPw,
+          newPasswordConfirm: values.newPwConfirm,
+        },
+        { headers: auth(accessToken) },
+      );
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
 
 // TODO: postImgFile API
 
-// TODO: postPassword API
-
-// DESC: slice 초기값과 타입
 interface usersSliceState {
   me: User | null;
   currentUser: User | null;
@@ -64,7 +119,6 @@ const initialState: usersSliceState = {
   currentUser: null,
 };
 
-// DESC: slice 부분
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -73,8 +127,14 @@ export const usersSlice = createSlice({
     builder.addCase(getMe.fulfilled, (state, action) => {
       state.me = action.payload as User;
     });
+    builder.addCase(getUser.fulfilled, (state, action) => {
+      state.currentUser = action.payload as User;
+    });
     builder.addCase(postLocation.fulfilled, (state, action) => {
-      state.me = action.payload as User;
+      state.me = action.payload;
+    });
+    builder.addCase(postUsername.fulfilled, (state, action) => {
+      state.me = action.payload;
     });
   },
 });

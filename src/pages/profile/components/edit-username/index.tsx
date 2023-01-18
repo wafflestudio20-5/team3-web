@@ -1,44 +1,43 @@
-import { useCallback, useState } from 'react';
-import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { ChangeEvent, useCallback, useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
 import ButtonMd from '../button-md';
-
 import { SetEditType, EditType } from '../../../../types/users';
-import { postLocation } from '../../../../store/slices/usersSlice';
+import { postUsername } from '../../../../store/slices/usersSlice';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
-import * as S from './edit-location.styled';
+import * as S from './edit-username.styled';
+import defaultImg from '../../../../assets/default-profile.png';
 
-interface EditLocationProps {
+
+interface EditUsernameProps {
+  img: string | null;
+  username: string | null;
   edit: EditType;
-  location: string | null;
   handleClose: SetEditType;
 }
 
-const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
+const EditUsername = ({
+  img,
+  username,
+  edit,
+  handleClose,
+}: EditUsernameProps) => {
   const dispatch = useAppDispatch();
-  const open = useDaumPostcodePopup();
+  const [currUsername, setCurrUsername] = useState(username);
   const { accessToken } = useAppSelector(state => state.session);
-  const [currLocation, setCurrLocation] = useState(location || '');
 
-  const handleComplete = (data: any) => {
-    const userAddress =
-      data.jibunAddress === '' ? data.autoJibunAddress : data.jibunAddress;
-    setCurrLocation(userAddress);
-  };
-
-  const handleClick = useCallback(() => {
-    open({ onComplete: handleComplete });
-  }, [open, handleComplete]);
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setCurrUsername(e.target.value);
+  }, []);
 
   const handleSubmit = useCallback(() => {
     if (accessToken) {
-      dispatch(postLocation({ accessToken, currLocation }))
+      dispatch(postUsername({ accessToken, currUsername }))
         .unwrap()
         .then(() => {
-          handleClose({ ...edit, location: false });
+          handleClose({ ...edit, username: false });
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -55,19 +54,19 @@ const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
           }
         });
     }
-  }, [currLocation]);
+  }, [currUsername]);
 
   return (
     <S.Wrapper>
       <S.InputWrapper>
-        <S.Input value={currLocation} readOnly />
-        <S.SearchButton onClick={handleClick}>주소 검색</S.SearchButton>
+        <S.Image src={img || defaultImg} alt="default" />
+        <S.Input value={currUsername || ''} onChange={handleChange} />
       </S.InputWrapper>
 
       <S.ButtonWrapper>
         <ButtonMd
           text="취소"
-          handleClick={() => handleClose({ ...edit, location: false })}
+          handleClick={() => handleClose({ ...edit, username: false })}
         />
         <ButtonMd text="변경" handleClick={handleSubmit} />
       </S.ButtonWrapper>
@@ -75,4 +74,4 @@ const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
   );
 };
 
-export default EditLocation;
+export default EditUsername;

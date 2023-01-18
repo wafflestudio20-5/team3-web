@@ -1,11 +1,13 @@
 import { ChangeEvent, useCallback, useState } from 'react';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 import ButtonMd from '../button-md';
 import { SetEditType, EditType } from '../../../../types/users';
+import { postPassword } from '../../../../store/slices/usersSlice';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 import * as S from './edit-password.styled';
-
-import { accessToken } from '../../../../constant';
 
 interface EditPasswordProps {
   edit: EditType;
@@ -13,13 +15,14 @@ interface EditPasswordProps {
 }
 
 const EditPassword = ({ edit, handleClose }: EditPasswordProps) => {
+  const dispatch = useAppDispatch();
+  const { accessToken } = useAppSelector(state => state.session);
+
   const [values, setValues] = useState({
     pw: '',
     newPw: '',
     newPwConfirm: '',
   });
-
-  // TODO: 토큰 가져오기 (with useSelector)
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,9 +36,27 @@ const EditPassword = ({ edit, handleClose }: EditPasswordProps) => {
   );
 
   const handleSubmit = useCallback(() => {
-    // TODO: newPw와 newPwConfirm 검증
-    // TODO: PATCH /users/me/password dispatch
-
+    if (accessToken) {
+      dispatch(postPassword({ accessToken, values }))
+        .unwrap()
+        .then(() => {
+          handleClose({ ...edit, password: false });
+        })
+        .catch(err => {
+          if (axios.isAxiosError(err)) {
+            toast(`🥕 ${err.response?.data.error}`, {
+              position: 'top-center',
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+            });
+          }
+        });
+    }
   }, [values?.pw, values?.newPw, values?.newPwConfirm]);
 
   return (
