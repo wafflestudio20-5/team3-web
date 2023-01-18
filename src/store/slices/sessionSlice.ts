@@ -27,7 +27,19 @@ export const postGoogleLogin = createAsyncThunk(
       const res = await axios.post(`${BASE_URL}/google/login`, {
         email: email,
       });
-      console.log(res)
+      console.log(res);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+export const postKakaoLogin = createAsyncThunk(
+  'session/postKakaoLogin',
+  async (code: string | null, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/kakao/login/?code=${code}`);
       return res.data;
     } catch (err) {
       return rejectWithValue(err);
