@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect } from 'react';
+import { ChangeEvent, useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import SignUpInputNormal, {
@@ -6,11 +6,11 @@ import SignUpInputNormal, {
 } from './components/SignUpInputNormal';
 
 import {
-  requestAuthEmail,
   requestSendEmail,
   requestCheckEmail,
   requestCheckUsername,
   requestSignUpUser,
+  requestVerifyEmail,
 } from '../../api/auth';
 import * as V from '../../utils/validateUserInfo';
 
@@ -21,6 +21,7 @@ import { getCoordinate } from '../../utils/map';
 import { randomPassword } from '../../utils/randomPassword';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Coordinate } from '../../types/auth';
 
 const SignUpPage = () => {
   let isSocialLoginProp: boolean, emailSocial: string;
@@ -36,7 +37,6 @@ const SignUpPage = () => {
   }
 
   const [isSocialLogin, setIsSocialLogin] = useState(isSocialLoginProp);
-  const [passwordSocial, setPasswordSocial] = useState('');
 
   const [isEmailAuthed, setIsEmailAuthed] = useState(false);
   const [isEmailUnique, setIsEmailUnique] = useState(false);
@@ -47,11 +47,13 @@ const SignUpPage = () => {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     email: '',
+    emailVerification: '',
     password: '',
     passwordConfirm: '',
     username: '',
   });
-  const { email, password, passwordConfirm, username } = inputs;
+  const { email, emailVerification, password, passwordConfirm, username } =
+    inputs;
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setInputs({
@@ -67,6 +69,7 @@ const SignUpPage = () => {
       setInputs({
         ...inputs,
         email: emailSocial,
+
         password: passwordSocial,
         passwordConfirm: passwordSocial,
       });
@@ -90,8 +93,8 @@ const SignUpPage = () => {
     }
   };
 
-  const authEmail = async () => {
-    const res = (await requestAuthEmail(email)) as any;
+  const verifyEmail = async () => {
+    const res = (await requestVerifyEmail(email, emailVerification)) as any;
     // 사용가능한(중복되지 않는) 이메일인 경우
     if (res.data) {
       toast('이메일 인증이 완료되었습니다.');
@@ -110,15 +113,24 @@ const SignUpPage = () => {
       toast('이미 동일한 닉네임이 있습니다.');
     }
   };
+
   const signUpUser = async () => {
-    const res = await requestSignUpUser({
+    // TODO: coordinate(좌표) 처리,
+    // const coordinate = getCoordinate(location); // 에러 발생(Invalid hook call)
+    const coordinate = { lat: 77.777777, lng: 77.77777 }; // 임시 데이터
+    const res = (await requestSignUpUser({
       email,
       password,
       username,
+      isEmailAuthed,
       location,
-    });
-    // TODO: 응답 바탕으로 로그인 처리(이후 회원가입 플로우에 따라 달라짐)
-    console.log(res);
+      coordinate,
+    })) as any;
+    if (res.status === 200) {
+      // TODO: 액세스 토큰 처리, 유저 로그인 상태 redux에 action으로 반영하기
+      alert('회원가입에 성공하였습니다'); // 로그인 페이지로 넘어가기 전에 사용자에게 알려주기
+      navigate('/login');
+    }
   };
 
   const [location, setLocation] = useState('');
@@ -131,9 +143,9 @@ const SignUpPage = () => {
     setLocation(userAddress);
   };
   // DESC: 이 함수를 버튼에 붙여주면 됩니다
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     open({ onComplete: handleComplete });
-  };
+  }, [open, handleComplete]);
 
   return (
     <>
@@ -159,11 +171,27 @@ const SignUpPage = () => {
           handleClick={checkEmail}
         />
         {isEmailAuthButtonOpen && (
-          <S.EmailAuthWrapper>
-            <S.P>{email} 로 인증 메일을 전송하였습니다.</S.P>
-            <S.P onClick={checkEmail}>메일 다시 보내기</S.P>
-            <S.P onClick={authEmail}>인증 완료</S.P>
-          </S.EmailAuthWrapper>
+          <>
+            <S.EmailAuthWrapper>
+              <S.P>{email} 로 인증 메일을 전송하였습니다.</S.P>
+              <S.P onClick={checkEmail}>메일 다시 보내기</S.P>
+            </S.EmailAuthWrapper>
+            <SignUpInputNormal
+              label="email verification"
+              valueName="emailVerification"
+              value={emailVerification}
+              color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
+              required={true}
+              placeholder="이메일로 전송된 인증코드를 입력해주세요"
+              handleChange={e => {
+                onChange(e);
+              }}
+              isWithButton={true}
+              buttonText="인증 확인"
+              // TODO: 변경된 회원가입 플로우에 따라 이 버튼으로 중복체크 & 메일 인증 되도록 바꿔주기
+              handleClick={verifyEmail}
+            />
+          </>
         )}
         <SignUpInputNormal
           label="password"
