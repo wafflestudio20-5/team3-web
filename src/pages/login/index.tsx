@@ -94,16 +94,17 @@ const LoginPage = () => {
   };
 
   /* DESC: 카카오 로그인하기 - 외부 링크로 이동해 동의하면 redirect page 쿼리로 인가코드 보내줌 */
-  // const KAKAO_REDIRECT_URI =
-  //   'http://waffle-market.s3-website.ap-northeast-2.amazonaws.com/login/kakao';
-  const KAKAO_REDIRECT_URI = 'http://localhost:3000/login/kakao';
+  const KAKAO_REDIRECT_URI = 'http://waffle-market.s3-website.ap-northeast-2.amazonaws.com/login/kakao';
+  // const KAKAO_REDIRECT_URI = 'http://localhost:3000/login/kakao';
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
   const linkToKakao = () => {
     window.location.href = KAKAO_AUTH_URL;
   };
 
   /* DESC: 구글 로그인 - gapi로 client(waffle-market) initialize(초기화) */
-  const googleClientId: any = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  // const googleClientId: any = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  const googleClientId =
+    '547362877836-u20226u1tkodpjvd7gs8sf21sa3g96lf.apps.googleusercontent.com';
   const GOOGLE_REDIRECT_URI = 'http://localhost:3000/login/google';
   // const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email`;
   // const linkToGoogle = () => {
