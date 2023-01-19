@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   width: 500px;
   gap: 20px;
   margin-top: 40px;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 
   @media ${MD_SIZE} {
     width: 400px;
