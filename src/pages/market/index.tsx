@@ -19,7 +19,6 @@ import { getTradePostList } from '../../store/slices/marketSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { TradePostList } from '../../types/market';
 import { TradeStatusType } from '../../types/tradePost';
-import { NavWrapper } from '../../components/gnb/navigation/navigation.styled';
 import Pagination from './components/pagination';
 
 const MarketPage = () => {
@@ -29,7 +28,7 @@ const MarketPage = () => {
   const [keyword, setKeyword] = useState<string>('');
   const initialList: TradePostList = [
     {
-      postId: 1000,
+      postId: 0,
       title: '',
       desc: '',
       price: 0,
@@ -60,7 +59,7 @@ const MarketPage = () => {
   const [page, setPage] = useState<number>(1);
   const changePage = (page: number) => {
     setPage(page);
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -69,13 +68,12 @@ const MarketPage = () => {
         getTradePostList({
           accessToken: accessToken,
           keyword: keyword,
-          offset: page,
+          page: page,
           limit: 20,
         }),
       )
         .unwrap()
         .then(res => {
-          console.log(res);
           setData(res.posts);
           setTotalPage(Math.ceil(res.paging.total / res.paging.limit));
         })
@@ -104,13 +102,12 @@ const MarketPage = () => {
         getTradePostList({
           accessToken: accessToken,
           keyword: keyword,
-          offset: page,
+          page: page,
           limit: 20,
         }),
       )
         .unwrap()
         .then(res => {
-          console.log(res);
           setData(res.posts);
           setPage(1);
           setTotalPage(Math.ceil(res.paging.total / res.paging.limit));

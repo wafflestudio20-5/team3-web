@@ -11,14 +11,14 @@ export const getTradePostList = createAsyncThunk(
     {
       accessToken,
       keyword,
-      offset,
+      page,
       limit,
-    }: { accessToken: string; keyword: string; offset: number; limit: number },
+    }: { accessToken: string; keyword: string; page: number; limit: number },
     { rejectWithValue },
   ) => {
     try {
       const res = await axios.get<TradePostResponse>(
-        `${BASE_URL}/tradepost?keyword=${keyword}&offset=${offset}&limit=${limit}`,
+        `${BASE_URL}/tradepost?keyword=${keyword}&page=${page}&limit=${limit}`,
         { headers: auth(accessToken) },
       );
       return res.data;
