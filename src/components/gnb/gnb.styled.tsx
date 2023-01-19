@@ -49,7 +49,7 @@ export const MenuIconWrapper = styled.div`
 
 export const DrawerWrapper = styled.div`
   width: 100%;
-  height: calc(100vh - 217px);
+  height: calc(100vh - 218px);
   padding: 0 25px;
 `;
 
