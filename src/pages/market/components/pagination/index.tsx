@@ -8,7 +8,7 @@ const Pagination = ({
 }: {
   total: number;
   page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setPage: (page: number) => void;
 }) => {
   console.log(total);
   const arr = Array(total).fill(0);
