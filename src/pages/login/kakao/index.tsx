@@ -12,13 +12,11 @@ const KaKaoLogin = () => {
 
   const url = new URL(window.location.href);
   const code = url.searchParams.get('code');
-  console.log(code);
 
   const loginKakao = async (code: string | null) => {
     dispatch(postKakaoLogin(code))
       .unwrap()
       .then(res => {
-        console.log(res.user);
         toast.success(`${res.user?.username}님, 환영합니다!`);
         navigate('/');
       })

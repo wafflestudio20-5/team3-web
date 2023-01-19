@@ -69,7 +69,6 @@ const LoginPage = () => {
     dispatch(postGoogleLogin(email))
       .unwrap()
       .then(res => {
-        console.log(res.user);
         toast.success(`${res.user?.username}님, 환영합니다!`);
         navigate('/');
       })
@@ -117,13 +116,10 @@ const LoginPage = () => {
   }, []);
   const onSuccess = async (res: any) => {
     // 성공하면 email, 이름, tokenId 모두 전달해줌
-    console.log('success:', res);
     const emailFromGoogle: string = res.profileObj.email;
     const response: any = loginGoogle(emailFromGoogle);
-    console.log(response);
   };
   const onFailure = (err: any) => {
-    console.log('failed:', err);
     toast('다시 시도해주세요');
   };
 
