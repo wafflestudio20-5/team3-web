@@ -37,15 +37,6 @@ const LoginPage = () => {
   };
 
   const login = async () => {
-    // const res: any = await requestLogin(inputs);
-    // if (res.data) {
-    //   console.log(res);
-    //   // setUser(res.data.user)
-    // } else {
-    //   window.alert(res.message);
-    // }
-
-    // 🥕 DESC: 추가
     dispatch(postLogin(inputs))
       .unwrap()
       .then(res => {
@@ -66,6 +57,12 @@ const LoginPage = () => {
           }
         }
       });
+  };
+
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key == 'Enter') {
+      login();
+    }
   };
 
   const loginGoogle = async (email: string) => {
@@ -94,7 +91,8 @@ const LoginPage = () => {
   };
 
   /* DESC: 카카오 로그인하기 - 외부 링크로 이동해 동의하면 redirect page 쿼리로 인가코드 보내줌 */
-  const KAKAO_REDIRECT_URI = 'http://waffle-market.s3-website.ap-northeast-2.amazonaws.com/login/kakao';
+  const KAKAO_REDIRECT_URI =
+    'http://waffle-market.s3-website.ap-northeast-2.amazonaws.com/login/kakao';
   // const KAKAO_REDIRECT_URI = 'http://localhost:3000/login/kakao';
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
   const linkToKakao = () => {
@@ -139,6 +137,7 @@ const LoginPage = () => {
           required={true}
           placeholder="이메일"
           onChange={onChange}
+          onKeyPress={onKeyPress}
         />
         <Input
           name="password"
@@ -146,6 +145,7 @@ const LoginPage = () => {
           value={password}
           placeholder="비밀번호"
           onChange={onChange}
+          onKeyPress={onKeyPress}
         />
         <LoginButton
           img={waffle}
