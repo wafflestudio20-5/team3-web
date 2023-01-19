@@ -140,7 +140,6 @@ const SignUpPage = () => {
       coordinate,
     })) as any;
     if (res.status === 200) {
-      // TODO: 액세스 토큰 처리, 유저 로그인 상태 redux에 action으로 반영하기
       dispatch(postLogin({ email, password }))
         .unwrap()
         .then(res => {
@@ -298,7 +297,6 @@ const SignUpPage = () => {
           />
         </S.SignUpButtonWrapper>
       </S.Wrapper>
-      <ToastContainer />
     </>
   );
 };
