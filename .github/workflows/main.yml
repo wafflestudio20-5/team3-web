@@ -2,6 +2,8 @@ name: development deployment3
 
 on:
   pull_request:
+    branches:
+      - main
     types:
       - closed
 
