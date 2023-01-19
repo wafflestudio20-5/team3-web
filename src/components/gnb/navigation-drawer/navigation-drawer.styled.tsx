@@ -28,7 +28,7 @@ export const AuthWrapper = styled.div`
   padding: 10px 0;
 `;
 
-interface CategoryProps extends HTMLAttributes<HTMLSpanElement> {
+interface CategoryProps extends HTMLAttributes<HTMLElement> {
   selected?: boolean;
 }
 

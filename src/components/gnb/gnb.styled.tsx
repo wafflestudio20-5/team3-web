@@ -1,15 +1,26 @@
+import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-export const OuterWrapper = styled.div`
+interface WrapperProps extends HTMLAttributes<HTMLElement> {
+  isMain?: boolean;
+}
+
+export const Wrapper = styled.div<WrapperProps>(
+  ({ isMain }) => `
+  background: ${isMain ? '#F8F5F4' : '#fff'};
   display: flex;
   justify-content: center;
   align-items: center;
+  position: sticky;
+  top: 0;
   width: 100%;
   min-width: 360px;
   height: 74px;
-  background-color: #fff;
-  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.029);
-`;
+  box-shadow: 0 4px 12px 0 rgba(199, 199, 199, 0.029);
+  z-index: 999;
+  border-bottom: 1px solid #f4f4f4;
+`,
+);
 
 export const InnerWrapper = styled.div`
   display: flex;

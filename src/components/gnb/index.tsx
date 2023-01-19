@@ -23,6 +23,7 @@ import { ReactComponent as MenuIcon } from '../../assets/menu.svg';
 const Gnb = () => {
   const { pathname } = useLocation();
   const [isMe, setIsMe] = useState(false);
+  const [isMain, setIsMain] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -59,6 +60,7 @@ const Gnb = () => {
   useEffect(() => {
     switch (pathname) {
       case '/':
+        setIsMain(true);
         setSelected({ ...selected, intro: true });
         break;
       case '/market':
@@ -81,7 +83,7 @@ const Gnb = () => {
   }, []);
 
   return (
-    <S.OuterWrapper>
+    <S.Wrapper isMain={isMain}>
       <S.InnerWrapper>
         <S.LogoImg alt="gnb" src={logoImg} onClick={() => navigate('/')} />
 
@@ -112,7 +114,7 @@ const Gnb = () => {
           </>
         </Drawer>
       </S.InnerWrapper>
-    </S.OuterWrapper>
+    </S.Wrapper>
   );
 };
 
