@@ -19,11 +19,13 @@ import lock from '../../assets/lock.svg';
 import logoImg from '../../assets/logo.svg';
 import { ReactComponent as MenuIcon } from '../../assets/menu.svg';
 
+interface GnbProps {
+  isMain?: boolean;
+}
 // DESC: global navigation bar
-const Gnb = () => {
+const Gnb = ({ isMain }: GnbProps) => {
   const { pathname } = useLocation();
   const [isMe, setIsMe] = useState(false);
-  const [isMain, setIsMain] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -60,7 +62,6 @@ const Gnb = () => {
   useEffect(() => {
     switch (pathname) {
       case '/':
-        setIsMain(true);
         setSelected({ ...selected, intro: true });
         break;
       case '/market':
@@ -87,7 +88,9 @@ const Gnb = () => {
       <S.InnerWrapper>
         <S.LogoImg alt="gnb" src={logoImg} onClick={() => navigate('/')} />
 
-        <Navigation selected={selected} />
+        <S.DesktopWrapper>
+          <Navigation selected={selected} />
+        </S.DesktopWrapper>
 
         <S.MenuIconWrapper>
           <MenuIcon onClick={handleToggleDrawer} />

@@ -1,5 +1,6 @@
 import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
+import { MD_SIZE } from '../../constant/breakpoint';
 
 interface WrapperProps extends HTMLAttributes<HTMLElement> {
   isMain?: boolean;
@@ -7,7 +8,7 @@ interface WrapperProps extends HTMLAttributes<HTMLElement> {
 
 export const Wrapper = styled.div<WrapperProps>(
   ({ isMain }) => `
-  background: ${isMain ? '#F8F5F4' : '#fff'};
+  background: ${isMain ? '#FBF7F2' : '#fff'};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,6 +31,10 @@ export const InnerWrapper = styled.div`
   min-width: 360px;
   height: 100%;
   padding: 0 40px;
+
+  @media ${MD_SIZE} {
+    padding: 0 20px;
+  }
 `;
 
 export const LogoImg = styled.img`
@@ -68,4 +73,12 @@ export const Auth = styled.div`
 export const LockIcon = styled.img`
   margin-right: 3px;
   width: 18px;
+`;
+
+export const DesktopWrapper = styled.div`
+  display: block;
+  flex-grow: 1;
+  @media ${MD_SIZE} {
+    display: none;
+  }
 `;

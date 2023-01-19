@@ -35,7 +35,7 @@ export const Category = styled.span<CategoryProps>(
   margin-right: 28px;
   font-weight: 800;
   font-size: 16px;
-  color: ${selected ? '#ff6f0f' : '#4d5159'};
+  color: ${selected ? '#ff6f0f' : '#000'};
   transition: all 0.3s;
 
   &:hover {

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  min-width: 360px;
 `;
 
 export const Background = styled.img`
