@@ -4,6 +4,7 @@ import HomePage from '../pages/home';
 import ErrorPage from '../pages/error';
 import LoginPage from '../pages/login';
 import KaKaoLogin from '../pages/login/kakao';
+import GoogleLoginPage from '../pages/login/google';
 import ProfilePage from '../pages/profile';
 import ProfileOtherPage from '../pages/profile-other';
 import MarketPage from '../pages/market';
@@ -23,6 +24,7 @@ function EntryRoute() {
         <Route path="/*" element={<ErrorPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/kakao" element={<KaKaoLogin />} />
+        <Route path="/login/google" element={<GoogleLoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/profile/me" element={<ProfilePage />} />
         <Route path="/profile/:id" element={<ProfileOtherPage />} />
