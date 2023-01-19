@@ -29,8 +29,8 @@ function EntryRoute() {
         <Route path="/profile/me" element={<ProfilePage />} />
         <Route path="/profile/:id" element={<ProfileOtherPage />} />
         <Route path="/market" element={<MarketPage />} />
-        <Route path="/review" element={<SendReview />} />
         <Route path="/tradepost/:id" element={<TradePostPage />} />
+        <Route path="/tradepost/:id/review" element={<SendReview />} />
         <Route path="/chat/messages/:UUID/:uid" element={<ChatPage />} />
         <Route path="/neighborhood" element={<NeighborhoodLanding />} />
         <Route path="/neighborhood/:id" element={<NeighborhoodPostPage />} />
