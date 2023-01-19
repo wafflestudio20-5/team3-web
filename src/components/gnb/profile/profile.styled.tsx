@@ -4,7 +4,7 @@ import { SM_SIZE } from '../../../constant/breakpoint';
 export const Wrapper = styled.div`
   display: flex;
   justify-content: flex-start;
-  margin: 35px 0 0 15px;
+  margin: 28px 0 0 15px;
 
   @media ${SM_SIZE} {
     margin: 35px 0 0 5px;
