@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 30px;
+  margin-bottom: 10px;
   gap: 8px;
 
   @media ${MD_SIZE} {
