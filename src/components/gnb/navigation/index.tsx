@@ -32,7 +32,7 @@ const Navigation = ({ isMe, selected }: NavigationProps) => {
         <Link to="/market">
           <S.Category selected={selected.market}>중고거래</S.Category>
         </Link>
-        <Link to="/">
+        <Link to="/neighborhood">
           <S.Category selected={selected.life}>동네생활</S.Category>
         </Link>
       </S.CategoryWrapper>
