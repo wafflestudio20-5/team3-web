@@ -58,6 +58,10 @@ const MarketPage = () => {
   const [data, setData] = useState<TradePostList>(initialList);
   const [totalPage, setTotalPage] = useState<number>(1);
   const [page, setPage] = useState<number>(1);
+  const changePage = (page: number) => {
+    setPage(page);
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  };
 
   useEffect(() => {
     if (accessToken) {
@@ -108,6 +112,7 @@ const MarketPage = () => {
         .then(res => {
           console.log(res);
           setData(res.posts);
+          setPage(1);
           setTotalPage(Math.ceil(res.paging.total / res.paging.limit));
         })
         .catch(err => {
@@ -258,7 +263,7 @@ const MarketPage = () => {
             created_at={'1일 전'}
           /> */}
         </List>
-        <Pagination total={totalPage} page={page} setPage={setPage} />
+        <Pagination total={totalPage} page={page} setPage={changePage} />
         <AddButton />
       </Wrapper>
     </>
