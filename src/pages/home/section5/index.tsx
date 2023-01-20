@@ -1,5 +1,6 @@
 import * as S from './section5.styled';
 import joinUs from '../../../assets/intro-joinus.png';
+import { ReactComponent as ArrowDown } from '../../../assets/arrow-down.svg';
 
 const Section5 = () => {
   return (
@@ -8,11 +9,15 @@ const Section5 = () => {
         <S.ImgWrapper>
           <S.Img src={joinUs} />
         </S.ImgWrapper>
-        <S.Title>지금 시작하세요.</S.Title>
+        <S.Title>와플마켓, 지금 같이해요.</S.Title>
+        <S.Subtitle>클릭해 함께하기</S.Subtitle>
+        <S.ArrowWrapper>
+          <ArrowDown />
+        </S.ArrowWrapper>
+
         <S.Button
           data-aos="zoom-in"
-          data-aos-offset="200"
-          data-aos-duration="500"
+          data-aos-duration="1000"
           data-aos-easing="ease-out-cubic"
           data-aos-anchor-placement="top-bottom"
         >

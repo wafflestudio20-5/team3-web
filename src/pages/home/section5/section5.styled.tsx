@@ -22,7 +22,7 @@ export const BgWrapper = styled.div`
   height: auto;
   width: 100%;
   padding: 80px 0 120px 0;
-  background-color: #fff;
+  background-color: #ffffffb5;
 
   @media (max-width: 900px) {
     padding: 80px 0;
@@ -55,21 +55,42 @@ export const Img = styled.img`
 `;
 
 export const Title = styled.h1`
-  margin: 28px 0 60px 0;
+  margin: 28px 0 36px 0;
   font-family: 'LINESeedKR-Bd';
   font-size: 40px;
   color: #404040;
 
   @media ${MD_SIZE} {
     font-size: 30px;
-    margin: 28px 0 42px 0;
   }
+`;
+
+export const Subtitle = styled.h4`
+  margin: 10px 0 0 0;
+  font-size: 14px;
+  color: #9f9f9f;
+`;
+
+export const ArrowWrapper = styled.div`
+  @keyframes updown {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(5px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  animation: updown 1.5s infinite;
 `;
 
 export const Button = styled.button`
   width: auto;
   height: auto;
   padding: 18px 34px;
+  margin-top: 10px;
   color: #fff;
   background: #ff6f06;
   font-size: 18px;
