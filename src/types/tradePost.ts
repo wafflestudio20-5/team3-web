@@ -15,7 +15,8 @@ export type TradePostType = {
   likeCount: number;
   isLiked: boolean;
   isOwner: boolean;
-  seller: TxUser | null;
+  // 수정: seller가 null일 수 있나요? 타입 에러때문에 일단 수정좀 할게요..!
+  seller: TxUser;
   buyer: TxUser | null;
   createdAt: Date;
   modifiedAt: Date;
@@ -25,7 +26,7 @@ export type TradePostType = {
 
   // 🥕 later...
   otherPosts: any;
-  imgUrls?: any;
+  imageUrls?: any;
 };
 
 export type TxUser = {
