@@ -7,8 +7,8 @@ interface Button extends HTMLAttributes<HTMLButtonElement> {
 
 export const Button = styled.button<Button>(
   ({ tradeStatus }) => `
-  background-color: ${tradeStatus === 'booked' ? '#1AA174' : '#ced4da'};
-  color: ${tradeStatus === 'booked' ? 'white' : 'black'};
+  background-color: ${tradeStatus === 'RESERVATION' ? '#12b886' : '#ced4da'};
+  color: ${tradeStatus === 'RESERVATION' ? 'white' : 'black'};
   border: 0px solid transparent;
   border-radius: 6px;
   height: 22px;
