@@ -3,99 +3,185 @@ import { LG_SIZE, MD_SIZE } from '../../../constant/breakpoint';
 
 export const Wrapper = styled.div`
   width: 100vw;
-  height: calc(100vh - 74px);
-  background-color: #fbf7f2;
+  height: 100vh;
+  background: transparent;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+  position: relative;
 
-  @media ${LG_SIZE} {
-    width: 100vw;
+  @media ${MD_SIZE} {
     height: auto;
   }
 `;
 
-export const ContentWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: space-between;
-  padding-left: 40px;
-  position: relative;
-  max-width: 1200px;
-  min-width: 1056px;
-
-  @media ${LG_SIZE} {
-    flex-direction: column;
-    min-width: 360px;
-    padding-left: 0px;
-  }
-`;
-
-export const Text = styled.div`
+export const AbsoluteBox = styled.div`
+  position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 92%;
-  margin-left: 50px;
+  align-items: flex-start;
+  width: 912px;
+  left: 0;
+  height: auto;
 
   @media ${LG_SIZE} {
-    height: 300px;
-    margin-left: 0;
-    align-items: center;
-    width: 100%;
-  }
-`;
-
-export const ImgWrapper = styled.div`
-  display: flex;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-
-  @media ${LG_SIZE} {
+    width: 700px;
     position: relative;
-    justify-content: center;
-  }
-`;
-
-export const DesktopImg = styled.img`
-  width: 755px;
-  height: 635px;
-
-  @media ${LG_SIZE} {
-    width: 500px;
-    height: 420px;
+    align-items: center;
   }
 
   @media ${MD_SIZE} {
-    width: 360px;
-    height: 310px;
+    height: auto;
+    width: auto;
+    position: relative;
+    align-items: center;
   }
 `;
 
 export const Title = styled.h1`
+  font-family: 'LINESeedKR-Bd';
+  width: 500px;
+  height: 80px;
   display: flex;
-  font-size: 45px;
-  color: #000;
-  font-weight: 600;
-  line-height: 1.3;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 40px;
+  border-radius: 0 10px 10px 0;
+  font-size: 28px;
+  color: #fff;
+  background: -webkit-linear-gradient(
+    -35deg,
+    rgb(255, 184, 0),
+    rgb(255, 131, 0)
+  );
+  background: linear-gradient(-35deg, rgb(255, 106, 0), rgb(254, 155, 50));
 
   @media ${LG_SIZE} {
+    font-size: 26px;
+    width: 450px;
+    height: 70px;
+    justify-content: center;
+    padding-left: 0;
+    border-radius: 10px;
+    padding-right: 0px;
+  }
+
+  @media ${MD_SIZE} {
+    width: 340px;
+    height: 60px;
+    font-size: 22px;
   }
 `;
 
-export const SubTitle = styled.h3`
+export const CardWrapper = styled.div`
+  width: 100%;
+  height: auto;
   display: flex;
-  font-size: 15px;
-  color: #5a5a5a;
-  font-weight: 300;
-  line-height: 1.2;
-  margin-top: 2px;
-
-  &:first-of-type {
-    margin-top: 30px;
-  }
+  justify-content: center;
+  margin-top: 70px;
+  gap: 20px;
 
   @media ${LG_SIZE} {
+    gap: 15px;
   }
+
+  @media ${MD_SIZE} {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+export const Card = styled.div`
+  width: 280px;
+  height: 380px;
+  background: #fff;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+
+  @media ${LG_SIZE} {
+    width: 220px;
+    height: 270px;
+  }
+
+  @media ${MD_SIZE} {
+    width: 280px;
+    height: 380px;
+  }
+`;
+
+export const CardType1Img = styled.img`
+  width: 100%;
+  height: 55%;
+  object-fit: cover;
+  border-radius: 20px 20px 0 0;
+`;
+
+export const CardType2Img = styled.img`
+  width: 100%;
+  height: 55%;
+  object-fit: cover;
+  border-radius: 0 0 20px 20px;
+`;
+
+export const CardContent = styled.div`
+  width: 100%;
+  height: 45%;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @media ${LG_SIZE} {
+    padding: 15px;
+  }
+
+  @media ${MD_SIZE} {
+    padding: 25px;
+  }
+`;
+
+export const CardTitle = styled.h2`
+  width: 100%;
+  height: auto;
+  font-size: 23px;
+  display: flex;
+  justify-content: flex-start;
+  font-weight: 600;
+  color: #393939;
+
+  @media ${LG_SIZE} {
+    font-size: 18px;
+  }
+  @media ${MD_SIZE} {
+    font-size: 23px;
+  }
+`;
+
+export const CardTitleType2 = styled(CardTitle)`
+  justify-content: flex-end;
+`;
+
+export const CardSubtitle = styled.h5`
+  margin-top: 15px;
+  width: 100%;
+  height: auto;
+  color: #787878;
+  font-size: 14px;
+
+  @media ${LG_SIZE} {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+  @media ${MD_SIZE} {
+    font-size: 14px;
+    margin-top: 15px;
+  }
+`;
+
+export const CardSubtitleType2 = styled(CardSubtitle)`
+  text-align: right;
 `;
