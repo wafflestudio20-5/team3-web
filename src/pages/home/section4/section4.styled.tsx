@@ -65,7 +65,7 @@ export const Title = styled.h1`
   }
 `;
 
-export const SubtitleWrapper = styled.h4`
+export const SubtitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
