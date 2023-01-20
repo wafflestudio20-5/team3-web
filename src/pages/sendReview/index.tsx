@@ -11,7 +11,7 @@ import { redirectWithMsg } from '../../utils/errors';
 
 import Product from './components/product';
 import Score from './components/score';
-import carrot from '../../assets/carrot.svg';
+import alt from '../../assets/post-alt.png';
 import * as S from './sendReview.styled';
 
 const SendReview = () => {
@@ -19,6 +19,7 @@ const SendReview = () => {
   const params = useParams();
   const postId = Number(params.id);
   const dispatch = useAppDispatch();
+  const { me } = useAppSelector(state => state.users);
   const { accessToken } = useAppSelector(state => state.session);
   const defaultEmotion = { bad: false, good: false, great: false };
   const [selected, setSelected] = useState(defaultEmotion);
@@ -117,7 +118,7 @@ const SendReview = () => {
     navigate(-1);
   }
   // 줄바꿈 적용을 위해 변수로 저장
-  const title1 = `User님,\n${tradeInfo?.neighbor}님과 거래가 어떠셨나요?`;
+  const title1 = `${me?.username}님,\n${tradeInfo?.neighbor}님과 거래가 어떠셨나요?`;
 
   return (
     <>
@@ -126,7 +127,7 @@ const SendReview = () => {
         {tradeInfo && (
           <Product
             postId={postId}
-            img={tradeInfo.img ? tradeInfo.img : carrot}
+            img={tradeInfo.img ? tradeInfo.img : alt}
             title={tradeInfo.title}
             neighbor={tradeInfo.neighbor}
             neighborId={tradeInfo.neighborId}
