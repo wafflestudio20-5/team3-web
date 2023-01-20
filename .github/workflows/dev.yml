@@ -1,11 +1,10 @@
-name: development deployment3
+name: dev deploy
 
 on:
   pull_request:
     branches:
-      - main
-    types:
-      - closed
+      - dev
+    types: [closed]
 
 jobs:
   deploy:
@@ -42,4 +41,4 @@ jobs:
           aws s3 cp \
             --recursive \
             --region ap-northeast-2 \
-            build s3://waffle-market
+            build s3://waffle-market-dev
