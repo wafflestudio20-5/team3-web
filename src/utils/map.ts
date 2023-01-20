@@ -8,7 +8,7 @@ export const getCoordinate = (
 ) => {
   useEffect(() => {
     try {
-      if (kakao.maps.services && kakao.maps.services.Places) {
+      if (location && kakao.maps.services && kakao.maps.services.Places) {
         const ps = new kakao.maps.services.Places();
 
         ps.keywordSearch(location, (data: any, status, _pagination) => {
