@@ -14,11 +14,12 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 30px;
 `;
 
 export const WindowWrapper = styled.div`
   position: relative;
-  width: 600px;
+  width: 700px;
   height: 405px;
   display: flex;
   justify-content: center;
@@ -110,13 +111,17 @@ export const Domain = styled.div`
 `;
 
 export const Typing = styled.div`
+  width: 92%;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   height: 60px;
   color: #ff7e36;
   font-weight: 400;
-  font-size: 30px;
+  font-size: 25px;
   font-family: 'Cafe24Ssurround';
+  margin-top: 30px;
+  margin-right: 150px;
 
   &::after {
     display: flex;
@@ -145,14 +150,25 @@ export const Typing = styled.div`
   }
   @media ${MD_SIZE} {
     font-size: 25px;
+    margin-right: 0px;
   }
 `;
 
+export const ScrollWrapper = styled.div`
+  width: auto;
+  height: auto;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 6vh;
+`;
+
 export const ScrollDown = styled.div`
+  font-family: 'LINESeedKR-Bd';
   color: #a9a9a9;
   font-weight: 500;
   font-size: 18px;
-  font-family: 'LINESeedKR-Bd';
   margin-top: -10px;
   animation: opacityAppear 2s;
 
@@ -172,7 +188,9 @@ export const ScrollDown = styled.div`
 export const Scroll = styled.img`
   margin-top: 5px;
   width: 40px;
-  animation: upDown 0.5s linear 0s infinite alternate;
+
+  /* TODO: 조잡해서 적용 고민중 */
+  /* animation: upDown 0.5s linear 0s infinite alternate;
 
   @keyframes upDown {
     0% {
@@ -181,17 +199,7 @@ export const Scroll = styled.img`
     100% {
       transform: translateY(0px);
     }
-  }
-`;
-
-export const ScrollWrapper = styled.div`
-  width: auto;
-  height: auto;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 6vh;
+  } */
 `;
 
 export const Main = styled.main`
@@ -202,29 +210,9 @@ export const Main = styled.main`
   height: 336px;
   background: #fff;
   padding: 10px;
-`;
-
-export const Daangni = styled.img`
-  width: 120px;
-  height: auto;
-  display: block;
-  z-index: 9;
-  right: 0;
-  bottom: 0;
-  position: absolute;
-
-  animation: float 3s infinite alternate;
-  @keyframes float {
-    0% {
-      transform: rotate(5deg);
-    }
-    100% {
-      transform: translate(0, 5px);
-    }
-  }
 
   @media ${MD_SIZE} {
-    width: 90px;
+    height: 230px;
   }
 `;
 
@@ -233,4 +221,94 @@ export const MockUpImg = styled.img`
   height: 100%;
   border-radius: 10px;
   object-fit: cover;
+
+  @media ${MD_SIZE} {
+    height: 100%;
+  }
+`;
+
+export const MockupImg2 = styled.div`
+  width: 180px;
+  height: 122px;
+  display: flex;
+  z-index: 9;
+  left: 30px;
+  bottom: 50px;
+  position: absolute;
+  background-color: #fff;
+  border: 8px solid #ffffff66;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 5px;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+
+  @media ${MD_SIZE} {
+    display: none;
+  }
+
+  animation: enlarge 3s infinite alternate;
+  @keyframes enlarge {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.08);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+`;
+
+export const MockupImg3 = styled.div`
+  position: absolute;
+  right: 10px;
+  bottom: 160px;
+  height: 120px;
+  animation: none;
+  border: 8px solid #ffffff66;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+  width: 140px;
+  height: 100px;
+  display: block;
+  z-index: 9;
+  object-fit: cover;
+
+  @media ${MD_SIZE} {
+    display: none;
+  }
+`;
+
+export const Cursor = styled.img`
+  left: 50px;
+  bottom: 40px;
+  width: 34px;
+  height: 38px;
+  border: none;
+  display: block;
+  position: absolute;
+  z-index: 10;
+  @media ${MD_SIZE} {
+    width: 25px;
+    height: 30px;
+    left: 20px;
+    bottom: 20px;
+  }
+
+  animation: click 3s infinite alternate;
+  @keyframes click {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(20deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
 `;
