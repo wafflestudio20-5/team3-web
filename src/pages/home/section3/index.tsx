@@ -8,7 +8,6 @@ const Section3 = () => {
     <S.Wrapper id="anchor5">
       <S.AbsoluteBox>
         <S.Title
-          id="anchor3"
           data-aos="fade-right"
           data-aos-offset="200"
           data-aos-mirror={true}

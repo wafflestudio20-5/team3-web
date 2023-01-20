@@ -34,7 +34,14 @@ const Section0 = () => {
 
   return (
     <S.Wrapper>
-      <S.ContentWrapper>
+      <S.ContentWrapper
+        data-aos="zoom-in"
+        data-aos-offset="200"
+        data-aos-mirror={true}
+        data-aos-duration="1000"
+        data-aos-easing="ease-out-cubic"
+        data-aos-anchor-placement="top-center"
+      >
         <S.Typing>{text}</S.Typing>
         <S.WindowWrapper>
           <S.Window>
