@@ -42,6 +42,7 @@ const Section0 = () => {
               <S.Close />
               <S.Hold />
               <S.Open />
+              {/* 우리 도메인으로 */}
               <S.Domain>https://www.waffle-market.com</S.Domain>
             </S.Nav>
             <S.Main>

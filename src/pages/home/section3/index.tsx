@@ -60,7 +60,7 @@ const Section3 = () => {
             <S.CardContent>
               <S.CardTitleType2>동네모임</S.CardTitleType2>
               <S.CardSubtitleType2>
-                관심사가 비슷한 이웃과는 
+                관심사가 비슷한 이웃과는
                 <br />
                 온오프라인으로도 만날 수 있어요.
                 <br />

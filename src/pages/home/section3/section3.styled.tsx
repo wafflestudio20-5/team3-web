@@ -2,14 +2,14 @@ import styled from 'styled-components';
 import { LG_SIZE, MD_SIZE } from '../../../constant/breakpoint';
 
 export const Wrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 100px;
   position: relative;
+  width: 100vw;
+  height: 100vh;
+  padding-top: 200px;
+  background: transparent;
 
   @media ${MD_SIZE} {
     height: auto;
@@ -17,54 +17,48 @@ export const Wrapper = styled.div`
 `;
 
 export const AbsoluteBox = styled.div`
-  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 912px;
+  position: absolute;
   left: 0;
+  width: 912px;
   height: auto;
 
   @media ${LG_SIZE} {
-    width: 700px;
-    position: relative;
     align-items: center;
+    position: relative;
+    width: 700px;
   }
 
   @media ${MD_SIZE} {
-    height: auto;
-    width: auto;
-    position: relative;
     align-items: center;
+    position: relative;
+    width: auto;
+    height: auto;
   }
 `;
 
 export const Title = styled.h1`
-  font-family: 'LINESeedKR-Bd';
-  width: 500px;
-  height: 80px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding-right: 40px;
+  width: 600px;
+  height: 80px;
+  padding-right: 60px;
   border-radius: 0 10px 10px 0;
+  font-family: 'LINESeedKR-Bd';
   font-size: 28px;
   color: #fff;
-  background: -webkit-linear-gradient(
-    -35deg,
-    rgb(255, 184, 0),
-    rgb(255, 131, 0)
-  );
-  background: linear-gradient(-35deg, rgb(255, 106, 0), rgb(254, 155, 50));
+  background: linear-gradient(35deg, rgb(255, 106, 0), rgb(254, 155, 50));
 
   @media ${LG_SIZE} {
-    font-size: 26px;
+    justify-content: center;
     width: 450px;
     height: 70px;
-    justify-content: center;
-    padding-left: 0;
+    padding-right: 0;
     border-radius: 10px;
-    padding-right: 0px;
+    font-size: 26px;
   }
 
   @media ${MD_SIZE} {
@@ -75,10 +69,10 @@ export const Title = styled.h1`
 `;
 
 export const CardWrapper = styled.div`
-  width: 100%;
-  height: auto;
   display: flex;
   justify-content: center;
+  width: 100%;
+  height: auto;
   margin-top: 70px;
   gap: 20px;
 
@@ -93,13 +87,13 @@ export const CardWrapper = styled.div`
 `;
 
 export const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 280px;
   height: 380px;
   background: #fff;
   border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
 
   @media ${LG_SIZE} {
@@ -128,12 +122,12 @@ export const CardType2Img = styled.img`
 `;
 
 export const CardContent = styled.div`
-  width: 100%;
-  height: 45%;
-  padding: 25px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
+  height: 45%;
+  padding: 25px;
 
   @media ${LG_SIZE} {
     padding: 15px;
@@ -145,11 +139,11 @@ export const CardContent = styled.div`
 `;
 
 export const CardTitle = styled.h2`
+  display: flex;
+  justify-content: flex-start;
   width: 100%;
   height: auto;
   font-size: 23px;
-  display: flex;
-  justify-content: flex-start;
   font-weight: 600;
   color: #393939;
 
@@ -166,9 +160,9 @@ export const CardTitleType2 = styled(CardTitle)`
 `;
 
 export const CardSubtitle = styled.h5`
-  margin-top: 15px;
   width: 100%;
   height: auto;
+  margin-top: 15px;
   color: #787878;
   font-size: 14px;
 

@@ -16,18 +16,10 @@ const Section1 = () => {
         data-aos-easing="ease-out-cubic"
         data-aos-anchor-placement="top-center"
       >
-        <S.Category>
-          유저정보 대표 이미지
-        </S.Category>
-        <S.Category>
-          중고거래 대표 이미지
-        </S.Category>
-        <S.Category>
-          동네생활 대표 이미지
-        </S.Category>
-        <S.Category>
-          그 외의 대표 이미지
-        </S.Category>
+        <S.Category>유저정보 대표 이미지</S.Category>
+        <S.Category>중고거래 대표 이미지</S.Category>
+        <S.Category>동네생활 대표 이미지</S.Category>
+        <S.Category>그 외의 대표 이미지</S.Category>
       </S.CategoryWrapper>
     </S.Wrapper>
   );

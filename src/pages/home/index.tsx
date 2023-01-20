@@ -11,7 +11,7 @@ import { Background, Wrapper } from './home.styled';
 const HomePage = () => {
   return (
     <Wrapper>
-      <Gnb />
+      <Gnb isMain />
       <Background src={bgImg} />
       <Section0 />
       <Section1 />
