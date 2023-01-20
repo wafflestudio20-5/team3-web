@@ -13,7 +13,7 @@ const App = () => {
   return (
     <>
       <EntryRoute />
-      <ToastContainer hideProgressBar />
+      <ToastContainer hideProgressBar position="top-center" />
     </>
   );
 };
