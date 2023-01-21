@@ -1,99 +1,56 @@
 import styled from 'styled-components';
-import { LG_SIZE, MD_SIZE } from '../../../constant/breakpoint';
+import { MD_SIZE } from '../../../constant/breakpoint';
 
 export const Wrapper = styled.div`
-  width: 100vw;
-  height: calc(100vh - 74px);
-  background-color: #fbf7f2;
-  display: flex;
-  justify-content: center;
-
-  @media ${LG_SIZE} {
-    width: 100vw;
-    height: auto;
-  }
-`;
-
-export const ContentWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: space-between;
-  padding-left: 40px;
-  position: relative;
-  max-width: 1200px;
-  min-width: 1056px;
-
-  @media ${LG_SIZE} {
-    flex-direction: column;
-    min-width: 360px;
-    padding-left: 0px;
-  }
-`;
-
-export const Text = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 92%;
-  margin-left: 50px;
-
-  @media ${LG_SIZE} {
-    height: 300px;
-    margin-left: 0;
-    align-items: center;
-    width: 100%;
-  }
-`;
-
-export const ImgWrapper = styled.div`
-  display: flex;
-  margin-top: 111px;
-
-  @media ${LG_SIZE} {
-    position: relative;
-    justify-content: center;
-  }
-`;
-
-export const DesktopImg = styled.img`
-  width: 755px;
-  height: 635px;
-
-  @media ${LG_SIZE} {
-    width: 500px;
-    height: 420px;
-  }
-
+  align-items: center;
+  width: 100%;
+  padding-top: 150px;
+  background: transparent;
   @media ${MD_SIZE} {
-    width: 360px;
-    height: 310px;
+    height: auto;
   }
 `;
 
 export const Title = styled.h1`
   display: flex;
-  font-size: 45px;
-  color: #000;
-  font-weight: 600;
-  line-height: 1.3;
+  justify-content: center;
+  width: 100%;
+  font-family: 'LINESeedKR-Bd';
+  font-size: 30px;
+  color: #404040;
 
-  @media ${LG_SIZE} {
+  @media ${MD_SIZE} {
+    font-size: 18px;
   }
 `;
 
-export const SubTitle = styled.h3`
+export const CategoryWrapper = styled.div`
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 320px 320px;
+  grid-template-rows: 178px 178px;
+  width: 100%;
+  height: auto;
+  margin-top: 70px;
+  gap: 20px;
+
+  @media ${MD_SIZE} {
+    grid-template-columns: 320px;
+    margin-top: 50px;
+  }
+`;
+
+export const Category = styled.div`
   display: flex;
-  font-size: 15px;
-  color: #5a5a5a;
-  font-weight: 300;
-  line-height: 1.2;
-  margin-top: 2px;
-
-  &:first-of-type {
-    margin-top: 30px;
-  }
-
-  @media ${LG_SIZE} {
-  }
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 320px;
+  height: 178px;
+  font-family: 'KyoboHand';
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
 `;

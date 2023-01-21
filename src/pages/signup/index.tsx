@@ -14,20 +14,33 @@ import {
 } from '../../api/auth';
 import * as V from '../../utils/validateUserInfo';
 
+import { Coordinate } from '../../types/auth';
+import { getCoordinate } from '../../utils/map';
+
 import * as S from './signup.styled';
 import { COLOR_CARROT } from '../../constant';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import { getCoordinate } from '../../utils/map';
 import { randomPassword } from '../../utils/randomPassword';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Coordinate } from '../../types/auth';
+
 import { useAppDispatch } from '../../store/hooks';
 import { postLogin } from '../../store/slices/sessionSlice';
 import axios from 'axios';
 import { redirectWithMsg } from '../../utils/errors';
 
 const SignUpPage = () => {
+  const [location, setLocation] = useState('');
+  const [coordinate, setCoordinate] = useState<Coordinate>({
+    lat: 0,
+    lng: 0,
+  });
+
+  // useEffect안에 넣지 말고 사용 (내부에 location에 따른 useEffect 걸려있음)
+  getCoordinate(location, coordinate, setCoordinate);
+  // TODO: test용 콘솔 -> 기능 한 번 확인해보시고 지워주시면 감사하겠습니다!
+  console.log(location, coordinate);
+
   let isSocialLoginProp: boolean, emailSocial: string;
   if (useLocation().state === null) {
     // 일반 로그인의 경우
@@ -128,9 +141,6 @@ const SignUpPage = () => {
   };
 
   const signUpUser = async () => {
-    // TODO: coordinate(좌표) 처리,
-    // const coordinate = getCoordinate(location); // 에러 발생(Invalid hook call)
-    const coordinate = { lat: 77.777777, lng: 77.77777 }; // 임시 데이터
     const res = (await requestSignUpUser({
       email,
       password,
@@ -167,7 +177,6 @@ const SignUpPage = () => {
     }
   };
 
-  const [location, setLocation] = useState('');
   // DESC: 카카오 API를 사용하여 위치 관련 정보를 얻어내기
   const open = useDaumPostcodePopup();
   const handleComplete = (data: any) => {

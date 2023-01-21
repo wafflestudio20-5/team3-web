@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
   right: 0;
   height: 100vh;
   z-index: 1000;
+  max-width: 430px;
 `;
 
 // DESC: for drawer motion
@@ -17,6 +18,7 @@ export const Container = styled(motion.div)`
   flex-direction: column;
   justify-content: space-between;
   width: 360px;
+  max-width: 360px;
   height: 100%;
   position: relative;
   background-color: #fff;
@@ -29,12 +31,20 @@ export const InnerWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   min-width: 360px;
-  padding: 25px 25px;
   box-sizing: border-box;
 `;
 
 export const QuitIconWrapper = styled.div`
   &:hover {
     cursor: pointer;
+    background: #efefef;
   }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  margin: 20px 0 0 20px;
+  border-radius: 5px;
+  transition: 0.3s all;
 `;

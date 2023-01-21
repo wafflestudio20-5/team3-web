@@ -2,126 +2,180 @@ import styled from 'styled-components';
 import { LG_SIZE, MD_SIZE } from '../../../constant/breakpoint';
 
 export const Wrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: #ffffff;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  padding-top: 200px;
+  background: transparent;
 
-  @media ${LG_SIZE} {
-    width: 100vw;
+  @media ${MD_SIZE} {
     height: auto;
   }
 `;
 
-export const ContentWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  padding-right: 40px;
-  position: relative;
-  max-width: 1100px;
-
-  @media ${LG_SIZE} {
-    flex-direction: column;
-    min-width: 360px;
-    padding-right: 0px;
-  }
-`;
-
-export const Text = styled.div`
+export const AbsoluteBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 92%;
-  margin-left: 100px;
-
-  @media ${LG_SIZE} {
-    height: 300px;
-    align-items: center;
-    width: 100%;
-    margin-left: 0;
-  }
-`;
-
-export const ImgWrapper = styled.div`
-  display: flex;
+  align-items: flex-end;
+  position: absolute;
+  right: 0;
+  width: 912px;
+  height: auto;
 
   @media ${LG_SIZE} {
     position: relative;
-    justify-content: center;
-    margin-top: 100px;
-  }
-`;
-
-export const DesktopImg = styled.img`
-  width: 490px;
-  height: 635px;
-
-  @media ${LG_SIZE} {
-    width: 325px;
-    height: 420px;
+    align-items: center;
+    width: 700px;
   }
 
   @media ${MD_SIZE} {
-    width: 360px;
-    height: 310px;
+    position: relative;
+    align-items: center;
+    width: auto;
+    height: auto;
   }
 `;
 
 export const Title = styled.h1`
   display: flex;
-  font-size: 40px;
-  color: #000;
-  font-weight: 600;
-  line-height: 1.3;
+  justify-content: flex-start;
+  align-items: center;
+  width: 600px;
+  height: 80px;
+  padding-left: 60px;
+  border-radius: 10px 0 0 10px;
+  font-family: 'LINESeedKR-Bd';
+  font-size: 28px;
+  color: #fff;
+  background: linear-gradient(-35deg, rgb(255, 106, 0), rgb(254, 155, 50));
 
   @media ${LG_SIZE} {
+    justify-content: center;
+    width: 450px;
+    height: 70px;
+    padding-left: 0;
+    border-radius: 10px;
+    font-size: 26px;
+  }
+
+  @media ${MD_SIZE} {
+    width: 340px;
+    height: 60px;
+    font-size: 22px;
   }
 `;
 
-export const SubTitle = styled.h3`
-  display: flex;
-  font-size: 15px;
-  color: #5a5a5a;
-  font-weight: 300;
-  line-height: 1.2;
-  margin-top: 2px;
-
-  &:first-of-type {
-    margin-top: 30px;
-  }
-
-  @media ${LG_SIZE} {
-  }
-`;
-
-export const ButtonWrapper = styled.div`
-  display: flex;
-  width: 300px;
-  height: auto;
-  justify-content: space-between;
-  margin-top: 30px;
-`;
-
-export const Button = styled.button`
+export const CardWrapper = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  width: auto;
-  height: 50px;
-  padding: 20px;
+  width: 100%;
+  height: auto;
+  margin-top: 70px;
+  gap: 20px;
 
-  background: #f1f3f5;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #212529;
-  transition: 0.2s all;
-
-  &:hover {
-    background: #e2e3e3;
+  @media ${LG_SIZE} {
+    gap: 15px;
   }
+
+  @media ${MD_SIZE} {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+export const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 280px;
+  height: 380px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+
+  @media ${LG_SIZE} {
+    width: 220px;
+    height: 270px;
+  }
+
+  @media ${MD_SIZE} {
+    width: 280px;
+    height: 380px;
+  }
+`;
+
+export const CardType1Img = styled.img`
+  width: 100%;
+  height: 55%;
+  object-fit: cover;
+  border-radius: 20px 20px 0 0;
+`;
+
+export const CardType2Img = styled.img`
+  width: 100%;
+  height: 55%;
+  object-fit: cover;
+  border-radius: 0 0 20px 20px;
+`;
+
+export const CardContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 45%;
+  padding: 25px;
+
+  @media ${LG_SIZE} {
+    padding: 20px;
+  }
+
+  @media ${MD_SIZE} {
+    padding: 25px;
+  }
+`;
+
+export const CardTitle = styled.h2`
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  height: auto;
+  font-size: 23px;
+  font-weight: 600;
+  color: #393939;
+
+  @media ${LG_SIZE} {
+    font-size: 18px;
+  }
+  @media ${MD_SIZE} {
+    font-size: 23px;
+  }
+`;
+
+export const CardTitleType2 = styled(CardTitle)`
+  justify-content: flex-end;
+`;
+
+export const CardSubtitle = styled.h5`
+  width: 100%;
+  height: auto;
+  margin-top: 15px;
+  color: #787878;
+  font-size: 14px;
+
+  @media ${LG_SIZE} {
+    margin-top: 6px;
+    font-size: 11px;
+  }
+  @media ${MD_SIZE} {
+    margin-top: 15px;
+    font-size: 14px;
+  }
+`;
+
+export const CardSubtitleType2 = styled(CardSubtitle)`
+  text-align: right;
 `;
