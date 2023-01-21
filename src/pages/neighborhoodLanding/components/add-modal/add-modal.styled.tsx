@@ -51,9 +51,21 @@ export const DescWrapper = styled.div`
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.3);
 `;
 
+export const TitleText = styled.textarea`
+  width: 100%;
+  height: 10%;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  border: none;
+
+  .content:focus {
+    outline: none;
+  }
+`;
+
 export const Desc = styled.textarea`
   width: 100%;
-  height: 100%;
+  height: 90%;
   padding: 10px;
   box-sizing: border-box;
   border: none;
