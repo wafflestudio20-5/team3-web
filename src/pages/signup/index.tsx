@@ -39,7 +39,7 @@ const SignUpPage = () => {
   // useEffect안에 넣지 말고 사용 (내부에 location에 따른 useEffect 걸려있음)
   getCoordinate(location, coordinate, setCoordinate);
   // TODO: test용 콘솔 -> 기능 한 번 확인해보시고 지워주시면 감사하겠습니다!
-  console.log(location, coordinate);
+  // console.log(location, coordinate);
 
   let isSocialLoginProp: boolean, emailSocial: string;
   if (useLocation().state === null) {
