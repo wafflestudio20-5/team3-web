@@ -1,34 +1,42 @@
-import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Drawer from '../drawer';
 import Profile from './profile';
+import { Footer } from './footer';
 import Navigation from './navigation';
+import NavigationDrawer from './navigation-drawer';
 
 import { loadItem } from '../../utils/storage';
 import { useDrawer } from '../../hooks/useDrawer';
 import { getMe } from '../../store/slices/usersSlice';
 import { postRefresh } from '../../store/slices/sessionSlice';
+import { sessionActions } from '../../store/slices/sessionSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import * as S from './gnb.styled';
+import lock from '../../assets/lock.svg';
 import logoImg from '../../assets/logo.svg';
 import { ReactComponent as MenuIcon } from '../../assets/menu.svg';
 
+interface GnbProps {
+  isMain?: boolean;
+}
 // DESC: global navigation bar
-const Gnb = () => {
+const Gnb = ({ isMain }: GnbProps) => {
   const { pathname } = useLocation();
   const [isMe, setIsMe] = useState(false);
 
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { active, handleToggleDrawer } = useDrawer();
   const { me } = useAppSelector(state => state.users);
   const { accessToken } = useAppSelector(state => state.session);
 
   const [selected, setSelected] = useState({
-    landing: false,
+    intro: false,
     market: false,
-    life: false,
+    neighborhood: false,
     profile: false,
   });
 
@@ -54,13 +62,13 @@ const Gnb = () => {
   useEffect(() => {
     switch (pathname) {
       case '/':
-        setSelected({ ...selected, landing: true });
+        setSelected({ ...selected, intro: true });
         break;
       case '/market':
         setSelected({ ...selected, market: true });
         break;
       case '/neighborhood':
-        setSelected({ ...selected, life: true });
+        setSelected({ ...selected, neighborhood: true });
         break;
       case '/profile/me':
         setSelected({ ...selected, profile: true });
@@ -70,32 +78,46 @@ const Gnb = () => {
     }
   }, []);
 
-  return (
-    <S.OuterWrapper>
-      <S.InnerWrapper>
-        <Link to="/">
-          <S.LogoImg alt="gnb" src={logoImg} />
-        </Link>
+  const handleLogout = useCallback(() => {
+    dispatch(sessionActions.logout());
+    window.location.href = '/';
+  }, []);
 
-        {/* DESC: for Desktop */}
+  return (
+    <S.Wrapper isMain={isMain}>
+      <S.InnerWrapper>
+        <S.LogoImg alt="gnb" src={logoImg} onClick={() => navigate('/')} />
+
         <S.DesktopWrapper>
-          <Navigation isMe={isMe} selected={selected} />
+          <Navigation selected={selected} />
         </S.DesktopWrapper>
 
-        {/* DESC: for Mobile */}
-        <S.MobileWrapper>
-          <S.MenuIconWrapper>
-            <MenuIcon onClick={handleToggleDrawer} />
-          </S.MenuIconWrapper>
-          <Drawer active={active} handleToggleDrawer={handleToggleDrawer}>
-            <>
+        <S.MenuIconWrapper>
+          <MenuIcon onClick={handleToggleDrawer} />
+        </S.MenuIconWrapper>
+        <Drawer active={active} handleToggleDrawer={handleToggleDrawer}>
+          <>
+            <S.DrawerWrapper>
               <Profile user={me} />
-              <Navigation isMe={isMe} selected={selected} />
-            </>
-          </Drawer>
-        </S.MobileWrapper>
+              <NavigationDrawer isMe={isMe} selected={selected} />
+            </S.DrawerWrapper>
+            {me ? (
+              <S.Auth onClick={handleLogout}>
+                <S.LockIcon alt="lock" src={lock} />
+                로그아웃
+              </S.Auth>
+            ) : (
+              <S.Auth onClick={() => navigate('/login')}>
+                <S.LockIcon alt="lock" src={lock} />
+                로그인
+              </S.Auth>
+            )}
+
+            <Footer />
+          </>
+        </Drawer>
       </S.InnerWrapper>
-    </S.OuterWrapper>
+    </S.Wrapper>
   );
 };
 

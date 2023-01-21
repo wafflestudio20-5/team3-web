@@ -7,7 +7,7 @@ export const Footer = () => {
   return (
     <Wrapper>
       <Text>{`Copyright ⓒ ${year}.`}</Text>
-      <Text>{`TEAM 03 all rights reserved.`}</Text>
+      <Text>{}</Text>
     </Wrapper>
   );
 };
