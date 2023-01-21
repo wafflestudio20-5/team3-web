@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 18%;
+  margin-top: 160px;
   width: 500px;
   min-width: 300px;
   height: 660px;

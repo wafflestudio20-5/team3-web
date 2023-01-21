@@ -27,7 +27,6 @@ export const postGoogleLogin = createAsyncThunk(
       const res = await axios.post(`${BASE_URL}/google/login`, {
         email: email,
       });
-      console.log(res);
       return res.data;
     } catch (err) {
       return rejectWithValue(err);

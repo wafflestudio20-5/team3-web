@@ -1,20 +1,26 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 import Gnb from '../../components/gnb';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { getTradePost } from '../../store/slices/tradePostSlice';
+import { postReview } from '../../store/slices/reviewSlice';
+import { redirectWithMsg } from '../../utils/errors';
 
 import Product from './components/product';
 import Score from './components/score';
-import sampleImg from '../../assets/product-sample-5.jpeg';
+import alt from '../../assets/post-alt.png';
 import * as S from './sendReview.styled';
 
 const SendReview = () => {
-  // 줄바꿈 적용을 위해 변수로 저장
-  const title1 = 'User님,\nUser2님과 거래가 어떠셨나요?';
   const navigate = useNavigate();
-  // const dispatch = useAppDispatch();
-  // const accessToken = useAppSelector(state => state.accessToken);
+  const params = useParams();
+  const postId = Number(params.id);
+  const dispatch = useAppDispatch();
+  const { me } = useAppSelector(state => state.users);
+  const { accessToken } = useAppSelector(state => state.session);
   const defaultEmotion = { bad: false, good: false, great: false };
   const [selected, setSelected] = useState(defaultEmotion);
   const [score, setScore] = useState(0);
@@ -51,31 +57,82 @@ const SendReview = () => {
     }
   };
 
-  // TODO: tradepost 정보 가져오기
-  //   const [tradeInfo, setTradeInfo] = useState({
-  //     title: '',
-  //     img: '',
-  //     neighbor: '',
-  //   });
-  //   useEffect(() => {
-  //     dispatch(getTradePost(accessToken, postNumber)).then(() => {
-  //       setTradeInfo({ title: '', img: '', neighbor: '' });
-  //     });
-  //   }, []);
+  const [tradeInfo, setTradeInfo] = useState({
+    title: '',
+    img: '',
+    neighbor: '',
+    neighborId: 0,
+  });
+  const [isValidPage, setIsValidPage] = useState(true);
+  useEffect(() => {
+    if (accessToken && postId) {
+      dispatch(getTradePost({ accessToken: accessToken, postId: postId }))
+        .unwrap()
+        .then(res => {
+          setTradeInfo({
+            title: res?.title,
+            img: res?.imageUrls[0],
+            neighbor: res?.seller.username,
+            neighborId: res?.seller.id,
+          });
+        })
+        .catch(() => {
+          setIsValidPage(false);
+        });
+    }
+  }, [accessToken, postId]);
 
   const handleSubmit = () => {
-    // if (score === 0) => {
-    //   toast('점수를 선택해주세요')
-    // } else {
-    //   requestPostReview(postId, score, content)
-    // }
+    if (score === 0) {
+      toast('거래 선호도를 선택해주세요');
+    } else {
+      if (accessToken && postId) {
+        dispatch(postReview({ accessToken, postId, score, content }))
+          .unwrap()
+          .then(res => {
+            toast('리뷰가 등록되었습니다');
+            navigate(`/tradepost/${postId}`);
+          })
+          .catch(err => {
+            if (axios.isAxiosError(err)) {
+              if (err.response?.status === 404) {
+                redirectWithMsg(2, err.response?.data.error, () =>
+                  navigate(-1),
+                );
+              } else if (err.response?.status === 403) {
+                // TODO: refresh 후 재요청
+                redirectWithMsg(2, err.response?.data.error, () =>
+                  navigate('/'),
+                );
+              } else {
+                redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                  navigate('/'),
+                );
+              }
+            }
+          });
+      }
+    }
   };
+  if (!isValidPage) {
+    navigate(-1);
+  }
+  // 줄바꿈 적용을 위해 변수로 저장
+  const title1 = `${me?.username}님,\n${tradeInfo?.neighbor}님과 거래가 어떠셨나요?`;
 
   return (
     <>
       <Gnb />
       <S.Wrapper>
-        <Product img={sampleImg} title="징거버거 와플" neighbor="자흔" />
+        {tradeInfo && (
+          <Product
+            postId={postId}
+            img={tradeInfo.img ? tradeInfo.img : alt}
+            title={tradeInfo.title}
+            neighbor={tradeInfo.neighbor}
+            neighborId={tradeInfo.neighborId}
+          />
+        )}
         <S.Title>{title1}</S.Title>
         <S.SubTitle>거래 선호도는 나만 볼 수 있어요.</S.SubTitle>
         <S.ScoreBox>
