@@ -19,7 +19,7 @@ import { getTradePostList } from '../../store/slices/marketSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { TradePostList } from '../../types/market';
 import { TradeStatusType } from '../../types/tradePost';
-import { NavWrapper } from '../../components/gnb/navigation/navigation.styled';
+import { shortenLocation } from '../../functions/location';
 import Pagination from './components/pagination';
 
 const MarketPage = () => {
@@ -60,7 +60,7 @@ const MarketPage = () => {
   const [page, setPage] = useState<number>(1);
   const changePage = (page: number) => {
     setPage(page);
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -153,7 +153,7 @@ const MarketPage = () => {
                 title={post?.title}
                 tradeStatus={post?.tradeStatus}
                 price={post?.price}
-                location={post?.seller.location}
+                location={shortenLocation(post?.seller.location)}
                 likes={post?.likeCount}
                 chats={post?.reservationCount}
                 created_at={post?.createdAt}
