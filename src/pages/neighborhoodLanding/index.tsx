@@ -12,8 +12,6 @@ export const NeighborhoodLanding = () => {
       const res = (await requestNeighborhood(accessToken)) as any;
       console.log(res);
     }
-
-    // 사용가능한(중복되지 않는) 이메일인 경우
   };
 
   return (
