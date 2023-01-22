@@ -14,6 +14,8 @@ import ChatPage from '../pages/chat';
 import { NeighborhoodLanding } from '../pages/neighborhoodLanding';
 import SignUpPage from '../pages/signup';
 import { NeighborhoodPostPage } from '../pages/neighborhoodPost';
+import MyReviewPage from '../pages/my-review';
+import OthersReviewPage from '../pages/others-review';
 
 // DESC: 라우팅 관리를 위한 EntryRoute
 function EntryRoute() {
@@ -27,7 +29,9 @@ function EntryRoute() {
         <Route path="/login/google" element={<GoogleLoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/profile/me" element={<ProfilePage />} />
+        <Route path="/profile/me/review" element={<MyReviewPage />} />
         <Route path="/profile/:id" element={<ProfileOtherPage />} />
+        <Route path="/profile/:id/review" element={<OthersReviewPage />} />
         <Route path="/market" element={<MarketPage />} />
         <Route path="/tradepost/:id" element={<TradePostPage />} />
         <Route path="/tradepost/:id/review" element={<SendReview />} />
