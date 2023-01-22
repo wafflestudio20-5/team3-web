@@ -145,6 +145,7 @@ const MarketPage = () => {
           {data.map(post => {
             return (
               <ShortCut
+                postId={post?.postId}
                 key={post?.postId}
                 img={post?.imageUrls}
                 title={post?.title}
