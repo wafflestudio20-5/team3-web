@@ -60,7 +60,7 @@ const ProfileOtherPage = () => {
             isLoading={isLoading}
             img={reviewIcon}
             text="거래후기"
-            handleClick={() => navigate('/')}
+            handleClick={() => navigate(`/profile/${userId}/review`)}
           />
           <NavigationButton
             isLoading={isLoading}
