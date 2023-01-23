@@ -3,6 +3,7 @@ import * as S from './shortcut.styled';
 import LikeIcon from '../../../../assets/like-icon.svg';
 import CommentIcon from '../../../../assets/comment-icon.svg';
 import { useNavigate } from 'react-router-dom';
+import { shortenLocation } from '../../../../functions/location';
 
 interface ShortCutProps {
   key: number;
@@ -31,7 +32,7 @@ export const ShortCut = ({
       <S.ContentP>{content}</S.ContentP>
 
       <S.FooterWrapper>
-        <S.Location>{location}</S.Location>
+        <S.Location>{shortenLocation(location)}</S.Location>
 
         <S.IconsContainer>
           {commentCount > 0 && (
