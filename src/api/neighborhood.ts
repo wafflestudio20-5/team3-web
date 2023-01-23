@@ -40,3 +40,32 @@ export const requestNeighborhoodPost = async (
     return e;
   }
 };
+
+export const requestEditNeighborhood = async (
+  postId: number,
+  { title, content }: neighborPostInput,
+  accessToken: string,
+) => {
+  try {
+    return await axios.patch(
+      `${BASE_URL}/neighborhood/${postId}`,
+      { title: title, content: content },
+      { headers: auth(accessToken) },
+    );
+  } catch (e) {
+    return e;
+  }
+};
+
+export const requestDeleteNeighborhood = async (
+  postId: number,
+  accessToken: string,
+) => {
+  try {
+    return await axios.delete(`${BASE_URL}/neighborhood/${postId}`, {
+      headers: auth(accessToken),
+    });
+  } catch (e) {
+    return e;
+  }
+};
