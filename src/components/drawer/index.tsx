@@ -1,8 +1,6 @@
 import { ReactElement } from 'react';
 
 import Dim from './dim';
-import { Footer } from './footer';
-
 import * as S from './drawer.styled';
 import { ReactComponent as QuitIcon } from '../../assets/quit.svg';
 
@@ -19,7 +17,7 @@ const Drawer = ({ active, children, handleToggleDrawer }: DrawerProps) => {
         <S.Container
           initial={active ? 'open' : 'close'}
           animate={active ? 'open' : 'close'}
-          variants={{ open: { width: '80vw' }, close: { width: 0 } }}
+          variants={{ open: { width: '360px' }, close: { width: 0 } }}
           transition={{
             type: 'spring',
             damping: 70,
@@ -27,12 +25,11 @@ const Drawer = ({ active, children, handleToggleDrawer }: DrawerProps) => {
           }}
         >
           <S.InnerWrapper>
-            <S.QuitIconWrapper>
-              <QuitIcon onClick={handleToggleDrawer} />
+            <S.QuitIconWrapper onClick={handleToggleDrawer}>
+              <QuitIcon />
             </S.QuitIconWrapper>
             {children}
           </S.InnerWrapper>
-          <Footer />
         </S.Container>
       </S.Wrapper>
       {active && <Dim handleToggle={handleToggleDrawer} />}

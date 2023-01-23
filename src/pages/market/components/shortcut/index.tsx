@@ -14,7 +14,8 @@ import {
   Date,
 } from './shortcut.styled';
 import TradeStatusButton from '../../../../components/trade-status-button';
-import carrot from '../../../../assets/carrot.svg';
+import { TradeStatusType } from '../../../../types/tradePost';
+import alt from '../../../../assets/post-alt.png';
 
 interface ShortCut {
   key: number;
@@ -44,7 +45,7 @@ const ShortCut = ({
       <Link to={`/tradepost/${key}`}>
         <Img
           src={img}
-          onError={e => ((e.target as HTMLImageElement).src = carrot)}
+          onError={e => ((e.target as HTMLImageElement).src = alt)}
         />
       </Link>
       <Info>
@@ -52,7 +53,7 @@ const ShortCut = ({
           <Title>{title}</Title>
         </Link>
         <PriceBox>
-          {tradeStatus !== 'TRADING' && (
+          {tradeStatus !== TradeStatusType.TRADING && (
             <TradeStatusButton tradeStatus={tradeStatus} />
           )}
           <Price>{price}원</Price>

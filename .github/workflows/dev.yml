@@ -1,0 +1,44 @@
+name: dev deploy
+
+on:
+  pull_request:
+    branches:
+      - dev
+    types: [closed]
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    strategy:
+      matrix:
+        node-versions: [16.x]
+
+    steps:
+      - name: Checkout source code.
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Build
+        env:
+          CI: ""
+          REACT_APP_KAKAO_REST_API_KEY: ${{ secrets.REACT_APP_KAKAO_REST_API_KEY }}
+          REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}
+          REACT_APP_GOOGLE_SECRET_KEY: ${{ secrets.REACT_APP_GOOGLE_SECRET_KEY }}
+          REACT_APP_KAKAOMAP_API_KEY: ${{ secrets.REACT_APP_KAKAOMAP_API_KEY }}
+        run: yarn build
+
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws s3 cp \
+            --recursive \
+            --region ap-northeast-2 \
+            build s3://waffle-market-dev

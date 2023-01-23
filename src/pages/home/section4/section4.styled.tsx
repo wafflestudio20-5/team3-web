@@ -1,101 +1,110 @@
 import styled from 'styled-components';
-import { LG_SIZE, MD_SIZE } from '../../../constant/breakpoint';
+import { MD_SIZE } from '../../../constant/breakpoint';
 
 export const Wrapper = styled.div`
-  width: 100vw;
-  height: calc(100vh - 74px);
-  background-color: #fbf7f2;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 150px;
+`;
+
+export const BgWrapper = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: auto;
+  width: 100%;
+  padding: 80px;
+  background-color: rgb(230, 243, 230);
 
-  @media ${LG_SIZE} {
-    width: 100vw;
+  @media (max-width: 900px) {
+    flex-direction: column-reverse;
+    padding: 80px 0;
+  }
+`;
+
+export const Img = styled.img`
+  width: 532px;
+  height: 684px;
+
+  @media ${MD_SIZE} {
+    width: 360px;
     height: auto;
   }
 `;
 
-export const ContentWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: space-between;
-  padding-left: 40px;
-  position: relative;
-  max-width: 1200px;
-  min-width: 1056px;
-
-  @media ${LG_SIZE} {
-    flex-direction: column;
-    min-width: 360px;
-    padding-left: 0px;
-  }
-`;
-
-export const Text = styled.div`
+export const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 92%;
-  margin-left: 50px;
+  align-items: flex-start;
+  margin: 30px;
 
-  @media ${LG_SIZE} {
-    height: 300px;
-    margin-left: 0;
+  @media (max-width: 900px) {
     align-items: center;
-    width: 100%;
-  }
-`;
-
-export const ImgWrapper = styled.div`
-  display: flex;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-
-  @media ${LG_SIZE} {
-    position: relative;
-    justify-content: center;
-  }
-`;
-
-export const DesktopImg = styled.img`
-  width: 755px;
-  height: 635px;
-
-  @media ${LG_SIZE} {
-    width: 500px;
-    height: 420px;
-  }
-
-  @media ${MD_SIZE} {
-    width: 360px;
-    height: 310px;
   }
 `;
 
 export const Title = styled.h1`
   display: flex;
-  font-size: 45px;
-  color: #000;
-  font-weight: 600;
-  line-height: 1.3;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: auto;
+  font-family: 'LINESeedKR-Bd';
+  font-size: 40px;
+  color: #404040;
 
-  @media ${LG_SIZE} {
+  @media (max-width: 900px) {
+    justify-content: center;
+  }
+
+  @media ${MD_SIZE} {
+    font-size: 30px;
   }
 `;
 
-export const SubTitle = styled.h3`
+export const SubtitleWrapper = styled.div`
   display: flex;
-  font-size: 15px;
-  color: #5a5a5a;
-  font-weight: 300;
-  line-height: 1.2;
-  margin-top: 2px;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 30px;
+  width: auto;
+  height: auto;
 
-  &:first-of-type {
-    margin-top: 30px;
+  @media (max-width: 900px) {
+    align-items: center;
   }
+`;
 
-  @media ${LG_SIZE} {
+export const Subtitle = styled.h4`
+  font-size: 16px;
+  color: #545657;
+  font-weight: 300;
+
+  @media (max-width: 900px) {
+    justify-content: center;
+  }
+  @media ${MD_SIZE} {
+    font-size: 14px;
+  }
+`;
+
+export const Button = styled.button`
+  width: auto;
+  height: auto;
+  padding: 14px 26px;
+  margin-top: 40px;
+  color: #232424;
+  background: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 10px;
+  transition: 0.3s all;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background: #f1f3f5;
   }
 `;

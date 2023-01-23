@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { postKakaoLogin } from '../../../store/slices/sessionSlice';
 import { useAppDispatch } from '../../../store/hooks';
 import { redirectWithMsg } from '../../../utils/errors';
+import { requestKakaoLogin } from '../../../api/auth';
 
 const KaKaoLogin = () => {
   const navigate = useNavigate();
