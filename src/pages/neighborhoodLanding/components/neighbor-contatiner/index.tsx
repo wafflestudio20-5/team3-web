@@ -26,7 +26,7 @@ export const NeighborContainer = () => {
   const getPosts = async () => {
     if (accessToken) {
       const res = (await requestNeighborhood(accessToken)) as any;
-      console.log(res);
+      // console.log(res);
       setPosts(res.data);
     } else {
       redirectWithMsg(
@@ -41,7 +41,7 @@ export const NeighborContainer = () => {
 
   useEffect(() => {
     getPosts();
-    console.log(posts);
+    // console.log(posts);
   }, []);
 
   return (
