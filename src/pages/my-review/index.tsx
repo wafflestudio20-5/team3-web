@@ -43,7 +43,7 @@ const MyReviewPage = () => {
           }
         });
     }
-  }, []);
+  }, [accessToken, me]);
 
   const removeReview = (reviewId: number) => {
     if (accessToken) {
