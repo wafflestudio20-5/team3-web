@@ -103,6 +103,7 @@ export const NeighborhoodPostPage = () => {
             post={post}
             handleClose={() => {
               setIsDeleteModalOpen(false);
+              getPost();
             }}
           />
         </ModalWrapper>

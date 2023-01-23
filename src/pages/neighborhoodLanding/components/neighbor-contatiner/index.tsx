@@ -95,7 +95,12 @@ export const NeighborContainer = () => {
       </S.Container>
       {isModalOpen && (
         <ModalWrapper handleClose={handleModalClose}>
-          <AddModal handleClose={handleModalClose} />
+          <AddModal
+            handleClose={() => {
+              handleModalClose();
+              getPosts();
+            }}
+          />
         </ModalWrapper>
       )}
     </>

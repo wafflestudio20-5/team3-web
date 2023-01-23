@@ -33,7 +33,8 @@ export const AddModal = ({ handleClose }: AddModalProps) => {
         accessToken,
       );
       toast('글 작성이 완료되었습니다.');
-      console.log(res);
+      handleClose();
+      // console.log(res);
     }
   };
   return (
