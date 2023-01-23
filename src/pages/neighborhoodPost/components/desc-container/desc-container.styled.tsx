@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  padding: 20px 0px;
+  padding: 10px 0px;
 `;
 
 export const TitleWrapper = styled.div`
