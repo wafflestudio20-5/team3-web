@@ -19,6 +19,7 @@ export interface neighborPost {
     username: string;
     imgUrl: string;
     location: string;
+    temperature: number;
   };
   title: string;
   viewCount: number;
