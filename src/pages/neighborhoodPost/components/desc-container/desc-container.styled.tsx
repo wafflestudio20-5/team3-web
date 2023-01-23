@@ -4,8 +4,14 @@ export const Wrapper = styled.div`
   padding: 20px 0px;
 `;
 
+export const TitleWrapper = styled.div`
+  margin: 10px 0px;
+  font-weight: 600;
+  font-size: 30px;
+`;
+
 export const DescriptionWrapper = styled.div`
-  padding: 20px 0px;
+  margin-bottom: 20px;
   font-size: 18px;
 `;
 

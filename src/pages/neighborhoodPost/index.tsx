@@ -1,5 +1,10 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { requestNeighborhoodPost } from '../../api/neighborhood';
 import Gnb from '../../components/gnb';
 import { LONG_TEXT } from '../../constant';
+import { useAppSelector } from '../../store/hooks';
+import { neighborPost } from '../../types/neighborhood';
 import { User } from '../../types/users';
 import { Comment } from './components/comment';
 import { CommentLikeCount } from './components/comment-like-count';
@@ -8,6 +13,21 @@ import { WriterInfo } from './components/writer-info';
 import { Container } from './neighbor-post-styled';
 
 export const NeighborhoodPostPage = () => {
+  const { id } = useParams();
+  const { accessToken } = useAppSelector(state => state.session);
+  const [post, setPost] = useState<neighborPost>({} as neighborPost);
+
+  const getPost = async () => {
+    if (accessToken && id) {
+      const res = (await requestNeighborhoodPost(id, accessToken)) as any;
+      // console.log(res);
+      setPost(res.data);
+    }
+  };
+
+  useEffect(() => {
+    getPost();
+  }, []);
   const writer: User = {
     id: 1,
     username: 'lerry',
@@ -33,11 +53,18 @@ export const NeighborhoodPostPage = () => {
     <>
       <Gnb />
       <Container>
-        <WriterInfo />
+        <WriterInfo
+          userId={post.publisher?.id}
+          username={post.publisher?.username}
+          location={post.publisher?.location}
+          temperature={post.publisher?.temperature}
+          imgUrl={post.publisher?.imgUrl}
+        />
         <Description
-          content={LONG_TEXT}
-          modifiedAt={new Date()}
-          viewCount={120}
+          title={post.title}
+          content={post.content}
+          modifiedAt={post.createdAt}
+          viewCount={post.viewCount}
         />
         <CommentLikeCount commentCount={2} likeCount={1} />
         <Comment user={writer} content="안녕하세요" modifiedAt={new Date()} />

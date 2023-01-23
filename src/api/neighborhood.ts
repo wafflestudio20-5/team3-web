@@ -27,3 +27,16 @@ export const requestPostNeighborhood = async (
     return e;
   }
 };
+
+export const requestNeighborhoodPost = async (
+  postId: string,
+  accessToken: string,
+) => {
+  try {
+    return await axios.get(`${BASE_URL}/neighborhood/${postId}`, {
+      headers: auth(accessToken),
+    });
+  } catch (e) {
+    return e;
+  }
+};

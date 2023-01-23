@@ -5,7 +5,8 @@ import CommentIcon from '../../../../assets/comment-icon.svg';
 import { useNavigate } from 'react-router-dom';
 
 interface ShortCutProps {
-  id?: number;
+  key: number;
+  id: number;
   content: string;
   location?: string;
   likeCount?: number;
@@ -14,15 +15,15 @@ interface ShortCutProps {
 
 // TODO: id(key props), handleClick 구현
 export const ShortCut = ({
-  id = 0,
+  id,
   content,
   location = '',
   likeCount = 0,
-
   commentCount = 0,
 }: ShortCutProps) => {
   const navigate = useNavigate();
   const handleClick = () => {
+    // console.log(id);
     navigate(`/neighborhood/${id}`);
   };
   return (
