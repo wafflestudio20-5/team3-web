@@ -27,3 +27,32 @@ export const postReview = createAsyncThunk(
     }
   },
 );
+
+export const getReviews = createAsyncThunk(
+  'tradePost/getReview',
+  async (userId: number, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}:81/users/${userId}/reviews`);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+export const deleteReview = createAsyncThunk(
+  'reviews/deleteReview',
+  async (
+    { accessToken, reviewId }: { accessToken: string; reviewId: number },
+    { rejectWithValue },
+  ) => {
+    try {
+      const res = await axios.delete(`${BASE_URL}/reviews/${reviewId}`, {
+        headers: auth(accessToken),
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);

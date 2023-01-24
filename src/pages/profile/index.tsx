@@ -85,7 +85,7 @@ const ProfilePage = () => {
               isLoading={sessionLoading}
               img={reviewIcon}
               text="거래후기"
-              handleClick={() => navigate('/')}
+              handleClick={() => navigate('/profile/me/review')}
             />
             <NavigationButton
               isLoading={sessionLoading}

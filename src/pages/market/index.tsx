@@ -19,6 +19,7 @@ import { getTradePostList } from '../../store/slices/marketSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { TradePostList } from '../../types/market';
 import { TradeStatusType } from '../../types/tradePost';
+import { shortenLocation } from '../../functions/location';
 import Pagination from './components/pagination';
 
 const MarketPage = () => {
@@ -151,7 +152,7 @@ const MarketPage = () => {
                 title={post?.title}
                 tradeStatus={post?.tradeStatus}
                 price={post?.price}
-                location={post?.seller.location}
+                location={shortenLocation(post?.seller.location)}
                 likes={post?.likeCount}
                 chats={post?.reservationCount}
                 created_at={post?.createdAt}
