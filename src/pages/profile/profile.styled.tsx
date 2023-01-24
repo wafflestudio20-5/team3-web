@@ -57,3 +57,22 @@ export const NavigationWrapper = styled.div`
     column-gap: 2px;
   }
 `;
+
+export const Header = styled.h1`
+  margin: 5px 10px;
+  font-size: 16px;
+  font-weight: 600;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 15px;
+`;
+
+export const DefaultAnnounce = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  font-size: 14px;
+  color: #757575;
+`;
+

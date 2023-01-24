@@ -19,10 +19,12 @@ import likeIcon from '../../assets/like-icon.svg';
 import sellIcon from '../../assets/sell-icon.svg';
 import reviewIcon from '../../assets/review-icon.svg';
 import mannerCommentIcon from '../../assets/manner-comment-icon.svg';
+import ModalWrapper from '../../components/modal-wrapper';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
   const { sessionLoading } = useAuth();
+  const [modalOpen, setModalOpen] = useState(false);
   const { me } = useAppSelector(state => state.users);
 
   const [edit, setEdit] = useState({
@@ -41,18 +43,7 @@ const ProfilePage = () => {
           {/* TODO: My chats 이동 */}
           <Header
             username={me?.username || null}
-            handleClick={() =>
-              toast('🥕 준비 중입니다.', {
-                position: 'top-center',
-                autoClose: 2000,
-                hideProgressBar: true,
-                closeOnClick: false,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: 'light',
-              })
-            }
+            handleClick={() => setModalOpen(true)}
             isLoading={sessionLoading}
           />
           <S.InfoWrapper>
@@ -112,6 +103,21 @@ const ProfilePage = () => {
         </S.ContentWrapper>
         <ContentFooter />
       </S.Wrapper>
+
+      {modalOpen && (
+        <ModalWrapper handleClose={() => setModalOpen(false)}>
+          <>
+            <S.Header>채팅목록</S.Header>
+            {true && (
+              <S.DefaultAnnounce>
+                🥕 현재 진행 중인 채팅이 없습니다.
+              </S.DefaultAnnounce>
+            )}
+
+            <ul></ul>
+          </>
+        </ModalWrapper>
+      )}
     </S.OuterWrapper>
   );
 };
