@@ -1,12 +1,21 @@
 import styled from 'styled-components';
-import { MD_SIZE, SM_to_MD_SIZE } from '../../constant/breakpoint';
+import { MD_SIZE } from '../../constant/breakpoint';
 
-export const Wrapper = styled.div`
+export const OuterWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+`;
+
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   height: auto;
+  max-width: 712px;
 `;
 
 export const ContentWrapper = styled.div`
@@ -14,15 +23,9 @@ export const ContentWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 712px;
   min-width: 360px;
   height: auto;
-  margin-bottom: 100px;
   padding: 30px 16px 0 16px;
-
-  @media ${SM_to_MD_SIZE} {
-    padding: 35px 20px;
-  }
 `;
 
 export const InfoWrapper = styled.div`
@@ -44,6 +47,7 @@ export const NavigationWrapper = styled.div`
   width: 100%;
   margin-top: 48px;
   padding-top: 36px;
+  padding-bottom: 100px;
   border-top: 2px solid #f5f5f5;
 
   @media ${MD_SIZE} {

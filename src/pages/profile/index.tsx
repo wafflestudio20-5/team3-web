@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 import Gnb from '../../components/gnb';
 import Header from './components/header';
-import Footer from '../../components/footer';
 import UserInfo from './container/user-info';
 import TxInfo from './container/transaction-info';
+import ContentFooter from '../../components/content-footer';
 import NavigationButton from './components/navigation-button';
 
 import { useAuth } from '../../hooks/useAuth';
@@ -33,83 +33,86 @@ const ProfilePage = () => {
   });
 
   return (
-    <S.Wrapper>
+    <S.OuterWrapper>
       <Gnb />
-      <S.ContentWrapper>
-        {/* TODO: My chats 이동 */}
-        <Header
-          username={me?.username || null}
-          handleClick={() =>
-            toast('🥕 준비 중입니다.', {
-              position: 'top-center',
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: false,
-              pauseOnHover: false,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-            })
-          }
-          isLoading={sessionLoading}
-        />
-        <S.InfoWrapper>
-          <UserInfo
-            me={me || null}
-            edit={edit}
-            isLoading={sessionLoading}
-            setEdit={setEdit}
-          />
-          <TxInfo
-            me={me || null}
-            edit={edit}
-            isLoading={sessionLoading}
-            setEdit={setEdit}
-          />
-        </S.InfoWrapper>
 
-        {/* TODO: 적절한 페이지로 이동 */}
-        <S.NavigationWrapper>
-          <NavigationButton
+      <S.Wrapper>
+        <S.ContentWrapper>
+          {/* TODO: My chats 이동 */}
+          <Header
+            username={me?.username || null}
+            handleClick={() =>
+              toast('🥕 준비 중입니다.', {
+                position: 'top-center',
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+              })
+            }
             isLoading={sessionLoading}
-            img={sellIcon}
-            text="판매내역"
-            handleClick={() => navigate('/')}
           />
-          <NavigationButton
-            isLoading={sessionLoading}
-            img={buyIcon}
-            text="구매내역"
-            handleClick={() => navigate('/')}
-          />
-          <NavigationButton
-            isLoading={sessionLoading}
-            img={likeIcon}
-            text="찜한 상품"
-            handleClick={() => navigate('/')}
-          />
-          <NavigationButton
-            isLoading={sessionLoading}
-            img={reviewIcon}
-            text="거래후기"
-            handleClick={() => navigate('/')}
-          />
-          <NavigationButton
-            isLoading={sessionLoading}
-            img={mannerCommentIcon}
-            text="매너평가"
-            handleClick={() => navigate('/')}
-          />
-          <NavigationButton
-            isLoading={sessionLoading}
-            img={lifeIcon}
-            text="동네생활"
-            handleClick={() => navigate('/')}
-          />
-        </S.NavigationWrapper>
-      </S.ContentWrapper>
-      <Footer />
-    </S.Wrapper>
+          <S.InfoWrapper>
+            <UserInfo
+              me={me || null}
+              edit={edit}
+              isLoading={sessionLoading}
+              setEdit={setEdit}
+            />
+            <TxInfo
+              me={me || null}
+              edit={edit}
+              isLoading={sessionLoading}
+              setEdit={setEdit}
+            />
+          </S.InfoWrapper>
+
+          {/* TODO: 적절한 페이지로 이동 */}
+          <S.NavigationWrapper>
+            <NavigationButton
+              isLoading={sessionLoading}
+              img={sellIcon}
+              text="판매내역"
+              handleClick={() => navigate('/')}
+            />
+            <NavigationButton
+              isLoading={sessionLoading}
+              img={buyIcon}
+              text="구매내역"
+              handleClick={() => navigate('/')}
+            />
+            <NavigationButton
+              isLoading={sessionLoading}
+              img={likeIcon}
+              text="찜한 상품"
+              handleClick={() => navigate('/')}
+            />
+            <NavigationButton
+              isLoading={sessionLoading}
+              img={reviewIcon}
+              text="거래후기"
+              handleClick={() => navigate('/')}
+            />
+            <NavigationButton
+              isLoading={sessionLoading}
+              img={mannerCommentIcon}
+              text="매너평가"
+              handleClick={() => navigate('/')}
+            />
+            <NavigationButton
+              isLoading={sessionLoading}
+              img={lifeIcon}
+              text="동네생활"
+              handleClick={() => navigate('/')}
+            />
+          </S.NavigationWrapper>
+        </S.ContentWrapper>
+        <ContentFooter />
+      </S.Wrapper>
+    </S.OuterWrapper>
   );
 };
 
