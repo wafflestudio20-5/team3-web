@@ -18,7 +18,7 @@ export const Wrapper = styled.div<WrapperProps>(
   min-width: 360px;
   height: 74px;
   box-shadow: 0 4px 12px 0 rgba(199, 199, 199, 0.029);
-  z-index: 999;
+  z-index: 990;
   border-bottom: 1px solid #f4f4f4;
 `,
 );
