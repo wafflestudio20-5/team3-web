@@ -2,10 +2,16 @@ import { ChangeEvent } from 'react';
 import * as S from './styles';
 
 interface TradePostUpdateProps {
-  values: any;
+  values: {
+    title?: string;
+    desc?: string;
+    price?: number;
+  };
   handleClose: () => void;
   handleSubmit: () => void;
-  handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handleChange: (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
 }
 
 const TradePostUpdate = ({

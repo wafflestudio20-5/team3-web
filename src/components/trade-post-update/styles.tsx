@@ -42,6 +42,10 @@ export const ModalClose = styled.button`
   font-weight: 500;
   font-size: 17px;
   color: #494949;
+  transition: 0.3s all;
+  &:hover {
+    color: #e78111;
+  }
 `;
 
 export const ModalSubmit = styled.button`
@@ -49,6 +53,10 @@ export const ModalSubmit = styled.button`
   font-weight: 600;
   font-size: 17px;
   color: #e78111;
+  transition: 0.3s all;
+  &:hover {
+    color: #ff6a00;
+  }
 `;
 
 export const PostTitle = styled.input`
