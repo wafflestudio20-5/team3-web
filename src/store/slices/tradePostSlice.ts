@@ -218,6 +218,13 @@ export const tradePostSlice = createSlice({
       state.tradePost = action.payload as TradePostType;
       state.tradeStatus = action.payload.tradeStatus;
     });
+    builder.addCase(deleteTradePost.fulfilled, (state, action) => {
+      state.isLiked = false;
+      state.seller = null;
+      state.buyer = null;
+      state.tradePost = null;
+      state.tradeStatus = null;
+    });
     builder.addCase(getReservation.fulfilled, (state, action) => {
       state.buyer = action.payload.buyer as TxUser;
       state.candidates = action.payload.candidates;

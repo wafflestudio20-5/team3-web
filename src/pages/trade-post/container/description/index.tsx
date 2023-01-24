@@ -10,12 +10,14 @@ import Candidate from '../../components/candidate';
 import ModalWrapper from '../../../../components/modal-wrapper';
 import ContentFooter from '../../../../components/content-footer';
 import TradePostUpdate from '../../../../components/trade-post-update';
+import TradePostUpdateImg from '../../../../components/trade-post-update-img';
 
 import {
   getTradeStatusKo,
   toStringNumWithComma,
 } from '../../../../utils/tradePost';
 import {
+  deleteTradePost,
   getReservation,
   postConfirmation,
   postLike,
@@ -223,6 +225,8 @@ const Description = () => {
   // 글 수정
   const [active, setActive] = useState(false);
   const [openEditPost, setOpenEditPost] = useState(false);
+  const [openEditPostImg, setOpenEditPostImg] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
 
   const [values, setValues] = useState({
     title: tradePost?.title,
@@ -273,6 +277,36 @@ const Description = () => {
     }
   }, [values?.title, values?.desc, values?.price]);
 
+  const handleDeletePost = useCallback(() => {
+    if (accessToken && tradePost) {
+      dispatch(deleteTradePost({ accessToken, postId: tradePost.postId }))
+        .unwrap()
+        .then(() => {
+          setOpenDelete(false);
+          navigate(`/market`);
+          toast.success('성공적으로 삭제되었습니다.');
+        })
+        .catch(err => {
+          if (axios.isAxiosError(err)) {
+            if (err.response?.status === 404) {
+              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+            } else if (err.response?.status === 401) {
+              // TODO: refresh 후 재요청
+              redirectWithMsg(2, err.response?.data.error, () =>
+                navigate('/login'),
+              );
+            } else if (err.response?.status === 400) {
+              toast.error(err.response?.data.error);
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
+            }
+          }
+        });
+    }
+  }, [accessToken]);
+
   return (
     <>
       <S.Wrapper>
@@ -297,10 +331,13 @@ const Description = () => {
                 >
                   <S.ElemWrapper>
                     <S.Elem onClick={() => setOpenEditPost(true)}>
-                      글 수정
+                      게시글 수정
                     </S.Elem>
-                    <S.Elem onClick={() => alert('사진 수정')}>
+                    <S.Elem onClick={() => setOpenEditPostImg(true)}>
                       사진 수정
+                    </S.Elem>
+                    <S.Elem onClick={() => setOpenDelete(true)}>
+                      <S.Delete>게시글 삭제</S.Delete>
                     </S.Elem>
                   </S.ElemWrapper>
                 </S.Dropdown>
@@ -406,6 +443,28 @@ const Description = () => {
           handleSubmit={handleSubmitEdit}
           handleClose={() => setOpenEditPost(false)}
         />
+      )}
+
+      {openEditPostImg && (
+        <TradePostUpdateImg
+          values={values}
+          handleChange={handleChange}
+          handleSubmit={handleSubmitEdit}
+          handleClose={() => setOpenEditPostImg(false)}
+        />
+      )}
+
+      {openDelete && (
+        <ModalWrapper handleClose={() => setOpenDelete(false)}>
+          <S.DeleteWrapper>
+            <S.DeleteTitle> 🥕 정말 삭제하시겠습니까?</S.DeleteTitle>
+            <S.DeleteSubtitle>삭제 시 복구할 수 없습니다.</S.DeleteSubtitle>
+            <S.ButtonWrapper>
+              <S.Cancel onClick={() => setOpenDelete(false)}>취소</S.Cancel>
+              <S.Cancel onClick={handleDeletePost}>삭제</S.Cancel>
+            </S.ButtonWrapper>
+          </S.DeleteWrapper>
+        </ModalWrapper>
       )}
     </>
   );

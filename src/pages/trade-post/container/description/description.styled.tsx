@@ -197,9 +197,13 @@ export const Elem = styled.span`
   }
 
   &:hover {
-    background: #f3f3f3;
+    background: #ececec;
     color: #212124;
   }
+`;
+
+export const Delete = styled.span`
+  color: #ff7171;
 `;
 
 export const Content = styled.div`
@@ -208,4 +212,46 @@ export const Content = styled.div`
   align-items: flex-start;
   width: 100%;
   padding: 0 20px;
+`;
+
+export const DeleteWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 10px 0 10px;
+`;
+
+export const DeleteTitle = styled.h1`
+  font-family: 'Inter';
+  font-weight: 600;
+  font-size: 16px;
+  color: #5f5f5f;
+`;
+
+export const DeleteSubtitle = styled.h3`
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 13px;
+  color: #aeaeae;
+`;
+
+export const ButtonWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+`;
+
+export const Cancel = styled.button`
+  width: 60px;
+  height: 40px;
+  background: #e78111;
+  color: #fff;
+  margin-left: 8px;
+  border-radius: 6px;
+  font-family: 'Inter';
+  font-size: 14px;
 `;
