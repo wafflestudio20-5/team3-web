@@ -1,28 +1,49 @@
+import { useNavigate } from 'react-router-dom';
+import { shortenLocation } from '../../../../functions/location';
 import ProfileImage from '../../../trade-post/components/profile-image';
 import TemperatureBar from '../../../trade-post/components/temperature-bar';
 import * as S from '../../../trade-post/container/trade-info/trade-info.styled';
 
-export const WriterInfo = () => {
+interface WriterInfoProps {
+  userId: number;
+  username: string;
+  location: string;
+  temperature: number;
+  imgUrl: string | null;
+}
+
+export const WriterInfo = ({
+  userId,
+  username,
+  location,
+  temperature,
+  imgUrl,
+}: WriterInfoProps) => {
+  const navigate = useNavigate();
   return (
     <S.UserWrapper>
-      <S.InfoWrapper>
+      <S.InfoWrapper
+        onClick={() => {
+          navigate(`/profile/${userId}`);
+        }}
+      >
         <ProfileImage
           // temperature={seller?.temperature || null}
           // profileImg={seller?.imgUrl}
-          temperature={null}
-          profileImg={null}
+          temperature={temperature}
+          profileImg={imgUrl}
         />
         <S.NameWrapper>
           {/* <S.Username>{seller?.username || null}</S.Username>
             <S.Location>{seller?.location || null}</S.Location> */}
-          <S.Username>유저 이름</S.Username>
-          <S.Location>봉천동</S.Location>
+          <S.Username>{username}</S.Username>
+          <S.Location>{location ? shortenLocation(location) : ''}</S.Location>
         </S.NameWrapper>
       </S.InfoWrapper>
 
       <S.TempWrapper>
         {/* <TemperatureBar temperature={seller?.temperature || null} /> */}
-        <TemperatureBar temperature={40.5} />
+        <TemperatureBar temperature={temperature} />
       </S.TempWrapper>
     </S.UserWrapper>
   );

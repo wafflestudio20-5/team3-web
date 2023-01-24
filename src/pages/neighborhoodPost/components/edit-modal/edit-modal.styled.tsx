@@ -37,6 +37,7 @@ export const SpanTitle = styled.span`
   font-size: 20px;
   font-weight: ${FONT_SEMI_BOLD};
 `;
+
 export const SpanComplete = styled.span`
   font-size: 20px;
   font-weight: 600;
