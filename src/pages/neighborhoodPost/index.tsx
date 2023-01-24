@@ -9,16 +9,18 @@ import { User } from '../../types/users';
 import { AddModal } from '../neighborhoodLanding/components/add-modal';
 import ModalWrapper from '../neighborhoodLanding/components/modal-wrapper';
 import { Comment } from './components/comment';
+import { CommentInput } from './components/comment-input';
 import { CommentLikeCount } from './components/comment-like-count';
 import { DeleteModal } from './components/delete-modal';
 import { Description } from './components/desc-container';
 import { EditDelete } from './components/edit-and-delete';
 import { EditModal } from './components/edit-modal';
 import { WriterInfo } from './components/writer-info';
-import { Container } from './neighbor-post-styled';
+import { CommentContainer, Container } from './neighbor-post-styled';
 
 export const NeighborhoodPostPage = () => {
-  const { id } = useParams();
+  const params = useParams();
+  const id = Number(params.id);
   const { accessToken } = useAppSelector(state => state.session);
   const { me } = useAppSelector(state => state.users);
   const [post, setPost] = useState<neighborPost>({} as neighborPost);
@@ -82,10 +84,25 @@ export const NeighborhoodPostPage = () => {
           modifiedAt={post.createdAt}
           viewCount={post.viewCount}
         />
-        <CommentLikeCount commentCount={2} likeCount={1} />
+        {/* <CommentLikeCount commentCount={2} likeCount={1} />
         <Comment user={writer} content="안녕하세요" modifiedAt={new Date()} />
-        <Comment user={writer2} content="반가워요" modifiedAt={new Date()} />
+        <Comment user={writer2} content="반가워요" modifiedAt={new Date()} /> */}
+        <CommentLikeCount
+          commentCount={post.commentCount}
+          likeCount={post.likeCount}
+        />
+        <CommentContainer>
+          {post.comments?.map(comment => (
+            <Comment
+              key={comment.commentId}
+              user={comment.commenter}
+              content={comment.comment}
+              modifiedAt={comment.modifiedAt}
+            />
+          ))}
+        </CommentContainer>
       </Container>
+      <CommentInput postId={id} refreshPost={getPost} />
       {isEditModalOpen && (
         <ModalWrapper handleClose={() => setIsEditModalOpen(false)}>
           <EditModal

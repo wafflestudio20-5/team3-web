@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { auth } from '.';
 import { BASE_URL } from '../constant';
-import { neighborPostInput } from '../types/neighborhood';
+import { neighborPostComment, neighborPostInput } from '../types/neighborhood';
 
 export const requestNeighborhood = async (accessToken: string) => {
   try {
@@ -29,7 +29,7 @@ export const requestPostNeighborhood = async (
 };
 
 export const requestNeighborhoodPost = async (
-  postId: string,
+  postId: number,
   accessToken: string,
 ) => {
   try {
@@ -65,6 +65,22 @@ export const requestDeleteNeighborhood = async (
     return await axios.delete(`${BASE_URL}/neighborhood/${postId}`, {
       headers: auth(accessToken),
     });
+  } catch (e) {
+    return e;
+  }
+};
+
+export const requestPostNeighborhoodComment = async (
+  postId: number,
+  { comment, isHidden }: neighborPostComment,
+  accessToken: string,
+) => {
+  try {
+    return await axios.post(
+      `${BASE_URL}/neighborhood/${postId}/comment`,
+      { comment: comment, isHidden: false },
+      { headers: auth(accessToken) },
+    );
   } catch (e) {
     return e;
   }
