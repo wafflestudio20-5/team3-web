@@ -95,9 +95,12 @@ export const NeighborhoodPostPage = () => {
           {post.comments?.map(comment => (
             <Comment
               key={comment.commentId}
+              postId={id}
+              commentId={comment.commentId}
               user={comment.commenter}
               content={comment.comment}
               modifiedAt={comment.modifiedAt}
+              refreshPost={getPost}
             />
           ))}
         </CommentContainer>

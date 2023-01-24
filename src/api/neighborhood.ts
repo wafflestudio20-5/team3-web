@@ -85,3 +85,32 @@ export const requestPostNeighborhoodComment = async (
     return e;
   }
 };
+
+export const requestPatchNeighborhoodComment = async (
+  commentId: number,
+  comment: string,
+  accessToken: string,
+) => {
+  try {
+    return await axios.patch(
+      `${BASE_URL}/neighborhood/comment/${commentId}`,
+      { comment: comment },
+      { headers: auth(accessToken) },
+    );
+  } catch (e) {
+    return e;
+  }
+};
+
+export const requestDeleteNeighborhoodComment = async (
+  commentId: number,
+  accessToken: string,
+) => {
+  try {
+    return await axios.delete(`${BASE_URL}/neighborhood/comment/${commentId}`, {
+      headers: auth(accessToken),
+    });
+  } catch (e) {
+    return e;
+  }
+};
