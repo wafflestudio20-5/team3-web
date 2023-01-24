@@ -60,11 +60,11 @@ export const updateTradePost = createAsyncThunk(
       desc,
       price,
     }: {
-      postId: number;
+      postId?: number;
       accessToken: string;
-      title: string | null;
-      desc: string | null;
-      price: string | null;
+      title?: string;
+      desc?: string;
+      price?: number;
     },
     { rejectWithValue },
   ) => {
@@ -205,6 +205,13 @@ export const tradePostSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(getTradePost.fulfilled, (state, action) => {
+      state.isLiked = action.payload.isLiked as boolean;
+      state.seller = action.payload.seller as TxUser;
+      state.buyer = action.payload.buyer as TxUser;
+      state.tradePost = action.payload as TradePostType;
+      state.tradeStatus = action.payload.tradeStatus;
+    });
+    builder.addCase(updateTradePost.fulfilled, (state, action) => {
       state.isLiked = action.payload.isLiked as boolean;
       state.seller = action.payload.seller as TxUser;
       state.buyer = action.payload.buyer as TxUser;

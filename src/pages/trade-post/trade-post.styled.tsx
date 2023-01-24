@@ -18,9 +18,9 @@ export const ContentWrapper = styled.div`
   max-width: 711px;
   min-width: 360px;
   height: auto;
-  padding: 50px 16px;
+  padding: 50px 0 0 0;
 
   @media ${SM_to_MD_SIZE} {
-    padding: 40px 10px;
+    padding: 40px 0;
   }
 `;

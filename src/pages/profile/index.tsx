@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Gnb from '../../components/gnb';
 import Header from './components/header';
+import Footer from '../../components/footer';
 import UserInfo from './container/user-info';
 import TxInfo from './container/transaction-info';
 import NavigationButton from './components/navigation-button';
@@ -107,6 +108,7 @@ const ProfilePage = () => {
           />
         </S.NavigationWrapper>
       </S.ContentWrapper>
+      <Footer />
     </S.Wrapper>
   );
 };
