@@ -48,13 +48,15 @@ export const Comment = ({
   const handleEdit = async () => {
     if (accessToken) {
       // alert('댓글 수정');
-      // TODO: 밑에 requestPatchNeighborhoodComment 수행 도중 auth/refresh 에서 403 오류가 뜹니다..
+      // TODO: 밑에 requestPatchNeighborhoodComment 수행 도중 auth/refresh 에서 403 오류가 뜹니다..ㅠㅠ
       requestPatchNeighborhoodComment(commentId, input, accessToken)
         .then(() => {
+          // 아래 then 과 catch 문 모두 실행되지 않습니다..
           toast('댓글 수정이 완료되었습니다.');
           navigate(-1);
         })
         .catch(err => {
+          alert('에러');
           console.log(err);
         });
     }
