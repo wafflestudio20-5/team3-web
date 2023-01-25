@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -6,13 +7,14 @@ export const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   height: auto;
-  padding: 20px 0;
+  padding: 20px 0 0 0;
 `;
 
 export const OptionWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  padding: 0 20px;
 `;
 
 export const ChatWrapper = styled.div`
@@ -20,6 +22,7 @@ export const ChatWrapper = styled.div`
 `;
 
 export const Edit = styled.button`
+  position: relative;
   width: 40px;
   height: 40px;
   background-color: rgba(243, 243, 243, 0.684);
@@ -155,4 +158,100 @@ export const DefaultAnnounce = styled.div`
   height: 100px;
   font-size: 14px;
   color: #757575;
+`;
+
+export const Dropdown = styled(motion.div)`
+  width: 120px;
+  flex-direction: column;
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 0;
+  background-color: transparent;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+`;
+
+export const ElemWrapper = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 10px;
+`;
+
+export const Elem = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 42px;
+  border-radius: 8px;
+  font-weight: 400;
+  font-size: 15px;
+  cursor: pointer;
+  color: #8d8d8d;
+  transition: all 0.2s;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    background: #ececec;
+    color: #212124;
+  }
+`;
+
+export const Delete = styled.span`
+  color: #ff7171;
+`;
+
+export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0 20px;
+`;
+
+export const DeleteWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 10px 0 10px;
+`;
+
+export const DeleteTitle = styled.h1`
+  font-family: 'Inter';
+  font-weight: 600;
+  font-size: 16px;
+  color: #5f5f5f;
+`;
+
+export const DeleteSubtitle = styled.h3`
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 13px;
+  color: #aeaeae;
+`;
+
+export const ButtonWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+`;
+
+export const Cancel = styled.button`
+  width: 60px;
+  height: 40px;
+  background: #e78111;
+  color: #fff;
+  margin-left: 8px;
+  border-radius: 6px;
+  font-family: 'Inter';
+  font-size: 14px;
 `;

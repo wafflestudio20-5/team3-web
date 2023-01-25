@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import Spinner from '../../../../components/spinner';
-import Description from '../../components/description';
+import Description from '../description';
 import ProfileImage from '../../components/profile-image';
 import TemperatureBar from '../../components/temperature-bar';
 

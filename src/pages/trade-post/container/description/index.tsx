@@ -1,24 +1,30 @@
-import { useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 import 'moment/locale/ko';
 import { toast } from 'react-toastify';
 
-import Button from '../button';
-import Candidate from '../candidate';
+import Button from '../../components/button';
+import Candidate from '../../components/candidate';
 import ModalWrapper from '../../../../components/modal-wrapper';
+import ContentFooter from '../../../../components/content-footer';
+import TradePostUpdate from '../../../../components/trade-post-update';
+import TradePostUpdateImg from '../../../../components/trade-post-update-img';
 
 import {
   getTradeStatusKo,
   toStringNumWithComma,
 } from '../../../../utils/tradePost';
 import {
+  deleteTradePost,
   getReservation,
   postConfirmation,
   postLike,
   postReservation,
+  updateTradePost,
 } from '../../../../store/slices/tradePostSlice';
+import { redirectWithMsg } from '../../../../utils/errors';
 import { getUUID } from '../../../../store/slices/chatSlice';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
@@ -28,7 +34,6 @@ import daangn from '../../../../assets/marker.png';
 import editPost from '../../../../assets/edit-post.svg';
 import likeFill from '../../../../assets/like-fill.svg';
 import likeBlank from '../../../../assets/like-blank.svg';
-import { redirectWithMsg } from '../../../../utils/errors';
 
 const Description = () => {
   const navigate = useNavigate();
@@ -217,6 +222,91 @@ const Description = () => {
     }
   }, [accessToken]);
 
+  // 글 수정
+  const [active, setActive] = useState(false);
+  const [openEditPost, setOpenEditPost] = useState(false);
+  const [openEditPostImg, setOpenEditPostImg] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+
+  const [values, setValues] = useState({
+    title: tradePost?.title,
+    desc: tradePost?.desc,
+    price: tradePost?.price,
+  });
+
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { value, name } = e.target;
+      setValues({
+        ...values,
+        [name]: value,
+      });
+    },
+    [values?.title, values?.desc, values?.price],
+  );
+
+  const handleSubmitEdit = useCallback(() => {
+    if (accessToken) {
+      dispatch(
+        updateTradePost({
+          postId: tradePost?.postId,
+          accessToken,
+          title: values.title,
+          desc: values.desc,
+          price: values.price,
+        }),
+      )
+        .unwrap()
+        .then(() => {
+          setOpenEditPost(false);
+        })
+        .catch(err => {
+          if (axios.isAxiosError(err)) {
+            toast(`🥕 ${err.response?.data.error}`, {
+              position: 'top-center',
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+            });
+          }
+        });
+    }
+  }, [values?.title, values?.desc, values?.price]);
+
+  const handleDeletePost = useCallback(() => {
+    if (accessToken && tradePost) {
+      dispatch(deleteTradePost({ accessToken, postId: tradePost.postId }))
+        .unwrap()
+        .then(() => {
+          setOpenDelete(false);
+          navigate(`/market`);
+          toast.success('성공적으로 삭제되었습니다.');
+        })
+        .catch(err => {
+          if (axios.isAxiosError(err)) {
+            if (err.response?.status === 404) {
+              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+            } else if (err.response?.status === 401) {
+              // TODO: refresh 후 재요청
+              redirectWithMsg(2, err.response?.data.error, () =>
+                navigate('/login'),
+              );
+            } else if (err.response?.status === 400) {
+              toast.error(err.response?.data.error);
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
+            }
+          }
+        });
+    }
+  }, [accessToken]);
+
   return (
     <>
       <S.Wrapper>
@@ -224,8 +314,33 @@ const Description = () => {
           <S.TradeStatus>{getTradeStatusKo(tradeStatus)}</S.TradeStatus>
           <S.ChatWrapper>
             {tradePost?.isOwner ? (
-              <S.Edit>
-                <S.EditIcon src={editPost} alt="edit"></S.EditIcon>
+              <S.Edit
+                onClick={() => {
+                  if (active) setActive(false);
+                  else setActive(true);
+                }}
+              >
+                <S.EditIcon src={editPost} alt="edit" />
+                <S.Dropdown
+                  initial={active ? 'open' : 'close'}
+                  animate={active ? 'open' : 'close'}
+                  variants={{
+                    open: { height: 'auto' },
+                    close: { height: 0 },
+                  }}
+                >
+                  <S.ElemWrapper>
+                    <S.Elem onClick={() => setOpenEditPost(true)}>
+                      게시글 수정
+                    </S.Elem>
+                    <S.Elem onClick={() => setOpenEditPostImg(true)}>
+                      사진 수정
+                    </S.Elem>
+                    <S.Elem onClick={() => setOpenDelete(true)}>
+                      <S.Delete>게시글 삭제</S.Delete>
+                    </S.Elem>
+                  </S.ElemWrapper>
+                </S.Dropdown>
               </S.Edit>
             ) : (
               <S.Like onClick={handleToggleLike}>
@@ -248,24 +363,27 @@ const Description = () => {
           </S.ChatWrapper>
         </S.OptionWrapper>
 
-        <S.TitleWrapper>
-          <S.Title>{tradePost?.title}</S.Title>
-          <S.TitleImg src={daangn} alt="logo" />
-          <S.Date>{`∙ ${moment(tradePost?.modifiedAt).fromNow()}`}</S.Date>
-        </S.TitleWrapper>
+        <S.Content onClick={() => setActive(false)}>
+          <S.TitleWrapper>
+            <S.Title>{tradePost?.title}</S.Title>
+            <S.TitleImg src={daangn} alt="logo" />
+            <S.Date>{`∙ ${moment(tradePost?.modifiedAt).fromNow()}`}</S.Date>
+          </S.TitleWrapper>
 
-        <S.Price>
-          <S.PriceImg src={price} alt="price" />
-          {`${toStringNumWithComma(tradePost?.price)}원`}
-        </S.Price>
+          <S.Price>
+            <S.PriceImg src={price} alt="price" />
+            {`${toStringNumWithComma(tradePost?.price)}원`}
+          </S.Price>
 
-        <S.Desc>{tradePost?.desc}</S.Desc>
+          <S.Desc>{tradePost?.desc}</S.Desc>
 
-        <S.DetailInfo>
-          <S.DetailText>{`관심 ${tradePost?.likeCount}`}</S.DetailText>
-          <S.DetailText>{`∙ 채팅 ${tradePost?.reservationCount}`}</S.DetailText>
-          <S.DetailText>{`∙ 조회 ${tradePost?.viewCount}`}</S.DetailText>
-        </S.DetailInfo>
+          <S.DetailInfo>
+            <S.DetailText>{`관심 ${tradePost?.likeCount}`}</S.DetailText>
+            <S.DetailText>{`∙ 채팅 ${tradePost?.reservationCount}`}</S.DetailText>
+            <S.DetailText>{`∙ 조회 ${tradePost?.viewCount}`}</S.DetailText>
+          </S.DetailInfo>
+        </S.Content>
+        <ContentFooter />
       </S.Wrapper>
 
       {modalOpen && (
@@ -315,6 +433,37 @@ const Description = () => {
           ) : (
             <>TODO: 로딩중 스켈레톤 넣기</>
           )}
+        </ModalWrapper>
+      )}
+
+      {openEditPost && (
+        <TradePostUpdate
+          values={values}
+          handleChange={handleChange}
+          handleSubmit={handleSubmitEdit}
+          handleClose={() => setOpenEditPost(false)}
+        />
+      )}
+
+      {openEditPostImg && (
+        <TradePostUpdateImg
+          values={values}
+          handleChange={handleChange}
+          handleSubmit={handleSubmitEdit}
+          handleClose={() => setOpenEditPostImg(false)}
+        />
+      )}
+
+      {openDelete && (
+        <ModalWrapper handleClose={() => setOpenDelete(false)}>
+          <S.DeleteWrapper>
+            <S.DeleteTitle> 🥕 정말 삭제하시겠습니까?</S.DeleteTitle>
+            <S.DeleteSubtitle>삭제 시 복구할 수 없습니다.</S.DeleteSubtitle>
+            <S.ButtonWrapper>
+              <S.Cancel onClick={() => setOpenDelete(false)}>취소</S.Cancel>
+              <S.Cancel onClick={handleDeletePost}>삭제</S.Cancel>
+            </S.ButtonWrapper>
+          </S.DeleteWrapper>
         </ModalWrapper>
       )}
     </>

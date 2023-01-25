@@ -60,11 +60,11 @@ export const updateTradePost = createAsyncThunk(
       desc,
       price,
     }: {
-      postId: number;
+      postId?: number;
       accessToken: string;
-      title: string | null;
-      desc: string | null;
-      price: string | null;
+      title?: string;
+      desc?: string;
+      price?: number;
     },
     { rejectWithValue },
   ) => {
@@ -210,6 +210,20 @@ export const tradePostSlice = createSlice({
       state.buyer = action.payload.buyer as TxUser;
       state.tradePost = action.payload as TradePostType;
       state.tradeStatus = action.payload.tradeStatus;
+    });
+    builder.addCase(updateTradePost.fulfilled, (state, action) => {
+      state.isLiked = action.payload.isLiked as boolean;
+      state.seller = action.payload.seller as TxUser;
+      state.buyer = action.payload.buyer as TxUser;
+      state.tradePost = action.payload as TradePostType;
+      state.tradeStatus = action.payload.tradeStatus;
+    });
+    builder.addCase(deleteTradePost.fulfilled, (state, action) => {
+      state.isLiked = false;
+      state.seller = null;
+      state.buyer = null;
+      state.tradePost = null;
+      state.tradeStatus = null;
     });
     builder.addCase(getReservation.fulfilled, (state, action) => {
       state.buyer = action.payload.buyer as TxUser;
