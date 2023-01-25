@@ -14,9 +14,14 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-self: center;
-  margin-top: 40px;
+  margin-top: 80px;
   margin-bottom: 60px;
   gap: 16px;
+
+  @media ${MD_SIZE} {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
 `;
 
 export const Button = styled.button<Button>(

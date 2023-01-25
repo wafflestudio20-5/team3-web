@@ -1,11 +1,12 @@
 import styled from 'styled-components';
-import { MD_SIZE, MD_to_XL_SIZE, SM_SIZE } from '../../constant/breakpoint';
+import { MD_SIZE, Market_MD, Market_XL } from '../../constant/breakpoint';
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-content: center;
+  align-items: center;
   justify-content: center;
 `;
 
@@ -13,28 +14,40 @@ export const Header = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  width: 95%;
-  max-width: 1200px;
   align-content: center;
+  justify-items: center;
   justify-content: center;
+  margin-bottom: 20px;
 
   @media ${MD_SIZE} {
     width: 100vw;
+    margin-bottom: 0;
   }
 `;
 
-export const Intro = styled.h2``;
+// export const List = styled.div`
+//   display: grid;
+//   grid-template-columns: repeat(auto-fit, minmax(160px, 200px));
+//   column-gap: 30px;
+//   row-gap: 100px;
+//   max-width: 1080px;
+//   align-content: center;
+
+//   @media ${MD_SIZE} {
+//     display: flex;
+//     flex-direction: column;
+//     row-gap: 0;
+//     column-gap: 0;
+//     width: 100vw;
+//     padding: 0;
+//   }
+// `;
 
 export const List = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 200px));
+  grid-template-columns: repeat(4, 200px);
   column-gap: 30px;
   row-gap: 100px;
-  width: 95%;
-  max-width: 1200px;
-  align-content: center;
-  justify-content: center;
-  padding: 30px 60px;
 
   @media ${MD_SIZE} {
     display: flex;
@@ -43,5 +56,13 @@ export const List = styled.div`
     column-gap: 0;
     width: 100vw;
     padding: 0;
+  }
+
+  @media ${Market_MD} {
+    grid-template-columns: repeat(3, 200px);
+  }
+
+  @media ${Market_XL} {
+    grid-template-columns: repeat(5, 200px);
   }
 `;

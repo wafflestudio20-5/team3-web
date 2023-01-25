@@ -1,3 +1,4 @@
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import {
@@ -12,13 +13,14 @@ import {
   Likes,
   Chats,
   Date,
+  More,
 } from './shortcut.styled';
 import TradeStatusButton from '../../../../components/trade-status-button';
-import { TradeStatusType } from '../../../../types/tradePost';
+import DropDown from '../drop-down';
 import alt from '../../../../assets/post-alt.png';
+import more from '../../../../assets/more.svg';
 
 interface ShortCut {
-  id: number;
   postId: number;
   img: string;
   title: string;
@@ -31,7 +33,6 @@ interface ShortCut {
 }
 
 const ShortCut = ({
-  id,
   postId,
   img,
   title,
@@ -42,22 +43,25 @@ const ShortCut = ({
   chats,
   created_at,
 }: ShortCut) => {
+  const [isDropped, setIsDropped] = useState(false);
+  const dropDownRef = useRef<any>();
+  const clickDropDown = () => {
+    setIsDropped(prev => !prev);
+  };
   return (
     <Container>
-      <Link to={`/tradepost/${id}`}>
       <Link to={`/tradepost/${postId}`}>
         <Img
-          src={img}
+          src={img ? img : alt}
           onError={e => ((e.target as HTMLImageElement).src = alt)}
         />
       </Link>
       <Info>
-        <Link to={`/tradepost/${id}`}>
         <Link to={`/tradepost/${postId}`}>
           <Title>{title}</Title>
         </Link>
         <PriceBox>
-          {tradeStatus !== TradeStatusType.TRADING && (
+          {tradeStatus !== 'TRADING' && (
             <TradeStatusButton tradeStatus={tradeStatus} />
           )}
           <Price>{price}원</Price>
@@ -71,6 +75,15 @@ const ShortCut = ({
           </Date>
         </Detail>
       </Info>
+      <More src={more} ref={dropDownRef} onClick={clickDropDown} />
+      {isDropped && (
+        <DropDown
+          dropDownRef={dropDownRef}
+          isDropped={isDropped}
+          setIsDropped={setIsDropped}
+          postId={postId}
+        />
+      )}
     </Container>
   );
 };

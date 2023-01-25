@@ -45,6 +45,14 @@ export const Img = styled.img`
   }
 `;
 
+export const Heart = styled.img`
+  position: absolute;
+  right: 2px;
+  top: 208px;
+  width: 24px;
+  z-index: 1;
+`;
+
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
@@ -58,7 +66,7 @@ export const Info = styled.div`
 `;
 
 export const Title = styled.h3`
-  width: 200px;
+  width: 176px;
   font-size: 17px;
   white-space: nowrap;
   overflow: hidden;
