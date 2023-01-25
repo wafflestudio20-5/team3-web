@@ -45,6 +45,9 @@ const ProfilePage = () => {
             username={me?.username || null}
             handleClick={() => setModalOpen(true)}
             isLoading={sessionLoading}
+            img={sellIcon}
+            text="판매내역"
+            handleClick={() => navigate('/profile/me/sell')}
           />
           <S.InfoWrapper>
             <UserInfo

@@ -4,12 +4,12 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { deleteReview, getReviews } from '../../store/slices/reviewSlice';
-import { shortenLocation } from '../../functions/location';
+import { shortenLocation } from '../../utils/location';
 import { redirectWithMsg } from '../../utils/errors';
 import Gnb from '../../components/gnb';
 import ReviewInfo from './components/review-info';
 import { Review } from '../../types/review';
-import { Wrapper, Header, List } from './my-review.styled';
+import { Wrapper, Header, List, Message } from './my-review.styled';
 
 const MyReviewPage = () => {
   const navigate = useNavigate();
@@ -91,7 +91,7 @@ const MyReviewPage = () => {
               removeReview={removeReview}
             />
           ))}
-          {!data && <a>아직 리뷰가 없습니다</a>}
+          {!data[0] && <Message>아직 리뷰가 없습니다</Message>}
         </List>
       </Wrapper>
     </>
