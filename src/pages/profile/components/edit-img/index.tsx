@@ -44,7 +44,7 @@ const EditImg = ({ img, edit, handleClose }: EditImgProps) => {
 
   const handleSubmit = useCallback(() => {
     const formData = new FormData();
-    formData.append('file', imgFile);
+    formData.append('image', imgFile);
     if (accessToken) {
       dispatch(postImg({ accessToken, formData }))
         .unwrap()
