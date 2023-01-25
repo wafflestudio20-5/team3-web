@@ -6,6 +6,7 @@ import Gnb from '../../components/gnb';
 import Header from './components/header';
 import UserInfo from './container/user-info';
 import TxInfo from './container/transaction-info';
+import ContentFooter from '../../components/content-footer';
 import NavigationButton from './components/navigation-button';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -43,7 +44,7 @@ const ProfileOtherPage = () => {
 
   return (
     <S.Wrapper>
-      <Gnb />
+      <Gnb isColored />
       <S.ContentWrapper>
         <Header
           isLoading={isLoading}
@@ -54,7 +55,6 @@ const ProfileOtherPage = () => {
           <TxInfo me={currentUser || null} isLoading={isLoading} />
         </S.InfoWrapper>
 
-        {/* TODO: 적절한 페이지로 이동 */}
         <S.NavigationWrapper>
           <NavigationButton
             isLoading={isLoading}
@@ -76,6 +76,7 @@ const ProfileOtherPage = () => {
           />
         </S.NavigationWrapper>
       </S.ContentWrapper>
+      <ContentFooter />
     </S.Wrapper>
   );
 };
