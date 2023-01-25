@@ -8,7 +8,7 @@ import { getSellHistory } from '../../store/slices/tradeHistorySlice';
 import { shortenLocation } from '../../utils/location';
 import { TradeHistory } from '../../types/history';
 import { redirectWithMsg } from '../../utils/errors';
-import * as S from './sell-history-my.styled';
+import * as S from './sell-history-others.styled';
 import { BASE_URL } from '../../constant';
 
 const SellHistoryOthersPage = () => {

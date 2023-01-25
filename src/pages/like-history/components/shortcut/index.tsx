@@ -1,8 +1,10 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Moment from 'react-moment';
 import {
   Container,
   Img,
+  Heart,
   Info,
   Title,
   PriceBox,
@@ -12,13 +14,16 @@ import {
   Likes,
   Chats,
   Date,
+  More,
 } from './shortcut.styled';
 import TradeStatusButton from '../../../../components/trade-status-button';
-import { TradeStatusType } from '../../../../types/tradePost';
 import alt from '../../../../assets/post-alt.png';
+import heart from '../../../../assets/heart.svg';
+import likeFill from '../../../../assets/like-fill.svg';
+import likeBlank from '../../../../assets/like-blank.svg';
 
 interface ShortCut {
-  id: number;
+  postId: number;
   img: string;
   title: string;
   tradeStatus: string;
@@ -27,10 +32,11 @@ interface ShortCut {
   likes: number;
   chats: number;
   created_at: Date;
+  isLiked: boolean;
 }
 
 const ShortCut = ({
-  id,
+  postId,
   img,
   title,
   tradeStatus,
@@ -39,21 +45,29 @@ const ShortCut = ({
   likes,
   chats,
   created_at,
+  isLiked,
 }: ShortCut) => {
+  const navigate = useNavigate();
+  const [liked, setLiked] = useState<boolean>(isLiked);
+  const clickLike = () => {
+    setLiked(prev => !prev);
+  };
+  // TODO: 찜하기 & 찜취소 통신 추가
   return (
     <Container>
-      <Link to={`/tradepost/${id}`}>
+      <Link to={`/tradepost/${postId}`}>
         <Img
-          src={img}
+          src={img ? img : alt}
           onError={e => ((e.target as HTMLImageElement).src = alt)}
         />
       </Link>
+      <Heart src={liked ? likeFill : likeBlank} onClick={clickLike} />
       <Info>
-        <Link to={`/tradepost/${id}`}>
+        <Link to={`/tradepost/${postId}`}>
           <Title>{title}</Title>
         </Link>
         <PriceBox>
-          {tradeStatus !== TradeStatusType.TRADING && (
+          {tradeStatus !== 'TRADING' && (
             <TradeStatusButton tradeStatus={tradeStatus} />
           )}
           <Price>{price}원</Price>

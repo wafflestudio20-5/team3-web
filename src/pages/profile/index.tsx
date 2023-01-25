@@ -73,13 +73,13 @@ const ProfilePage = () => {
               isLoading={sessionLoading}
               img={buyIcon}
               text="구매내역"
-              handleClick={() => navigate('/')}
+              handleClick={() => navigate('/profile/me/buy')}
             />
             <NavigationButton
               isLoading={sessionLoading}
               img={likeIcon}
               text="찜한 상품"
-              handleClick={() => navigate('/')}
+              handleClick={() => navigate('/profile/me/like')}
             />
             <NavigationButton
               isLoading={sessionLoading}
