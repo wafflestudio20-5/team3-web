@@ -91,7 +91,9 @@ export const Desc = styled.div`
   justify-content: flex-start;
   width: 100%;
   margin-top: 25px;
+  margin-bottom: 8px;
   font-size: 15px;
+  white-space: pre-wrap;
 `;
 
 export const DetailInfo = styled.div`
@@ -111,7 +113,7 @@ export const Title = styled.span`
   font-weight: 500;
   font-size: 20px;
   color: #212529;
-  margin-right: 6px;
+  margin: 0 8px 0 4px;
   word-break: break-word;
   white-space: pre-wrap;
 `;

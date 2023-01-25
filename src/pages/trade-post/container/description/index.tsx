@@ -364,9 +364,9 @@ const Description = () => {
 
         <S.Content onClick={() => setActive(false)}>
           <S.TitleWrapper>
-            <S.Title>{tradePost?.title}</S.Title>
             <S.TitleImg src={daangn} alt="logo" />
-            <S.Date>{`∙ ${moment(tradePost?.modifiedAt).fromNow()}`}</S.Date>
+            <S.Title>{tradePost?.title}</S.Title>
+            <S.Date>{`${moment(tradePost?.modifiedAt).fromNow()}`}</S.Date>
           </S.TitleWrapper>
 
           <S.Price>

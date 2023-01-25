@@ -7,6 +7,7 @@ export const Wrapper = styled(Carousel)`
   height: 390px;
   margin-bottom: 12px;
   border-radius: 8px;
+  z-index: 0;
 
   @media ${MD_SIZE} {
     height: 280px;
