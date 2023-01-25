@@ -1,17 +1,19 @@
 import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
+import { MD_SIZE } from '../../../../constant/breakpoint';
 
 export const OuterWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  min-width: 360px;
+  min-width: 480px;
   background: #fff;
   padding: 5px 5px 5px 0;
   border-radius: 30px;
 
-  @media (max-width: 410px) {
+  @media ${MD_SIZE} {
     padding: 0;
+    min-width: 360px;
   }
 `;
 
