@@ -9,7 +9,8 @@ export const Wrapper = styled.div`
   height: auto;
   border-left: 2px solid #eaebee;
   padding-left: 15px;
-
+  z-index: 0;
+  
   @media ${MD_SIZE} {
     padding-left: 0;
     border-left: none;

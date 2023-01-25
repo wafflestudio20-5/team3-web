@@ -18,7 +18,7 @@ import { TradeStatusType } from '../../../../types/tradePost';
 import alt from '../../../../assets/post-alt.png';
 
 interface ShortCut {
-  key: number;
+  id: number;
   img: string;
   title: string;
   tradeStatus: string;
@@ -30,7 +30,7 @@ interface ShortCut {
 }
 
 const ShortCut = ({
-  key,
+  id,
   img,
   title,
   tradeStatus,
@@ -42,14 +42,14 @@ const ShortCut = ({
 }: ShortCut) => {
   return (
     <Container>
-      <Link to={`/tradepost/${key}`}>
+      <Link to={`/tradepost/${id}`}>
         <Img
           src={img}
           onError={e => ((e.target as HTMLImageElement).src = alt)}
         />
       </Link>
       <Info>
-        <Link to={`/tradepost/${key}`}>
+        <Link to={`/tradepost/${id}`}>
           <Title>{title}</Title>
         </Link>
         <PriceBox>

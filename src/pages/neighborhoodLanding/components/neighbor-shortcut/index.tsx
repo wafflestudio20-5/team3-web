@@ -3,10 +3,9 @@ import * as S from './shortcut.styled';
 import LikeIcon from '../../../../assets/like-icon.svg';
 import CommentIcon from '../../../../assets/comment-icon.svg';
 import { useNavigate } from 'react-router-dom';
-import { shortenLocation } from '../../../../functions/location';
+import { shortenLocation } from '../../../../utils/location';
 
 interface ShortCutProps {
-  key: number;
   id: number;
   content: string;
   location?: string;

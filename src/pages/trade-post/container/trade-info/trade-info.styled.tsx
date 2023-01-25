@@ -14,7 +14,7 @@ export const Header = styled.div`
   width: 100%;
   height: auto;
   margin-bottom: 16px;
-  padding-bottom: 10px;
+  padding: 0 20px 10px 20px;
   border-bottom: 2px solid #eaebee;
 `;
 
@@ -30,6 +30,7 @@ export const UserWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 76px;
+  padding: 0 20px;
   border-bottom: 2px solid #eaebee7c;
   padding-bottom: 20px;
 `;
