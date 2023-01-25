@@ -108,41 +108,6 @@ const MarketPage = () => {
               keyword={keyword}
               setKeyword={setKeyword}
               searchClick={searchHandler}
-      <Wrapper>
-        <Header>
-          <SearchBar
-            keyword={keyword}
-            setKeyword={setKeyword}
-            searchClick={searchHandler}
-          />
-        </Header>
-        <List>
-          {data.map(post => {
-            return (
-              <ShortCut
-                postId={post?.postId}
-                key={post?.postId}
-                img={post?.imageUrls}
-                title={post?.title}
-                tradeStatus={post?.tradeStatus}
-                price={post?.price}
-                location={shortenLocation(post?.seller.location)}
-                likes={post?.likeCount}
-                chats={post?.reservationCount}
-                created_at={post?.createdAt}
-              />
-            );
-          })}
-          {/* {data && (
-            <ShortCut
-              img={data[0]?.imageUrls}
-              title={data[0]?.title}
-              tradeStatus={data[0]?.tradeStatus}
-              price={data[0]?.price}
-              location={data[0]?.seller.location}
-              likes={data[0]?.likeCount}
-              chats={data[0]?.reservationCount}
-              created_at={data[0]?.modifiedAt}
             />
           </Header>
           <List>
