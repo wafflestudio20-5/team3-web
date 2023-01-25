@@ -6,12 +6,8 @@ export const Button = styled.img`
   position: fixed;
   right: 60px;
   bottom: 60px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  padding: 10px;
-  background-color: ${COLOR_CARROT};
-  box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.3);
+  width: 80px;
+  height: 80px;
 
   @media ${MD_SIZE} {
     right: 40px;

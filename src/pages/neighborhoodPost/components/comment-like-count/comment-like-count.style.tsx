@@ -14,6 +14,7 @@ export const Text = styled.div`
 
 export const IconImg = styled.img`
   margin-left: 10px;
+  margin-right: 5px;
   width: 20px;
   height: 20px;
 `;

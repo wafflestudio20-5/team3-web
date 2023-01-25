@@ -3,9 +3,11 @@ import * as S from './shortcut.styled';
 import LikeIcon from '../../../../assets/like-icon.svg';
 import CommentIcon from '../../../../assets/comment-icon.svg';
 import { useNavigate } from 'react-router-dom';
+import { shortenLocation } from '../../../../functions/location';
 
 interface ShortCutProps {
-  id?: number;
+  key: number;
+  id: number;
   content: string;
   location?: string;
   likeCount?: number;
@@ -14,15 +16,15 @@ interface ShortCutProps {
 
 // TODO: id(key props), handleClick 구현
 export const ShortCut = ({
-  id = 0,
+  id,
   content,
   location = '',
   likeCount = 0,
-
   commentCount = 0,
 }: ShortCutProps) => {
   const navigate = useNavigate();
   const handleClick = () => {
+    // console.log(id);
     navigate(`/neighborhood/${id}`);
   };
   return (
@@ -30,7 +32,7 @@ export const ShortCut = ({
       <S.ContentP>{content}</S.ContentP>
 
       <S.FooterWrapper>
-        <S.Location>{location}</S.Location>
+        <S.Location>{shortenLocation(location)}</S.Location>
 
         <S.IconsContainer>
           {commentCount > 0 && (
