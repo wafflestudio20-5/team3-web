@@ -14,7 +14,6 @@ import {
   Likes,
   Chats,
   Date,
-  More,
 } from './shortcut.styled';
 import TradeStatusButton from '../../../../components/trade-status-button';
 import alt from '../../../../assets/post-alt.png';
@@ -33,6 +32,7 @@ interface ShortCut {
   chats: number;
   created_at: Date;
   isLiked: boolean;
+  handleLike: (postId: number) => void;
 }
 
 const ShortCut = ({
@@ -46,13 +46,15 @@ const ShortCut = ({
   chats,
   created_at,
   isLiked,
+  handleLike,
 }: ShortCut) => {
   const navigate = useNavigate();
   const [liked, setLiked] = useState<boolean>(isLiked);
   const clickLike = () => {
+    handleLike(postId);
     setLiked(prev => !prev);
   };
-  // TODO: 찜하기 & 찜취소 통신 추가
+
   return (
     <Container>
       <Link to={`/tradepost/${postId}`}>

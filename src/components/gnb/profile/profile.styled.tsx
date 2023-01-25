@@ -15,7 +15,8 @@ export const ProfileImg = styled.img`
   width: 70px;
   height: 70px;
   border-radius: 50%;
-
+  object-fit: cover;
+  
   @media ${SM_SIZE} {
     width: 60px;
     height: 60px;

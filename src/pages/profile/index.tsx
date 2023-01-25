@@ -1,16 +1,17 @@
-import { useState } from 'react';
-import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Gnb from '../../components/gnb';
 import Header from './components/header';
 import UserInfo from './container/user-info';
 import TxInfo from './container/transaction-info';
+import ModalWrapper from '../../components/modal-wrapper';
 import ContentFooter from '../../components/content-footer';
 import NavigationButton from './components/navigation-button';
 
 import { useAuth } from '../../hooks/useAuth';
-import { useAppSelector } from '../../store/hooks';
+import { getMyChats } from '../../store/slices/usersSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import * as S from './profile.styled';
 import buyIcon from '../../assets/buy-icon.svg';
@@ -19,13 +20,14 @@ import likeIcon from '../../assets/like-icon.svg';
 import sellIcon from '../../assets/sell-icon.svg';
 import reviewIcon from '../../assets/review-icon.svg';
 import mannerCommentIcon from '../../assets/manner-comment-icon.svg';
-import ModalWrapper from '../../components/modal-wrapper';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { sessionLoading } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const { me } = useAppSelector(state => state.users);
+  const { accessToken } = useAppSelector(state => state.session);
 
   const [edit, setEdit] = useState({
     img: false,
@@ -34,13 +36,25 @@ const ProfilePage = () => {
     location: false,
   });
 
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(getMyChats(accessToken))
+        .unwrap()
+        .then(() => {
+          console.log('성공');
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }, [accessToken]);
+
   return (
     <S.OuterWrapper>
       <Gnb isColored />
 
       <S.Wrapper>
         <S.ContentWrapper>
-          {/* TODO: My chats 이동 */}
           <Header
             username={me?.username || null}
             handleClick={() => setModalOpen(true)}
