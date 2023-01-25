@@ -4,11 +4,14 @@ import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Gnb from '../../components/gnb';
 import ShortCut from './components/shortcut';
-import { getBuyHistory } from '../../store/slices/tradeHistorySlice';
+import { getLikeHistory } from '../../store/slices/tradeHistorySlice';
+import { postLike } from '../../store/slices/tradePostSlice';
 import { shortenLocation } from '../../utils/location';
 import { TradeHistory } from '../../types/history';
 import { redirectWithMsg } from '../../utils/errors';
 import * as S from './like-history.styled';
+import { stringify } from 'querystring';
+import { toast } from 'react-toastify';
 
 const LikeHistoryPage = () => {
   const navigate = useNavigate();
@@ -18,10 +21,10 @@ const LikeHistoryPage = () => {
   const [data, setData] = useState<TradeHistory[]>([]);
   useEffect(() => {
     if (me) {
-      // TODO: 찜목록 API 생기면 변경예정
-      dispatch(getBuyHistory(accessToken as string))
+      dispatch(getLikeHistory(accessToken as string))
         .unwrap()
         .then(res => {
+          console.log(res);
           setData(res.posts);
         })
         .catch(err => {
@@ -43,6 +46,35 @@ const LikeHistoryPage = () => {
     }
   }, [accessToken, me]);
 
+  const handleLike = (postId: number) => {
+    dispatch(
+      postLike({
+        accessToken: accessToken as string,
+        postId: postId as number,
+      }),
+    )
+      .unwrap()
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 404) {
+            redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+          } else if (err.response?.status === 401) {
+            // TODO: refresh 후 재요청
+            redirectWithMsg(2, err.response?.data.error, () =>
+              navigate('/login'),
+            );
+          } else {
+            redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+              navigate('/'),
+            );
+          }
+        }
+      });
+  };
+
   return (
     <>
       <Gnb />
@@ -62,7 +94,8 @@ const LikeHistoryPage = () => {
                 likes={post?.likeCount}
                 chats={post?.reservationCount}
                 created_at={post?.createdAt}
-                isLiked={true}
+                isLiked={post?.isLiked}
+                handleLike={handleLike}
               />
             );
           })}
