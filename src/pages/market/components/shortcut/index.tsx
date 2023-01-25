@@ -19,7 +19,6 @@ import alt from '../../../../assets/post-alt.png';
 
 interface ShortCut {
   id: number;
-  postId: number;
   img: string;
   title: string;
   tradeStatus: string;
@@ -32,7 +31,6 @@ interface ShortCut {
 
 const ShortCut = ({
   id,
-  postId,
   img,
   title,
   tradeStatus,
@@ -45,7 +43,6 @@ const ShortCut = ({
   return (
     <Container>
       <Link to={`/tradepost/${id}`}>
-      <Link to={`/tradepost/${postId}`}>
         <Img
           src={img}
           onError={e => ((e.target as HTMLImageElement).src = alt)}
@@ -53,7 +50,6 @@ const ShortCut = ({
       </Link>
       <Info>
         <Link to={`/tradepost/${id}`}>
-        <Link to={`/tradepost/${postId}`}>
           <Title>{title}</Title>
         </Link>
         <PriceBox>
