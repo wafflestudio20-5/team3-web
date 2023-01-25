@@ -1,13 +1,8 @@
-import { Link } from 'react-router-dom';
 import { Button } from './add-button.styled';
 import addButton from '../../../../assets/add-button.svg';
 
-const AddButton = () => {
-  return (
-    <Link to="/login">
-      <Button src={addButton} />
-    </Link>
-  );
+const AddButton = ({ handleClick }: { handleClick: () => void }) => {
+  return <Button src={addButton} onClick={handleClick} />;
 };
 
 export default AddButton;

@@ -19,11 +19,11 @@ const ProfileImage = ({
   return (
     <S.PositionWrapper>
       <S.ProflieImg src={profileImg ? profileImg : defaultImg} alt="profile" />
-      {/* <S.EditWrapper onClick={setEdit}>
+      <S.EditWrapper onClick={setEdit}>
         <S.EditInnerWrapper>
           <S.Edit src={edit} />
         </S.EditInnerWrapper>
-      </S.EditWrapper> */}
+      </S.EditWrapper>
       {temperature && temperature > BADGE_THRESHOLD ? (
         <S.BadgeWrapper>
           <S.BadgeInnerWrapper>
