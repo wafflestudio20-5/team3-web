@@ -19,7 +19,7 @@ import { getTradePostList } from '../../store/slices/marketSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { TradePostList } from '../../types/market';
 import { TradeStatusType } from '../../types/tradePost';
-import { shortenLocation } from '../../functions/location';
+import { shortenLocation } from '../../utils/location';
 import Pagination from './components/pagination';
 
 const MarketPage = () => {
