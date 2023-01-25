@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Gnb from '../../components/gnb';
 import ShortCut from './components/shortcut';
 import { getSellHistory } from '../../store/slices/tradeHistorySlice';
-import { shortenLocation } from '../../functions/location';
+import { shortenLocation } from '../../utils/location';
 import { TradeHistory } from '../../types/history';
 import { redirectWithMsg } from '../../utils/errors';
 import * as S from './sell-history-my.styled';
