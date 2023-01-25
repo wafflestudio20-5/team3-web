@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { requestPostNeighborhoodComment } from '../../../../api/neighborhood';
 import { useAppSelector } from '../../../../store/hooks';
@@ -10,19 +11,23 @@ interface CommentInputProps {
 }
 
 export const CommentInput = ({ postId, refreshPost }: CommentInputProps) => {
+  const navigate = useNavigate();
   const { accessToken } = useAppSelector(state => state.session);
   const [input, setInput] = useState('');
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (accessToken) {
-      requestPostNeighborhoodComment(
+      await requestPostNeighborhoodComment(
         postId,
         { comment: input, isHidden: false },
         accessToken,
-      );
-      toast('댓글을 등록하였습니다.');
-      setInput('');
-      refreshPost();
+      ).then(() => {
+        toast('댓글을 등록하였습니다.');
+        navigate(`/neighborhood/${postId}`);
+      });
+
+      // 원래는 refreshPost() 로 post 정보를 다시 받아오고 싶었는데.. auth/refresh 403 에러
+      // TODO: 뒤로 가지 않고 바로 작성한 댓글 보여주기
     }
   };
 

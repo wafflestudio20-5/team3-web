@@ -1,12 +1,14 @@
+import axios from 'axios';
 import moment from 'moment';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { auth } from '../../../../api';
 import {
   requestDeleteNeighborhoodComment,
   requestPatchNeighborhoodComment,
 } from '../../../../api/neighborhood';
-import { accessToken } from '../../../../constant';
+import { accessToken, BASE_URL } from '../../../../constant';
 import { shortenLocation } from '../../../../functions/location';
 import { useAppSelector } from '../../../../store/hooks';
 import { User } from '../../../../types/users';
@@ -33,21 +35,27 @@ export const Comment = ({
   modifiedAt,
   refreshPost,
 }: CommentProps) => {
-  const { me } = useAppSelector(state => state.users);
+  // const { me } = useAppSelector(state => state.users);
+  // const { accessToken } = useAppSelector(state => state.session);
   const { accessToken } = useAppSelector(state => state.session);
+  const { me } = useAppSelector(state => state.users);
   const [input, setInput] = useState(content);
   const [isEdit, setIsEdit] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleEdit = async () => {
     if (accessToken) {
-      const res = await requestPatchNeighborhoodComment(
-        commentId,
-        input,
-        accessToken,
-      );
-      console.log(res);
-      toast('댓글 수정이 완료되었습니다.');
+      // alert('댓글 수정');
+      // TODO: 밑에 requestPatchNeighborhoodComment 수행 도중 auth/refresh 에서 403 오류가 뜹니다..
+      requestPatchNeighborhoodComment(commentId, input, accessToken)
+        .then(() => {
+          toast('댓글 수정이 완료되었습니다.');
+          navigate(-1);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   };
 

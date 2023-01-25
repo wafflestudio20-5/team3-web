@@ -94,7 +94,7 @@ export const requestPatchNeighborhoodComment = async (
   try {
     return await axios.patch(
       `${BASE_URL}/neighborhood/comment/${commentId}`,
-      { comment: comment },
+      { comment },
       { headers: auth(accessToken) },
     );
   } catch (e) {

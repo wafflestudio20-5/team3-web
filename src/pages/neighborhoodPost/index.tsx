@@ -28,7 +28,7 @@ export const NeighborhoodPostPage = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const getPost = async () => {
-    if (accessToken && id) {
+    if (accessToken) {
       const res = (await requestNeighborhoodPost(id, accessToken)) as any;
       // console.log(res);
       setPost(res.data);
