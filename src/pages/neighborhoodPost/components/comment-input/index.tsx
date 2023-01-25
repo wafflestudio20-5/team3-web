@@ -26,6 +26,7 @@ export const CommentInput = ({ postId, refreshPost }: CommentInputProps) => {
         // 원래는 refreshPost() 로 post 정보를 다시 받아오고 싶었는데.. auth/refresh 403 에러
         // TODO: 뒤로 가지 않고 바로 작성한 댓글 보여주기
         setInput('');
+        navigate(-1);
       });
     }
   };
