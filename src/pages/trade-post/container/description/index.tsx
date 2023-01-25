@@ -8,7 +8,6 @@ import { toast } from 'react-toastify';
 import Button from '../../components/button';
 import Candidate from '../../components/candidate';
 import ModalWrapper from '../../../../components/modal-wrapper';
-import ContentFooter from '../../../../components/content-footer';
 import TradePostUpdate from '../../../../components/trade-post-update';
 import TradePostUpdateImg from '../../../../components/trade-post-update-img';
 
@@ -383,7 +382,6 @@ const Description = () => {
             <S.DetailText>{`∙ 조회 ${tradePost?.viewCount}`}</S.DetailText>
           </S.DetailInfo>
         </S.Content>
-        <ContentFooter />
       </S.Wrapper>
 
       {modalOpen && (
