@@ -9,9 +9,10 @@ import {
   requestPatchNeighborhoodComment,
 } from '../../../../api/neighborhood';
 import { accessToken, BASE_URL } from '../../../../constant';
-import { shortenLocation } from '../../../../functions/location';
+
 import { useAppSelector } from '../../../../store/hooks';
 import { User } from '../../../../types/users';
+import { shortenLocation } from '../../../../utils/location';
 import ModalWrapper from '../../../neighborhoodLanding/components/modal-wrapper';
 import { CommentDeleteModal } from '../comment-delete-modal';
 import { DeleteModal } from '../delete-modal';

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { shortenLocation } from '../../../../functions/location';
+import { shortenLocation } from '../../../../utils/location';
 import ProfileImage from '../../../trade-post/components/profile-image';
 import TemperatureBar from '../../../trade-post/components/temperature-bar';
 import * as S from '../../../trade-post/container/trade-info/trade-info.styled';
