@@ -23,5 +23,3 @@ export const FONT_REGULAR = 400;
 export const FONT_MEDIUM = 500;
 export const FONT_SEMI_BOLD = 600;
 export const FONT_BOLD = 700;
-
-export const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
