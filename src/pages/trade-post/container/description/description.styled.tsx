@@ -76,6 +76,7 @@ export const TitleWrapper = styled.div`
 `;
 
 export const Price = styled.div`
+  font-family: 'LINESeedKR-Bd';
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -109,11 +110,13 @@ export const DetailInfo = styled.div`
 `;
 
 export const Title = styled.span`
+  font-family: 'LINESeedKR-Bd';
   max-width: 70%;
   font-weight: 500;
   font-size: 20px;
   color: #212529;
-  margin: 0 8px 0 4px;
+  font-weight: 600;
+  margin: 0 8px 0 0;
   word-break: break-word;
   white-space: pre-wrap;
 `;
@@ -130,7 +133,6 @@ export const PriceImg = styled.img`
   width: 15px;
   height: 15px;
   margin-right: 5px;
-  margin-top: 2px;
 `;
 
 export const TitleImg = styled.img`
