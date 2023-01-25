@@ -4,7 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { deleteReview, getReviews } from '../../store/slices/reviewSlice';
-import { shortenLocation } from '../../functions/location';
+import { shortenLocation } from '../../utils/location';
 import { redirectWithMsg } from '../../utils/errors';
 import Gnb from '../../components/gnb';
 import ReviewInfo from './components/review-info';

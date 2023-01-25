@@ -73,7 +73,7 @@ const ProfilePage = () => {
             isLoading={sessionLoading}
             img={sellIcon}
             text="판매내역"
-            handleClick={() => navigate('/')}
+            handleClick={() => navigate('/profile/me/sell')}
           />
           <NavigationButton
             isLoading={sessionLoading}
