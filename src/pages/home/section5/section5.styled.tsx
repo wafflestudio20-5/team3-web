@@ -7,10 +7,8 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 200px 0 300px 0;
-
+  
   @media ${MD_SIZE} {
-    margin: 100px 0 200px 0;
   }
 `;
 
@@ -21,11 +19,11 @@ export const BgWrapper = styled.div`
   align-items: center;
   height: auto;
   width: 100%;
-  padding: 80px 0 120px 0;
-  background-color: #ffffffb5;
+  padding: 200px 0 300px 0;
+  background-color: #fff8f0;
 
   @media (max-width: 900px) {
-    padding: 80px 0;
+    padding: 100px 0 200px 0;
   }
 `;
 

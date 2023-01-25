@@ -20,10 +20,10 @@ import logoImg from '../../assets/logo.svg';
 import { ReactComponent as MenuIcon } from '../../assets/menu.svg';
 
 interface GnbProps {
-  isMain?: boolean;
+  isColored?: boolean;
 }
 // DESC: global navigation bar
-const Gnb = ({ isMain }: GnbProps) => {
+const Gnb = ({ isColored }: GnbProps) => {
   const { pathname } = useLocation();
   const [isMe, setIsMe] = useState(false);
 
@@ -84,7 +84,7 @@ const Gnb = ({ isMain }: GnbProps) => {
   }, []);
 
   return (
-    <S.Wrapper isMain={isMain}>
+    <S.Wrapper isColored={isColored}>
       <S.InnerWrapper>
         <S.LogoImg alt="gnb" src={logoImg} onClick={() => navigate('/')} />
 

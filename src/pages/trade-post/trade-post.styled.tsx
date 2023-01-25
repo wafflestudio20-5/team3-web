@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   width: 100%;
   height: auto;
   min-width: 360px;
+  background-color: #f5f5f5;
 `;
 
 export const ContentWrapper = styled.div`
