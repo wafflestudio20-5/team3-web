@@ -20,7 +20,7 @@ export const ContentWrapper = styled.div`
   max-width: 711px;
   min-width: 360px;
   height: auto;
-  padding: 44px 10px;
+  padding: 44px 10px 30px 10px;
   margin: 20px 0 50px 0;
   background: #fff;
   border-radius: 16px;
