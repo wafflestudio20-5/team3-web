@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   top: 0;
   right: 0;
   height: 100vh;
-  z-index: 1000;
+  z-index: 1002;
   max-width: 430px;
 `;
 

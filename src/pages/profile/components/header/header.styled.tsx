@@ -9,7 +9,10 @@ export const Wrapper = styled.div`
   margin-bottom: 36px;
 
   @media ${MD_SIZE} {
-    width: 342px;
+    flex-direction: column;
+    width: auto;
+    height: 94px;
+    align-items: flex-end;
   }
 `;
 
@@ -35,7 +38,7 @@ export const Title = styled.span`
 export const ChatBtn = styled.button`
   display: flex;
   align-items: center;
-  width: auto;
+  width: 120px;
   height: 44px;
   padding: 0 14px;
   border-radius: 10px;

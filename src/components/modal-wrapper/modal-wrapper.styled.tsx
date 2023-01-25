@@ -8,7 +8,7 @@ export const Dim = styled.div`
   position: fixed;
   top: 0;
   background-color: #00000072;
-  z-index: 1000;
+  z-index: 999;
   animation: modalBgShow 0.3s;
 
   @keyframes modalBgShow {
@@ -48,7 +48,7 @@ export const ModalContainer = styled.div`
   padding-bottom: 30px;
   background-color: #fff;
   border-radius: 15px;
-  z-index: 1001;
+  z-index: 1000;
   animation: modalShow 0.3s;
 
   @keyframes modalShow {
