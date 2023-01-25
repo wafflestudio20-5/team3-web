@@ -22,7 +22,7 @@
     "react-dom": "^18.2.0",
     "react-google-login": "^5.2.2",
     "react-kakao-maps-sdk": "^1.1.5",
-    "react-moment": "^1.1.2",
+    "react-moment": "^1.1.3",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
@@ -40,7 +40,10 @@
     "lint:fix": "eslint src --ext ts,tsx . --fix",
     "deploy:kyj": "aws s3 sync ./build s3://waffle-market --profile=lerrybe",
     "deploy:bmh": "aws s3 sync ./build s3://waffle-market --profile=roddywhite",
-    "deploy:ycm": "aws s3 sync ./build s3://waffle-market --profile=fluentmin"
+    "deploy:ycm": "aws s3 sync ./build s3://waffle-market --profile=fluentmin",
+    "deploy:kyj:dev": "aws s3 sync ./build s3://waffle-market-dev --profile=lerrybe",
+    "deploy:bmh:dev": "aws s3 sync ./build s3://waffle-market-dev --profile=roddywhite",
+    "deploy:ycm:dev": "aws s3 sync ./build s3://waffle-market-dev --profile=fluentmin"
   },
   "eslintConfig": {
     "extends": [

@@ -3,13 +3,13 @@ import { MD_SIZE, MD_to_XL_SIZE, SM_SIZE } from '../../../../constant/breakpoint
 
 export const Button = styled.img`
   position: fixed;
-  right: 60px;
-  bottom: 60px;
-  width: 60px;
-  height: 60px;
+  right: 50px;
+  bottom: 50px;
+  width: 90px;
+  height: 90px;
 
   @media ${MD_SIZE} {
-    right: 40px;
-    bottom: 40px;
+    right: 30px;
+    bottom: 30px;
   }
 `;

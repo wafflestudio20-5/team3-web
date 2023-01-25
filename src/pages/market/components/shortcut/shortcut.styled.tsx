@@ -21,7 +21,7 @@ export const Container = styled.div`
     align-content: center;
     width: 100%;
     height: 180px;
-    border-top: 0.5px solid black;
+    border-bottom: 0.5px solid black;
     border-radius: 0;
     gap: 4px;
   }
@@ -80,7 +80,11 @@ export const Price = styled.span`
   font-weight: 600;
 `;
 
-export const Location = styled.span``;
+export const Location = styled.span`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 
 export const Detail = styled.div`
   display: flex;

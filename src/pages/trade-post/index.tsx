@@ -21,7 +21,6 @@ const TradePostPage = () => {
         <TradeInfo />
         <OtherTrades />
       </S.ContentWrapper>
-      {/* footer */}
     </S.Wrapper>
   );
 };

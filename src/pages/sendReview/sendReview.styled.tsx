@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   flex-wrap: wrap;
   align-content: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
 `;
 
 export const Goods = styled.div``;
@@ -22,7 +22,7 @@ export const SubTitle = styled.span`
   color: gray;
   font-size: 16px;
   font-weight: 400;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;
 
 export const ScoreBox = styled.div`
@@ -31,7 +31,7 @@ export const ScoreBox = styled.div`
   align-content: center;
   justify-content: center;
   width: 500px;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
   gap: 60px;
 
   @media ${MD_SIZE} {

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
 import {
   Container,
   Img,
@@ -12,8 +14,11 @@ import {
   Date,
 } from './shortcut.styled';
 import TradeStatusButton from '../../../../components/trade-status-button';
+import { TradeStatusType } from '../../../../types/tradePost';
+import alt from '../../../../assets/post-alt.png';
 
 interface ShortCut {
+  postId: number;
   img: string;
   title: string;
   tradeStatus: string;
@@ -21,10 +26,11 @@ interface ShortCut {
   location: string;
   likes: number;
   chats: number;
-  created_at: string;
+  created_at: Date;
 }
 
 const ShortCut = ({
+  postId,
   img,
   title,
   tradeStatus,
@@ -36,11 +42,18 @@ const ShortCut = ({
 }: ShortCut) => {
   return (
     <Container>
-      <Img src={img} />
+      <Link to={`/tradepost/${postId}`}>
+        <Img
+          src={img}
+          onError={e => ((e.target as HTMLImageElement).src = alt)}
+        />
+      </Link>
       <Info>
-        <Title>{title}</Title>
+        <Link to={`/tradepost/${postId}`}>
+          <Title>{title}</Title>
+        </Link>
         <PriceBox>
-          {tradeStatus !== 'onSale' && (
+          {tradeStatus !== TradeStatusType.TRADING && (
             <TradeStatusButton tradeStatus={tradeStatus} />
           )}
           <Price>{price}원</Price>
@@ -49,7 +62,9 @@ const ShortCut = ({
         <Detail>
           <Likes>관심 {likes} · </Likes>
           <Chats>채팅 {chats} · </Chats>
-          <Date>{created_at}</Date>
+          <Date>
+            <Moment fromNow>{created_at}</Moment>
+          </Date>
         </Detail>
       </Info>
     </Container>

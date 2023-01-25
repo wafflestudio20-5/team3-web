@@ -60,13 +60,13 @@ const ProfileOtherPage = () => {
             isLoading={isLoading}
             img={reviewIcon}
             text="거래후기"
-            handleClick={() => navigate('/')}
+            handleClick={() => navigate(`/profile/${userId}/review`)}
           />
           <NavigationButton
             isLoading={isLoading}
             img={mannerCommentIcon}
-            text="매너평가"
-            handleClick={() => navigate('/')}
+            text="판매목록"
+            handleClick={() => navigate(`/profile/${userId}/sell`)}
           />
           <NavigationButton
             isLoading={isLoading}

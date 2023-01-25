@@ -14,16 +14,33 @@ import {
 } from '../../api/auth';
 import * as V from '../../utils/validateUserInfo';
 
+import { Coordinate } from '../../types/auth';
+import { getCoordinate } from '../../utils/map';
+
 import * as S from './signup.styled';
 import { COLOR_CARROT } from '../../constant';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import { getCoordinate } from '../../utils/map';
 import { randomPassword } from '../../utils/randomPassword';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Coordinate } from '../../types/auth';
+
+import { useAppDispatch } from '../../store/hooks';
+import { postLogin } from '../../store/slices/sessionSlice';
+import axios from 'axios';
+import { redirectWithMsg } from '../../utils/errors';
 
 const SignUpPage = () => {
+  const [location, setLocation] = useState('');
+  const [coordinate, setCoordinate] = useState<Coordinate>({
+    lat: 0,
+    lng: 0,
+  });
+
+  // useEffect안에 넣지 말고 사용 (내부에 location에 따른 useEffect 걸려있음)
+  getCoordinate(location, coordinate, setCoordinate);
+  // TODO: test용 콘솔 -> 기능 한 번 확인해보시고 지워주시면 감사하겠습니다!
+  // console.log(location, coordinate);
+
   let isSocialLoginProp: boolean, emailSocial: string;
   if (useLocation().state === null) {
     // 일반 로그인의 경우
@@ -62,6 +79,13 @@ const SignUpPage = () => {
     });
   };
 
+  // DESC: 랜덤 닉네임 설정
+  // axios
+  //   .get('https://nickname.hwanmoo.kr/?format=text&count=1&max_length=10&')
+  //   .then(res => console.log(res));
+
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (isSocialLogin) {
       setIsEmailAuthed(true);
@@ -85,7 +109,9 @@ const SignUpPage = () => {
         setIsEmailUnique(true);
         setIsEmailAuthButtonOpen(true);
         requestSendEmail(email); // 인증 이메일 전송
+        toast(`${email}로 인증 메일을 전송하였습니다.`);
       } else {
+        // console.log(res);
         toast('이미 동일한 이메일이 있습니다.');
       }
     } else {
@@ -115,9 +141,6 @@ const SignUpPage = () => {
   };
 
   const signUpUser = async () => {
-    // TODO: coordinate(좌표) 처리,
-    // const coordinate = getCoordinate(location); // 에러 발생(Invalid hook call)
-    const coordinate = { lat: 77.777777, lng: 77.77777 }; // 임시 데이터
     const res = (await requestSignUpUser({
       email,
       password,
@@ -127,13 +150,33 @@ const SignUpPage = () => {
       coordinate,
     })) as any;
     if (res.status === 200) {
-      // TODO: 액세스 토큰 처리, 유저 로그인 상태 redux에 action으로 반영하기
+      dispatch(postLogin({ email, password }))
+        .unwrap()
+        .then(res => {
+          toast.success(`${res.user?.username}님, 환영합니다!`);
+          navigate('/');
+        })
+        .catch(err => {
+          if (axios.isAxiosError(err)) {
+            if (err.response?.status === 403) {
+              // 이메일, 비밀번호 잘못됨
+              toast.error(err.response?.data.error);
+            } else if (err.response?.status === 400) {
+              // error: 이메일 인증이 필요합니다. 적절한 처리
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
+            }
+          }
+        });
       alert('회원가입에 성공하였습니다'); // 로그인 페이지로 넘어가기 전에 사용자에게 알려주기
       navigate('/login');
+    } else {
+      toast('회원가입에 실패하였습니다.');
     }
   };
 
-  const [location, setLocation] = useState('');
   // DESC: 카카오 API를 사용하여 위치 관련 정보를 얻어내기
   const open = useDaumPostcodePopup();
   const handleComplete = (data: any) => {
@@ -263,7 +306,6 @@ const SignUpPage = () => {
           />
         </S.SignUpButtonWrapper>
       </S.Wrapper>
-      <ToastContainer />
     </>
   );
 };
