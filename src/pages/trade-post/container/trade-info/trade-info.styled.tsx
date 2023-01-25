@@ -15,7 +15,7 @@ export const Header = styled.div`
   height: auto;
   margin-bottom: 16px;
   padding: 0 20px 10px 20px;
-  border-bottom: 2px solid #eaebee;
+  border-bottom: 2px solid #f6f6f6;
 `;
 
 export const Title = styled.span`
@@ -41,9 +41,14 @@ export const InfoWrapper = styled.div`
   align-items: center;
   height: auto;
   width: auto;
+  padding: 5px;
+  padding-right: 20px;
   cursor: pointer;
+  transition: 0.5s all;
+  border-radius: 5px;
+
   &:hover {
-    color: #909090;
+    transform: translateY(-2px);
   }
 `;
 

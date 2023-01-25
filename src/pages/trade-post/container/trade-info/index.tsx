@@ -63,7 +63,7 @@ const TradeInfo = () => {
       </S.Header>
 
       <S.UserWrapper>
-        <S.InfoWrapper onClick={() => navigate('/')}>
+        <S.InfoWrapper onClick={() => navigate(`/profile/${seller?.id}`)}>
           <ProfileImage
             temperature={seller?.temperature || null}
             profileImg={seller?.imgUrl || null}
