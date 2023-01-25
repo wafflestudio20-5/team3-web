@@ -12,13 +12,12 @@ export const Wrapper = styled.div<WrapperProps>(
   display: flex;
   justify-content: center;
   align-items: center;
-  position: sticky;
-  top: 0;
+  // position: fixed;
+  // top: 0;
   width: 100%;
   min-width: 360px;
   height: 74px;
   box-shadow: 0 4px 12px 0 rgba(199, 199, 199, 0.029);
-  z-index: 999;
   border-bottom: 1px solid #f4f4f4;
 `,
 );

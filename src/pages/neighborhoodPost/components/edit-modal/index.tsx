@@ -1,21 +1,23 @@
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
-import { requestPostNeighborhood } from '../../../../api/neighborhood';
+import { requestEditNeighborhood } from '../../../../api/neighborhood';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
-import * as S from './add-modal.styled';
+import { neighborPost } from '../../../../types/neighborhood';
+import * as S from './edit-modal.styled';
 
-interface AddModalProps {
+interface EditModalProps {
+  post: neighborPost;
   handleClose: () => void;
 }
 
-export const AddModal = ({ handleClose }: AddModalProps) => {
+export const EditModal = ({ post, handleClose }: EditModalProps) => {
   const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
   // console.log(accessToken);
 
   const [inputs, setInputs] = useState({
-    title: '',
-    content: '',
+    title: post?.title,
+    content: post?.content,
   });
   const { title, content } = inputs;
   const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -28,20 +30,20 @@ export const AddModal = ({ handleClose }: AddModalProps) => {
 
   const handleClick = async () => {
     if (accessToken) {
-      const res = await requestPostNeighborhood(
+      const res = await requestEditNeighborhood(
+        post?.postId,
         { title, content },
         accessToken,
       );
-      toast('글 작성이 완료되었습니다.');
+      toast('글 수정이 완료되었습니다.');
       handleClose();
-      // console.log(res);
     }
   };
   return (
     <S.Container>
       <S.TopWrapper>
         <S.SpanClose onClick={handleClose}>닫기</S.SpanClose>
-        <S.SpanTitle>동네생활 글쓰기</S.SpanTitle>
+        <S.SpanTitle>동네생활 글쓰기 수정</S.SpanTitle>
         <S.SpanComplete onClick={handleClick}>완료</S.SpanComplete>
       </S.TopWrapper>
       <S.DescWrapper>

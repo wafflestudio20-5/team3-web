@@ -1,5 +1,5 @@
 import { Button } from './add-button.styled';
-import addIcon from '../../assets/add-icon.svg';
+import addIcon from '../../assets/add-button.svg';
 
 interface AddButtonProps {
   handleClick: () => void;

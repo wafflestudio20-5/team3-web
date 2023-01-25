@@ -71,13 +71,13 @@ const UserInfo = ({ me, edit, isLoading, setEdit }: UserInfoProps) => {
           handleClose={setEdit}
         />
       )}
-      {edit.img && (
+      {/* {edit.img && (
         <EditImg
           img={me?.imgUrl || null}
           edit={edit}
           handleClose={setEdit}
         />
-      )}
+      )} */}
       {edit.password && <EditPassword edit={edit} handleClose={setEdit} />}
     </S.Wrapper>
   );

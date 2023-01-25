@@ -1,13 +1,69 @@
 import axios from 'axios';
+import { auth } from '.';
 import { BASE_URL } from '../constant';
+import { neighborPostInput } from '../types/neighborhood';
 
-const accessToken =
-  'eyJhbGciOiJIUzM4NCJ9.eyJhdWQiOiLsmYDtlIztl4zthLAiLCJzdWIiOiJmbHVlbnRtaW5AZ21haWwuY29tIiwiaXNzIjoid2FmZmxlLWRhYW5nbiIsImV4cCI6MTY3Mzc5Mjg2NSwiaWF0IjoxNjczNzg5MjY1fQ.3LxI6OvoLIQ7FnclL3MbhhTtIpIy6Sm9rn5BJZZnNkZdt70w2IUvmTDaWYqmtqBT';
-
-export const requestNeighborhood = async () => {
+export const requestNeighborhood = async (accessToken: string) => {
   try {
     return await axios.get(`${BASE_URL}/neighborhood`, {
-      headers: { Authorization: accessToken },
+      headers: auth(accessToken),
+    });
+  } catch (e) {
+    return e;
+  }
+};
+
+export const requestPostNeighborhood = async (
+  { title, content }: neighborPostInput,
+  accessToken: string,
+) => {
+  try {
+    return await axios.post(
+      `${BASE_URL}/neighborhood`,
+      { title: title, content: content },
+      { headers: auth(accessToken) },
+    );
+  } catch (e) {
+    return e;
+  }
+};
+
+export const requestNeighborhoodPost = async (
+  postId: string,
+  accessToken: string,
+) => {
+  try {
+    return await axios.get(`${BASE_URL}/neighborhood/${postId}`, {
+      headers: auth(accessToken),
+    });
+  } catch (e) {
+    return e;
+  }
+};
+
+export const requestEditNeighborhood = async (
+  postId: number,
+  { title, content }: neighborPostInput,
+  accessToken: string,
+) => {
+  try {
+    return await axios.patch(
+      `${BASE_URL}/neighborhood/${postId}`,
+      { title: title, content: content },
+      { headers: auth(accessToken) },
+    );
+  } catch (e) {
+    return e;
+  }
+};
+
+export const requestDeleteNeighborhood = async (
+  postId: number,
+  accessToken: string,
+) => {
+  try {
+    return await axios.delete(`${BASE_URL}/neighborhood/${postId}`, {
+      headers: auth(accessToken),
     });
   } catch (e) {
     return e;

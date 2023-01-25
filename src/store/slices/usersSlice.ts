@@ -109,6 +109,31 @@ export const postPassword = createAsyncThunk(
 );
 
 // TODO: postImgFile API
+export const postImg = createAsyncThunk(
+  'users/postImg',
+  async (
+    {
+      accessToken,
+      formData,
+    }: {
+      accessToken: string;
+      formData: any;
+    },
+    { rejectWithValue },
+  ) => {
+    try {
+      const res = await axios.patch(`${BASE_URL}/users/me/image`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
 
 interface usersSliceState {
   me: User | null;
