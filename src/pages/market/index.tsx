@@ -59,6 +59,8 @@ const MarketPage = () => {
             }
           }
         });
+    } else {
+      redirectWithMsg(2, '로그인이 필요합니다', () => navigate('/login'));
     }
   }, [accessToken, page]);
 
@@ -99,35 +101,37 @@ const MarketPage = () => {
   return (
     <>
       <Gnb />
-      <Wrapper>
-        <Header>
-          <SearchBar
-            keyword={keyword}
-            setKeyword={setKeyword}
-            searchClick={searchHandler}
-          />
-        </Header>
-        <List>
-          {data.map(post => {
-            return (
-              <ShortCut
-                key={post?.postId}
-                id={post?.postId}
-                img={post?.imageUrls}
-                title={post?.title}
-                tradeStatus={post?.tradeStatus}
-                price={post?.price}
-                location={shortenLocation(post?.seller.location)}
-                likes={post?.likeCount}
-                chats={post?.reservationCount}
-                created_at={post?.createdAt}
-              />
-            );
-          })}
-        </List>
-        <Pagination total={totalPage} page={page} setPage={changePage} />
-        <AddButton />
-      </Wrapper>
+      {accessToken && (
+        <Wrapper>
+          <Header>
+            <SearchBar
+              keyword={keyword}
+              setKeyword={setKeyword}
+              searchClick={searchHandler}
+            />
+          </Header>
+          <List>
+            {data.map(post => {
+              return (
+                <ShortCut
+                  key={post?.postId}
+                  id={post?.postId}
+                  img={post?.imageUrls}
+                  title={post?.title}
+                  tradeStatus={post?.tradeStatus}
+                  price={post?.price}
+                  location={shortenLocation(post?.seller.location)}
+                  likes={post?.likeCount}
+                  chats={post?.reservationCount}
+                  created_at={post?.createdAt}
+                />
+              );
+            })}
+          </List>
+          <Pagination total={totalPage} page={page} setPage={changePage} />
+          <AddButton />
+        </Wrapper>
+      )}
     </>
   );
 };
