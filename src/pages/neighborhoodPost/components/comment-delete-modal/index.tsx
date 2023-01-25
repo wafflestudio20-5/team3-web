@@ -3,31 +3,34 @@ import { toast } from 'react-toastify';
 import {
   requestDeleteNeighborhood,
   requestDeleteNeighborhoodComment,
+  requestNeighborhoodPost,
 } from '../../../../api/neighborhood';
-import { useAppSelector } from '../../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { setComments } from '../../../../store/slices/neighborhoodSlice';
 import { neighborPost } from '../../../../types/neighborhood';
 import * as S from './comment-delete-modal.styled';
 
 interface CommentDeleteModalProps {
+  postId: number;
   commentId: number;
   handleClose: () => void;
 }
 
 export const CommentDeleteModal = ({
+  postId,
   commentId,
   handleClose,
 }: CommentDeleteModalProps) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
-  const handleDeleteButtonClick = () => {
+  const handleDeleteButtonClick = async () => {
     if (accessToken) {
-      requestDeleteNeighborhoodComment(commentId, accessToken);
+      await requestDeleteNeighborhoodComment(commentId, accessToken);
       toast('댓글 삭제가 완료되었어요.');
       handleClose();
-      // 마찬가지로 현재 페이지 내에서 refresh를 해주고 싶은데요..
-      // navigate(0); // 과 같이 쓰면 auth/refresh 403 에러가 뜹니다
-      // 그래서 일단 뒤로가기를 해두었습니다
-      navigate(-1);
+      const res = (await requestNeighborhoodPost(postId, accessToken)) as any;
+      dispatch(setComments(res.data.comments));
     }
   };
   return (
