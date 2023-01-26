@@ -209,7 +209,7 @@ const MarketPage = () => {
                 <ShortCut
                   key={post?.postId}
                   id={post?.postId}
-                  img={post?.imageUrls}
+                  img={post?.imageUrls[0]}
                   title={post?.title}
                   tradeStatus={post?.tradeStatus}
                   price={post?.price}
