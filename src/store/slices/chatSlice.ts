@@ -50,7 +50,7 @@ export const getMyChats = createAsyncThunk(
   'chat/getMyChats',
   async (token: string, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`${BASE_URL}/users/chats`, {
+      const res = await axios.get<any>(`${BASE_URL}/users/chats`, {
         headers: auth(token),
       });
       return res.data;
@@ -83,7 +83,16 @@ export const chatSlice = createSlice({
       state.you = action.payload.you;
     });
     builder.addCase(getMyChats.fulfilled, (state, action) => {
-      state.myChats = action.payload.chats;
+      state.myChats = action.payload.chats
+        ?.sort((chat1: any, chat2: any) => {
+          if (chat1.lastChat && chat2.lastChat) {
+            return (
+              new Date(chat1.lastChat.createdAt).getTime() -
+              new Date(chat2.lastChat.createdAt).getTime()
+            );
+          }
+        })
+        .reverse();
     });
   },
 });

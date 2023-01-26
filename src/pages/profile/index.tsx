@@ -30,7 +30,6 @@ const ProfilePage = () => {
   const { me } = useAppSelector(state => state.users);
   const { myChats } = useAppSelector(state => state.chat);
   const { accessToken } = useAppSelector(state => state.session);
-  const [orderedChats, setOrderedChats] = useState();
 
   const [edit, setEdit] = useState({
     img: false,
@@ -44,7 +43,7 @@ const ProfilePage = () => {
       dispatch(getMyChats(accessToken))
         .unwrap()
         .then(() => {
-          // console.log('성공');
+          // console.log(res.chats);
         })
         .catch(err => {
           console.log(err);
@@ -135,14 +134,14 @@ const ProfilePage = () => {
                     return (
                       <ChatItem
                         chat={chat}
-                        key={String(chat?.buyer?.id) + chat?.buyer?.email + String(index)}
+                        key={
+                          String(chat?.you?.id) +
+                          chat?.you?.email +
+                          String(index)
+                        }
                         handleClick={() =>
                           navigate(
-                            `/chat/messages/${chat.roomUUID}/${
-                              !chat?.post?.isOnwer
-                                ? chat?.post.seller.id
-                                : chat?.buyer.id
-                            }`,
+                            `/chat/messages/${chat.roomUUID}/${chat?.you?.id}`,
                           )
                         }
                       />
