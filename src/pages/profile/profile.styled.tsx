@@ -67,9 +67,11 @@ export const NavigationWrapper = styled.div`
 `;
 
 export const ModalInnerWrapper = styled.ul`
-  max-height: 400px;
-  overflow: auto;
+  max-height: 440px;
+  overflow-y: auto;
   padding-right: 8px;
+  overflow-x: hidden;
+  height: auto;
 
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
@@ -81,7 +83,7 @@ export const ModalInnerWrapper = styled.ul`
   ::-webkit-scrollbar-thumb {
     background-color: #ff871f;
   }
-  
+
   &::-webkit-scrollbar-track {
     background-color: #c3c3c33c;
   }

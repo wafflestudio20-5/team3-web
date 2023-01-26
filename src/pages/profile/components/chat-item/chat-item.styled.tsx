@@ -32,6 +32,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const User = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
 `;
@@ -54,7 +55,8 @@ export const LastChat = styled.span`
   white-space: nowrap;
 `;
 
-export const Message = styled.div`
+export const Message = styled.span`
+  max-width: 220px;
   height: 20px;
   font-weight: 600;
   font-size: 13px;
@@ -62,6 +64,7 @@ export const Message = styled.div`
   overflow-x: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding-right: 5px;
 `;
 
 export const PostImg = styled.img`
