@@ -44,7 +44,7 @@ const Dialog = ({
   return (
     <S.OuterWrapper>
       <S.Wrapper>
-        <S.Header>
+        <S.Header onClick={() => navigate(`/profile/${to?.id}`)}>
           <S.ProfileImg src={to?.imgUrl || defaultImg} alt="profile" />
           <S.Username>{to?.username}</S.Username>
           <S.Temperature>{`${to?.temperature}°C`}</S.Temperature>

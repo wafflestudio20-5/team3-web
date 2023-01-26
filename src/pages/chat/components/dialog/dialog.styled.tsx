@@ -35,6 +35,12 @@ export const Header = styled.div`
   background-color: #fff;
   border-bottom: 1px solid #0017580d;
   border-radius: 30px 30px 0 0;
+  cursor: pointer;
+  transition: 0.5s all;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
 `;
 
 export const ProfileImg = styled.img`

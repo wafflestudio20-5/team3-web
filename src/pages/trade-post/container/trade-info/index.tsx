@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -20,6 +20,7 @@ const TradeInfo = () => {
   const dispatch = useAppDispatch();
   const postId = Number(useParams().id);
   const [dataLoading, setDataLoading] = useState(true);
+  const { me } = useAppSelector(state => state.users);
   const { seller } = useAppSelector(state => state.tradePost);
   const { accessToken } = useAppSelector(state => state.session);
 
@@ -49,6 +50,14 @@ const TradeInfo = () => {
     }
   }, [accessToken, postId]);
 
+  const handleClick = useCallback(() => {
+    if (me && me.id === seller?.id) {
+      navigate('/profile/me');
+    } else {
+      navigate(`/profile/${seller?.id}`);
+    }
+  }, [seller?.id]);
+
   if (dataLoading) {
     return <Spinner />;
   }
@@ -63,7 +72,7 @@ const TradeInfo = () => {
       </S.Header>
 
       <S.UserWrapper>
-        <S.InfoWrapper onClick={() => navigate(`/profile/${seller?.id}`)}>
+        <S.InfoWrapper onClick={handleClick}>
           <ProfileImage
             temperature={seller?.temperature || null}
             profileImg={seller?.imgUrl || null}
