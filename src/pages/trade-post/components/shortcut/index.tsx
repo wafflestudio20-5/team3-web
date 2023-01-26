@@ -15,7 +15,7 @@ interface ShortCut {
 const ShortCut = ({ tradeData }: ShortCut) => {
   return (
     <S.Container>
-      <Link to={`/tradepost/${tradeData?.id}`}>
+      <Link to={`/tradepost/${tradeData?.postId}`}>
         <S.Img src={tradeData?.img || alt} />
       </Link>
       <S.Info>
