@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { shortenLocation } from '../../../../utils/location';
 
 interface ShortCutProps {
-  key: number;
   id: number;
   content: string;
   location?: string;

@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { KR_TIME_DIFF } from '../../../../constant';
 import * as S from './desc-container.styled';
 
 interface DescriptionProps {
@@ -20,7 +19,7 @@ export const Description = ({
       <S.TitleWrapper>{title}</S.TitleWrapper>
       <S.DescriptionWrapper>{content}</S.DescriptionWrapper>
       <S.LocationWrapper>{`${moment(
-        new Date(modifiedAt).getTime() + KR_TIME_DIFF,
+        new Date(modifiedAt).getTime(),
       ).fromNow()} ∙ 조회 ${viewCount}`}</S.LocationWrapper>
     </S.Wrapper>
   );

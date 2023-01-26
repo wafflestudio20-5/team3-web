@@ -4,7 +4,6 @@ import { COLOR_CARROT } from '../../../../constant';
 export const Wrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 10px;
   width: 100%;
   gap: 15px;
 `;
