@@ -20,7 +20,7 @@ export const OuterWrapper = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   width: 100%;
   font-family: -apple-system, Noto Sans, sans-serif, Apple Color Emoji;
 `;
@@ -66,8 +66,46 @@ export const Product = styled.div`
   width: 100%;
   height: 64px;
   padding: 0 20px;
+  margin-top: 3px;
   background-color: #fff;
   border-bottom: 1px solid #0017580d;
+  cursor: pointer;
+  transition: 0.5s all;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+`;
+
+export const ProductImg = styled.img`
+  width: 40px;
+  height: 40px;
+  border: 1px solid #e9e9e9;
+  border-radius: 4px;
+  object-fit: cover;
+  background: #f4f4f4;
+  margin-right: 12px;
+`;
+
+export const ProductInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+export const ProductTitle = styled.h1`
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+export const ProductPrice = styled.h3`
+  font-size: 14px;
+  font-family: 'LINESeedKR-Bd';
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const MessageWrapper = styled.ul`
