@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
@@ -13,6 +14,7 @@ export const Wrapper = styled.div`
 export const OptionWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   padding: 0 20px;
 `;
@@ -52,25 +54,38 @@ export const EditIcon = styled.img`
   height: 100%;
 `;
 
-export const TradeStatus = styled.span`
+interface TradeStatus extends HTMLAttributes<HTMLElement> {
+  tradeStatus: string;
+}
+
+export const TradeStatus = styled.span<TradeStatus>(
+  ({ tradeStatus }) => `
+  color: ${tradeStatus === 'RESERVATION' && '#fff'};
+  color: ${tradeStatus === 'TRADING' && '#fff'};
+  color: ${tradeStatus === 'COMPLETED' && '#000'};
+  background: ${tradeStatus === 'RESERVATION' && '#12b886'};
+  background: ${tradeStatus === 'TRADING' && '#12b886'};
+  background: ${tradeStatus === 'COMPLETED' && '#ced4da'};
+  border: 0px solid transparent;
+  border-radius: 6px;
+  height: 22px;
+  width: auto;
+  height: 30px;
+  font-weight: 400;
+  text-align: center;
   display: flex;
   align-items: center;
-  width: auto;
-  height: 40px;
-  padding: 0 15px;
-  background: #ffffff;
-  border: 1px solid #868b94;
-  border-radius: 50px;
-  box-sizing: border-box;
+  padding: 0 10px;
   font-size: 14px;
-`;
+`,
+);
 
 export const TitleWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 14px;
   word-break: break-word;
   white-space: pre-wrap;
 `;
@@ -84,7 +99,7 @@ export const Price = styled.div`
   margin-top: 10px;
   font-weight: 400;
   font-size: 16px;
-  color: #bbbbbb;
+  color: #868e96;
 `;
 
 export const Desc = styled.div`
@@ -111,7 +126,7 @@ export const DetailInfo = styled.div`
 
 export const Title = styled.span`
   font-family: 'LINESeedKR-Bd';
-  max-width: 70%;
+  max-width: 100%;
   font-weight: 500;
   font-size: 20px;
   color: #212529;
@@ -122,11 +137,13 @@ export const Title = styled.span`
 `;
 
 export const Date = styled.span`
+  font-family: 'Inter';
   font-weight: 400;
   font-size: 12px;
   color: #868e96;
   word-break: break-word;
   white-space: pre-wrap;
+  margin-top: 3px;
 `;
 
 export const PriceImg = styled.img`
@@ -139,6 +156,7 @@ export const TitleImg = styled.img`
   width: 22px;
   height: 32px;
   margin-right: 5px;
+  object-fit: cover;
 `;
 
 export const DetailText = styled.span`

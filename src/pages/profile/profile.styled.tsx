@@ -66,12 +66,36 @@ export const NavigationWrapper = styled.div`
   }
 `;
 
+export const ModalInnerWrapper = styled.ul`
+  max-height: 440px;
+  overflow-y: auto;
+  padding-right: 8px;
+  overflow-x: hidden;
+  height: auto;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #ff871f;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #c3c3c33c;
+  }
+`;
+
 export const Header = styled.h1`
-  margin: 5px 10px;
+  width: 100%;
   font-size: 16px;
   font-weight: 600;
   border-bottom: 1px solid #eeeeee;
-  padding-bottom: 15px;
+  padding: 5px 0 20px 5px;
+  background-color: #fff;
 `;
 
 export const DefaultAnnounce = styled.div`

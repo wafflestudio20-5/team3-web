@@ -72,6 +72,7 @@ export const Chat = styled.span`
 
   @media ${MD_SIZE} {
     font-size: 0;
+    margin-left: 0;
   }
 `;
 
