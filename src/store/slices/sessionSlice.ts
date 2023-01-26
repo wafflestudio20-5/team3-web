@@ -87,6 +87,14 @@ export const sessionSlice = createSlice({
       state.accessToken = action.payload.accessToken;
       saveItem('refreshToken', action.payload.refreshToken);
     });
+    builder.addCase(postGoogleLogin.fulfilled, (state, action) => {
+      state.accessToken = action.payload.accessToken;
+      saveItem('refreshToken', action.payload.refreshToken);
+    });
+    builder.addCase(postKakaoLogin.fulfilled, (state, action) => {
+      state.accessToken = action.payload.accessToken;
+      saveItem('refreshToken', action.payload.refreshToken);
+    });
   },
 });
 
