@@ -43,7 +43,7 @@ export const NeighborhoodPostPage = () => {
 
   useEffect(() => {
     getPost();
-  }, []);
+  }, [accessToken]);
 
   return (
     <>
