@@ -141,6 +141,7 @@ export const TitleImg = styled.img`
   width: 22px;
   height: 32px;
   margin-right: 5px;
+  object-fit: cover;
 `;
 
 export const DetailText = styled.span`

@@ -18,6 +18,7 @@ export const TopWrapper = styled.div`
 export const ProfileImage = styled.img`
   width: 30px;
   height: 30px;
+  object-fit: cover;
 `;
 
 export const UserName = styled.span`

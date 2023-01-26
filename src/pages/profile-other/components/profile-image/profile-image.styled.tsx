@@ -25,6 +25,7 @@ export const BadgeWrapper = styled.div`
   height: 50px;
   background-color: #fff;
   border-radius: 50%;
+  object-fit: cover;
 `;
 
 export const BadgeInnerWrapper = styled.div`

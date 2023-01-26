@@ -31,6 +31,7 @@ export const Img = styled.img`
   border: 1px solid transparent;
   border-radius: 12px;
   margin-bottom: 4px;
+  object-fit: cover;
 
   @media ${MD_SIZE} {
     width: 130px;
