@@ -33,7 +33,7 @@ const ShortCut = ({ tradeData }: ShortCut) => {
           <S.Likes>관심 {tradeData?.likes} · </S.Likes>
           <S.Chats>채팅 {tradeData?.chats} · </S.Chats>
           <S.Date>
-            <Moment fromNow>{tradeData?.created_at}</Moment>
+            <Moment fromNow>{tradeData?.createdAt}</Moment>
           </S.Date>
         </S.Detail>
       </S.Info>
