@@ -10,7 +10,7 @@ import { TradeHistory } from '../../types/history';
 import { redirectWithMsg } from '../../utils/errors';
 import * as S from './sell-history-others.styled';
 import { BASE_URL } from '../../constant';
-import defaultImg from '../../../../assets/default-trade-img.svg';
+import defaultImg from '../../assets/default-trade-img.svg';
 
 const SellHistoryOthersPage = () => {
   const navigate = useNavigate();
