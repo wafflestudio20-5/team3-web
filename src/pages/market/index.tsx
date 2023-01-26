@@ -58,9 +58,14 @@ const MarketPage = () => {
         }),
       )
         .unwrap()
-        .then(() => {
+        .then(res => {
           setOpenCreatePost(false);
-          // navigate(`/tradepost/${}`)
+          navigate(`/tradepost/${res.postId}`);
+          setValues({
+            title: '',
+            desc: '',
+            price: '',
+          });
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {

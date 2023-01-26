@@ -170,7 +170,7 @@ export const usersSlice = createSlice({
     });
     builder.addCase(getMyChats.fulfilled, (state, action) => {
       // TODO
-      console.log(action.payload);
+      // console.log(action.payload);
     });
     builder.addCase(postLocation.fulfilled, (state, action) => {
       state.me = action.payload;

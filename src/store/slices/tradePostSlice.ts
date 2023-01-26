@@ -272,7 +272,6 @@ export const tradePostSlice = createSlice({
       state.tradeStatus = action.payload.tradeStatus;
     });
     builder.addCase(createTradePost.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.isLiked = action.payload.isLiked as boolean;
       state.seller = action.payload.seller as TxUser;
       state.buyer = action.payload.buyer as TxUser;
