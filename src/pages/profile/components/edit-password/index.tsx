@@ -41,6 +41,7 @@ const EditPassword = ({ edit, handleClose }: EditPasswordProps) => {
         .unwrap()
         .then(() => {
           handleClose({ ...edit, password: false });
+          toast.success('비밀번호가 변경되었습니다.');
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -90,7 +91,10 @@ const EditPassword = ({ edit, handleClose }: EditPasswordProps) => {
       />
 
       <S.ButtonWrapper>
-        <ButtonMd text="취소" handleClick={() => handleClose({ ...edit, password: false })} />
+        <ButtonMd
+          text="취소"
+          handleClick={() => handleClose({ ...edit, password: false })}
+        />
         <ButtonMd text="변경" handleClick={handleSubmit} />
       </S.ButtonWrapper>
     </S.Wrapper>

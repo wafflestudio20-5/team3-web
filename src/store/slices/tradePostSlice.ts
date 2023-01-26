@@ -26,6 +26,26 @@ export const getTradePost = createAsyncThunk(
   },
 );
 
+export const getTop3 = createAsyncThunk(
+  'tradePost/getTop3',
+  async (
+    { accessToken }: { accessToken: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/tradepost/top3`,
+        {
+          headers: auth(accessToken),
+        },
+      );
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 export const postTradePost = createAsyncThunk(
   'tradePost/postTradePost',
   async (
@@ -41,6 +61,39 @@ export const postTradePost = createAsyncThunk(
       const res = await axios.post<TradePostType>(
         `${BASE_URL}/tradepost`,
         { title, desc, price },
+        { headers: auth(accessToken) },
+      );
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+export const createTradePost = createAsyncThunk(
+  'tradePost/createTradePost',
+  async (
+    {
+      accessToken,
+      values,
+    }: {
+      accessToken: string;
+      values: {
+        title?: string;
+        desc?: string;
+        price?: string | null;
+      };
+    },
+    { rejectWithValue },
+  ) => {
+    try {
+      const res = await axios.post<TradePostType>(
+        `${BASE_URL}/tradepost`,
+        {
+          title: values?.title,
+          desc: values?.desc,
+          price: Number(values?.price),
+        },
         { headers: auth(accessToken) },
       );
       return res.data;
@@ -218,6 +271,13 @@ export const tradePostSlice = createSlice({
       state.tradePost = action.payload as TradePostType;
       state.tradeStatus = action.payload.tradeStatus;
     });
+    builder.addCase(createTradePost.fulfilled, (state, action) => {
+      state.isLiked = action.payload.isLiked as boolean;
+      state.seller = action.payload.seller as TxUser;
+      state.buyer = action.payload.buyer as TxUser;
+      state.tradePost = action.payload as TradePostType;
+      state.tradeStatus = action.payload.tradeStatus;
+    });
     builder.addCase(deleteTradePost.fulfilled, (state, action) => {
       state.isLiked = false;
       state.seller = null;
@@ -242,6 +302,9 @@ export const tradePostSlice = createSlice({
     });
     builder.addCase(postLike.fulfilled, state => {
       state.isLiked = !state.isLiked;
+    });
+    builder.addCase(getTop3.fulfilled, (state, action) => {
+      // console.log(action.payload);
     });
   },
 });

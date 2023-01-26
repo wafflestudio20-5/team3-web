@@ -18,13 +18,27 @@ export const getBuyHistory = createAsyncThunk(
 );
 
 export const getSellHistory = createAsyncThunk(
-  'users/getBuyHistory',
+  'users/getSellHistory',
   async (
     { accessToken, userId }: { accessToken: string; userId: number },
     { rejectWithValue },
   ) => {
     try {
       const res = await axios.get(`${BASE_URL}/users/${userId}/sell-trade`, {
+        headers: auth(accessToken),
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+export const getLikeHistory = createAsyncThunk(
+  'users/getLikeHistory',
+  async (accessToken: string, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/users/like-trade`, {
         headers: auth(accessToken),
       });
       return res.data;

@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import Spinner from '../../../../components/spinner';
 import Description from '../description';
+import ImgCarousel from '../../components/carousel';
+import Spinner from '../../../../components/spinner';
 import ProfileImage from '../../components/profile-image';
 import TemperatureBar from '../../components/temperature-bar';
 
@@ -19,6 +20,7 @@ const TradeInfo = () => {
   const dispatch = useAppDispatch();
   const postId = Number(useParams().id);
   const [dataLoading, setDataLoading] = useState(true);
+  const { me } = useAppSelector(state => state.users);
   const { seller } = useAppSelector(state => state.tradePost);
   const { accessToken } = useAppSelector(state => state.session);
 
@@ -48,23 +50,29 @@ const TradeInfo = () => {
     }
   }, [accessToken, postId]);
 
+  const handleClick = useCallback(() => {
+    if (me && me.id === seller?.id) {
+      navigate('/profile/me');
+    } else {
+      navigate(`/profile/${seller?.id}`);
+    }
+  }, [seller?.id]);
+
   if (dataLoading) {
     return <Spinner />;
   }
 
   return (
     <S.Wrapper>
-      <S.SampleImg
-        src="https://dnvefa72aowie.cloudfront.net/origin/article/202008/2F22EE23018C3A490E6C3596917934B9B2C80A2958862C4BE49A54BE0AFA6953.jpg?q=95&s=1440x1440&t=inside"
-        alt="img"
-      />
+      <ImgCarousel />
+
       <S.Header>
         <TradeInfoIcon />
         <S.Title>Trade Info</S.Title>
       </S.Header>
 
       <S.UserWrapper>
-        <S.InfoWrapper onClick={() => navigate('/')}>
+        <S.InfoWrapper onClick={handleClick}>
           <ProfileImage
             temperature={seller?.temperature || null}
             profileImg={seller?.imgUrl || null}

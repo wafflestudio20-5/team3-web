@@ -115,23 +115,28 @@ export const Typing = styled.div`
   align-items: center;
   justify-content: flex-end;
   margin-top: 30px;
-  margin-right: 150px;
-  width: 92%;
-  height: 60px;
-  color: #ff7e36;
+  margin-left: 40%;
+  margin-bottom: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  width: 250px;
+  height: 50px;
+  color: #fff;
   font-weight: 400;
-  font-size: 25px;
+  font-size: 20px;
   font-family: 'Cafe24Ssurround';
+  background: #ff7e36;
+  border-radius: 25px 25px 5px 25px;
 
   &::after {
     display: flex;
-    height: 60px;
+    height: 50px;
     font-family: 'Pretendard-Regular';
     content: '|';
     animation: blink 1s step-end infinite;
-    color: #ff7e36;
+    color: #fff;
     font-weight: 300;
-    font-size: 40px;
+    font-size: 30px;
   }
 
   @keyframes blink {
@@ -148,10 +153,10 @@ export const Typing = styled.div`
       opacity: 0;
     }
   }
-  @media ${MD_SIZE} {
+  /* @media ${MD_SIZE} {
     font-size: 25px;
     margin-right: 0px;
-  }
+  } */
 `;
 
 export const ScrollWrapper = styled.div`

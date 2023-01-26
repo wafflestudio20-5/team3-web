@@ -9,10 +9,7 @@ export const Wrapper = styled.div`
   margin-bottom: 36px;
 
   @media ${MD_SIZE} {
-    flex-direction: column;
-    width: auto;
-    height: 94px;
-    align-items: flex-end;
+    padding: 0 16px;
   }
 `;
 
@@ -22,25 +19,35 @@ export const TitleBox = styled.div`
   align-items: center;
   width: auto;
   height: 44px;
-  padding: 0 28px;
+  padding: 0 24px;
   border-radius: 10px;
   background: rgba(255, 111, 15, 0.2);
+
+  @media ${MD_SIZE} {
+    height: 40px;
+    padding: 0 20px;
+  }
 `;
 
 export const Title = styled.span`
   margin-left: 6px;
   color: #ff6f0f;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 20px;
   font-weight: 500;
+
+  @media ${MD_SIZE} {
+    font-size: 13px;
+  }
 `;
 
 export const ChatBtn = styled.button`
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 120px;
   height: 44px;
-  padding: 0 14px;
+  padding: 0 12px;
   border-radius: 10px;
   background: #ff6f0f;
   transition: all 0.3s;
@@ -50,13 +57,23 @@ export const ChatBtn = styled.button`
     box-shadow: 0 5px 10px #e9e9e9;
     transform: translateY(-2px);
   }
+
+  @media ${MD_SIZE} {
+    width: 48px;
+    height: 40px;
+  }
 `;
 
 export const Chat = styled.span`
   margin-left: 6px;
   color: #fff;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
+
+  @media ${MD_SIZE} {
+    font-size: 0;
+    margin-left: 0;
+  }
 `;
 
 export const SkeletonTitleBox = styled.div`

@@ -14,8 +14,9 @@ export const DeleteModal = ({ post, handleClose }: DeleteModalProps) => {
   const { accessToken } = useAppSelector(state => state.session);
   const handleDeleteButtonClick = () => {
     if (accessToken) {
-      requestDeleteNeighborhood(post.postId, accessToken);
-      navigate('/neighborhood');
+      requestDeleteNeighborhood(post.postId, accessToken).then(() =>
+        navigate('/neighborhood'),
+      );
     }
   };
   return (

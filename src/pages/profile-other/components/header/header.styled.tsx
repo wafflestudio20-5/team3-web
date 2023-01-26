@@ -10,6 +10,8 @@ export const Wrapper = styled.div`
 
   @media ${MD_SIZE} {
     width: 342px;
+    justify-content: flex-end;
+    margin-right: 5px;
   }
 `;
 
@@ -22,6 +24,11 @@ export const TitleBox = styled.div`
   padding: 0 28px;
   border-radius: 10px;
   background: rgba(255, 111, 15, 0.2);
+
+  @media ${MD_SIZE} {
+    height: 40px;
+    padding: 0 20px;
+  }
 `;
 
 export const Title = styled.span`
@@ -30,6 +37,10 @@ export const Title = styled.span`
   font-size: 16px;
   line-height: 20px;
   font-weight: 500;
+
+  @media ${MD_SIZE} {
+    font-size: 13px;
+  }
 `;
 
 export const SkeletonTitleBox = styled.div`
