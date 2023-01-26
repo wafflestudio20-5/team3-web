@@ -365,12 +365,12 @@ const Description = () => {
         <S.Content onClick={() => setActive(false)}>
           <S.TitleWrapper>
             <S.Title>{tradePost?.title}</S.Title>
-            <S.Date>{`${moment(tradePost?.modifiedAt).fromNow()}`}</S.Date>
           </S.TitleWrapper>
 
           <S.Price>
             <S.PriceImg src={price} alt="price" />
             {`${toStringNumWithComma(tradePost?.price)}원`}
+            <S.Date>{` ∙ ${moment(tradePost?.modifiedAt).fromNow()}`}</S.Date>
           </S.Price>
 
           <S.Desc>{tradePost?.desc}</S.Desc>

@@ -84,7 +84,7 @@ export const Price = styled.div`
   margin-top: 10px;
   font-weight: 400;
   font-size: 16px;
-  color: #bbbbbb;
+  color: #868e96;
 `;
 
 export const Desc = styled.div`
@@ -111,7 +111,7 @@ export const DetailInfo = styled.div`
 
 export const Title = styled.span`
   font-family: 'LINESeedKR-Bd';
-  max-width: 70%;
+  max-width: 100%;
   font-weight: 500;
   font-size: 20px;
   color: #212529;
@@ -122,11 +122,13 @@ export const Title = styled.span`
 `;
 
 export const Date = styled.span`
+  font-family: 'Inter';
   font-weight: 400;
   font-size: 12px;
   color: #868e96;
   word-break: break-word;
   white-space: pre-wrap;
+  margin-top: 3px;
 `;
 
 export const PriceImg = styled.img`
