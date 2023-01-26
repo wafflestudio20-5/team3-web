@@ -29,7 +29,6 @@ import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 import * as S from './description.styled';
 import price from '../../../../assets/price.svg';
-import daangn from '../../../../assets/marker.png';
 import editPost from '../../../../assets/edit-post.svg';
 import likeFill from '../../../../assets/like-fill.svg';
 import likeBlank from '../../../../assets/like-blank.svg';
@@ -186,7 +185,9 @@ const Description = () => {
   const handleSellerGetChat = useCallback(
     (candidate: any) => {
       if (candidate && tradePost) {
-        navigate(`/chat/messages/${candidate.roomUUID}/${candidate.id}/${tradePost.postId}`);
+        navigate(
+          `/chat/messages/${candidate.roomUUID}/${candidate.id}/${tradePost.postId}`,
+        );
       }
     },
     [candidates, tradePost],
@@ -198,7 +199,9 @@ const Description = () => {
         .unwrap()
         .then((res: { roomUUID: string }) => {
           // DESC: 채팅 이동
-          navigate(`/chat/messages/${res.roomUUID}/${tradePost.seller?.id}/${tradePost.postId}`);
+          navigate(
+            `/chat/messages/${res.roomUUID}/${tradePost.seller?.id}/${tradePost.postId}`,
+          );
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -310,7 +313,9 @@ const Description = () => {
     <>
       <S.Wrapper>
         <S.OptionWrapper>
-          <S.TradeStatus>{getTradeStatusKo(tradeStatus)}</S.TradeStatus>
+          <S.TradeStatus tradeStatus={tradeStatus}>
+            {getTradeStatusKo(tradeStatus)}
+          </S.TradeStatus>
           <S.ChatWrapper>
             {tradePost?.isOwner ? (
               <S.Edit
