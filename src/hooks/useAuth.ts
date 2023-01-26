@@ -37,7 +37,7 @@ export const useAuth = () => {
             if (axios.isAxiosError(err)) {
               if (err.response?.status === 403) {
                 toast.error(err.response?.data.error);
-                clearItem('refreshToken');
+                // clearItem('refreshToken');
                 navigate('/');
               } else if (err.response?.status === 401) {
                 redirectWithMsg(2, err.response?.data.error, () =>
