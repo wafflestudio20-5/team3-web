@@ -20,7 +20,7 @@ import { shortenLocation } from '../../utils/location';
 import { TradeStatusType } from '../../types/tradePost';
 
 import { Wrapper, Header, List } from './market.styled';
-import defaultImg from '../../../../assets/default-trade-img.svg';
+import defaultImg from '../../assets/default-trade-img.svg';
 
 const MarketPage = () => {
   const navigate = useNavigate();
