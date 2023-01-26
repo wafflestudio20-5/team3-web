@@ -4,13 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import Gnb from '../../components/gnb';
 import Header from './components/header';
 import UserInfo from './container/user-info';
+import ChatItem from './components/chat-item';
 import TxInfo from './container/transaction-info';
 import ModalWrapper from '../../components/modal-wrapper';
 import ContentFooter from '../../components/content-footer';
 import NavigationButton from './components/navigation-button';
 
 import { useAuth } from '../../hooks/useAuth';
-import { getMyChats } from '../../store/slices/usersSlice';
+import { getMyChats } from '../../store/slices/chatSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import * as S from './profile.styled';
@@ -27,7 +28,9 @@ const ProfilePage = () => {
   const { sessionLoading } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const { me } = useAppSelector(state => state.users);
+  const { myChats } = useAppSelector(state => state.chat);
   const { accessToken } = useAppSelector(state => state.session);
+  const [orderedChats, setOrderedChats] = useState();
 
   const [edit, setEdit] = useState({
     img: false,
@@ -37,17 +40,17 @@ const ProfilePage = () => {
   });
 
   useEffect(() => {
-    if (accessToken) {
+    if (modalOpen && accessToken) {
       dispatch(getMyChats(accessToken))
         .unwrap()
         .then(() => {
-          console.log('성공');
+          // console.log('성공');
         })
         .catch(err => {
           console.log(err);
         });
     }
-  }, [accessToken]);
+  }, [modalOpen, accessToken]);
 
   return (
     <S.OuterWrapper>
@@ -121,13 +124,35 @@ const ProfilePage = () => {
         <ModalWrapper handleClose={() => setModalOpen(false)}>
           <>
             <S.Header>채팅목록</S.Header>
-            {true && (
+            {!myChats || !(myChats?.length > 0) ? (
               <S.DefaultAnnounce>
                 🥕 현재 진행 중인 채팅이 없습니다.
               </S.DefaultAnnounce>
+            ) : (
+              <ul>
+                {myChats && myChats?.length > 0 ? (
+                  myChats?.map((chat: any) => {
+                    return (
+                      <ChatItem
+                        chat={chat}
+                        key={String(chat?.buyer?.id) + chat?.buyer?.email}
+                        handleClick={() =>
+                          navigate(
+                            `/chat/messages/${chat.roomUUID}/${
+                              !chat?.post?.isOnwer
+                                ? chat?.post.seller.id
+                                : chat?.buyer.id
+                            }`,
+                          )
+                        }
+                      />
+                    );
+                  })
+                ) : (
+                  <>로딩 중...</>
+                )}
+              </ul>
             )}
-
-            <ul></ul>
           </>
         </ModalWrapper>
       )}

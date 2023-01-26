@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import * as S from './other-trades.styled';
 import ShortCut from '../../components/shortcut';
-import { getTradePostList } from '../../../../store/slices/marketSlice';
+import { getTop3 } from '../../../../store/slices/tradePostSlice';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 const OtherTrades = () => {
@@ -15,17 +15,10 @@ const OtherTrades = () => {
   // TODO: 응답으로 처리하기
   useEffect(() => {
     if (accessToken) {
-      dispatch(
-        getTradePostList({
-          accessToken: accessToken,
-          keyword: '',
-          page: 3,
-          limit: 20,
-        }),
-      )
+      dispatch(getTop3({ accessToken }))
         .unwrap()
         .then((res: any) => {
-          setTrades(res.posts.slice(17, 20));
+          setTrades(res.posts);
         });
     }
   }, [accessToken]);
@@ -38,7 +31,7 @@ const OtherTrades = () => {
       </S.TitleWrapper>
       <S.TradesWrapper>
         {trades.map(trade => {
-          return <ShortCut key={trade.id} tradeData={trade} />;
+          return <ShortCut key={trade.postId} tradeData={trade} />;
         })}
       </S.TradesWrapper>
     </S.Wrapper>

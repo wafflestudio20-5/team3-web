@@ -46,13 +46,29 @@ export const getChats = createAsyncThunk(
   },
 );
 
+export const getMyChats = createAsyncThunk(
+  'chat/getMyChats',
+  async (token: string, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/users/chats`, {
+        headers: auth(token),
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 interface chatSliceState {
   roomUUID: string | null;
   you: any;
+  myChats: any;
 }
 const initialState: chatSliceState = {
   roomUUID: null,
   you: null,
+  myChats: null,
 };
 
 export const chatSlice = createSlice({
@@ -65,6 +81,9 @@ export const chatSlice = createSlice({
     });
     builder.addCase(getChats.fulfilled, (state, action) => {
       state.you = action.payload.you;
+    });
+    builder.addCase(getMyChats.fulfilled, (state, action) => {
+      state.myChats = action.payload.chats;
     });
   },
 });

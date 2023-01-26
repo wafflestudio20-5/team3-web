@@ -67,11 +67,10 @@ export const NavigationWrapper = styled.div`
 `;
 
 export const Header = styled.h1`
-  margin: 5px 10px;
   font-size: 16px;
   font-weight: 600;
   border-bottom: 1px solid #eeeeee;
-  padding-bottom: 15px;
+  padding: 5px 0 20px 5px;
 `;
 
 export const DefaultAnnounce = styled.div`
