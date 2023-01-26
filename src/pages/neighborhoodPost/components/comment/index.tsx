@@ -15,7 +15,6 @@ import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { setComments } from '../../../../store/slices/neighborhoodSlice';
 import { User } from '../../../../types/users';
 import { shortenLocation } from '../../../../utils/location';
-import ModalWrapper from '../../../neighborhoodLanding/components/modal-wrapper';
 import { CommentDeleteModal } from '../comment-delete-modal';
 import { DeleteModal } from '../delete-modal';
 import { EditDelete } from '../edit-and-delete';
@@ -50,7 +49,6 @@ export const Comment = ({
       // TODO: 밑에 requestPatchNeighborhoodComment 수행 도중 auth/refresh 에서 403 오류가 뜹니다..ㅠㅠ
       requestPatchNeighborhoodComment(commentId, input, accessToken)
         .then(async () => {
-          // 아래 then 과 catch 문 모두 실행되지 않습니다..
           toast('댓글 수정이 완료되었습니다.');
           const res = (await requestNeighborhoodPost(
             postId,
@@ -113,15 +111,13 @@ export const Comment = ({
         <S.Date>{`${moment(modifiedAt).fromNow()}`}</S.Date>
       </S.CommentWrapper>
       {isDeleteModalOpen && (
-        <ModalWrapper handleClose={() => setIsDeleteModalOpen(false)}>
-          <CommentDeleteModal
-            postId={postId}
-            commentId={commentId}
-            handleClose={() => {
-              setIsDeleteModalOpen(false);
-            }}
-          />
-        </ModalWrapper>
+        <CommentDeleteModal
+          postId={postId}
+          commentId={commentId}
+          handleClose={() => {
+            setIsDeleteModalOpen(false);
+          }}
+        />
       )}
     </>
   );

@@ -4,9 +4,9 @@ import { MD_SIZE } from '../../../../constant/breakpoint';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  width: 600px;
-  height: 200px;
+  padding: 0px 10px;
+  width: 100%;
+  height: 80px;
 
   @media ${MD_SIZE} {
     width: 100%;
@@ -15,12 +15,12 @@ export const Container = styled.div`
 
 export const Title = styled.div`
   flex: 1;
-  font-size: 30px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 400;
 `;
 
 export const Text = styled.div`
-  flex: 2;
+  flex: 1;
   margin-top: 20px;
   font-size: 20px;
 `;

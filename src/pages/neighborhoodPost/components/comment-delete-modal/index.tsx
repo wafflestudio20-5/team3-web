@@ -35,7 +35,7 @@ export const CommentDeleteModal = ({
   return (
     <S.Container>
       <S.Title>정말로 이 댓글을 삭제하시겠습니까?</S.Title>
-      <S.Text>삭제한 댓글은 되돌릴 수 없어요</S.Text>
+
       <S.ButtonWrapper>
         <S.ConfirmButton onClick={handleDeleteButtonClick}>
           삭제
