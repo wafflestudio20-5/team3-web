@@ -29,7 +29,6 @@ import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 import * as S from './description.styled';
 import price from '../../../../assets/price.svg';
-import daangn from '../../../../assets/marker.png';
 import editPost from '../../../../assets/edit-post.svg';
 import likeFill from '../../../../assets/like-fill.svg';
 import likeBlank from '../../../../assets/like-blank.svg';
@@ -185,11 +184,13 @@ const Description = () => {
 
   const handleSellerGetChat = useCallback(
     (candidate: any) => {
-      if (candidate) {
-        navigate(`/chat/messages/${candidate.roomUUID}/${candidate.id}`);
+      if (candidate && tradePost) {
+        navigate(
+          `/chat/messages/${candidate.roomUUID}/${candidate.id}/${tradePost.postId}`,
+        );
       }
     },
-    [candidates],
+    [candidates, tradePost],
   );
 
   const handleBuyerGetChat = useCallback(() => {
@@ -198,7 +199,9 @@ const Description = () => {
         .unwrap()
         .then((res: { roomUUID: string }) => {
           // DESC: 채팅 이동
-          navigate(`/chat/messages/${res.roomUUID}/${tradePost.seller?.id}`);
+          navigate(
+            `/chat/messages/${res.roomUUID}/${tradePost.seller?.id}/${tradePost.postId}`,
+          );
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -245,6 +248,28 @@ const Description = () => {
   );
 
   const handleSubmitEdit = useCallback(() => {
+    // VALID TODO: to function
+    const numberReg = /^[0-9]+$/;
+    if (!values.title?.trim() || !(values.title.length > 2)) {
+      toast.warn('제목은 3자 이상이어야 합니다.');
+      return;
+    } else if (!values.desc?.trim() || !(values.desc.length > 9)) {
+      toast.warn('내용은 10자 이상이어야 합니다.');
+      return;
+    } else if (!String(values.price).trim()) {
+      toast.warn('가격을 입력해주세요.');
+      return;
+    } else if (Number(values.price) < 0) {
+      toast.warn('음수는 입력하실 수 없습니다.');
+      return;
+    } else if (!numberReg.test(String(values.price))) {
+      toast.warn('가격은 숫자만 입력가능합니다.');
+      return;
+    } else if (Number(values.price) % 10 !== 0) {
+      toast.warn('1원 단위는 입력하실 수 없습니다.');
+      return;
+    } 
+
     if (accessToken) {
       dispatch(
         updateTradePost({
@@ -258,6 +283,7 @@ const Description = () => {
         .unwrap()
         .then(() => {
           setOpenEditPost(false);
+          toast.success('성공적으로 수정되었습니다.')
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -306,11 +332,22 @@ const Description = () => {
     }
   }, [accessToken]);
 
+  const handleCloseModal = useCallback(() => {
+    setOpenEditPost(false);
+    setValues({
+      title: tradePost?.title,
+      desc: tradePost?.desc,
+      price: tradePost?.price,
+    });
+  }, []);
+
   return (
     <>
       <S.Wrapper>
         <S.OptionWrapper>
-          <S.TradeStatus>{getTradeStatusKo(tradeStatus)}</S.TradeStatus>
+          <S.TradeStatus tradeStatus={tradeStatus}>
+            {getTradeStatusKo(tradeStatus)}
+          </S.TradeStatus>
           <S.ChatWrapper>
             {tradePost?.isOwner ? (
               <S.Edit
@@ -365,12 +402,12 @@ const Description = () => {
         <S.Content onClick={() => setActive(false)}>
           <S.TitleWrapper>
             <S.Title>{tradePost?.title}</S.Title>
-            <S.Date>{`${moment(tradePost?.modifiedAt).fromNow()}`}</S.Date>
           </S.TitleWrapper>
 
           <S.Price>
             <S.PriceImg src={price} alt="price" />
             {`${toStringNumWithComma(tradePost?.price)}원`}
+            <S.Date>{` ∙ ${moment(tradePost?.modifiedAt).fromNow()}`}</S.Date>
           </S.Price>
 
           <S.Desc>{tradePost?.desc}</S.Desc>
@@ -438,7 +475,7 @@ const Description = () => {
           values={values}
           handleChange={handleChange}
           handleSubmit={handleSubmitEdit}
-          handleClose={() => setOpenEditPost(false)}
+          handleClose={handleCloseModal}
         />
       )}
 

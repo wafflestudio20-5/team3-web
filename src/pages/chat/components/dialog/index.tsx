@@ -1,15 +1,18 @@
 import { useRef, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Moment from 'react-moment';
 
 import { ChatMessageType } from '../../../../types/chat';
+import { toStringNumWithComma } from '../../../../utils/tradePost';
 
 import * as S from './dialog.styled';
 import defaultImg from '../../../../assets/default-profile.png';
+import defaultProduct from '../../../../assets/default-product.svg';
 
 interface DialogProps {
   to: any;
   from: any;
-  product: any; // TODO: 상품정보, 수정
+  product: any;
   message: string;
   publish: (msg: string) => void;
   setMessage: (msg: string) => void;
@@ -25,6 +28,7 @@ const Dialog = ({
   setMessage,
   chatMessages,
 }: DialogProps) => {
+  const navigate = useNavigate();
   const scrollRef = useRef<null | HTMLUListElement>(null);
 
   const scrollToBottom = useCallback(() => {
@@ -40,13 +44,25 @@ const Dialog = ({
   return (
     <S.OuterWrapper>
       <S.Wrapper>
-        <S.Header>
+        <S.Header onClick={() => navigate(`/profile/${to?.id}`)}>
           <S.ProfileImg src={to?.imgUrl || defaultImg} alt="profile" />
           <S.Username>{to?.username}</S.Username>
           <S.Temperature>{`${to?.temperature}°C`}</S.Temperature>
         </S.Header>
 
-        <S.Product></S.Product>
+        <S.Product onClick={() => navigate(`/tradepost/${product.postId}`)}>
+          <S.ProductImg
+            src={
+              product?.imageUrls && product?.imageUrls.length > 0
+                ? product?.imageUrls[0]
+                : defaultProduct
+            }
+          />
+          <S.ProductInfo>
+            <S.ProductTitle>{product?.title}</S.ProductTitle>
+            <S.ProductPrice>{toStringNumWithComma(product?.price)}원</S.ProductPrice>
+          </S.ProductInfo>
+        </S.Product>
 
         <S.MessageWrapper ref={scrollRef}>
           {chatMessages && chatMessages.length > 0 && (

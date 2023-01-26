@@ -10,12 +10,14 @@ import Spinner from '../../../components/spinner';
 import { redirectWithMsg } from '../../../utils/errors';
 import { getChats } from '../../../store/slices/chatSlice';
 import { ChatMessageType, SubBodyType } from '../../../types/chat';
+import { getTradePost } from '../../../store/slices/tradePostSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 const ChatContainer = () => {
   const navigate = useNavigate();
   const roomUUID = useParams().UUID;
   const uid = Number(useParams().uid);
+  const postId = Number(useParams().pid);
 
   const { me } = useAppSelector(state => state.users);
   const { you } = useAppSelector(state => state.chat);
@@ -25,6 +27,7 @@ const ChatContainer = () => {
   const client = useRef<any>({});
   const dispatch = useAppDispatch();
 
+  const [product, setProduct] = useState<any>(null);
   const [message, setMessage] = useState<string>('');
   const [chatMessages, setChatMessages] = useState<ChatMessageType[]>([]);
 
@@ -60,6 +63,32 @@ const ChatContainer = () => {
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (accessToken && postId) {
+      dispatch(getTradePost({ accessToken, postId }))
+        .unwrap()
+        .then(res => {
+          setProduct(res);
+        })
+        .catch(err => {
+          if (axios.isAxiosError(err)) {
+            if (err.response?.status === 404) {
+              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+            } else if (err.response?.status === 401) {
+              // TODO: refresh 후 재요청
+              redirectWithMsg(2, err.response?.data.error, () =>
+                navigate('/login'),
+              );
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
+            }
+          }
+        });
+    }
+  }, [accessToken, postId]);
 
   const connect = () => {
     // DESC: client 객체 만들기
@@ -129,7 +158,7 @@ const ChatContainer = () => {
     <Dialog
       to={you}
       from={me}
-      product={null}
+      product={product}
       message={message}
       publish={publish}
       setMessage={setMessage}

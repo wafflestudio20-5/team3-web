@@ -6,21 +6,21 @@ export const OuterWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  min-width: 480px;
+  width: 480px;
   background: #fff;
   padding: 5px 5px 5px 0;
   border-radius: 30px;
 
   @media ${MD_SIZE} {
     padding: 0;
-    min-width: 360px;
+    width: 360px;
   }
 `;
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   width: 100%;
   font-family: -apple-system, Noto Sans, sans-serif, Apple Color Emoji;
 `;
@@ -35,6 +35,12 @@ export const Header = styled.div`
   background-color: #fff;
   border-bottom: 1px solid #0017580d;
   border-radius: 30px 30px 0 0;
+  cursor: pointer;
+  transition: 0.5s all;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
 `;
 
 export const ProfileImg = styled.img`
@@ -43,6 +49,7 @@ export const ProfileImg = styled.img`
   margin-right: 12px;
   border-radius: 50%;
   border: 1px solid #0017580d;
+  object-fit: cover;
 `;
 
 export const Username = styled.span`
@@ -65,8 +72,46 @@ export const Product = styled.div`
   width: 100%;
   height: 64px;
   padding: 0 20px;
+  margin-top: 3px;
   background-color: #fff;
   border-bottom: 1px solid #0017580d;
+  cursor: pointer;
+  transition: 0.5s all;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+`;
+
+export const ProductImg = styled.img`
+  width: 40px;
+  height: 40px;
+  border: 1px solid #e9e9e9;
+  border-radius: 4px;
+  object-fit: cover;
+  background: #f4f4f4;
+  margin-right: 12px;
+`;
+
+export const ProductInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+export const ProductTitle = styled.h1`
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+export const ProductPrice = styled.h3`
+  font-size: 14px;
+  font-family: 'LINESeedKR-Bd';
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const MessageWrapper = styled.ul`
@@ -155,6 +200,7 @@ export const ToMessageProfile = styled.img`
   margin-right: 12px;
   border-radius: 50%;
   border: 1px solid #0017580d;
+  object-fit: cover;
 `;
 
 export const MessageDate = styled.div`

@@ -119,7 +119,7 @@ export const Typing = styled.div`
   margin-bottom: 20px;
   padding-right: 20px;
   padding-top: 5px;
-  width: 240px;
+  width: 250px;
   height: 50px;
   color: #fff;
   font-weight: 400;

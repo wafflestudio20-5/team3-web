@@ -50,7 +50,38 @@ const MarketPage = () => {
     [values?.title, values?.desc, values?.price],
   );
 
+  const handleCloseModal = useCallback(() => {
+    setOpenCreatePost(false);
+    setValues({
+      title: '',
+      desc: '',
+      price: '',
+    });
+  }, []);
+
   const handleSubmitCreate = useCallback(() => {
+    // VALID TODO: to function
+    const numberReg = /^[0-9]+$/;
+    if (!values.title?.trim() || !(values.title.length > 2)) {
+      toast.warn('제목은 3자 이상이어야 합니다.');
+      return;
+    } else if (!values.desc?.trim() || !(values.desc.length > 9)) {
+      toast.warn('내용은 10자 이상이어야 합니다.');
+      return;
+    } else if (!String(values.price).trim()) {
+      toast.warn('가격을 입력해주세요.');
+      return;
+    } else if (Number(values.price) < 0) {
+      toast.warn('음수는 입력하실 수 없습니다.');
+      return;
+    } else if (!numberReg.test(String(values.price))) {
+      toast.warn('가격은 숫자만 입력가능합니다.');
+      return;
+    } else if (Number(values.price) % 10 !== 0) {
+      toast.warn('1원 단위는 입력하실 수 없습니다.');
+      return;
+    } 
+
     if (accessToken) {
       dispatch(
         createTradePost({
@@ -59,9 +90,15 @@ const MarketPage = () => {
         }),
       )
         .unwrap()
-        .then(() => {
+        .then(res => {
           setOpenCreatePost(false);
-          // navigate(`/tradepost/${}`)
+          navigate(`/tradepost/${res.postId}`);
+          toast.success('성공적으로 등록되었습니다.')
+          setValues({
+            title: '',
+            desc: '',
+            price: '',
+          });
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -195,7 +232,7 @@ const MarketPage = () => {
           values={values}
           handleChange={handleChange}
           handleSubmit={handleSubmitCreate}
-          handleClose={() => setOpenCreatePost(false)}
+          handleClose={handleCloseModal}
         />
       )}
     </>

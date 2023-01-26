@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  
+
   @media ${MD_SIZE} {
   }
 `;
@@ -35,7 +35,6 @@ export const ImgWrapper = styled.div`
   height: 230px;
   background: #fff;
   border-radius: 50%;
-  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
 
   @media ${MD_SIZE} {
     width: 190px;
