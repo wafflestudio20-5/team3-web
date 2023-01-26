@@ -141,7 +141,7 @@ const ProfilePage = () => {
                         }
                         handleClick={() =>
                           navigate(
-                            `/chat/messages/${chat.roomUUID}/${chat?.you?.id}`,
+                            `/chat/messages/${chat.roomUUID}/${chat?.you?.id}/${chat?.post.postId}`,
                           )
                         }
                       />

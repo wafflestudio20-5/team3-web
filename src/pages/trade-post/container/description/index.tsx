@@ -185,11 +185,11 @@ const Description = () => {
 
   const handleSellerGetChat = useCallback(
     (candidate: any) => {
-      if (candidate) {
-        navigate(`/chat/messages/${candidate.roomUUID}/${candidate.id}`);
+      if (candidate && tradePost) {
+        navigate(`/chat/messages/${candidate.roomUUID}/${candidate.id}/${tradePost.postId}`);
       }
     },
-    [candidates],
+    [candidates, tradePost],
   );
 
   const handleBuyerGetChat = useCallback(() => {
@@ -198,7 +198,7 @@ const Description = () => {
         .unwrap()
         .then((res: { roomUUID: string }) => {
           // DESC: 채팅 이동
-          navigate(`/chat/messages/${res.roomUUID}/${tradePost.seller?.id}`);
+          navigate(`/chat/messages/${res.roomUUID}/${tradePost.seller?.id}/${tradePost.postId}`);
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
