@@ -19,6 +19,20 @@ export const getMe = createAsyncThunk(
   },
 );
 
+export const getMyChats = createAsyncThunk(
+  'users/getMyChats',
+  async (token: string, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(`${BASE_URL}/users/chats`, {
+        headers: auth(token),
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 export const getUser = createAsyncThunk(
   'users/getUser',
   async (userId: number, { rejectWithValue }) => {
@@ -153,6 +167,10 @@ export const usersSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.currentUser = action.payload as User;
+    });
+    builder.addCase(getMyChats.fulfilled, (state, action) => {
+      // TODO
+      console.log(action.payload);
     });
     builder.addCase(postLocation.fulfilled, (state, action) => {
       state.me = action.payload;
