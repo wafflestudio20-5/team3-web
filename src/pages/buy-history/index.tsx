@@ -9,7 +9,7 @@ import { shortenLocation } from '../../utils/location';
 import { TradeHistory } from '../../types/history';
 import { redirectWithMsg } from '../../utils/errors';
 import * as S from './buy-history.styled';
-import defaultImg from '../../../../assets/default-trade-img.svg';
+import defaultImg from '../../assets/default-trade-img.svg';
 
 const BuyHistoryPage = () => {
   const navigate = useNavigate();
