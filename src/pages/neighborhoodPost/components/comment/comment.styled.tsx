@@ -60,6 +60,7 @@ export const EditText = styled.textarea`
   width: 80%;
   height: 30px;
   border-radius: 10px;
+  resize: none;
 `;
 
 export const Content = styled.div`

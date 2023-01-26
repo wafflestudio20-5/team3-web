@@ -21,7 +21,6 @@ export const CommentDeleteModal = ({
   commentId,
   handleClose,
 }: CommentDeleteModalProps) => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
   const handleDeleteButtonClick = async () => {
