@@ -51,7 +51,7 @@ const ProfilePage = () => {
 
   return (
     <S.OuterWrapper>
-      <Gnb />
+      <Gnb isColored />
 
       <S.Wrapper>
         <S.ContentWrapper>
@@ -75,7 +75,6 @@ const ProfilePage = () => {
             />
           </S.InfoWrapper>
 
-          {/* TODO: 적절한 페이지로 이동 */}
           <S.NavigationWrapper>
             <NavigationButton
               isLoading={sessionLoading}
@@ -115,8 +114,8 @@ const ProfilePage = () => {
             />
           </S.NavigationWrapper>
         </S.ContentWrapper>
-        <ContentFooter />
       </S.Wrapper>
+      <ContentFooter />
 
       {modalOpen && (
         <ModalWrapper handleClose={() => setModalOpen(false)}>

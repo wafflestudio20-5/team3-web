@@ -1,13 +1,27 @@
 import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
+import { MD_SIZE } from '../../../../constant/breakpoint';
+
+export const OuterWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 480px;
+  background: #fff;
+  padding: 5px 5px 5px 0;
+  border-radius: 30px;
+
+  @media ${MD_SIZE} {
+    padding: 0;
+    min-width: 360px;
+  }
+`;
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  max-width: 711px;
   width: 100%;
-  min-width: 360px;
   font-family: -apple-system, Noto Sans, sans-serif, Apple Color Emoji;
 `;
 
@@ -20,6 +34,7 @@ export const Header = styled.div`
   padding: 0 20px;
   background-color: #fff;
   border-bottom: 1px solid #0017580d;
+  border-radius: 30px 30px 0 0;
 `;
 
 export const ProfileImg = styled.img`
@@ -58,10 +73,14 @@ export const MessageWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: calc(100vh - 370px);
-  padding: 0 20px;
+  height: calc(100vh - 390px);
+  padding: 0 5px 0 10px;
   min-height: 412px;
   overflow-y: auto;
+
+  @media (max-width: 410px) {
+    padding: 0;
+  }
 `;
 
 export const Li = styled.li`
@@ -155,7 +174,7 @@ export const TextareaWrapper = styled.div`
   height: 125px;
   margin: 16px 8px 16px 16px;
   box-sizing: border-box;
-  border: 1px solid #212124;
+  border: 1px solid #aeaeae;
   border-radius: 8px;
 `;
 

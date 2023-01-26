@@ -8,7 +8,6 @@ import { toast } from 'react-toastify';
 import Button from '../../components/button';
 import Candidate from '../../components/candidate';
 import ModalWrapper from '../../../../components/modal-wrapper';
-import ContentFooter from '../../../../components/content-footer';
 import TradePostUpdate from '../../../../components/trade-post-update';
 import TradePostUpdateImg from '../../../../components/trade-post-update-img';
 
@@ -366,8 +365,7 @@ const Description = () => {
         <S.Content onClick={() => setActive(false)}>
           <S.TitleWrapper>
             <S.Title>{tradePost?.title}</S.Title>
-            <S.TitleImg src={daangn} alt="logo" />
-            <S.Date>{`∙ ${moment(tradePost?.modifiedAt).fromNow()}`}</S.Date>
+            <S.Date>{`${moment(tradePost?.modifiedAt).fromNow()}`}</S.Date>
           </S.TitleWrapper>
 
           <S.Price>
@@ -383,7 +381,6 @@ const Description = () => {
             <S.DetailText>{`∙ 조회 ${tradePost?.viewCount}`}</S.DetailText>
           </S.DetailInfo>
         </S.Content>
-        <ContentFooter />
       </S.Wrapper>
 
       {modalOpen && (
