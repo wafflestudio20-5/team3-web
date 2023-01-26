@@ -22,6 +22,7 @@ export const ProfileImg = styled.img`
   border-radius: 50%;
   border: 1px solid #ececec;
   margin-right: 8px;
+  object-fit: cover;
 `;
 
 export const ContentWrapper = styled.div`

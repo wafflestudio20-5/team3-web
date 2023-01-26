@@ -66,11 +66,18 @@ export const NavigationWrapper = styled.div`
   }
 `;
 
+export const ModalInnerWrapper = styled.ul`
+  max-height: 400px;
+  overflow: auto;
+`;
+
 export const Header = styled.h1`
+  width: 100%;
   font-size: 16px;
   font-weight: 600;
   border-bottom: 1px solid #eeeeee;
   padding: 5px 0 20px 5px;
+  background-color: #fff;
 `;
 
 export const DefaultAnnounce = styled.div`

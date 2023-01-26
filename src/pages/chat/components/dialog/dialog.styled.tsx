@@ -43,6 +43,7 @@ export const ProfileImg = styled.img`
   margin-right: 12px;
   border-radius: 50%;
   border: 1px solid #0017580d;
+  object-fit: cover;
 `;
 
 export const Username = styled.span`
@@ -155,6 +156,7 @@ export const ToMessageProfile = styled.img`
   margin-right: 12px;
   border-radius: 50%;
   border: 1px solid #0017580d;
+  object-fit: cover;
 `;
 
 export const MessageDate = styled.div`

@@ -129,13 +129,13 @@ const ProfilePage = () => {
                 🥕 현재 진행 중인 채팅이 없습니다.
               </S.DefaultAnnounce>
             ) : (
-              <ul>
+              <S.ModalInnerWrapper>
                 {myChats && myChats?.length > 0 ? (
-                  myChats?.map((chat: any) => {
+                  myChats?.map((chat: any, index: number) => {
                     return (
                       <ChatItem
                         chat={chat}
-                        key={String(chat?.buyer?.id) + chat?.buyer?.email}
+                        key={String(chat?.buyer?.id) + chat?.buyer?.email + String(index)}
                         handleClick={() =>
                           navigate(
                             `/chat/messages/${chat.roomUUID}/${
@@ -151,7 +151,7 @@ const ProfilePage = () => {
                 ) : (
                   <>로딩 중...</>
                 )}
-              </ul>
+              </S.ModalInnerWrapper>
             )}
           </>
         </ModalWrapper>
