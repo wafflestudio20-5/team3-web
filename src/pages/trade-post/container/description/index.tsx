@@ -248,6 +248,28 @@ const Description = () => {
   );
 
   const handleSubmitEdit = useCallback(() => {
+    // VALID TODO: to function
+    const numberReg = /^[0-9]+$/;
+    if (!values.title?.trim() || !(values.title.length > 2)) {
+      toast.warn('제목은 3자 이상이어야 합니다.');
+      return;
+    } else if (!values.desc?.trim() || !(values.desc.length > 9)) {
+      toast.warn('내용은 10자 이상이어야 합니다.');
+      return;
+    } else if (!String(values.price).trim()) {
+      toast.warn('가격을 입력해주세요.');
+      return;
+    } else if (Number(values.price) < 0) {
+      toast.warn('음수는 입력하실 수 없습니다.');
+      return;
+    } else if (!numberReg.test(String(values.price))) {
+      toast.warn('가격은 숫자만 입력가능합니다.');
+      return;
+    } else if (Number(values.price) % 10 !== 0) {
+      toast.warn('1원 단위는 입력하실 수 없습니다.');
+      return;
+    } 
+
     if (accessToken) {
       dispatch(
         updateTradePost({
@@ -261,6 +283,7 @@ const Description = () => {
         .unwrap()
         .then(() => {
           setOpenEditPost(false);
+          toast.success('성공적으로 수정되었습니다.')
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -308,6 +331,15 @@ const Description = () => {
         });
     }
   }, [accessToken]);
+
+  const handleCloseModal = useCallback(() => {
+    setOpenEditPost(false);
+    setValues({
+      title: tradePost?.title,
+      desc: tradePost?.desc,
+      price: tradePost?.price,
+    });
+  }, []);
 
   return (
     <>
@@ -443,7 +475,7 @@ const Description = () => {
           values={values}
           handleChange={handleChange}
           handleSubmit={handleSubmitEdit}
-          handleClose={() => setOpenEditPost(false)}
+          handleClose={handleCloseModal}
         />
       )}
 
