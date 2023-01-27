@@ -12,6 +12,7 @@ import { redirectWithMsg } from '../../utils/errors';
 import * as S from './like-history.styled';
 import { stringify } from 'querystring';
 import { toast } from 'react-toastify';
+import defaultImg from '../../assets/default-trade-img.svg';
 
 const LikeHistoryPage = () => {
   const navigate = useNavigate();
@@ -86,7 +87,7 @@ const LikeHistoryPage = () => {
               <ShortCut
                 key={post?.postId}
                 postId={post?.postId}
-                img={post?.imageUrls[0]}
+                img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
                 title={post?.title}
                 tradeStatus={post?.tradeStatus}
                 price={post?.price}

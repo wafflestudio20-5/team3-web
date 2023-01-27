@@ -20,6 +20,7 @@ import { shortenLocation } from '../../utils/location';
 import { TradeStatusType } from '../../types/tradePost';
 
 import { Wrapper, Header, List } from './market.styled';
+import defaultImg from '../../assets/default-trade-img.svg';
 
 const MarketPage = () => {
   const navigate = useNavigate();
@@ -209,7 +210,7 @@ const MarketPage = () => {
                 <ShortCut
                   key={post?.postId}
                   id={post?.postId}
-                  img={post?.imageUrls[0]}
+                  img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
                   title={post?.title}
                   tradeStatus={post?.tradeStatus}
                   price={post?.price}
