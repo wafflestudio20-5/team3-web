@@ -14,6 +14,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-self: center;
+  align-items: center;
   margin-top: 80px;
   margin-bottom: 60px;
   gap: 16px;
@@ -22,6 +23,20 @@ export const Wrapper = styled.div`
     margin-top: 40px;
     margin-bottom: 40px;
   }
+`;
+
+export const Move = styled.button`
+  width: 36px;
+  height: 24px;
+  border: 0.5px solid gray;
+  border-radius: 12px;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: 400;
+`;
+
+export const More = styled.span`
+  color: gray;
 `;
 
 export const Button = styled.button<Button>(

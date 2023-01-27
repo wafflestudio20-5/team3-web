@@ -16,8 +16,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import { redirectWithMsg } from '../../utils/errors';
 import { TradePostType } from '../../types/tradePost';
-import { shortenLocation } from '../../utils/location';
-import { TradeStatusType } from '../../types/tradePost';
+import { shortenLocation, getDong } from '../../utils/location';
 
 import { Wrapper, Header, List } from './market.styled';
 import defaultImg from '../../assets/default-trade-img.svg';
@@ -26,6 +25,8 @@ const MarketPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
+  const { me } = useAppSelector(state => state.users);
+  const [dong, setDong] = useState<string>('내 동네');
   const [keyword, setKeyword] = useState<string>('');
   const [data, setData] = useState<TradePostType[]>([]);
   const [totalPage, setTotalPage] = useState<number>(1);
@@ -80,7 +81,7 @@ const MarketPage = () => {
     } else if (Number(values.price) % 10 !== 0) {
       toast.warn('1원 단위는 입력하실 수 없습니다.');
       return;
-    } 
+    }
 
     if (accessToken) {
       dispatch(
@@ -93,7 +94,7 @@ const MarketPage = () => {
         .then(res => {
           setOpenCreatePost(false);
           navigate(`/tradepost/${res.postId}`);
-          toast.success('성공적으로 등록되었습니다.')
+          toast.success('성공적으로 등록되었습니다.');
           setValues({
             title: '',
             desc: '',
@@ -153,8 +154,6 @@ const MarketPage = () => {
             }
           }
         });
-    } else {
-      redirectWithMsg(2, '로그인이 필요합니다', () => navigate('/login'));
     }
   }, [accessToken, page]);
 
@@ -192,6 +191,21 @@ const MarketPage = () => {
         });
     }
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      searchHandler();
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [accessToken, keyword]);
+
+  useEffect(() => {
+    if (me) {
+      setDong(getDong(me.location) as string);
+    }
+  }, [me, accessToken]);
+
   return (
     <>
       <Gnb />
@@ -202,6 +216,7 @@ const MarketPage = () => {
               keyword={keyword}
               setKeyword={setKeyword}
               searchClick={searchHandler}
+              dong={dong}
             />
           </Header>
           <List>
