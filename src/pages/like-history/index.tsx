@@ -25,8 +25,7 @@ const LikeHistoryPage = () => {
       dispatch(getLikeHistory(accessToken as string))
         .unwrap()
         .then(res => {
-          console.log(res);
-          setData(res.posts);
+          setData(res.posts.reverse());
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {

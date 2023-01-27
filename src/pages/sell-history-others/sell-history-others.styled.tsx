@@ -55,6 +55,8 @@ export const Filter = styled.select`
   width: 160px;
   height: 30px;
   margin-left: auto;
+  border: 0.5px solid #8a8a8a;
+  border-radius: 6px;
 `;
 
 export const Option = styled.option``;
