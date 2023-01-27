@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
     width: 100vw;
     align-items: center;
     margin-top: 0px;
+    margin-bottom: 0px;
     gap: 0;
   }
 `;
@@ -23,12 +24,14 @@ export const Div = styled.div`
   height: 40px;
   align-items: center;
   padding-right: 8px;
-  border: 0.5px solid gray;
+  border: 0.5px solid #8a8a8a;
   border-radius: 12px;
 
   @media ${MD_SIZE} {
     width: 100vw;
     border-left: 0px solid transparent;
+    border-right: 0px solid transparent;
+    border-bottom: 0px solid transparent;
     border-radius: 0;
     margin-top: 0;
   }
@@ -62,7 +65,6 @@ export const Clear = styled.img`
   height: 22px;
   margin-left: auto;
   @media ${MD_SIZE} {
-  
   }
 `;
 
