@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom';
 import { requestNeighborhoodPost } from '../../api/neighborhood';
 import Gnb from '../../components/gnb';
 import { LONG_TEXT } from '../../constant';
-import { useAppSelector } from '../../store/hooks';
-import { neighborPost } from '../../types/neighborhood';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { setComments } from '../../store/slices/neighborhoodSlice';
+import { neighborPost, comment } from '../../types/neighborhood';
 import { User } from '../../types/users';
 import { AddModal } from '../neighborhoodLanding/components/add-modal';
 import ModalWrapper from '../neighborhoodLanding/components/modal-wrapper';
@@ -21,9 +22,12 @@ import { CommentContainer, Container } from './neighbor-post-styled';
 export const NeighborhoodPostPage = () => {
   const params = useParams();
   const id = Number(params.id);
+  const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
   const { me } = useAppSelector(state => state.users);
   const [post, setPost] = useState<neighborPost>({} as neighborPost);
+  // const [comments, setComments] = useState<Array<comment>>([]);
+  const comments = useAppSelector(state => state.comments);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -32,33 +36,15 @@ export const NeighborhoodPostPage = () => {
       const res = (await requestNeighborhoodPost(id, accessToken)) as any;
       // console.log(res);
       setPost(res.data);
+      // setComments(res.data.comments);
+      dispatch(setComments(res.data.comments));
     }
   };
 
   useEffect(() => {
     getPost();
-  }, []);
-  const writer: User = {
-    id: 1,
-    username: 'lerry',
-    email: '123@gmail.com',
-    location: '서울 관악구 봉천동',
-    temperature: 37.8,
-    imgUrl:
-      'https://i.ytimg.com/vi/HJ6mfzCh1_A/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCXouyVg57RxkROo4Fo2EMluMFXAA',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
-  const writer2: User = {
-    id: 2,
-    username: 'rod',
-    email: '1234@gmail.com',
-    location: '서울 관악구 봉천동',
-    temperature: 39.1,
-    imgUrl: 'https://avatars.githubusercontent.com/u/109863663?s=60&v=4',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
+  }, [accessToken]);
+
   return (
     <>
       <Gnb />
@@ -88,11 +74,11 @@ export const NeighborhoodPostPage = () => {
         <Comment user={writer} content="안녕하세요" modifiedAt={new Date()} />
         <Comment user={writer2} content="반가워요" modifiedAt={new Date()} /> */}
         <CommentLikeCount
-          commentCount={post.commentCount}
+          commentCount={comments.length}
           likeCount={post.likeCount}
         />
         <CommentContainer>
-          {post.comments?.map(comment => (
+          {comments.map(comment => (
             <Comment
               key={comment.commentId}
               postId={id}
@@ -100,7 +86,6 @@ export const NeighborhoodPostPage = () => {
               user={comment.commenter}
               content={comment.comment}
               modifiedAt={comment.modifiedAt}
-              refreshPost={getPost}
             />
           ))}
         </CommentContainer>

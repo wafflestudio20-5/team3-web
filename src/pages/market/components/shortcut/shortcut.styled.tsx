@@ -21,7 +21,7 @@ export const Container = styled.div`
     align-content: center;
     width: 100%;
     height: 180px;
-    border-bottom: 0.5px solid black;
+    border-top: 0.5px solid #8a8a8a;
     border-radius: 0;
     gap: 4px;
   }
@@ -33,6 +33,7 @@ export const Img = styled.img`
   border: 1px solid transparent;
   border-radius: 12px;
   margin-bottom: 4px;
+  object-fit: cover;
 
   @media ${MD_SIZE} {
     width: 160px;

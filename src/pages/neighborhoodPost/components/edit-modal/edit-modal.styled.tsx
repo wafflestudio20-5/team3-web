@@ -58,6 +58,7 @@ export const TitleText = styled.textarea`
   padding: 5px 10px;
   box-sizing: border-box;
   border: none;
+  resize: none;
 
   .content:focus {
     outline: none;
@@ -70,6 +71,8 @@ export const Desc = styled.textarea`
   padding: 10px;
   box-sizing: border-box;
   border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+  resize: none;
 
   .content:focus {
     outline: none;

@@ -9,6 +9,7 @@ import { shortenLocation } from '../../utils/location';
 import { TradeHistory } from '../../types/history';
 import { redirectWithMsg } from '../../utils/errors';
 import * as S from './sell-history-my.styled';
+import defaultImg from '../../assets/default-trade-img.svg';
 
 const SellHistoryMyPage = () => {
   const navigate = useNavigate();
@@ -28,9 +29,11 @@ const SellHistoryMyPage = () => {
         .unwrap()
         .then(res => {
           setData(
-            res.posts.filter((post: TradeHistory) => {
-              return post.tradeStatus === status;
-            }),
+            res.posts
+              .filter((post: TradeHistory) => {
+                return post.tradeStatus === status;
+              })
+              .reverse(),
           );
         })
         .catch(err => {
@@ -70,7 +73,7 @@ const SellHistoryMyPage = () => {
               <ShortCut
                 key={post?.postId}
                 postId={post?.postId}
-                img={post?.imageUrls[0]}
+                img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
                 title={post?.title}
                 tradeStatus={post?.tradeStatus}
                 price={post?.price}

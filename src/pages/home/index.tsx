@@ -7,14 +7,12 @@ import Section5 from './section5';
 import Gnb from '../../components/gnb';
 import Footer from '../../components/footer';
 
-import bgImg from '../../assets/background.png';
-import { Background, Wrapper } from './home.styled';
+import { Wrapper } from './home.styled';
 
 const HomePage = () => {
   return (
     <Wrapper>
-      <Gnb isMain />
-      <Background src={bgImg} />
+      <Gnb isColored />
       <Section0 />
       <Section1 />
       <Section2 />

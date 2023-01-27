@@ -38,7 +38,7 @@ export const Category = styled.button<CategoryProps>(
   margin-left: 10px;
   cursor: pointer;
   transition: 0.3s all;
-  font-weight: 500;
+  font-weight: 600;
 
   color: ${selected ? '#FF7E36' : '#000'};
   &:hover {

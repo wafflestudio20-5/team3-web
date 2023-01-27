@@ -10,7 +10,6 @@ import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import * as S from './edit-username.styled';
 import defaultImg from '../../../../assets/default-profile.png';
 
-
 interface EditUsernameProps {
   img: string | null;
   username: string | null;
@@ -33,11 +32,21 @@ const EditUsername = ({
   }, []);
 
   const handleSubmit = useCallback(() => {
+    // TODO: 함수로 빼기
+    const USERNAME_REG = /^([a-zA-Z0-9가-힣]){2,10}$/;
+    if (!USERNAME_REG.test(currUsername || '')) {
+      toast.warn(
+        '닉네임은 한글, 영어, 숫자 중 하나를 포함한 형태의 2~10자리여야 합니다.',
+      );
+      return;
+    }
+
     if (accessToken) {
       dispatch(postUsername({ accessToken, currUsername }))
         .unwrap()
         .then(() => {
           handleClose({ ...edit, username: false });
+          toast.success('닉네임이 변경되었습니다.');
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {

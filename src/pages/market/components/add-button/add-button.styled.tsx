@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { MD_SIZE, MD_to_XL_SIZE, SM_SIZE } from '../../../../constant/breakpoint';
+import { MD_SIZE } from '../../../../constant/breakpoint';
 
 export const Button = styled.img`
   position: fixed;
@@ -7,6 +7,7 @@ export const Button = styled.img`
   bottom: 50px;
   width: 90px;
   height: 90px;
+  cursor: pointer;
 
   @media ${MD_SIZE} {
     right: 30px;

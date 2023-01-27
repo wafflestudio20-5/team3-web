@@ -6,14 +6,15 @@ import { toast } from 'react-toastify';
 import { auth } from '../../../../api';
 import {
   requestDeleteNeighborhoodComment,
+  requestNeighborhoodPost,
   requestPatchNeighborhoodComment,
 } from '../../../../api/neighborhood';
 import { accessToken, BASE_URL } from '../../../../constant';
 
-import { useAppSelector } from '../../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { setComments } from '../../../../store/slices/neighborhoodSlice';
 import { User } from '../../../../types/users';
 import { shortenLocation } from '../../../../utils/location';
-import ModalWrapper from '../../../neighborhoodLanding/components/modal-wrapper';
 import { CommentDeleteModal } from '../comment-delete-modal';
 import { DeleteModal } from '../delete-modal';
 import { EditDelete } from '../edit-and-delete';
@@ -25,7 +26,6 @@ interface CommentProps {
   user: User;
   content: string;
   modifiedAt: Date;
-  refreshPost: () => void;
 }
 
 export const Comment = ({
@@ -34,10 +34,8 @@ export const Comment = ({
   user,
   content,
   modifiedAt,
-  refreshPost,
 }: CommentProps) => {
-  // const { me } = useAppSelector(state => state.users);
-  // const { accessToken } = useAppSelector(state => state.session);
+  const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
   const { me } = useAppSelector(state => state.users);
   const [input, setInput] = useState(content);
@@ -45,15 +43,18 @@ export const Comment = ({
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleEdit = async () => {
+  const handleEdit = () => {
     if (accessToken) {
       // alert('댓글 수정');
       // TODO: 밑에 requestPatchNeighborhoodComment 수행 도중 auth/refresh 에서 403 오류가 뜹니다..ㅠㅠ
       requestPatchNeighborhoodComment(commentId, input, accessToken)
-        .then(() => {
-          // 아래 then 과 catch 문 모두 실행되지 않습니다..
+        .then(async () => {
           toast('댓글 수정이 완료되었습니다.');
-          navigate(-1);
+          const res = (await requestNeighborhoodPost(
+            postId,
+            accessToken,
+          )) as any;
+          dispatch(setComments(res.data.comments));
         })
         .catch(err => {
           alert('에러');
@@ -110,14 +111,13 @@ export const Comment = ({
         <S.Date>{`${moment(modifiedAt).fromNow()}`}</S.Date>
       </S.CommentWrapper>
       {isDeleteModalOpen && (
-        <ModalWrapper handleClose={() => setIsDeleteModalOpen(false)}>
-          <CommentDeleteModal
-            commentId={commentId}
-            handleClose={() => {
-              setIsDeleteModalOpen(false);
-            }}
-          />
-        </ModalWrapper>
+        <CommentDeleteModal
+          postId={postId}
+          commentId={commentId}
+          handleClose={() => {
+            setIsDeleteModalOpen(false);
+          }}
+        />
       )}
     </>
   );

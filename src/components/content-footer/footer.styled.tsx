@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   width: 100%;
   height: 330px;
   padding-top: 30px;
-  background: #fafafa;
+  background: #f5f5f5;
   font-family: 'KOTRA_GOTHIC';
 `;
 
@@ -15,7 +15,11 @@ export const ContentWrapper = styled.div`
   flex-grow: 1;
   width: 100%;
   min-width: 340px;
-  padding: 0 20px;
+  padding: 0 40px;
+
+  @media ${MD_SIZE} {
+    padding: 0 20px;
+  }
 `;
 
 export const LogoWrapper = styled.div`

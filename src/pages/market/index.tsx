@@ -1,28 +1,123 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
-import ShortCut from './components/shortcut';
-import { Wrapper, Header, List } from './market.styled';
+
+import { toast } from 'react-toastify';
 import Gnb from '../../components/gnb';
+import ShortCut from './components/shortcut';
 import AddButton from './components/add-button';
 import SearchBar from './components/search-bar';
+import Pagination from './components/pagination';
+import TradePostCreate from '../../components/trade-post-create';
+
+import { getTradePostList } from '../../store/slices/marketSlice';
+import { createTradePost } from '../../store/slices/tradePostSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import { redirectWithMsg } from '../../utils/errors';
-import { getTradePostList } from '../../store/slices/marketSlice';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { TradePostType } from '../../types/tradePost';
-import { TradeStatusType } from '../../types/tradePost';
-import { shortenLocation } from '../../utils/location';
-import Pagination from './components/pagination';
+import { shortenLocation, getDong } from '../../utils/location';
+
+import { Wrapper, Header, List } from './market.styled';
+import defaultImg from '../../assets/default-trade-img.svg';
 
 const MarketPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
+  const { me } = useAppSelector(state => state.users);
+  const [dong, setDong] = useState<string>('내 동네');
   const [keyword, setKeyword] = useState<string>('');
   const [data, setData] = useState<TradePostType[]>([]);
   const [totalPage, setTotalPage] = useState<number>(1);
   const [page, setPage] = useState<number>(1);
+
+  // DESC: 중고거래 글쓰기
+  const [openCreatePost, setOpenCreatePost] = useState(false);
+  const [values, setValues] = useState({
+    title: '',
+    desc: '',
+    price: '',
+  });
+
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { value, name } = e.target;
+      setValues({
+        ...values,
+        [name]: value,
+      });
+    },
+    [values?.title, values?.desc, values?.price],
+  );
+
+  const handleCloseModal = useCallback(() => {
+    setOpenCreatePost(false);
+    setValues({
+      title: '',
+      desc: '',
+      price: '',
+    });
+  }, []);
+
+  const handleSubmitCreate = useCallback(() => {
+    // VALID TODO: to function
+    const numberReg = /^[0-9]+$/;
+    if (!values.title?.trim() || !(values.title.length > 2)) {
+      toast.warn('제목은 3자 이상이어야 합니다.');
+      return;
+    } else if (!values.desc?.trim() || !(values.desc.length > 9)) {
+      toast.warn('내용은 10자 이상이어야 합니다.');
+      return;
+    } else if (!String(values.price).trim()) {
+      toast.warn('가격을 입력해주세요.');
+      return;
+    } else if (Number(values.price) < 0) {
+      toast.warn('음수는 입력하실 수 없습니다.');
+      return;
+    } else if (!numberReg.test(String(values.price))) {
+      toast.warn('가격은 숫자만 입력가능합니다.');
+      return;
+    } else if (Number(values.price) % 10 !== 0) {
+      toast.warn('1원 단위는 입력하실 수 없습니다.');
+      return;
+    }
+
+    if (accessToken) {
+      dispatch(
+        createTradePost({
+          accessToken,
+          values,
+        }),
+      )
+        .unwrap()
+        .then(res => {
+          setOpenCreatePost(false);
+          navigate(`/tradepost/${res.postId}`);
+          toast.success('성공적으로 등록되었습니다.');
+          setValues({
+            title: '',
+            desc: '',
+            price: '',
+          });
+        })
+        .catch(err => {
+          if (axios.isAxiosError(err)) {
+            toast(`🥕 ${err.response?.data.error}`, {
+              position: 'top-center',
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: false,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+            });
+          }
+        });
+    }
+  }, [values?.title, values?.desc, values?.price]);
+
   const changePage = (page: number) => {
     setPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -59,8 +154,6 @@ const MarketPage = () => {
             }
           }
         });
-    } else {
-      redirectWithMsg(2, '로그인이 필요합니다', () => navigate('/login'));
     }
   }, [accessToken, page]);
 
@@ -98,6 +191,21 @@ const MarketPage = () => {
         });
     }
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      searchHandler();
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [accessToken, keyword]);
+
+  useEffect(() => {
+    if (me) {
+      setDong(getDong(me.location) as string);
+    }
+  }, [me, accessToken]);
+
   return (
     <>
       <Gnb />
@@ -108,6 +216,7 @@ const MarketPage = () => {
               keyword={keyword}
               setKeyword={setKeyword}
               searchClick={searchHandler}
+              dong={dong}
             />
           </Header>
           <List>
@@ -116,7 +225,7 @@ const MarketPage = () => {
                 <ShortCut
                   key={post?.postId}
                   id={post?.postId}
-                  img={post?.imageUrls}
+                  img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
                   title={post?.title}
                   tradeStatus={post?.tradeStatus}
                   price={post?.price}
@@ -129,8 +238,17 @@ const MarketPage = () => {
             })}
           </List>
           <Pagination total={totalPage} page={page} setPage={changePage} />
-          <AddButton />
+          <AddButton handleClick={() => setOpenCreatePost(true)} />
         </Wrapper>
+      )}
+
+      {openCreatePost && (
+        <TradePostCreate
+          values={values}
+          handleChange={handleChange}
+          handleSubmit={handleSubmitCreate}
+          handleClose={handleCloseModal}
+        />
       )}
     </>
   );

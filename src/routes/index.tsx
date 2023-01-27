@@ -43,7 +43,7 @@ function EntryRoute() {
         <Route path="/market" element={<MarketPage />} />
         <Route path="/tradepost/:id" element={<TradePostPage />} />
         <Route path="/tradepost/:id/review" element={<SendReview />} />
-        <Route path="/chat/messages/:UUID/:uid" element={<ChatPage />} />
+        <Route path="/chat/messages/:UUID/:uid/:pid" element={<ChatPage />} />
         <Route path="/neighborhood" element={<NeighborhoodLanding />} />
         <Route path="/neighborhood/:id" element={<NeighborhoodPostPage />} />
       </Routes>
