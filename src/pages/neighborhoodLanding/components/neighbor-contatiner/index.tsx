@@ -27,7 +27,7 @@ export const NeighborContainer = () => {
     if (accessToken) {
       const res = (await requestNeighborhood(accessToken)) as any;
       // console.log(res);
-      setPosts(res.data);
+      setPosts(res.data.reverse());
     } else {
       redirectWithMsg(
         2,
