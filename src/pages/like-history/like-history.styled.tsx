@@ -18,6 +18,7 @@ export const Header = styled.div`
 
   @media ${MD_SIZE} {
     width: 100vw;
+    margin-top: 20px;
   }
 `;
 
@@ -71,7 +72,7 @@ export const List = styled.div`
     row-gap: 0;
     column-gap: 0;
     width: 100vw;
-    padding: 0;
+    border-bottom: 0.5px solid #8a8a8a;
   }
 
   @media ${Market_MD} {

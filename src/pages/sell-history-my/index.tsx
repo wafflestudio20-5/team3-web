@@ -29,9 +29,11 @@ const SellHistoryMyPage = () => {
         .unwrap()
         .then(res => {
           setData(
-            res.posts.filter((post: TradeHistory) => {
-              return post.tradeStatus === status;
-            }),
+            res.posts
+              .filter((post: TradeHistory) => {
+                return post.tradeStatus === status;
+              })
+              .reverse(),
           );
         })
         .catch(err => {

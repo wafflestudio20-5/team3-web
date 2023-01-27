@@ -3,10 +3,23 @@ export const shortenLocation = (fullLocation: string) => {
   const arr = fullLocation.split(' ');
   let dongIdx = 0;
   arr.forEach((word, i) => {
-    if (word.slice(-1) === '동') {
+    if (
+      word.slice(-1) === '동' ||
+      word.slice(-1) === '읍' ||
+      word.slice(-1) === '면'
+    ) {
       dongIdx = i;
     }
   });
-  const result = arr.slice(0, dongIdx + 1).join(' ');
+  const result = arr.slice(1, dongIdx + 1).join(' ');
   return result;
+};
+
+export const getDong = (fullLocation: string) => {
+  const arr = fullLocation.split(' ');
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].slice(-1) === '동') {
+      return arr[i];
+    }
+  }
 };

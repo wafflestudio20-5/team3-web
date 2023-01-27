@@ -21,9 +21,7 @@ export const Container = styled.div`
     align-content: center;
     width: 100%;
     height: 180px;
-    border-top: 0.5px solid black;
-    border-bottom: 0.5px solid black;
-    border-collapse: collapse;
+    border-top: 0.5px solid #8a8a8a;
     border-radius: 0;
     gap: 4px;
   }
@@ -35,6 +33,7 @@ export const Img = styled.img`
   border: 1px solid transparent;
   border-radius: 12px;
   margin-bottom: 4px;
+  object-fit: cover;
 
   @media ${MD_SIZE} {
     width: 160px;
@@ -47,10 +46,15 @@ export const Img = styled.img`
 
 export const Heart = styled.img`
   position: absolute;
-  right: 2px;
+  right: 4px;
   top: 208px;
   width: 24px;
   z-index: 1;
+
+  @media ${MD_SIZE} {
+    top: 146px;
+    right: 10px;
+  }
 `;
 
 export const Info = styled.div`

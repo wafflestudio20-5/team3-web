@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Moment from 'react-moment';
+import { toStringNumWithComma } from '../../../../utils/tradePost';
 import {
   Container,
   Img,
@@ -72,7 +73,7 @@ const ShortCut = ({
           {tradeStatus !== 'TRADING' && (
             <TradeStatusButton tradeStatus={tradeStatus} />
           )}
-          <Price>{price}원</Price>
+          <Price>{toStringNumWithComma(price)}원</Price>
         </PriceBox>
         <Location>{location}</Location>
         <Detail>
