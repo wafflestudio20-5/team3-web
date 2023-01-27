@@ -19,14 +19,15 @@ export const Wrapper = styled.div`
 export const Div = styled.div`
   display: flex;
   flex-direction: row;
-  width: 400px;
+  width: 430px;
   height: 40px;
   align-items: center;
-  border: 1px solid gray;
+  padding-right: 8px;
+  border: 0.5px solid gray;
   border-radius: 12px;
 
   @media ${MD_SIZE} {
-    width: 98vw;
+    width: 100vw;
     border-left: 0px solid transparent;
     border-radius: 0;
     margin-top: 0;
@@ -45,14 +46,23 @@ export const Img = styled.img`
 `;
 
 export const Bar = styled.input`
-  width: 350px;
+  width: 360px;
   height: 36px;
-  border: 1px solid transparent;
+  border: 0px solid transparent;
   margin-bottom: 1px;
   outline: none;
 
   @media ${MD_SIZE} {
     width: 80%;
+  }
+`;
+
+export const Clear = styled.img`
+  width: 22px;
+  height: 22px;
+  margin-left: auto;
+  @media ${MD_SIZE} {
+  
   }
 `;
 

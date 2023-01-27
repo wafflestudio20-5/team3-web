@@ -10,3 +10,12 @@ export const shortenLocation = (fullLocation: string) => {
   const result = arr.slice(0, dongIdx + 1).join(' ');
   return result;
 };
+
+export const getDong = (fullLocation: string) => {
+  const arr = fullLocation.split(' ');
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].slice(-1) === '동') {
+      return arr[i];
+    }
+  }
+};

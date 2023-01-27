@@ -1,13 +1,15 @@
-import { Wrapper, Bar, Div, Img, Button } from './search-bar.styled';
+import { Wrapper, Bar, Div, Img, Clear } from './search-bar.styled';
 import search from '../../../../assets/search.svg';
+import close from '../../../../assets/close.svg';
 
 interface Search {
   keyword: string;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   searchClick: () => void;
+  dong: string | undefined;
 }
 
-const SearchBar = ({ keyword, setKeyword, searchClick }: Search) => {
+const SearchBar = ({ keyword, setKeyword, searchClick, dong }: Search) => {
   const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key == 'Enter') {
       searchClick();
@@ -21,11 +23,11 @@ const SearchBar = ({ keyword, setKeyword, searchClick }: Search) => {
         <Bar
           value={keyword}
           onChange={e => setKeyword(e.target.value)}
-          placeholder="봉천동 근처 물품 검색하기"
+          placeholder={`${dong ? dong : '내 동네'} 근처 물품 검색하기`}
           onKeyPress={onKeyPress}
         />
+        {keyword && <Clear src={close} onClick={() => setKeyword('')} />}
       </Div>
-      <Button onClick={searchClick}>검색</Button>
     </Wrapper>
   );
 };
