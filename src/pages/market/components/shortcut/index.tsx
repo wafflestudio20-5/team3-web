@@ -15,6 +15,7 @@ import {
 } from './shortcut.styled';
 import TradeStatusButton from '../../../../components/trade-status-button';
 import { TradeStatusType } from '../../../../types/tradePost';
+import { toStringNumWithComma } from '../../../../utils/tradePost';
 import alt from '../../../../assets/post-alt.png';
 
 interface ShortCut {
@@ -56,7 +57,7 @@ const ShortCut = ({
           {tradeStatus !== TradeStatusType.TRADING && (
             <TradeStatusButton tradeStatus={tradeStatus} />
           )}
-          <Price>{price}원</Price>
+          <Price>{toStringNumWithComma(price)}원</Price>
         </PriceBox>
         <Location>{location}</Location>
         <Detail>
