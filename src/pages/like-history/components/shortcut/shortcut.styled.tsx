@@ -46,7 +46,7 @@ export const Img = styled.img`
 
 export const Heart = styled.img`
   position: absolute;
-  right: 2px;
+  right: 4px;
   top: 208px;
   width: 24px;
   z-index: 1;
