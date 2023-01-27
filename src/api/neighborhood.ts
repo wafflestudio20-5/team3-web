@@ -114,3 +114,16 @@ export const requestDeleteNeighborhoodComment = async (
     return e;
   }
 };
+
+export const requestPostNeighborhoodLike = async (
+  postId: number,
+  accessToken: string,
+) => {
+  try {
+    return await axios.post(`${BASE_URL}/neighborhood/${postId}/like`, null, {
+      headers: auth(accessToken),
+    });
+  } catch (e) {
+    return e;
+  }
+};
