@@ -4,13 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import Gnb from '../../components/gnb';
 import Header from './components/header';
 import UserInfo from './container/user-info';
+import ChatItem from './components/chat-item';
 import TxInfo from './container/transaction-info';
 import ModalWrapper from '../../components/modal-wrapper';
 import ContentFooter from '../../components/content-footer';
 import NavigationButton from './components/navigation-button';
 
 import { useAuth } from '../../hooks/useAuth';
-import { getMyChats } from '../../store/slices/usersSlice';
+import { getMyChats } from '../../store/slices/chatSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import * as S from './profile.styled';
@@ -27,6 +28,7 @@ const ProfilePage = () => {
   const { sessionLoading } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const { me } = useAppSelector(state => state.users);
+  const { myChats } = useAppSelector(state => state.chat);
   const { accessToken } = useAppSelector(state => state.session);
 
   const [edit, setEdit] = useState({
@@ -37,21 +39,21 @@ const ProfilePage = () => {
   });
 
   useEffect(() => {
-    if (accessToken) {
+    if (modalOpen && accessToken) {
       dispatch(getMyChats(accessToken))
         .unwrap()
         .then(() => {
-          console.log('성공');
+          // console.log(res.chats);
         })
         .catch(err => {
           console.log(err);
         });
     }
-  }, [accessToken]);
+  }, [modalOpen, accessToken]);
 
   return (
     <S.OuterWrapper>
-      <Gnb />
+      <Gnb isColored />
 
       <S.Wrapper>
         <S.ContentWrapper>
@@ -75,7 +77,6 @@ const ProfilePage = () => {
             />
           </S.InfoWrapper>
 
-          {/* TODO: 적절한 페이지로 이동 */}
           <S.NavigationWrapper>
             <NavigationButton
               isLoading={sessionLoading}
@@ -115,20 +116,42 @@ const ProfilePage = () => {
             />
           </S.NavigationWrapper>
         </S.ContentWrapper>
-        <ContentFooter />
       </S.Wrapper>
+      <ContentFooter />
 
       {modalOpen && (
         <ModalWrapper handleClose={() => setModalOpen(false)}>
           <>
             <S.Header>채팅목록</S.Header>
-            {true && (
+            {!myChats || !(myChats?.length > 0) ? (
               <S.DefaultAnnounce>
                 🥕 현재 진행 중인 채팅이 없습니다.
               </S.DefaultAnnounce>
+            ) : (
+              <S.ModalInnerWrapper>
+                {myChats && myChats?.length > 0 ? (
+                  myChats?.map((chat: any, index: number) => {
+                    return (
+                      <ChatItem
+                        chat={chat}
+                        key={
+                          String(chat?.you?.id) +
+                          chat?.you?.email +
+                          String(index)
+                        }
+                        handleClick={() =>
+                          navigate(
+                            `/chat/messages/${chat.roomUUID}/${chat?.you?.id}/${chat?.post.postId}`,
+                          )
+                        }
+                      />
+                    );
+                  })
+                ) : (
+                  <>로딩 중...</>
+                )}
+              </S.ModalInnerWrapper>
             )}
-
-            <ul></ul>
           </>
         </ModalWrapper>
       )}

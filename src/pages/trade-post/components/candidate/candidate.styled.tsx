@@ -52,6 +52,7 @@ export const Img = styled.img`
   width: 34px;
   height: 34px;
   margin-right: 4px;
+  object-fit: cover;
 `;
 
 export const Text = styled.span`

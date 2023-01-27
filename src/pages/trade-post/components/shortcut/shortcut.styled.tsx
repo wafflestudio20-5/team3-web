@@ -1,46 +1,43 @@
 import styled from 'styled-components';
-import {
-  MD_SIZE,
-  MD_to_XL_SIZE,
-  SM_SIZE,
-} from '../../../../constant/breakpoint';
+import { MD_SIZE } from '../../../../constant/breakpoint';
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  position: relative;
-  width: 200px;
-  height: 300px;
+  align-items: flex-end;
+  width: auto;
+  height: auto;
+  margin: auto;
   border: 1px solid white;
-  border-radius: 12px;
-  gap: 4px;
 
   @media ${MD_SIZE} {
     display: flex;
     flex-direction: row;
     align-content: center;
     width: 100%;
-    height: 180px;
-    border-bottom: 0.5px solid black;
-    border-radius: 0;
-    gap: 4px;
+    height: auto;
+    border-bottom: 0.5px solid #7b7b7b42;
+    padding: 10px 0;
+
+    &:last-of-type {
+      border: none;
+    }
   }
 `;
 
 export const Img = styled.img`
-  width: 200px;
-  height: 200px;
+  max-width: 180px;
+  height: 180px;
   border: 1px solid transparent;
   border-radius: 12px;
   margin-bottom: 4px;
   object-fit: cover;
 
   @media ${MD_SIZE} {
-    width: 160px;
-    height: 160px;
-    margin-top: 10px;
-    margin-right: 20px;
-    margin-left: 16px;
+    width: 130px;
+    height: 130px;
+    margin-right: 10px;
+    margin-bottom: 0;
   }
 `;
 
@@ -49,16 +46,19 @@ export const Info = styled.div`
   flex-direction: column;
   justify-content: center;
   align-content: center;
-  gap: 6px;
+  gap: 4px;
+  height: 120px;
+  width: 175px;
 
   @media ${MD_SIZE} {
-    gap: 10px;
+    gap: 8px;
+    height: 130px;
+    flex-grow: 1;
   }
 `;
 
 export const Title = styled.h3`
-  width: 200px;
-  font-size: 17px;
+  font-size: 15px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -66,7 +66,6 @@ export const Title = styled.h3`
   @media ${MD_SIZE} {
     width: 100%;
     height: 24px;
-    font-size: 18px;
   }
 `;
 
@@ -77,7 +76,8 @@ export const PriceBox = styled.div`
 `;
 
 export const Price = styled.span`
-  font-size: 18px;
+  font-family: 'LINESeedKR-Bd';
+  font-size: 14px;
   font-weight: 600;
 `;
 
@@ -85,12 +85,14 @@ export const Location = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 13px;
 `;
 
 export const Detail = styled.div`
   display: flex;
   flex-direction: row;
   gap: 6px;
+  font-size: 12px;
 `;
 
 export const Likes = styled.span`

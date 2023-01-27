@@ -15,7 +15,7 @@ const ChatPage = () => {
 
   return (
     <Wrapper>
-      <Gnb />
+      <Gnb isColored />
       <ChatWrapper>
         <ChatContainer />
       </ChatWrapper>

@@ -26,6 +26,26 @@ export const getTradePost = createAsyncThunk(
   },
 );
 
+export const getTop3 = createAsyncThunk(
+  'tradePost/getTop3',
+  async (
+    { accessToken }: { accessToken: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      const res = await axios.get(
+        `${BASE_URL}/tradepost/top3`,
+        {
+          headers: auth(accessToken),
+        },
+      );
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 export const postTradePost = createAsyncThunk(
   'tradePost/postTradePost',
   async (
@@ -252,7 +272,6 @@ export const tradePostSlice = createSlice({
       state.tradeStatus = action.payload.tradeStatus;
     });
     builder.addCase(createTradePost.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.isLiked = action.payload.isLiked as boolean;
       state.seller = action.payload.seller as TxUser;
       state.buyer = action.payload.buyer as TxUser;
@@ -283,6 +302,9 @@ export const tradePostSlice = createSlice({
     });
     builder.addCase(postLike.fulfilled, state => {
       state.isLiked = !state.isLiked;
+    });
+    builder.addCase(getTop3.fulfilled, (state, action) => {
+      // console.log(action.payload);
     });
   },
 });

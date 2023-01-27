@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { MD_SIZE } from '../../constant/breakpoint';
 
 interface WrapperProps extends HTMLAttributes<HTMLElement> {
-  isMain?: boolean;
+  isColored?: boolean;
 }
 
 export const Wrapper = styled.div<WrapperProps>(
-  ({ isMain }) => `
-  background: ${isMain ? '#FBF7F2' : '#fff'};
+  ({ isColored }) => `
+  background: ${isColored ? '#f5f5f5' : '#fff'};
   display: flex;
   justify-content: center;
   align-items: center;

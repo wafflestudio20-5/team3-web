@@ -17,6 +17,18 @@ export const ModalLayout = styled.div`
   background: #fff;
   box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
+  animation: modalShow 0.5s;
+
+  @keyframes modalShow {
+    from {
+      opacity: 0;
+      margin-top: -100px;
+    }
+    to {
+      opacity: 1;
+      margin-top: 0;
+    }
+  }
 `;
 
 export const ModalHeader = styled.div`

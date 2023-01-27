@@ -2,6 +2,7 @@ import Gnb from '../../components/gnb';
 import Spinner from '../../components/spinner';
 import TradeInfo from './container/trade-info';
 import OtherTrades from './container/other-trades';
+import ContentFooter from '../../components/content-footer';
 
 import { useAuth } from '../../hooks/useAuth';
 
@@ -16,11 +17,12 @@ const TradePostPage = () => {
 
   return (
     <S.Wrapper>
-      <Gnb />
+      <Gnb isColored />
       <S.ContentWrapper>
         <TradeInfo />
         <OtherTrades />
       </S.ContentWrapper>
+      <ContentFooter />
     </S.Wrapper>
   );
 };
