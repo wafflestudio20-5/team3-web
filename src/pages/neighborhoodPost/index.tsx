@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { requestNeighborhoodPost } from '../../api/neighborhood';
+import ContentFooter from '../../components/content-footer';
 import Gnb from '../../components/gnb';
 import { LONG_TEXT } from '../../constant';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -18,7 +19,7 @@ import { Description } from './components/desc-container';
 import { EditDelete } from './components/edit-and-delete';
 import { EditModal } from './components/edit-modal';
 import { WriterInfo } from './components/writer-info';
-import { CommentContainer, Container } from './neighbor-post-styled';
+import { CommentContainer, Container, Wrapper } from './neighbor-post-styled';
 
 export const NeighborhoodPostPage = () => {
   const params = useParams();
@@ -48,7 +49,7 @@ export const NeighborhoodPostPage = () => {
   }, [accessToken]);
 
   return (
-    <>
+    <Wrapper>
       <Gnb />
       <Container>
         <WriterInfo
@@ -81,6 +82,7 @@ export const NeighborhoodPostPage = () => {
           // commentCount={comments.length}
           // likeCount={post.likeCount}
         />
+        <CommentInput postId={id} refreshPost={getPost} />
         <CommentContainer>
           {comments.map(comment => (
             <Comment
@@ -94,7 +96,8 @@ export const NeighborhoodPostPage = () => {
           ))}
         </CommentContainer>
       </Container>
-      <CommentInput postId={id} refreshPost={getPost} />
+
+      <ContentFooter />
       {isEditModalOpen && (
         <ModalWrapper handleClose={() => setIsEditModalOpen(false)}>
           <EditModal
@@ -117,6 +120,6 @@ export const NeighborhoodPostPage = () => {
           />
         </ModalWrapper>
       )}
-    </>
+    </Wrapper>
   );
 };

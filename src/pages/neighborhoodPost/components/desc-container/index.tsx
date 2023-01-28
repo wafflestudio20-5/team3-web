@@ -16,7 +16,7 @@ export const Description = ({
 }: DescriptionProps) => {
   return (
     <S.Wrapper>
-      <S.TitleWrapper>{title}</S.TitleWrapper>
+      {/* <S.TitleWrapper>{title}</S.TitleWrapper> */}
       <S.DescriptionWrapper>{content}</S.DescriptionWrapper>
       <S.LocationWrapper>{`${moment(
         new Date(modifiedAt).getTime(),

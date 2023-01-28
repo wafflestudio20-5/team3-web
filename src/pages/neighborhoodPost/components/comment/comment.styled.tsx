@@ -6,15 +6,21 @@ export const CommentWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   margin: 20px 0px;
-  height: 80px;
+  height: 100px;
   border-top: 0.5px solid rgba(0, 0, 0, 0.2);
 `;
 
 export const TopWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-top: 10px;
   width: 100%;
+`;
+
+export const ProfileWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const EditDeleteWrapper = styled.div`
@@ -24,16 +30,22 @@ export const EditDeleteWrapper = styled.div`
 export const ProfileImage = styled.img`
   width: 30px;
   height: 30px;
+  border-radius: 50%;
   object-fit: cover;
+  border: 1px solid #f2f2f2;
 `;
 
 export const UserName = styled.span`
   margin: 0px 10px;
-  font-size: 18px;
+  font-family: 'Pretendard-Regular';
+  font-size: 15px;
+  white-space: pre-wrap;
 `;
 
 export const Location = styled.span`
-  font-size: 16px;
+  font-family: 'Pretendard-Regular';
+  font-size: 12px;
+  white-space: pre-wrap;
 `;
 
 export const Form = styled.form`
@@ -65,7 +77,9 @@ export const EditText = styled.textarea`
 `;
 
 export const Content = styled.div`
-  font-size: 18px;
+  font-family: 'Pretendard-Regular';
+  font-size: 15px;
+  white-space: pre-wrap;
 `;
 
 export const Date = styled.span`
