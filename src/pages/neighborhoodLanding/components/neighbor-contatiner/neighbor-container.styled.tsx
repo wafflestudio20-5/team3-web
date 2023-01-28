@@ -2,42 +2,42 @@ import styled from 'styled-components';
 
 import { MD_SIZE } from '../../../../constant/breakpoint';
 
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   position: relative;
+  z-index: 1;
 
-  width: 100vw;
-  height: 100vh;
-  margin-top: 20px;
-  padding: 0px 20vw;
+  width: 711px;
+  height: auto;
 
-  overflow: auto;
+  padding: 0px 46px;
+  border-radius: 10px;
+
+  background-color: white;
+  // overflow: auto;
 
   @media ${MD_SIZE} {
-    padding: 0px 5px;
+    padding: 0px 20px;
+    width: 100%;
   }
-
 `;
 
 export const TopTextWrapper = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
-  margin-bottom: 10px;
+  margin: 20px 0px;
 `;
 
 export const TopText = styled.span`
-  font-size: 24px;
-
+  font-size: 25px;
 
   @media ${MD_SIZE} {
     font-size: 30px;
   }
-
 `;
 
 export const MoreTextWrapper = styled.div`

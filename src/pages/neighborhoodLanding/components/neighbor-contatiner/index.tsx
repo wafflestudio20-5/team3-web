@@ -13,6 +13,7 @@ import { redirectWithMsg } from '../../../../utils/errors';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { setPosts } from '../../../../store/slices/neighborhoodPostListSlice';
+import SearchBar from '../search-bar';
 
 export const NeighborContainer = () => {
   const dispatch = useAppDispatch();
@@ -104,17 +105,26 @@ export const NeighborContainer = () => {
   };
   return (
     <>
+      <S.TopTextWrapper>
+        <S.TopText>동네정보</S.TopText>
+      </S.TopTextWrapper>
+      <SearchBar
+        keyword={name}
+        setKeyword={setName}
+        searchClick={() => {
+          console.log('clicked');
+        }}
+        dong="내 동네"
+      />
       <S.Container>
-        <S.TopTextWrapper>
-          <S.TopText>동네정보</S.TopText>
-        </S.TopTextWrapper>
         {posts
           ? posts.map(post => (
               <ShortCut
                 key={post.postId}
                 id={post.postId}
-                content={post.title}
+                content={post.content}
                 location={post.publisher.location}
+                modifiedAt={post.modifiedAt}
                 likeCount={post.likeCount}
                 commentCount={post.commentCount}
               />
@@ -142,24 +152,24 @@ export const NeighborContainer = () => {
         <ShortCut content="6내용내용내용" location="주소주소주소" />
         <ShortCut content="7내용내용내용" location="주소주소주소" />
         <ShortCut content="8내용내용내용" location="주소주소주소" /> */}
-        <S.MoreTextWrapper onClick={handleMoreButtonClick}>
+        {/* <S.MoreTextWrapper onClick={handleMoreButtonClick}>
           <S.MoreText>더보기</S.MoreText>
-        </S.MoreTextWrapper>
+        </S.MoreTextWrapper> */}
         <AddButton
           handleClick={() => {
             setIsModalOpen(prev => !prev);
           }}
         />
+        {isModalOpen && (
+          <ModalWrapper handleClose={handleModalClose}>
+            <AddModal
+              handleClose={() => {
+                handleModalClose();
+              }}
+            />
+          </ModalWrapper>
+        )}
       </S.Container>
-      {isModalOpen && (
-        <ModalWrapper handleClose={handleModalClose}>
-          <AddModal
-            handleClose={() => {
-              handleModalClose();
-            }}
-          />
-        </ModalWrapper>
-      )}
     </>
   );
 };
