@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { LONG_TEXT } from '../../../../constant';
 import { AddButton } from '../../../../components/add-button';
 import { AddModal } from '../add-modal';
@@ -18,7 +18,7 @@ export const NeighborContainer = () => {
   const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
   const navigate = useNavigate();
-  const [pageNum, setPageNum] = useState(1);
+  const pageNum = useRef(1);
   const [name, setName] = useState('');
   // const [posts, setPosts] = useState<Array<neighborPost>>([]);
   const posts = useAppSelector(state => state.neighborhoodPostList);
@@ -31,11 +31,10 @@ export const NeighborContainer = () => {
     if (accessToken) {
       const res = (await requestNeighborhood(
         accessToken,
-        pageNum,
+        pageNum.current,
         name,
       )) as any;
-      dispatch(setPosts(posts.concat(res.data.reverse())));
-      setPageNum(prev => prev + 1);
+      dispatch(setPosts(res.data.reverse()));
     } else {
       redirectWithMsg(
         2,
@@ -83,8 +82,25 @@ export const NeighborContainer = () => {
   //   }
   // }, [accessToken, pageNum]);
 
-  const handleMoreButtonClick = () => {
-    setPageNum(prev => prev + 1);
+  const handleMoreButtonClick = async () => {
+    if (accessToken) {
+      pageNum.current++;
+      const res = (await requestNeighborhood(
+        accessToken,
+        pageNum.current,
+        name,
+      )) as any;
+      console.log(pageNum.current);
+      dispatch(setPosts(res.data.reverse().concat(posts)));
+    } else {
+      redirectWithMsg(
+        2,
+        '액세스 토큰이 유효하지 않습니다. 다시 로그인해 주세요.',
+        () => {
+          navigate('/login');
+        },
+      );
+    }
   };
   return (
     <>
@@ -126,7 +142,7 @@ export const NeighborContainer = () => {
         <ShortCut content="6내용내용내용" location="주소주소주소" />
         <ShortCut content="7내용내용내용" location="주소주소주소" />
         <ShortCut content="8내용내용내용" location="주소주소주소" /> */}
-        <S.MoreTextWrapper>
+        <S.MoreTextWrapper onClick={handleMoreButtonClick}>
           <S.MoreText>더보기</S.MoreText>
         </S.MoreTextWrapper>
         <AddButton
