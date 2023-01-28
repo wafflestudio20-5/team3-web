@@ -37,7 +37,6 @@ export const Container = styled.div`
 `;
 
 export const CommentContainer = styled.div`
-  flex: 3;
   width: 100%;
 
   overflow: auto;
