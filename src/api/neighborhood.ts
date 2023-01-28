@@ -3,9 +3,13 @@ import { auth } from '.';
 import { BASE_URL } from '../constant';
 import { neighborPostComment, neighborPostInput } from '../types/neighborhood';
 
-export const requestNeighborhood = async (accessToken: string) => {
+export const requestNeighborhood = async (
+  accessToken: string,
+  page: number,
+  name: string,
+) => {
   try {
-    return await axios.get(`${BASE_URL}/neighborhood`, {
+    return await axios.get(`${BASE_URL}/neighborhood/?page=${page}`, {
       headers: auth(accessToken),
     });
   } catch (e) {

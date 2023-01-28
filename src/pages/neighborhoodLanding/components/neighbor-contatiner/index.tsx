@@ -11,13 +11,17 @@ import { neighborPost } from '../../../../types/neighborhood';
 import { toast } from 'react-toastify';
 import { redirectWithMsg } from '../../../../utils/errors';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { setPosts } from '../../../../store/slices/neighborhoodPostListSlice';
 
 export const NeighborContainer = () => {
   const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
   const navigate = useNavigate();
-
-  const [posts, setPosts] = useState<Array<neighborPost>>([]);
+  const [pageNum, setPageNum] = useState(1);
+  const [name, setName] = useState('');
+  // const [posts, setPosts] = useState<Array<neighborPost>>([]);
+  const posts = useAppSelector(state => state.neighborhoodPostList);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalClose = () => {
     setIsModalOpen(prev => !prev);
@@ -25,9 +29,13 @@ export const NeighborContainer = () => {
 
   const getPosts = async () => {
     if (accessToken) {
-      const res = (await requestNeighborhood(accessToken)) as any;
-      // console.log(res);
-      setPosts(res.data.reverse());
+      const res = (await requestNeighborhood(
+        accessToken,
+        pageNum,
+        name,
+      )) as any;
+      dispatch(setPosts(posts.concat(res.data.reverse())));
+      setPageNum(prev => prev + 1);
     } else {
       redirectWithMsg(
         2,
@@ -41,9 +49,43 @@ export const NeighborContainer = () => {
 
   useEffect(() => {
     getPosts();
-    // console.log(posts);
-  }, []);
+  }, [accessToken]);
 
+  // useEffect(() => {
+  //   if (accessToken) {
+  //     dispatch(
+  //       getNeighborhoodPostList({
+  //         accessToken: accessToken,
+  //         name: '',
+  //         page: pageNum,
+  //       }),
+  //     )
+  //       .unwrap()
+  //       .then(res => {
+  //         setPosts(res.reverse());
+  //       })
+  //       .catch(err => {
+  //         if (axios.isAxiosError(err)) {
+  //           if (err.response?.status === 404) {
+  //             redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+  //           } else if (err.response?.status === 401) {
+  //             // TODO: refresh 후 재요청
+  //             redirectWithMsg(2, err.response?.data.error, () =>
+  //               navigate('/login'),
+  //             );
+  //           } else {
+  //             redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+  //               navigate('/'),
+  //             );
+  //           }
+  //         }
+  //       });
+  //   }
+  // }, [accessToken, pageNum]);
+
+  const handleMoreButtonClick = () => {
+    setPageNum(prev => prev + 1);
+  };
   return (
     <>
       <S.Container>
@@ -98,7 +140,6 @@ export const NeighborContainer = () => {
           <AddModal
             handleClose={() => {
               handleModalClose();
-              getPosts();
             }}
           />
         </ModalWrapper>

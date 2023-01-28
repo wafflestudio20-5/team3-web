@@ -1,4 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { auth } from '../../api';
+import { BASE_URL } from '../../constant';
 import { neighborPost } from '../../types/neighborhood';
 
 const initialState: neighborPost = {} as neighborPost;
