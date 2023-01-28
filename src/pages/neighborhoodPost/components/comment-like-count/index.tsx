@@ -9,6 +9,8 @@ import {
   requestPostNeighborhoodLike,
 } from '../../../../api/neighborhood';
 import { setPost } from '../../../../store/slices/neighborhoodPostSlice';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 interface CommentLikeCountProps {
   // isLiked: boolean;
@@ -38,20 +40,14 @@ CommentLikeCountProps) => {
     }
   }, [isLiked]);
 
-  const handleLikeButtonClicked = async () => {
+  const handleLikeButtonClicked = () => {
     if (accessToken) {
-      await requestPostNeighborhoodLike(postId, accessToken)
-        .then(async () => {
-          const res = (await requestNeighborhoodPost(
-            postId,
-            accessToken,
-          )) as any;
-          // console.log(res);
-          dispatch(setPost(res.data));
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      requestPostNeighborhoodLike(postId, accessToken).then(async () => {
+        const res = (await requestNeighborhoodPost(postId, accessToken)) as any;
+        // console.log(res);
+        // TODO: response로 온 post 데이터 받아 post 업데이트
+        dispatch(setPost(res.data));
+      });
     }
   };
   return (

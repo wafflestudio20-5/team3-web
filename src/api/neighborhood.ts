@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { auth } from '.';
 import { BASE_URL } from '../constant';
 import { neighborPostComment, neighborPostInput } from '../types/neighborhood';
@@ -127,7 +128,11 @@ export const requestPostNeighborhoodLike = async (
     return await axios.post(`${BASE_URL}/neighborhood/${postId}/like`, null, {
       headers: auth(accessToken),
     });
-  } catch (e) {
+  } catch (e: any) {
+    console.log(e);
+    if (e.response?.status === 400) {
+      toast('본인의 글에는 좋아요를 누를 수 없습니다.');
+    }
     return e;
   }
 };
