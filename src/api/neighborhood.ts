@@ -7,16 +7,16 @@ import { neighborPostComment, neighborPostInput } from '../types/neighborhood';
 export const requestNeighborhood = async (
   accessToken: string,
   page: number,
-  name: string,
+  keyword: string,
 ) => {
   try {
-    if (name === '') {
+    if (keyword === '') {
       return await axios.get(`${BASE_URL}/neighborhood/?page=${page}`, {
         headers: auth(accessToken),
       });
     } else {
       return await axios.get(
-        `${BASE_URL}/neighborhood/?page=${page}&name=${name}`,
+        `${BASE_URL}/neighborhood/?page=${page}&keyword=${keyword}`,
         {
           headers: auth(accessToken),
         },

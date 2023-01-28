@@ -20,7 +20,7 @@ export const NeighborContainer = () => {
   const { accessToken } = useAppSelector(state => state.session);
   const navigate = useNavigate();
   const pageNum = useRef(1);
-  const [name, setName] = useState('');
+  const [keyword, setKeyword] = useState('');
   // const [posts, setPosts] = useState<Array<neighborPost>>([]);
   const posts = useAppSelector(state => state.neighborhoodPostList);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,9 +33,9 @@ export const NeighborContainer = () => {
       const res = (await requestNeighborhood(
         accessToken,
         pageNum.current,
-        name,
+        keyword,
       )) as any;
-      dispatch(setPosts(res.data.reverse()));
+      dispatch(setPosts(res.data));
     } else {
       redirectWithMsg(
         2,
@@ -53,7 +53,7 @@ export const NeighborContainer = () => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [accessToken, name]);
+  }, [accessToken, keyword]);
 
   // useEffect(() => {
   //   if (accessToken) {
@@ -93,7 +93,7 @@ export const NeighborContainer = () => {
       const res = (await requestNeighborhood(
         accessToken,
         pageNum.current,
-        name,
+        keyword,
       )) as any;
       console.log(pageNum.current);
       dispatch(setPosts(res.data.reverse().concat(posts)));
@@ -113,8 +113,8 @@ export const NeighborContainer = () => {
         <S.TopText>동네정보</S.TopText>
       </S.TopTextWrapper>
       <SearchBar
-        keyword={name}
-        setKeyword={setName}
+        keyword={keyword}
+        setKeyword={setKeyword}
         searchClick={() => {
           console.log('clicked');
         }}
