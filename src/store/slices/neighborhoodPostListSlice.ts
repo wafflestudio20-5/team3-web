@@ -9,9 +9,9 @@ import { neighborPost } from '../../types/neighborhood';
 //   async (
 //     {
 //       accessToken,
-//       name,
+//       keyword,
 //       page,
-//     }: { accessToken: string; name: string; page: number },
+//     }: { accessToken: string; keyword: string; page: number },
 //     { rejectWithValue },
 //   ) => {
 //     try {

@@ -48,8 +48,12 @@ export const NeighborContainer = () => {
   };
 
   useEffect(() => {
-    getPosts();
-  }, [accessToken]);
+    const timer = setTimeout(() => {
+      getPosts();
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [accessToken, name]);
 
   // useEffect(() => {
   //   if (accessToken) {
@@ -130,31 +134,7 @@ export const NeighborContainer = () => {
               />
             ))
           : null}
-        {/* <ShortCut content="1내용내용내용" location="주소주소주소" />
-        <ShortCut
-          content="2내용내용내용"
-          location="주소주소주소"
-          likeCount={7}
-        />
-        <ShortCut
-          content={LONG_TEXT}
-          location="주소주소주소"
-          commentCount={5}
-        />
-        <ShortCut
-          content="4내용내용내용"
-          location="주소주소주소"
-          likeCount={3}
-          commentCount={10}
-        />
 
-        <ShortCut content="5내용내용내용" location="주소주소주소" />
-        <ShortCut content="6내용내용내용" location="주소주소주소" />
-        <ShortCut content="7내용내용내용" location="주소주소주소" />
-        <ShortCut content="8내용내용내용" location="주소주소주소" /> */}
-        {/* <S.MoreTextWrapper onClick={handleMoreButtonClick}>
-          <S.MoreText>더보기</S.MoreText>
-        </S.MoreTextWrapper> */}
         <AddButton
           handleClick={() => {
             setIsModalOpen(prev => !prev);

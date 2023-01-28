@@ -10,9 +10,18 @@ export const requestNeighborhood = async (
   name: string,
 ) => {
   try {
-    return await axios.get(`${BASE_URL}/neighborhood/?page=${page}`, {
-      headers: auth(accessToken),
-    });
+    if (name === '') {
+      return await axios.get(`${BASE_URL}/neighborhood/?page=${page}`, {
+        headers: auth(accessToken),
+      });
+    } else {
+      return await axios.get(
+        `${BASE_URL}/neighborhood/?page=${page}&name=${name}`,
+        {
+          headers: auth(accessToken),
+        },
+      );
+    }
   } catch (e) {
     return e;
   }
