@@ -131,7 +131,7 @@ const ProfilePage = () => {
               isLoading={sessionLoading}
               img={lifeIcon}
               text="동네생활"
-              handleClick={() => navigate('/')}
+              handleClick={() => navigate('/profile/me/neighborhood')}
             />
           </S.NavigationWrapper>
         </S.ContentWrapper>
