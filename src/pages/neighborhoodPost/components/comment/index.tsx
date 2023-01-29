@@ -10,6 +10,7 @@ import {
   requestPatchNeighborhoodComment,
 } from '../../../../api/neighborhood';
 import { accessToken, BASE_URL } from '../../../../constant';
+import defaultProfile from '../../../../assets/default-profile.png';
 
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { setComments } from '../../../../store/slices/neighborhoodSlice';
@@ -55,6 +56,7 @@ export const Comment = ({
             accessToken,
           )) as any;
           dispatch(setComments(res.data.comments));
+          setIsEdit(false);
         })
         .catch(err => {
           alert('에러');
@@ -63,13 +65,26 @@ export const Comment = ({
     }
   };
 
+  const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key == 'Enter') {
+      if (!e.shiftKey) {
+        handleEdit();
+      }
+    }
+  };
+
   return (
     <>
       <S.CommentWrapper>
         <S.TopWrapper>
-          <S.ProfileImage src={user.imgUrl || undefined} />
-          <S.UserName>{user.username}</S.UserName>
-          <S.Location>{shortenLocation(user.location)}</S.Location>
+          <S.ProfileWrapper>
+            <S.ProfileImage
+              src={user.imgUrl === null ? defaultProfile : user.imgUrl}
+            />
+            <S.UserName>{user.username}</S.UserName>
+            <S.Location>{shortenLocation(user.location)}</S.Location>
+          </S.ProfileWrapper>
+
           {user?.id === me?.id && (
             <S.EditDeleteWrapper>
               <EditDelete
@@ -92,6 +107,7 @@ export const Comment = ({
               onChange={e => {
                 setInput(e.target.value);
               }}
+              onKeyPress={onKeyPress}
             />
             <S.ButtonWrapper>
               <S.ConfirmButton onClick={handleEdit}>수정</S.ConfirmButton>
