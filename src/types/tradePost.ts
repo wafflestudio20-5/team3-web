@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: 백엔드와 타입 합의 후 타입정보 수정
 
+import { ReviewHistory } from "./review";
+
 export enum TradeStatusType {
   TRADING = 'TRADING',
   RESERVATION = 'RESERVATION',
@@ -27,6 +29,7 @@ export type TradePostType = {
   // 🥕 later...
   otherPosts: any;
   imageUrls?: any;
+  reviews: ReviewHistory[]
 };
 
 export type TxUser = {
