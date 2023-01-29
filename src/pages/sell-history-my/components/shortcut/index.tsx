@@ -45,6 +45,7 @@ interface ShortCut {
   chats: number;
   created_at: Date;
   desc: string;
+  getList: () => void;
 }
 
 const ShortCut = ({
@@ -58,6 +59,7 @@ const ShortCut = ({
   chats,
   created_at,
   desc,
+  getList,
 }: ShortCut) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -75,6 +77,7 @@ const ShortCut = ({
         .unwrap()
         .then(() => {
           toast.success('성공적으로 삭제되었습니다.');
+          getList();
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -124,11 +127,10 @@ const ShortCut = ({
     }
   };
 
-  // 글 수정
+  // 글 수정 🚀🚀🚀
   const [active, setActive] = useState(false);
-  const [openEditPost, setOpenEditPost] = useState(false);
-  const [openEditPostImg, setOpenEditPostImg] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [openEditPost, setOpenEditPost] = useState(false);
 
   const [values, setValues] = useState({
     title: title,
@@ -178,12 +180,14 @@ const ShortCut = ({
           title: values.title,
           desc: values.desc,
           price: values.price,
+          imgs,
         }),
       )
         .unwrap()
         .then(() => {
           setOpenEditPost(false);
           toast.success('성공적으로 수정되었습니다.');
+          getList();
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -210,6 +214,9 @@ const ShortCut = ({
       price: price,
     });
   }, []);
+
+  // 사진
+  const [imgs, setImgs] = useState<any>([]);
 
   return (
     <Container>
@@ -255,6 +262,8 @@ const ShortCut = ({
       )}
       {openEditPost && (
         <TradePostUpdate
+          imgs={imgs}
+          setImgs={setImgs}
           values={values}
           handleChange={handleChange}
           handleSubmit={handleSubmitEdit}
