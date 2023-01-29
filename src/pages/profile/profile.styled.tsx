@@ -26,13 +26,13 @@ export const ContentWrapper = styled.div`
   width: 100%;
   min-width: 360px;
   height: auto;
-  padding: 25px 30px;
+  padding: 15px 30px 25px 30px;
   margin: 20px 0 50px 0;
   background: #fff;
   border-radius: 16px;
 
   @media ${MD_SIZE} {
-    padding: 30px 0;
+    padding: 15px 0 30px 0;
     width: 360px;
   }
 `;

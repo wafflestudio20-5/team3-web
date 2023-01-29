@@ -74,3 +74,19 @@ export const PostImg = styled.img`
   height: 40px;
   object-fit: cover;
 `;
+
+export const Unread = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  background: #ff6f0f;
+  border-radius: 100px;
+  font-weight: 400;
+  font-size: 11px;
+  color: #ffffff;
+  margin: 0 10px;
+`;

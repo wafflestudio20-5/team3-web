@@ -122,9 +122,7 @@ const ChatContainer = () => {
       const bodyObj: SubBodyType = JSON.parse(body);
       axios
         .get(`${BASE_URL}/chat/${bodyObj.chatId}`)
-        .then(res => {
-          console.log('res', res);
-          console.log('bodyObj', bodyObj);
+        .then(() => {
           setChatMessages([
             ...chatMessages,
             {
