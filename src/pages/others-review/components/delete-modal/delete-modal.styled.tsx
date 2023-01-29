@@ -25,12 +25,15 @@ export const FixedWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   position: fixed;
+  z-index: 1001;
   top: 0;
   left: 0;
   background-color: transparent;
 `;
 
 export const Wrapper = styled.div`
+  position: fixed;
+  z-index: 1001;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -39,6 +42,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ModalContainer = styled.div`
+  position: fixed;
   display: flex;
   flex-direction: column;
   width: 400px;
