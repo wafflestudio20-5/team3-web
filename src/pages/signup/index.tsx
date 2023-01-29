@@ -1,45 +1,39 @@
 import { ChangeEvent, useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
-import SignUpInputNormal, {
-  SignUpButtonNormal,
-} from './components/SignUpInputNormal';
+import { useAppDispatch } from '../../store/hooks';
+import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { postLogin } from '../../store/slices/sessionSlice';
+import { randomPassword } from '../../utils/randomPassword';
+import SignUpInputNormal from './components/SignUpInputNormal';
 
 import {
   requestSendEmail,
   requestCheckEmail,
-  requestCheckUsername,
   requestSignUpUser,
   requestVerifyEmail,
+  requestCheckUsername,
 } from '../../api/auth';
 import * as V from '../../utils/validateUserInfo';
-
 import { Coordinate } from '../../types/auth';
 import { getCoordinate } from '../../utils/map';
-
-import * as S from './signup.styled';
-import { COLOR_CARROT } from '../../constant';
-import { useDaumPostcodePopup } from 'react-daum-postcode';
-import { randomPassword } from '../../utils/randomPassword';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-import { useAppDispatch } from '../../store/hooks';
-import { postLogin } from '../../store/slices/sessionSlice';
-import axios from 'axios';
 import { redirectWithMsg } from '../../utils/errors';
 
+import * as S from './signup.styled';
+import logo from '../../assets/logo.svg';
+import 'react-toastify/dist/ReactToastify.css';
+
 const SignUpPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [location, setLocation] = useState('');
   const [coordinate, setCoordinate] = useState<Coordinate>({
     lat: 0,
     lng: 0,
   });
-
-  // useEffect안에 넣지 말고 사용 (내부에 location에 따른 useEffect 걸려있음)
   getCoordinate(location, coordinate, setCoordinate);
-  // TODO: test용 콘솔 -> 기능 한 번 확인해보시고 지워주시면 감사하겠습니다!
-  // console.log(location, coordinate);
 
   let isSocialLoginProp: boolean, emailSocial: string;
   if (useLocation().state === null) {
@@ -53,15 +47,13 @@ const SignUpPage = () => {
     emailSocial = useLocation().state.emailSocial;
   }
 
-  const [isSocialLogin, setIsSocialLogin] = useState(isSocialLoginProp);
-
   const [isEmailAuthed, setIsEmailAuthed] = useState(false);
   const [isEmailUnique, setIsEmailUnique] = useState(false);
   const [isUsernameUnique, setIsUsernameUnique] = useState(false);
+  const [isSocialLogin, setIsSocialLogin] = useState(isSocialLoginProp);
   // DESC: 이메일 인증 기능을 회원가입 페이지에서 구현
   const [isEmailAuthButtonOpen, setIsEmailAuthButtonOpen] = useState(false);
 
-  const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     email: '',
     emailVerification: '',
@@ -83,8 +75,6 @@ const SignUpPage = () => {
   // axios
   //   .get('https://nickname.hwanmoo.kr/?format=text&count=1&max_length=10&')
   //   .then(res => console.log(res));
-
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (isSocialLogin) {
@@ -191,16 +181,19 @@ const SignUpPage = () => {
   }, [open, handleComplete]);
 
   return (
-    <>
+    <S.OuterWrapper>
+      <S.Logo src={logo} alt="logo" />
+      <S.Subtitle>
+        하나의 아이디로 와플마켓의 다양한 서비스를 이용해보세요.
+      </S.Subtitle>
       <S.Wrapper>
-        <S.H1>회원가입</S.H1>
         <SignUpInputNormal
           label="email"
           valueName="email"
           value={email}
           color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
           required={true}
-          placeholder="이메일을 입력해주세요"
+          placeholder="이메일"
           validationText={V.valEmailToMsg(email)}
           handleChange={e => {
             onChange(e);
@@ -213,28 +206,40 @@ const SignUpPage = () => {
           // TODO: 변경된 회원가입 플로우에 따라 이 버튼으로 중복체크 & 메일 인증 되도록 바꿔주기
           handleClick={checkEmail}
         />
-        {isEmailAuthButtonOpen && (
-          <>
-            <S.EmailAuthWrapper>
-              <S.P>{email} 로 인증 메일을 전송하였습니다.</S.P>
-              <S.P onClick={checkEmail}>메일 다시 보내기</S.P>
-            </S.EmailAuthWrapper>
-            <SignUpInputNormal
-              label="email verification"
-              valueName="emailVerification"
-              value={emailVerification}
-              color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
-              required={true}
-              placeholder="이메일로 전송된 인증코드를 입력해주세요"
-              handleChange={e => {
-                onChange(e);
-              }}
-              isWithButton={true}
-              buttonText="인증 확인"
-              // TODO: 변경된 회원가입 플로우에 따라 이 버튼으로 중복체크 & 메일 인증 되도록 바꿔주기
-              handleClick={verifyEmail}
-            />
-          </>
+        {!isEmailAuthButtonOpen && (
+          <S.EmailAuthWrapper>
+            <S.P>{email} 로 인증 메일을 전송하였습니다.</S.P>
+            <S.EmailInnerWrapper>
+              <S.InputPositionWrapper>
+                <S.EmailVerifyInput
+                  name="emailVerification"
+                  value={emailVerification}
+                  color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
+                  required={true}
+                  placeholder="인증코드 입력"
+                  onChange={e => {
+                    onChange(e);
+                  }}
+                  // TODO: 변경된 회원가입 플로우에 따라 이 버튼으로 중복체크 & 메일 인증 되도록 바꿔주기
+                />
+                <S.Timer>10:00</S.Timer>
+              </S.InputPositionWrapper>
+
+              <S.ButtonWrapper>
+                <S.EmailVerifyButton
+                  isVerifyButton
+                  onClick={verifyEmail}
+                  isEmailAuthed={isEmailAuthed}
+                  disabled={isEmailAuthed}
+                >
+                  {isEmailAuthed ? '인증 완료' : '인증 확인'}
+                </S.EmailVerifyButton>
+                <S.EmailVerifyButton onClick={checkEmail}>
+                  이메일 재요청
+                </S.EmailVerifyButton>
+              </S.ButtonWrapper>
+            </S.EmailInnerWrapper>
+          </S.EmailAuthWrapper>
         )}
         <SignUpInputNormal
           label="password"
@@ -243,7 +248,7 @@ const SignUpPage = () => {
           color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
           type="password"
           required={true}
-          placeholder="비밀번호를 입력해주세요"
+          placeholder="비밀번호"
           validationText={V.valPasswordToMsg(password)}
           handleChange={onChange}
           isReadOnly={isSocialLogin}
@@ -255,7 +260,7 @@ const SignUpPage = () => {
           color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
           type="password"
           required={true}
-          placeholder="비밀번호를 한 번 더 입력해주세요"
+          placeholder="비밀번호를 한 번 더 입력하세요"
           validationText={V.confirmPasswordToMsg(password, passwordConfirm)}
           handleChange={onChange}
           isReadOnly={isSocialLogin}
@@ -265,7 +270,7 @@ const SignUpPage = () => {
           valueName="username"
           value={username}
           required={true}
-          placeholder="사용하고자 하는 유저 이름을 입력해주세요"
+          placeholder="유저 이름"
           validationText={V.valUsernameToMsg(username)}
           handleChange={e => {
             onChange(e);
@@ -280,7 +285,7 @@ const SignUpPage = () => {
           label="location"
           valueName="location"
           value={location}
-          placeholder="동네 이름을 검색해주세요"
+          placeholder="동네 이름을 검색하세요"
           isReadOnly={true}
           isWithButton={true}
           buttonText="동네 검색"
@@ -288,13 +293,11 @@ const SignUpPage = () => {
         />
 
         <S.SignUpButtonWrapper>
-          <SignUpButtonNormal
-            text="회원가입"
-            bgColor={COLOR_CARROT}
+          <S.SubmitButton
             disabled={
               !V.validAllInputs(email, password, passwordConfirm, username)
             }
-            handleClick={() => {
+            onClick={() => {
               if (isEmailUnique && isUsernameUnique) {
                 signUpUser();
               } else if (isSocialLogin) {
@@ -303,10 +306,12 @@ const SignUpPage = () => {
                 alert('이메일과 닉네임 중복 여부를 확인해주세요.');
               }
             }}
-          />
+          >
+            회원가입
+          </S.SubmitButton>
         </S.SignUpButtonWrapper>
       </S.Wrapper>
-    </>
+    </S.OuterWrapper>
   );
 };
 

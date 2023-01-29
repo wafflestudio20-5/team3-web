@@ -8,22 +8,30 @@ interface Input extends HTMLAttributes<HTMLInputElement> {
 
 export const Input = styled.input<Input>(
   ({ color }) => `
-width: 100%;
-height: 50px;
-padding: 10px 0px;
-border: none;
-border-bottom: 1px solid #ccc;
-background-color: transparent;
-color: ${color || 'tomato'};
-font-size: 18px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  padding-left: 42px;
+  border: none;
+  border-radius: 5px;
+  background: #EBE9E9;
+  color: ${color || 'tomato'};
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
 
-transition: border-bottom 0s ease-out 0s;
-// DESC: 👇자동완성 시 background color 바뀌는 현상 해결
--webkit-box-shadow: 0 0 0 1000px white inset;
-&:focus {
-  outline: none;
-  border-bottom: 1px solid ${COLOR_CARROT};
-  transition-duration: 0.5s;
-}
+  &::placeholder {
+    color: #949494;
+  }
+
+  // DESC: 👇 자동완성 시 background color 바뀌는 현상 해결
+  -webkit-box-shadow: 0 0 0 1000px #EBE9E9 inset;
+  
+  &:focus {
+    outline: none;
+    // border-bottom: 1px solid ${COLOR_CARROT};
+    // transition-duration: 0.5s;
+  }
 `,
 );

@@ -56,37 +56,31 @@ const SignUpInputNormal = ({
 }: SignUpInputNormal) => {
   return (
     <S.SignUpInputWrapper>
-      <S.Label>
-        {required && '* '}
-        {label}
-        <S.SignUpInput>
-          <S.SignUpInputLeft>
-            <S.SignUpInputSpan color="tomato">
-              {validationText}
-            </S.SignUpInputSpan>
-            <InputNormal
-              name={valueName}
-              placeholder={placeholder}
-              type={type}
-              required={required}
-              value={value}
-              color={color}
-              isReadOnly={isReadOnly}
-              handleChange={handleChange}
-            />
-          </S.SignUpInputLeft>
+      <S.SignUpInput>
+        <S.SignUpInputLeft>
+          <InputNormal
+            name={valueName}
+            placeholder={placeholder}
+            type={type}
+            required={required}
+            value={value}
+            color={color}
+            isReadOnly={isReadOnly}
+            handleChange={handleChange}
+          />
+        </S.SignUpInputLeft>
 
-          {isWithButton && (
-            <S.SignUpInputRight>
-              <SignUpButtonNormal
-                text={buttonText ? buttonText : ''}
-                bgColor={COLOR_CARROT}
-                handleClick={handleClick}
-              />
-            </S.SignUpInputRight>
-          )}
-        </S.SignUpInput>
-      </S.Label>
+        {isWithButton && (
+          <S.SignUpInputRight>
+            <SignUpButtonNormal
+              text={buttonText ? buttonText : ''}
+              bgColor={COLOR_CARROT}
+              handleClick={handleClick}
+            />
+          </S.SignUpInputRight>
+        )}
+      </S.SignUpInput>
+      <S.SignUpInputSpan color="#D94D11">{validationText}</S.SignUpInputSpan>
     </S.SignUpInputWrapper>
   );
 };
