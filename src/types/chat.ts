@@ -2,6 +2,7 @@ export type ChatMessageType = {
   message: string;
   senderId: number;
   createdAt: Date;
+  chatId: number;
 }
 
 export type SubBodyType = { 
@@ -9,4 +10,5 @@ export type SubBodyType = {
   message: string;
   senderId: number;
   createdAt: Date;
+  chatId: number;
 }
