@@ -11,7 +11,7 @@ export const Container = styled.div`
   position: relative;
   width: 200px;
   height: 300px;
-  border: 1px solid white;
+  border: 1px solid transparent;
   border-radius: 12px;
   gap: 4px;
 
@@ -45,14 +45,21 @@ export const Img = styled.img`
   }
 `;
 
+export const Div = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: center;
+  width: 180px;
   gap: 6px;
 
   @media ${MD_SIZE} {
+    width: 50vw;
     gap: 10px;
   }
 `;
