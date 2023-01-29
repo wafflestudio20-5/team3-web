@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import * as S from './drop-down.styled';
 
 const DropDown = ({
+  postId,
   dropDownRef,
   isDropped,
   setIsDropped,
@@ -10,7 +12,9 @@ const DropDown = ({
   tradeStatus,
   onTradeConfirmation,
   setOpenEditPost,
+  isReviewed,
 }: {
+  postId: number;
   dropDownRef: any;
   isDropped: boolean;
   setIsDropped: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,7 +23,9 @@ const DropDown = ({
   tradeStatus: string;
   onTradeConfirmation: () => void;
   setOpenEditPost: React.Dispatch<React.SetStateAction<boolean>>;
+  isReviewed: boolean;
 }) => {
+  const navigate = useNavigate();
   const clickOutside = (e: MouseEvent) => {
     if (isDropped && !dropDownRef.current.contains(e.target)) {
       setIsDropped(false);
@@ -54,6 +60,11 @@ const DropDown = ({
       <S.ElemWrapper>
         {tradeStatus === 'RESERVATION' && (
           <S.Elem onClick={onConfirmation}>판매완료로 변경</S.Elem>
+        )}
+        {tradeStatus === 'COMPLETED' && !isReviewed && (
+          <S.Elem onClick={() => navigate(`/tradepost/${postId}/review`)}>
+            후기 보내기
+          </S.Elem>
         )}
         <S.Elem onClick={() => setOpenEditPost(true)}>수정하기</S.Elem>
         <S.ElemRed onClick={() => setIsDeleteModalOpen(true)}>

@@ -33,6 +33,7 @@ import TradeStatusButton from '../../../../components/trade-status-button';
 import DropDown from '../drop-down';
 import alt from '../../../../assets/post-alt.png';
 import more from '../../../../assets/more.svg';
+import { ReviewHistory } from '../../../../types/review';
 
 interface ShortCut {
   postId: number;
@@ -45,6 +46,7 @@ interface ShortCut {
   chats: number;
   created_at: Date;
   desc: string;
+  reviews: ReviewHistory[];
   getList: () => void;
 }
 
@@ -60,6 +62,7 @@ const ShortCut = ({
   created_at,
   desc,
   getList,
+  reviews,
 }: ShortCut) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -71,6 +74,21 @@ const ShortCut = ({
   const clickDropDown = () => {
     setIsDropped(prev => !prev);
   };
+
+  const checkIsReviewed = () => {
+    if (reviews[0]) {
+      for (let i = 0; i < reviews.length; i++) {
+        if (reviews[i].type === 'SELLER') {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    return false;
+  };
+  const isReviewed = checkIsReviewed();
+
   const handleDeletePost = () => {
     if (accessToken && postId) {
       dispatch(deleteTradePost({ accessToken: accessToken, postId: postId }))
@@ -250,6 +268,7 @@ const ShortCut = ({
       </Div>
       {isDropped && (
         <DropDown
+          postId={postId}
           dropDownRef={dropDownRef}
           isDropped={isDropped}
           setIsDropped={setIsDropped}
@@ -258,6 +277,7 @@ const ShortCut = ({
           tradeStatus={tradeStatus}
           onTradeConfirmation={handleTradeConfirmation}
           setOpenEditPost={setOpenEditPost}
+          isReviewed={isReviewed}
         />
       )}
       {openEditPost && (

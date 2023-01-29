@@ -29,6 +29,7 @@ const SellHistoryMyPage = () => {
       )
         .unwrap()
         .then(res => {
+          console.log(res);
           setData(
             res.posts
               .filter((post: TradeHistory) => {
@@ -86,6 +87,7 @@ const SellHistoryMyPage = () => {
                 chats={post?.reservationCount}
                 created_at={post?.createdAt}
                 desc={post?.desc}
+                reviews={post?.reviews}
                 getList={getList}
               />
             );
