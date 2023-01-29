@@ -88,6 +88,7 @@ const MarketPage = () => {
         createTradePost({
           accessToken,
           values,
+          imgs
         }),
       )
         .unwrap()
@@ -206,6 +207,9 @@ const MarketPage = () => {
     }
   }, [me, accessToken]);
 
+  // 사진
+  const [imgs, setImgs] = useState<any>([]);
+
   return (
     <>
       <Gnb />
@@ -244,6 +248,8 @@ const MarketPage = () => {
 
       {openCreatePost && (
         <TradePostCreate
+          imgs={imgs}
+          setImgs={setImgs}
           values={values}
           handleChange={handleChange}
           handleSubmit={handleSubmitCreate}

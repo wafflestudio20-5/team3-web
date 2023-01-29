@@ -11,7 +11,8 @@ export const ModalOuterLayout = styled.div`
 `;
 
 export const ModalLayout = styled.div`
-  width: 712px;
+  width: 100%;
+  max-width: 712px;
   min-width: 360px;
   height: auto;
   background: #fff;
@@ -97,7 +98,7 @@ export const PostDesc = styled.textarea`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 350px;
+  height: 250px;
   flex-grow: 1;
   padding: 18px 22px;
   resize: none;
