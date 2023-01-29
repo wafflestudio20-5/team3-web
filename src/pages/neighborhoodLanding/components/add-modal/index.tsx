@@ -38,13 +38,20 @@ export const AddModal = ({ handleClose }: AddModalProps) => {
       ).then(async () => {
         toast('글 작성이 완료되었습니다.');
         const res = (await requestNeighborhood(accessToken, 1, '')) as any;
-        dispatch(setPosts(res.data.reverse()));
+        dispatch(setPosts(res.data));
         handleClose();
       });
-
-      // console.log(res);
     }
   };
+
+  const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key == 'Enter') {
+      if (!e.shiftKey) {
+        handleClick();
+      }
+    }
+  };
+
   return (
     <S.Container>
       <S.TopWrapper>
@@ -53,17 +60,12 @@ export const AddModal = ({ handleClose }: AddModalProps) => {
         <S.SpanComplete onClick={handleClick}>완료</S.SpanComplete>
       </S.TopWrapper>
       <S.DescWrapper>
-        <S.TitleText
-          placeholder="제목을 입력하세요."
-          name="title"
-          value={title}
-          onChange={onChange}
-        />
         <S.Desc
           placeholder="우리 동네 관련된 질문이나 이야기를 해보세요."
           name="content"
           value={content}
           onChange={onChange}
+          onKeyPress={onKeyPress}
         />
       </S.DescWrapper>
       <S.NoticeWrapper>
