@@ -1,6 +1,6 @@
 import user from '../assets/signup-user.svg';
 import email from '../assets/signup-email.svg';
-import location from '../assets/signup-email.svg';
+import location from '../assets/signup-location.svg';
 import password from '../assets/signup-password.svg';
 
 //DESC: 유저 정보가 형식에 맞는지 검사해주는 함수들
