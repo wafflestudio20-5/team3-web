@@ -69,8 +69,6 @@ const SendReview = () => {
       dispatch(getTradePost({ accessToken: accessToken, postId: postId }))
         .unwrap()
         .then(res => {
-          console.log(me);
-          console.log(res);
           setTradeInfo({
             title: res?.title,
             img: res?.imageUrls[0],
