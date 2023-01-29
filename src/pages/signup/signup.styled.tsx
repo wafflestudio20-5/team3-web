@@ -253,7 +253,7 @@ export const EmailVerifyButton = styled.button<Button>(
   line-height: 18px;
   transition: 0.3s all;
   color: ${isEmailAuthed && isVerifyButton ? '#fff' : '#949494'};
-  background: ${isEmailAuthed && isVerifyButton ? '#E78111' : '#fff'};
+  background: ${isEmailAuthed && isVerifyButton ? '#FF6F0F' : '#fff'};
   border: ${isEmailAuthed && isVerifyButton ? 'none' : '1px solid #aaaaaa'};
 
   &:hover {
