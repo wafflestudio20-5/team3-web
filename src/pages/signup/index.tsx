@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect, useCallback } from 'react';
+import { ChangeEvent, useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -92,6 +92,8 @@ const SignUpPage = () => {
   }, [isSocialLogin]);
 
   const checkEmail = async () => {
+    clearInterval(timerId.current);
+
     if (V.valEmail(email)) {
       const res = (await requestCheckEmail(email)) as any;
       // 사용가능한(중복되지 않는) 이메일인 경우
@@ -100,6 +102,12 @@ const SignUpPage = () => {
         setIsEmailAuthButtonOpen(true);
         requestSendEmail(email); // 인증 이메일 전송
         toast(`${email}로 인증 메일을 전송하였습니다.`);
+
+        // DESC: 타이머 초기화
+        setMin(10);
+        setSec(0);
+        time.current = 600;
+        startTimer();
       } else {
         // console.log(res);
         toast('이미 동일한 이메일이 있습니다.');
@@ -180,6 +188,28 @@ const SignUpPage = () => {
     open({ onComplete: handleComplete });
   }, [open, handleComplete]);
 
+  // DESC: Timer
+  const [min, setMin] = useState(10);
+  const [sec, setSec] = useState(0);
+  const time = useRef(600);
+  const timerId = useRef<any>(null);
+
+  const startTimer = useCallback(() => {
+    timerId.current = setInterval(() => {
+      setMin(Math.floor(time.current / 60));
+      setSec(time.current % 60);
+      time.current -= 1;
+    }, 1000);
+
+    if (time.current === 0) {
+      clearInterval(timerId.current);
+    }
+  }, []);
+
+  useEffect(() => {
+    return () => clearInterval(timerId.current);
+  }, []);
+
   return (
     <S.OuterWrapper>
       <S.Logo src={logo} alt="logo" />
@@ -222,7 +252,13 @@ const SignUpPage = () => {
                   }}
                   // TODO: 변경된 회원가입 플로우에 따라 이 버튼으로 중복체크 & 메일 인증 되도록 바꿔주기
                 />
-                <S.Timer>10:00</S.Timer>
+                {min <= 0 && sec <= 0 ? (
+                  <S.Timer isTimesUp>00:00</S.Timer>
+                ) : (
+                  <S.Timer>{`${String(min).padStart(2, '0')}:${String(
+                    sec,
+                  ).padStart(2, '0')}`}</S.Timer>
+                )}
               </S.InputPositionWrapper>
 
               <S.ButtonWrapper>

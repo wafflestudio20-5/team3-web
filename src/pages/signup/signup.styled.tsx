@@ -170,7 +170,7 @@ export const P = styled.p`
   font-weight: 500;
   font-size: 11px;
   line-height: 18px;
-  color: #ff8400;
+  color: #000000;
   margin-bottom: 6px;
   padding-left: 2px;
 `;
@@ -216,21 +216,28 @@ export const EmailVerifyInput = styled.input`
   }
 `;
 
-export const Timer = styled.span`
+interface Span extends HTMLAttributes<HTMLElement> {
+  isTimesUp?: boolean;
+}
+
+export const Timer = styled.span<Span>(
+  ({ isTimesUp }) => `
   position: absolute;
   font-weight: 500;
   font-size: 12px;
   line-height: 15px;
-  color: #000000;
+  color: ${isTimesUp ? '#D94D11' : '#000'};
   top: 10px;
   right: 5px;
-`;
+`,
+);
 
 export const ButtonWrapper = styled.div`
   display: flex;
   gap: 7px;
 `;
-interface Button extends HTMLAttributes<HTMLInputElement> {
+
+interface Button extends HTMLAttributes<HTMLElement> {
   isVerifyButton?: boolean;
   isEmailAuthed?: boolean;
 }
