@@ -7,6 +7,7 @@ import axios from 'axios';
 import Dialog from '../components/dialog';
 import Spinner from '../../../components/spinner';
 
+import { BASE_URL } from '../../../constant';
 import { redirectWithMsg } from '../../../utils/errors';
 import { getChats } from '../../../store/slices/chatSlice';
 import { ChatMessageType, SubBodyType } from '../../../types/chat';
@@ -119,15 +120,22 @@ const ChatContainer = () => {
   const subscribe = () => {
     client.current.subscribe(`/sub/room/${roomUUID}`, ({ body }: any) => {
       const bodyObj: SubBodyType = JSON.parse(body);
-      // if (id) get .then(() setChatMessages...)
-      setChatMessages([
-        ...chatMessages,
-        {
-          message: bodyObj.message,
-          senderId: bodyObj.senderId,
-          createdAt: bodyObj.createdAt,
-        },
-      ]);
+      axios
+        .get(`${BASE_URL}/chat/${bodyObj.chatId}`)
+        .then(() => {
+          setChatMessages([
+            ...chatMessages,
+            {
+              message: bodyObj.message,
+              senderId: bodyObj.senderId,
+              createdAt: bodyObj.createdAt,
+              chatId: bodyObj.chatId,
+            },
+          ]);
+        })
+        .catch(err => {
+          console.log('err', err);
+        });
     });
   };
 

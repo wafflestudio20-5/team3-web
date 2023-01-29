@@ -28,7 +28,7 @@ const ProfilePage = () => {
   const { sessionLoading } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const { me } = useAppSelector(state => state.users);
-  const { myChats } = useAppSelector(state => state.chat);
+  const { myChats, unreadTotalCount } = useAppSelector(state => state.chat);
   const { accessToken } = useAppSelector(state => state.session);
 
   const [edit, setEdit] = useState({
@@ -39,17 +39,35 @@ const ProfilePage = () => {
   });
 
   useEffect(() => {
-    if (modalOpen && accessToken) {
+    if (accessToken) {
       dispatch(getMyChats(accessToken))
         .unwrap()
         .then(() => {
-          // console.log(res.chats);
+          // console.log(res);
         })
         .catch(err => {
           console.log(err);
         });
     }
-  }, [modalOpen, accessToken]);
+
+    // DESC: polling 이용해 구현
+    const polling = setInterval(() => {
+      if (accessToken) {
+        dispatch(getMyChats(accessToken))
+          .unwrap()
+          .then(() => {
+            // console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    }, 3000);
+
+    return () => {
+      clearInterval(polling);
+    };
+  }, [accessToken, modalOpen]);
 
   return (
     <S.OuterWrapper>
@@ -61,6 +79,7 @@ const ProfilePage = () => {
             username={me?.username || null}
             handleClick={() => setModalOpen(true)}
             isLoading={sessionLoading}
+            unread={unreadTotalCount}
           />
           <S.InfoWrapper>
             <UserInfo
