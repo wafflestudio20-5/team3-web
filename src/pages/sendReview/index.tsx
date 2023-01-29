@@ -65,15 +65,23 @@ const SendReview = () => {
   });
   const [isValidPage, setIsValidPage] = useState(true);
   useEffect(() => {
-    if (accessToken && postId) {
+    if (accessToken && me && postId) {
       dispatch(getTradePost({ accessToken: accessToken, postId: postId }))
         .unwrap()
         .then(res => {
+          console.log(me);
+          console.log(res);
           setTradeInfo({
             title: res?.title,
             img: res?.imageUrls[0],
-            neighbor: res?.seller.username,
-            neighborId: res?.seller.id,
+            neighbor:
+              me.id === res?.seller.id
+                ? (res?.buyer as any).username
+                : res?.seller.username,
+            neighborId:
+              me.id === res?.seller.id
+                ? (res?.buyer as any).id
+                : res?.seller.id,
           });
         })
         .catch(() => {
