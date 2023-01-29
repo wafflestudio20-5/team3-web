@@ -9,7 +9,6 @@ import Button from '../../components/button';
 import Candidate from '../../components/candidate';
 import ModalWrapper from '../../../../components/modal-wrapper';
 import TradePostUpdate from '../../../../components/trade-post-update';
-import TradePostUpdateImg from '../../../../components/trade-post-update-img';
 
 import {
   getTradeStatusKo,
@@ -224,11 +223,10 @@ const Description = () => {
     }
   }, [accessToken]);
 
-  // 글 수정
+  // 글 수정 🚀🚀🚀
   const [active, setActive] = useState(false);
-  const [openEditPost, setOpenEditPost] = useState(false);
-  const [openEditPostImg, setOpenEditPostImg] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [openEditPost, setOpenEditPost] = useState(false);
 
   const [values, setValues] = useState({
     title: tradePost?.title,
@@ -268,7 +266,7 @@ const Description = () => {
     } else if (Number(values.price) % 10 !== 0) {
       toast.warn('1원 단위는 입력하실 수 없습니다.');
       return;
-    } 
+    }
 
     if (accessToken) {
       dispatch(
@@ -278,12 +276,13 @@ const Description = () => {
           title: values.title,
           desc: values.desc,
           price: values.price,
+          imgs
         }),
       )
         .unwrap()
         .then(() => {
           setOpenEditPost(false);
-          toast.success('성공적으로 수정되었습니다.')
+          toast.success('성공적으로 수정되었습니다.');
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -341,6 +340,9 @@ const Description = () => {
     });
   }, []);
 
+  // 사진
+  const [imgs, setImgs] = useState<any>([]);
+
   return (
     <>
       <S.Wrapper>
@@ -368,9 +370,6 @@ const Description = () => {
                   <S.ElemWrapper>
                     <S.Elem onClick={() => setOpenEditPost(true)}>
                       게시글 수정
-                    </S.Elem>
-                    <S.Elem onClick={() => setOpenEditPostImg(true)}>
-                      사진 수정
                     </S.Elem>
                     <S.Elem onClick={() => setOpenDelete(true)}>
                       <S.Delete>게시글 삭제</S.Delete>
@@ -472,19 +471,12 @@ const Description = () => {
 
       {openEditPost && (
         <TradePostUpdate
+          imgs={imgs}
+          setImgs={setImgs}
           values={values}
           handleChange={handleChange}
           handleSubmit={handleSubmitEdit}
           handleClose={handleCloseModal}
-        />
-      )}
-
-      {openEditPostImg && (
-        <TradePostUpdateImg
-          values={values}
-          handleChange={handleChange}
-          handleSubmit={handleSubmitEdit}
-          handleClose={() => setOpenEditPostImg(false)}
         />
       )}
 

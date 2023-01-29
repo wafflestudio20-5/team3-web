@@ -119,6 +119,7 @@ const ChatContainer = () => {
   const subscribe = () => {
     client.current.subscribe(`/sub/room/${roomUUID}`, ({ body }: any) => {
       const bodyObj: SubBodyType = JSON.parse(body);
+      // if (id) get .then(() setChatMessages...)
       setChatMessages([
         ...chatMessages,
         {
