@@ -168,7 +168,7 @@ export const FromMessageBox = styled.span`
   padding: 10px 14px;
   width: auto;
   height: auto;
-  max-width: 80%;
+  max-width: 65%;
   word-break: break-word;
   white-space: pre-wrap;
   font-size: 14px;
@@ -183,7 +183,7 @@ export const ToMessageBox = styled.span`
   display: inline-flex;
   margin: 0px;
   padding: 10px 14px;
-  max-width: 80%;
+  max-width: 65%;
   word-break: break-word;
   white-space: pre-wrap;
   font-size: 14px;
