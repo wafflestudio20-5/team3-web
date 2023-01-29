@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const Dim = styled.div`
-  min-width: 360px;
-  min-height: 100%;
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -28,6 +26,7 @@ export const FixedWrapper = styled.div`
   top: 0;
   left: 0;
   background-color: transparent;
+  z-index: 1002;
 `;
 
 export const Wrapper = styled.div`

@@ -114,9 +114,10 @@ export const Date = styled.span`
 `;
 
 export const More = styled.img`
-  position: relative;
+  position: absolute;
+  right: 0px;
+  top: 212px;
   width: 20px;
-  height: 20px;
 
   @media ${MD_SIZE} {
     top: 20px;

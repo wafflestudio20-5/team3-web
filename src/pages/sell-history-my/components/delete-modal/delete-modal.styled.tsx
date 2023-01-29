@@ -26,6 +26,7 @@ export const FixedWrapper = styled.div`
   top: 0;
   left: 0;
   background-color: transparent;
+  z-index: 1002;
 `;
 
 export const Wrapper = styled.div`
@@ -39,6 +40,7 @@ export const Wrapper = styled.div`
 export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
+  position: fixed;
   width: 400px;
   height: 200px;
   margin-bottom: 60px;

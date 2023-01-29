@@ -6,37 +6,11 @@ import {
 } from '../../../../constant/breakpoint';
 import { motion } from 'framer-motion';
 
-// export const Container = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   background: white;
-//   color: #E78111;
-//   position: absolute;
-//   top: 240px;
-//   right: 0px;
-//   width: 80px;
-//   text-align: center;
-//   border: 1px solid black;
-//   border-radius: 6px;
-//   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
-
-//   @media ${MD_SIZE} {
-//     top: 48px;
-//     right: 12px;
-//   }
-// `;
-
-// export const Button = styled.button`
-//   line-height: 26px;
-//   font-size: 15px;
-//   font-weight: 500;
-//   border-bottom: 0.3px solid gray;
-// `;
-
 export const Container = styled(motion.div)`
   width: 120px;
-  flex-direction: column;
-  position: relative;
+  position: absolute;
+  top: 240px;
+  right: 4px;
   background-color: transparent;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   border-radius: 8px;
