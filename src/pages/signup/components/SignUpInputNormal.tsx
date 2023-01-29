@@ -1,7 +1,9 @@
 import { ChangeEventHandler } from 'react';
 import { COLOR_CARROT } from '../../../constant';
+
 import * as S from '../signup.styled';
 import { InputNormal } from './input';
+import { getSignupIcon } from '../../../utils/validateUserInfo';
 
 interface SignUpInputNormal {
   label: string;
@@ -79,6 +81,7 @@ const SignUpInputNormal = ({
             />
           </S.SignUpInputRight>
         )}
+        <S.InputIcon src={getSignupIcon(valueName)} alt="icon" />
       </S.SignUpInput>
       <S.SignUpInputSpan color="#D94D11">{validationText}</S.SignUpInputSpan>
     </S.SignUpInputWrapper>

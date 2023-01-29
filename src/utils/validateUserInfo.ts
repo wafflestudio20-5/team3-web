@@ -1,3 +1,8 @@
+import user from '../assets/signup-user.svg';
+import email from '../assets/signup-email.svg';
+import location from '../assets/signup-email.svg';
+import password from '../assets/signup-password.svg';
+
 //DESC: 유저 정보가 형식에 맞는지 검사해주는 함수들
 const EMAIL_REG =
   /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
@@ -73,5 +78,20 @@ export const valUsernameToMsg = (username: string): string => {
     return '닉네임은 한글, 영어, 숫자 중 하나를 포함한 형태의 2~10자리여야 합니다.';
   } else {
     return '사용가능한 형식의 닉네임입니다.';
+  }
+};
+
+export const getSignupIcon = (valueName: string) => {
+  switch (valueName) {
+    case 'email':
+      return email;
+    case 'password':
+      return password;
+    case 'passwordConfirm':
+      return password;
+    case 'username':
+      return user;
+    default:
+      return location;
   }
 };

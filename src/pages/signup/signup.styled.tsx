@@ -54,8 +54,17 @@ export const SignUpInputWrapper = styled.div`
 
 export const SignUpInput = styled.div`
   display: flex;
+  position: relative;
   width: 100%;
   margin: 3px 0px;
+`;
+
+export const InputIcon = styled.img`
+  position: absolute;
+  width: 15px;
+  height: 17px;
+  left: 16px;
+  top: 16px;
 `;
 
 export const Input = styled.input`

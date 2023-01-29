@@ -206,7 +206,7 @@ const SignUpPage = () => {
           // TODO: 변경된 회원가입 플로우에 따라 이 버튼으로 중복체크 & 메일 인증 되도록 바꿔주기
           handleClick={checkEmail}
         />
-        {!isEmailAuthButtonOpen && (
+        {isEmailAuthButtonOpen && (
           <S.EmailAuthWrapper>
             <S.P>{email} 로 인증 메일을 전송하였습니다.</S.P>
             <S.EmailInnerWrapper>
