@@ -12,8 +12,10 @@ export const Wrapper = styled.div`
 
 export const Edit = styled.div`
   color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 `;
 
 export const Delete = styled.div`
   color: ${COLOR_CARROT};
+  cursor: pointer;
 `;

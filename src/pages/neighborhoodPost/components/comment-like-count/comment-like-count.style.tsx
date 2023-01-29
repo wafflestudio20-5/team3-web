@@ -17,4 +17,6 @@ export const IconImg = styled.img`
   margin-right: 5px;
   width: 20px;
   height: 20px;
+
+  cursor: pointer;
 `;
