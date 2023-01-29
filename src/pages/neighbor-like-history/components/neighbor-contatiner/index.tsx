@@ -111,12 +111,12 @@ export const NeighborContainer = () => {
             ))
           : null}
 
-        <AddButton
+        {/* <AddButton
           handleClick={() => {
             setIsModalOpen(prev => !prev);
           }}
-        />
-        {isModalOpen && (
+        /> */}
+        {/* {isModalOpen && (
           <ModalWrapper handleClose={handleModalClose}>
             <AddModal
               handleClose={() => {
@@ -124,7 +124,7 @@ export const NeighborContainer = () => {
               }}
             />
           </ModalWrapper>
-        )}
+        )} */}
       </S.Container>
     </>
   );
