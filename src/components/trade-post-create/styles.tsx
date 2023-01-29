@@ -11,7 +11,8 @@ export const ModalOuterLayout = styled.div`
 `;
 
 export const ModalLayout = styled.div`
-  width: 712px;
+  width: 100%;
+  max-width: 712px;
   min-width: 360px;
   height: auto;
   background: #fff;

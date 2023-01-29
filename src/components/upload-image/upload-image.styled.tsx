@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   height: 110px;
   gap: 8px;
   border-bottom: 0.5px solid #a9a9a9;
+  overflow-x: auto;
 `;
 
 export const Label = styled.label`
@@ -47,7 +48,7 @@ export const ImgCount = styled.div`
 export const Spinner = styled.img`
   width: 40px;
   height: 40px;
-`
+`;
 
 export const SpinnerWrapper = styled.div`
   width: 100%;
@@ -56,4 +57,4 @@ export const SpinnerWrapper = styled.div`
   justify-content: flex-start;
   align-items: flex-end;
   padding-bottom: 20px;
-`
+`;

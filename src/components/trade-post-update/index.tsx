@@ -49,10 +49,7 @@ const TradePostUpdate = ({
           onChange={handleChange}
         />
 
-        <UploadImage
-          imgs={imgs}
-          setImgs={setImgs}
-        />
+        <UploadImage imgs={imgs} setImgs={setImgs} />
 
         <S.PostPriceWrapper>
           <S.PostPriceUnit>₩</S.PostPriceUnit>
