@@ -7,6 +7,7 @@ import { ShortCut } from '../neighbor-shortcut';
 import * as S from './neighbor-container.styled';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import {
+  requestMyLikeNeighborhood,
   requestMyNeighborhood,
   requestNeighborhood,
 } from '../../../../api/neighborhood';
@@ -35,7 +36,7 @@ export const NeighborContainer = () => {
   // DESC: 현재 keyword 기능은 api에 반영되어 있지 않으나, 추후 반영 가능성 고려하여 요청 함수를 작성해두었습니다
   const getPosts = async () => {
     if (me && accessToken) {
-      const res = (await requestMyNeighborhood(
+      const res = (await requestMyLikeNeighborhood(
         accessToken,
         pageNum.current,
         keyword,
@@ -85,7 +86,7 @@ export const NeighborContainer = () => {
   return (
     <>
       <S.TopTextWrapper>
-        <S.TopText>{me?.username} 님의 동네정보</S.TopText>
+        <S.TopText>{me?.username} 님이 좋아한 동네생활</S.TopText>
       </S.TopTextWrapper>
       {/* <SearchBar
         keyword={keyword}

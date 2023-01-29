@@ -171,3 +171,29 @@ export const requestMyNeighborhood = async (
     return e;
   }
 };
+
+export const requestMyLikeNeighborhood = async (
+  accessToken: string,
+  page: number,
+  keyword: string,
+) => {
+  try {
+    if (keyword === '') {
+      return await axios.get(
+        `${BASE_URL}/users/like-neighborhood/?page=${page}`,
+        {
+          headers: auth(accessToken),
+        },
+      );
+    } else {
+      return await axios.get(
+        `${BASE_URL}/users/like-neighborhood/?page=${page}&keyword=${keyword}`,
+        {
+          headers: auth(accessToken),
+        },
+      );
+    }
+  } catch (e) {
+    return e;
+  }
+};
