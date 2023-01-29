@@ -82,6 +82,7 @@ const SellHistoryMyPage = () => {
                 likes={post?.likeCount}
                 chats={post?.reservationCount}
                 created_at={post?.createdAt}
+                desc={post?.desc}
               />
             );
           })}

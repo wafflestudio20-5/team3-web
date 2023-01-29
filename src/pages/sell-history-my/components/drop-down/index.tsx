@@ -9,6 +9,7 @@ const DropDown = ({
   setIsReviewModalOpen,
   tradeStatus,
   onTradeConfirmation,
+  setOpenEditPost,
 }: {
   dropDownRef: any;
   isDropped: boolean;
@@ -17,6 +18,7 @@ const DropDown = ({
   setIsReviewModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   tradeStatus: string;
   onTradeConfirmation: () => void;
+  setOpenEditPost: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const clickOutside = (e: MouseEvent) => {
     if (isDropped && !dropDownRef.current.contains(e.target)) {
@@ -33,7 +35,7 @@ const DropDown = ({
   });
 
   const onConfirmation = () => {
-    console.log('판매완료로 변경')
+    console.log('판매완료로 변경');
     onTradeConfirmation();
     setIsReviewModalOpen(true);
   };
@@ -53,7 +55,7 @@ const DropDown = ({
         {tradeStatus === 'RESERVATION' && (
           <S.Elem onClick={onConfirmation}>판매완료로 변경</S.Elem>
         )}
-        <S.Elem>수정하기</S.Elem>
+        <S.Elem onClick={() => setOpenEditPost(true)}>수정하기</S.Elem>
         <S.ElemRed onClick={() => setIsDeleteModalOpen(true)}>
           삭제하기
         </S.ElemRed>
