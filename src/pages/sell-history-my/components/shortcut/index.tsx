@@ -12,7 +12,8 @@ import {
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { redirectWithMsg } from '../../../../utils/errors';
 import DeleteModal from '../delete-modal';
-import ReviewModal from '../review-modal';
+import SendReviewModal from '../send-review-modal';
+import ReviewCheckModal from '../../../../components/review-check-modal';
 import TradePostUpdate from '../trade-post-update';
 import {
   Container,
@@ -48,6 +49,8 @@ interface ShortCut {
   desc: string;
   reviews: ReviewHistory[];
   getList: () => void;
+  buyer: any;
+  seller: any;
 }
 
 const ShortCut = ({
@@ -63,13 +66,16 @@ const ShortCut = ({
   desc,
   getList,
   reviews,
+  buyer,
+  seller,
 }: ShortCut) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
   const [isDropped, setIsDropped] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isSendReviewModalOpen, setIsSendReviewModalOpen] = useState(false);
+  const [isCheckReviewModalOpen, setIsCheckReviewModalOpen] = useState(false);
   const dropDownRef = useRef<any>();
   const clickDropDown = () => {
     setIsDropped(prev => !prev);
@@ -273,11 +279,12 @@ const ShortCut = ({
           isDropped={isDropped}
           setIsDropped={setIsDropped}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
-          setIsReviewModalOpen={setIsReviewModalOpen}
+          setIsSendReviewModalOpen={setIsSendReviewModalOpen}
           tradeStatus={tradeStatus}
           onTradeConfirmation={handleTradeConfirmation}
           setOpenEditPost={setOpenEditPost}
           isReviewed={isReviewed}
+          setIsCheckReviewModalOpen={setIsCheckReviewModalOpen}
         />
       )}
       {openEditPost && (
@@ -297,12 +304,21 @@ const ShortCut = ({
           onDeletePost={handleDeletePost}
         />
       )}
-      {isReviewModalOpen && (
-        <ReviewModal
-          isReviewModalOpen={isReviewModalOpen}
-          setIsReviewModalOpen={setIsReviewModalOpen}
+      {isSendReviewModalOpen && (
+        <SendReviewModal
+          isSendReviewModalOpen={isSendReviewModalOpen}
+          setIsSendReviewModalOpen={setIsSendReviewModalOpen}
           onTradeConfirm={handleTradeConfirmation}
           postId={postId}
+        />
+      )}
+      {isCheckReviewModalOpen && (
+        <ReviewCheckModal
+          isModalOpen={isCheckReviewModalOpen}
+          setIsModalOpen={setIsCheckReviewModalOpen}
+          reviews={reviews}
+          seller={seller}
+          buyer={buyer}
         />
       )}
     </Container>
