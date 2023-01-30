@@ -23,6 +23,7 @@ import reviewIcon from '../../assets/review-icon.svg';
 import scopeWide from '../../assets/scope-wide.png';
 import scopeNarrow from '../../assets/scope-narrow.png';
 import scopeNormal from '../../assets/scope-normal.png';
+import defaultImg from '../../assets/default-profile.png';
 import mannerCommentIcon from '../../assets/manner-comment-icon.svg';
 
 const ProfilePage = () => {
@@ -223,7 +224,7 @@ const ProfilePage = () => {
               <S.Desc>가까운 동네</S.Desc>
               <S.Desc>먼 동네</S.Desc>
             </S.RangeDesc>
-            <S.ScopeImg src={rangeImg} alt="scope" />
+            <S.ScopeImg src={rangeImg || defaultImg} alt="scope" />
           </S.DisplayWrapper>
         </ModalWrapper>
       )}
