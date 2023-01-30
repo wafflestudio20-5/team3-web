@@ -7,7 +7,6 @@ import TemperatureBar from '../../components/temperature-bar';
 import { SetEditType, User, EditType } from '../../../../types/users';
 
 import * as S from './transaction-info.styled';
-import EditSmIcon from '../../../../assets/edit-small-icon.svg';
 import { ReactComponent as TxInfoIcon } from '../../../../assets/txinfo-icon.svg';
 
 interface TxInfoProps {
@@ -15,9 +14,16 @@ interface TxInfoProps {
   edit: EditType;
   isLoading: boolean;
   setEdit: SetEditType;
+  setOpenAreaModal: (value: boolean) => void;
 }
 
-const TxInfo = ({ me, edit, isLoading, setEdit }: TxInfoProps) => {
+const TxInfo = ({
+  me,
+  edit,
+  setEdit,
+  isLoading,
+  setOpenAreaModal,
+}: TxInfoProps) => {
   return (
     <S.Wrapper>
       <S.Header>
@@ -42,11 +48,16 @@ const TxInfo = ({ me, edit, isLoading, setEdit }: TxInfoProps) => {
               <>
                 <S.LocationInnerWrapper>
                   <S.LocationText>{`* ${me?.location || null}`}</S.LocationText>
-                  <ButtonSm
-                    img={EditSmIcon}
-                    text={'동네 변경'}
-                    handleClick={() => setEdit({ ...edit, location: true })}
-                  />
+                  <S.ButtonWrapper>
+                    <ButtonSm
+                      text={'범위'}
+                      handleClick={() => setOpenAreaModal(true)}
+                    />
+                    <ButtonSm
+                      text={'변경'}
+                      handleClick={() => setEdit({ ...edit, location: true })}
+                    />
+                  </S.ButtonWrapper>
                 </S.LocationInnerWrapper>
                 <S.MapWrapper>
                   <ProfileMap location={me?.location || null} />
