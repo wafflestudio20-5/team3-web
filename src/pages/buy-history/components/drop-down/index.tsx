@@ -7,11 +7,17 @@ const DropDown = ({
   isDropped,
   setIsDropped,
   postId,
+  isReviewed,
+  tradeStatus,
+  setIsCheckReviewModalOpen,
 }: {
   dropDownRef: any;
   isDropped: boolean;
   setIsDropped: React.Dispatch<React.SetStateAction<boolean>>;
   postId: number;
+  isReviewed: boolean;
+  tradeStatus: any;
+  setIsCheckReviewModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const navigate = useNavigate();
   const clickOutside = (e: MouseEvent) => {
@@ -38,9 +44,16 @@ const DropDown = ({
       }}
     >
       <S.ElemWrapper>
-        <S.Elem onClick={() => navigate(`/tradepost/${postId}/review`)}>
-          후기 보내기
-        </S.Elem>
+        {!isReviewed && (
+          <S.Elem onClick={() => navigate(`/tradepost/${postId}/review`)}>
+            후기 보내기
+          </S.Elem>
+        )}
+        {tradeStatus === 'COMPLETED' && isReviewed && (
+          <S.Elem onClick={() => setIsCheckReviewModalOpen(true)}>
+            보낸 후기 보기
+          </S.Elem>
+        )}
       </S.ElemWrapper>
     </S.Container>
   );
