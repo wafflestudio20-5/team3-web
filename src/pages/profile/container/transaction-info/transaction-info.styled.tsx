@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   border-left: 2px solid #eaebee;
   padding-left: 15px;
   z-index: 0;
-  
+
   @media ${MD_SIZE} {
     padding-left: 0;
     border-left: none;
@@ -68,6 +68,10 @@ export const LocationText = styled.span`
   font-size: 12px;
   line-height: 21px;
   color: #5d5d71;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
 `;
 
 export const MapWrapper = styled.div`
