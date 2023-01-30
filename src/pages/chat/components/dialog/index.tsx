@@ -182,7 +182,6 @@ const Dialog = ({
         <ReviewCheckModal
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          product={product}
         />
       )}
     </S.OuterWrapper>

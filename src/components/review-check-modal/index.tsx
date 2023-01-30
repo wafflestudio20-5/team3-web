@@ -7,11 +7,11 @@ import { TradePostType } from '../../types/tradePost';
 const ReviewCheckModal = ({
   isModalOpen,
   setIsModalOpen,
-  product,
+  // product,
 }: {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  product: TradePostType;
+  // product: TradePostType;
 }) => {
   const modalRef = useRef<any>();
   // const clickOutside = (e: MouseEvent) => {
