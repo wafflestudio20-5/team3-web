@@ -20,6 +20,7 @@ import TradeStatusButton from '../../../../components/trade-status-button';
 import DropDown from '../drop-down';
 import alt from '../../../../assets/post-alt.png';
 import more from '../../../../assets/more.svg';
+import { ReviewHistory } from '../../../../types/review';
 
 interface ShortCut {
   postId: number;
@@ -31,6 +32,7 @@ interface ShortCut {
   likes: number;
   chats: number;
   created_at: Date;
+  reviews: ReviewHistory[];
 }
 
 const ShortCut = ({
@@ -43,12 +45,26 @@ const ShortCut = ({
   likes,
   chats,
   created_at,
+  reviews,
 }: ShortCut) => {
   const [isDropped, setIsDropped] = useState(false);
   const dropDownRef = useRef<any>();
   const clickDropDown = () => {
     setIsDropped(prev => !prev);
   };
+  const checkIsReviewed = () => {
+    if (reviews[0]) {
+      for (let i = 0; i < reviews.length; i++) {
+        if (reviews[i].type === 'BUYER') {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    return false;
+  };
+  const isReviewed = checkIsReviewed();
   return (
     <Container>
       <Link to={`/tradepost/${postId}`}>
@@ -76,7 +92,9 @@ const ShortCut = ({
           </Date>
         </Detail>
       </Info>
-      <More src={more} ref={dropDownRef} onClick={clickDropDown} />
+      {!isReviewed && (
+        <More src={more} ref={dropDownRef} onClick={clickDropDown} />
+      )}
       {isDropped && (
         <DropDown
           dropDownRef={dropDownRef}

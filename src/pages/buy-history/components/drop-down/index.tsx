@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { Container, Button } from './drop-down.styled';
+import * as S from './drop-down.styled';
 
 const DropDown = ({
   dropDownRef,
@@ -28,14 +28,21 @@ const DropDown = ({
     }
   });
 
-  // TODO: 이미 리뷰 보낸 경우 처리
-
   return (
-    <Container>
-      <Button onClick={() => navigate(`/tradepost/${postId}/review`)}>
-        리뷰 보내기
-      </Button>
-    </Container>
+    <S.Container
+      initial={isDropped ? 'open' : 'close'}
+      animate={isDropped ? 'open' : 'close'}
+      variants={{
+        open: { height: 'auto' },
+        close: { height: 0 },
+      }}
+    >
+      <S.ElemWrapper>
+        <S.Elem onClick={() => navigate(`/tradepost/${postId}/review`)}>
+          후기 보내기
+        </S.Elem>
+      </S.ElemWrapper>
+    </S.Container>
   );
 };
 

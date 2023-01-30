@@ -8,10 +8,11 @@ export const Container = styled.div`
   width: 100%;
   height: 160px;
   border: 0.5px solid gray;
-  border-radius: 6px;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 3px 0px 5px rgba(0, 0, 0, 0.1);
   padding: 0 20px;
   gap: 30px;
+  margin-bottom: 16px;
 `;
 
 export const Img = styled.img`

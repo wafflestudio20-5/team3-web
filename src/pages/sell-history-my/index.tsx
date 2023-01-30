@@ -19,7 +19,7 @@ const SellHistoryMyPage = () => {
   const { me } = useAppSelector(state => state.users);
   const [data, setData] = useState<TradeHistory[]>([]);
   const [status, setStatus] = useState<string>('TRADING');
-  useEffect(() => {
+  const getList = () => {
     if (me) {
       dispatch(
         getSellHistory({
@@ -29,6 +29,7 @@ const SellHistoryMyPage = () => {
       )
         .unwrap()
         .then(res => {
+          console.log(res);
           setData(
             res.posts
               .filter((post: TradeHistory) => {
@@ -54,6 +55,9 @@ const SellHistoryMyPage = () => {
           }
         });
     }
+  };
+  useEffect(() => {
+    getList();
   }, [accessToken, me, status]);
 
   return (
@@ -83,6 +87,8 @@ const SellHistoryMyPage = () => {
                 chats={post?.reservationCount}
                 created_at={post?.createdAt}
                 desc={post?.desc}
+                reviews={post?.reviews}
+                getList={getList}
               />
             );
           })}

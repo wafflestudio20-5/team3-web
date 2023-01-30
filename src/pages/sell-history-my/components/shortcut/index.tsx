@@ -33,6 +33,7 @@ import TradeStatusButton from '../../../../components/trade-status-button';
 import DropDown from '../drop-down';
 import alt from '../../../../assets/post-alt.png';
 import more from '../../../../assets/more.svg';
+import { ReviewHistory } from '../../../../types/review';
 
 interface ShortCut {
   postId: number;
@@ -45,6 +46,8 @@ interface ShortCut {
   chats: number;
   created_at: Date;
   desc: string;
+  reviews: ReviewHistory[];
+  getList: () => void;
 }
 
 const ShortCut = ({
@@ -58,6 +61,8 @@ const ShortCut = ({
   chats,
   created_at,
   desc,
+  getList,
+  reviews,
 }: ShortCut) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -69,12 +74,28 @@ const ShortCut = ({
   const clickDropDown = () => {
     setIsDropped(prev => !prev);
   };
+
+  const checkIsReviewed = () => {
+    if (reviews[0]) {
+      for (let i = 0; i < reviews.length; i++) {
+        if (reviews[i].type === 'SELLER') {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    return false;
+  };
+  const isReviewed = checkIsReviewed();
+
   const handleDeletePost = () => {
     if (accessToken && postId) {
       dispatch(deleteTradePost({ accessToken: accessToken, postId: postId }))
         .unwrap()
         .then(() => {
           toast.success('성공적으로 삭제되었습니다.');
+          getList();
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -124,11 +145,10 @@ const ShortCut = ({
     }
   };
 
-  // 글 수정
+  // 글 수정 🚀🚀🚀
   const [active, setActive] = useState(false);
-  const [openEditPost, setOpenEditPost] = useState(false);
-  const [openEditPostImg, setOpenEditPostImg] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [openEditPost, setOpenEditPost] = useState(false);
 
   const [values, setValues] = useState({
     title: title,
@@ -178,12 +198,14 @@ const ShortCut = ({
           title: values.title,
           desc: values.desc,
           price: values.price,
+          imgs,
         }),
       )
         .unwrap()
         .then(() => {
           setOpenEditPost(false);
           toast.success('성공적으로 수정되었습니다.');
+          getList();
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -210,6 +232,9 @@ const ShortCut = ({
       price: price,
     });
   }, []);
+
+  // 사진
+  const [imgs, setImgs] = useState<any>([]);
 
   return (
     <Container>
@@ -243,6 +268,7 @@ const ShortCut = ({
       </Div>
       {isDropped && (
         <DropDown
+          postId={postId}
           dropDownRef={dropDownRef}
           isDropped={isDropped}
           setIsDropped={setIsDropped}
@@ -251,10 +277,13 @@ const ShortCut = ({
           tradeStatus={tradeStatus}
           onTradeConfirmation={handleTradeConfirmation}
           setOpenEditPost={setOpenEditPost}
+          isReviewed={isReviewed}
         />
       )}
       {openEditPost && (
         <TradePostUpdate
+          imgs={imgs}
+          setImgs={setImgs}
           values={values}
           handleChange={handleChange}
           handleSubmit={handleSubmitEdit}
