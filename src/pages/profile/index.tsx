@@ -20,10 +20,10 @@ import lifeIcon from '../../assets/life-icon.svg';
 import likeIcon from '../../assets/like-icon.svg';
 import sellIcon from '../../assets/sell-icon.svg';
 import reviewIcon from '../../assets/review-icon.svg';
-import scopeWide from '../../assets/scope-wide.png';
-import scopeNarrow from '../../assets/scope-narrow.png';
-import scopeNormal from '../../assets/scope-normal.png';
-import defaultImg from '../../assets/default-profile.png';
+// import scopeWide from '../../assets/scope-wide.png';
+// import scopeNarrow from '../../assets/scope-narrow.png';
+// import scopeNormal from '../../assets/scope-normal.png';
+// import defaultImg from '../../assets/default-profile.png';
 import mannerCommentIcon from '../../assets/manner-comment-icon.svg';
 
 const ProfilePage = () => {
@@ -37,7 +37,7 @@ const ProfilePage = () => {
   const { myChats, unreadTotalCount } = useAppSelector(state => state.chat);
 
   const [rangeValue, setRangeValue] = useState(0);
-  const [rangeImg, setRangeImg] = useState(scopeNarrow);
+  // const [rangeImg, setRangeImg] = useState(scopeNarrow);
   const [rangeDistance, setRangeDistance] = useState(35);
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -46,13 +46,13 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (rangeValue === 0) {
-      setRangeImg(scopeNarrow);
+      // setRangeImg(scopeNarrow);
       setRangeDistance(35);
     } else if (rangeValue === 1) {
-      setRangeImg(scopeNormal);
+      // setRangeImg(scopeNormal);
       setRangeDistance(200);
     } else if (rangeValue === 2) {
-      setRangeImg(scopeWide);
+      // setRangeImg(scopeWide);
       setRangeDistance(400);
     }
   }, [rangeValue]);
@@ -207,7 +207,9 @@ const ProfilePage = () => {
           <S.DisplayWrapper>
             <S.HeaderWrapper>
               <S.RangeTitle>동네 범위 선택</S.RangeTitle>
-              <S.SubmitRange onClick={() => alert('변경')}>변경하기</S.SubmitRange>
+              <S.SubmitRange onClick={() => alert('변경')}>
+                변경하기
+              </S.SubmitRange>
             </S.HeaderWrapper>
             <S.RangeAnnounce>
               선택한 범위의 게시글만 볼 수 있어요.
@@ -224,7 +226,7 @@ const ProfilePage = () => {
               <S.Desc>가까운 동네</S.Desc>
               <S.Desc>먼 동네</S.Desc>
             </S.RangeDesc>
-            <S.ScopeImg src={rangeImg || defaultImg} alt="scope" />
+            {/* <S.ScopeImg src={rangeImg || defaultImg} alt="scope" /> */}
           </S.DisplayWrapper>
         </ModalWrapper>
       )}
