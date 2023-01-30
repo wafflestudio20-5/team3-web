@@ -6,7 +6,10 @@ import ModalWrapper from '../modal-wrapper';
 import { ShortCut } from '../neighbor-shortcut';
 import * as S from './neighbor-container.styled';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
-import { requestNeighborhood } from '../../../../api/neighborhood';
+import {
+  requestMyNeighborhood,
+  requestNeighborhood,
+} from '../../../../api/neighborhood';
 import { neighborPost } from '../../../../types/neighborhood';
 import { toast } from 'react-toastify';
 import { redirectWithMsg } from '../../../../utils/errors';
@@ -18,6 +21,7 @@ import SearchBar from '../search-bar';
 export const NeighborContainer = () => {
   const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
+  const { me } = useAppSelector(state => state.users);
   const navigate = useNavigate();
   const pageNum = useRef(1);
   const [keyword, setKeyword] = useState('');
@@ -28,14 +32,16 @@ export const NeighborContainer = () => {
     setIsModalOpen(prev => !prev);
   };
 
+  // DESC: 현재 keyword 기능은 api에 반영되어 있지 않으나, 추후 반영 가능성 고려하여 요청 함수를 작성해두었습니다
   const getPosts = async () => {
-    if (accessToken) {
-      const res = (await requestNeighborhood(
+    if (me && accessToken) {
+      const res = (await requestMyNeighborhood(
         accessToken,
         pageNum.current,
         keyword,
       )) as any;
-      dispatch(setPosts(res.data));
+      console.log(res);
+      dispatch(setPosts(res.data.reverse()));
     } else {
       redirectWithMsg(
         2,
@@ -55,6 +61,7 @@ export const NeighborContainer = () => {
     return () => clearTimeout(timer);
   }, [accessToken, keyword]);
 
+  // TODO: api에 페이지네이션 추가되면 반영 (현재는 내가 작성한 모든 글이 한 번에 불러와짐)
   const handleMoreButtonClick = async () => {
     if (accessToken) {
       pageNum.current++;
@@ -75,20 +82,19 @@ export const NeighborContainer = () => {
       );
     }
   };
-
   return (
     <>
       <S.TopTextWrapper>
-        <S.TopText>동네정보</S.TopText>
+        <S.TopText>{me?.username} 님의 동네정보</S.TopText>
       </S.TopTextWrapper>
-      <SearchBar
+      {/* <SearchBar
         keyword={keyword}
         setKeyword={setKeyword}
         searchClick={() => {
           console.log('clicked');
         }}
         dong="내 동네"
-      />
+      /> */}
       <S.Container>
         {posts
           ? posts.map(post => (
@@ -104,7 +110,7 @@ export const NeighborContainer = () => {
             ))
           : null}
 
-        <AddButton
+        {/* <AddButton
           handleClick={() => {
             setIsModalOpen(prev => !prev);
           }}
@@ -117,7 +123,7 @@ export const NeighborContainer = () => {
               }}
             />
           </ModalWrapper>
-        )}
+        )} */}
       </S.Container>
     </>
   );

@@ -31,21 +31,16 @@ export const TopWrapper = styled.div`
 export const SpanClose = styled.span`
   font-size: 20px;
   color: rgba(0, 0, 0, 0.5);
-
-  cursor: pointer;
 `;
 
 export const SpanTitle = styled.span`
   font-size: 20px;
   font-weight: ${FONT_SEMI_BOLD};
 `;
-
 export const SpanComplete = styled.span`
   font-size: 20px;
   font-weight: 600;
   color: ${COLOR_CARROT};
-
-  cursor: pointer;
 `;
 
 export const DescWrapper = styled.div`
@@ -75,7 +70,7 @@ export const Desc = styled.textarea`
   padding: 10px;
   box-sizing: border-box;
   border: none;
-
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
   resize: none;
 
   .content:focus {

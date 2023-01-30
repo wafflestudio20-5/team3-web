@@ -145,3 +145,55 @@ export const requestPostNeighborhoodLike = async (
     return e;
   }
 };
+
+export const requestMyNeighborhood = async (
+  accessToken: string,
+  page: number,
+  keyword: string,
+) => {
+  try {
+    if (keyword === '') {
+      return await axios.get(
+        `${BASE_URL}/users/neighborhood-post/?page=${page}`,
+        {
+          headers: auth(accessToken),
+        },
+      );
+    } else {
+      return await axios.get(
+        `${BASE_URL}/users/neighborhood-post/?page=${page}&keyword=${keyword}`,
+        {
+          headers: auth(accessToken),
+        },
+      );
+    }
+  } catch (e) {
+    return e;
+  }
+};
+
+export const requestMyLikeNeighborhood = async (
+  accessToken: string,
+  page: number,
+  keyword: string,
+) => {
+  try {
+    if (keyword === '') {
+      return await axios.get(
+        `${BASE_URL}/users/like-neighborhood/?page=${page}`,
+        {
+          headers: auth(accessToken),
+        },
+      );
+    } else {
+      return await axios.get(
+        `${BASE_URL}/users/like-neighborhood/?page=${page}&keyword=${keyword}`,
+        {
+          headers: auth(accessToken),
+        },
+      );
+    }
+  } catch (e) {
+    return e;
+  }
+};
