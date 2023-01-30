@@ -13,6 +13,7 @@ import {
   Content,
   More,
 } from './review-info.styled';
+import { shortenLocation } from '../../utils/location';
 import userImg from '../../assets/default-profile.png';
 
 interface ReviewInfo {
@@ -46,12 +47,12 @@ const ReviewInfo = ({
         <User onClick={() => navigate(`/profile/${userId}`)}>{username}</User>
         <Desc>
           <Type>{type === 'BUYER' ? '구매자' : '판매자'} · </Type>
-          <Location>{location} · </Location>
+          <Location>{shortenLocation(location)} · </Location>
           <Time>
             <Moment fromNow>{createdAt}</Moment>
           </Time>
         </Desc>
-        <Content>{content}</Content>
+        <Content>{content ? content : '내용 없음'}</Content>
       </Info>
       {/* <More src={more} ref={dropDownRef} onClick={() => setIsDropped(true)} />
       {isDropped && (

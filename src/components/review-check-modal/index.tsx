@@ -2,16 +2,20 @@ import { useEffect, useRef } from 'react';
 import close from '../../assets/close.svg';
 import * as S from './review-check-modal.styled';
 import ReviewInfo from '../review-info';
-import { TradePostType } from '../../types/tradePost';
+import defaultImg from '../../assets/default-profile.png';
 
 const ReviewCheckModal = ({
   isModalOpen,
   setIsModalOpen,
-  // product,
+  reviews,
+  seller,
+  buyer,
 }: {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  // product: TradePostType;
+  reviews: any;
+  seller: any;
+  buyer: any;
 }) => {
   const modalRef = useRef<any>();
   // const clickOutside = (e: MouseEvent) => {
@@ -27,6 +31,24 @@ const ReviewCheckModal = ({
   //     };
   //   }
   // });
+  const getReview = (reviews: any) => {
+    const result = { buyerReview: {} as any, sellerReview: {} as any };
+    if (reviews[0]) {
+      for (let i = 0; i < reviews.length; i++) {
+        if (reviews[i].type === 'BUYER') {
+          result.buyerReview = reviews[i];
+        } else {
+          result.sellerReview = reviews[i];
+        }
+      }
+      return result;
+    } else {
+      return null;
+    }
+  };
+  const buyerReview = getReview(reviews)?.buyerReview;
+  const sellerReview = getReview(reviews)?.sellerReview;
+
   return (
     <S.FixedWrapper>
       <S.Dim>
@@ -34,30 +56,33 @@ const ReviewCheckModal = ({
           <S.ModalContainer ref={modalRef}>
             <S.Close onClick={() => setIsModalOpen(false)} src={close} />
             <S.Header>주고받은 후기</S.Header>
-            <S.List>
-              {/* {product.reviews[0] &&
-                product.reviews.map(review => { */}
-              <ReviewInfo
-                userId={4}
-                img={'d'}
-                username={'테스트'}
-                type={'SELLER'}
-                location={'관악구 봉천동'}
-                createdAt={new Date()}
-                content={
-                  '좋았어요 좋았어요 좋았어요 좋았어요 좋았어요 좋았어요 좋았어요 좋았어요 좋았어요 좋았어요 좋았어요 '
-                }
-              />
-              <ReviewInfo
-                userId={4}
-                img={'d'}
-                username={'테스트'}
-                type={'SELLER'}
-                location={'관악구 봉천동'}
-                createdAt={new Date()}
-                content={'좋았어요F'}
-              />
-            </S.List>
+            {reviews[0] && (
+              <S.List>
+                {sellerReview.id && (
+                  <ReviewInfo
+                    userId={seller.id}
+                    img={seller.imgUrl ? seller.imgUrl : defaultImg}
+                    username={seller.username}
+                    type={'SELLER'}
+                    location={seller.location}
+                    createdAt={sellerReview.createdAt}
+                    content={sellerReview.content}
+                  />
+                )}
+                {buyerReview.id && (
+                  <ReviewInfo
+                    userId={buyer.id}
+                    img={buyer.imgUrl ? seller.imgUrl : defaultImg}
+                    username={buyer.username}
+                    type={'BUYER'}
+                    location={buyer.location}
+                    createdAt={buyerReview.createdAt}
+                    content={buyerReview.content}
+                  />
+                )}
+              </S.List>
+            )}
+            {!reviews[0] && <S.List>등록된 후기가 없습니다</S.List>}
           </S.ModalContainer>
         </S.Wrapper>
       </S.Dim>
