@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, ChangeEvent } from 'react';
+import ReactS3Client from 'react-aws-s3-typescript';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 
@@ -33,6 +34,7 @@ const MarketPage = () => {
   const [page, setPage] = useState<number>(1);
 
   // DESC: 중고거래 글쓰기
+  const [imgObject, setImgObject] = useState<any>([]);
   const [openCreatePost, setOpenCreatePost] = useState(false);
   const [values, setValues] = useState({
     title: '',
@@ -58,9 +60,36 @@ const MarketPage = () => {
       desc: '',
       price: '',
     });
+    setImgObject([]);
   }, []);
 
-  const handleSubmitCreate = useCallback(() => {
+  const uploadImage = async () => {
+    const s3Config = {
+      bucketName: process.env.REACT_APP_AWS_BUCKET_NAME || '',
+      region: process.env.REACT_APP_AWS_REGION || '',
+      accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY || '',
+      secretAccessKey: process.env.REACT_APP_AWS_SECRET_KEY || '',
+    };
+    const s3 = new ReactS3Client(s3Config);
+
+    const promises = imgObject.map(async (elem: { img: File | string }) => {
+      if (typeof elem.img === 'string') {
+        return elem.img;
+      } else {
+        return await s3
+          .uploadFile(elem.img)
+          .then(res => {
+            return res.location;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    });
+    return await Promise.all(promises);
+  };
+
+  const handleSubmitCreate = async () => {
     // VALID TODO: to function
     const numberReg = /^[0-9]+$/;
     if (!values.title?.trim() || !(values.title.length > 2)) {
@@ -81,43 +110,53 @@ const MarketPage = () => {
     } else if (Number(values.price) % 10 !== 0) {
       toast.warn('1원 단위는 입력하실 수 없습니다.');
       return;
+    } else if (imgObject.length < 1) {
+      toast.warn('이미지는 최소 한 장 이상 등록해야 합니다.');
+      return;
     }
 
-    if (accessToken) {
-      dispatch(
-        createTradePost({
-          accessToken,
-          values,
-          imgs
-        }),
-      )
-        .unwrap()
-        .then(res => {
-          setOpenCreatePost(false);
-          navigate(`/tradepost/${res.postId}`);
-          toast.success('성공적으로 등록되었습니다.');
-          setValues({
-            title: '',
-            desc: '',
-            price: '',
-          });
-        })
-        .catch(err => {
-          if (axios.isAxiosError(err)) {
-            toast(`🥕 ${err.response?.data.error}`, {
-              position: 'top-center',
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: false,
-              pauseOnHover: false,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
+    uploadImage()
+      .then(imgs => {
+        if (accessToken) {
+          dispatch(
+            createTradePost({
+              accessToken,
+              values,
+              imgs,
+            }),
+          )
+            .unwrap()
+            .then(res => {
+              setOpenCreatePost(false);
+              navigate(`/tradepost/${res.postId}`);
+              toast.success('성공적으로 등록되었습니다.');
+              setValues({
+                title: '',
+                desc: '',
+                price: '',
+              });
+              setImgObject([]);
+            })
+            .catch(err => {
+              if (axios.isAxiosError(err)) {
+                toast(`🥕 ${err.response?.data.error}`, {
+                  position: 'top-center',
+                  autoClose: 2000,
+                  hideProgressBar: true,
+                  closeOnClick: false,
+                  pauseOnHover: false,
+                  draggable: true,
+                  progress: undefined,
+                  theme: 'light',
+                });
+              }
             });
-          }
-        });
-    }
-  }, [values?.title, values?.desc, values?.price]);
+        }
+      })
+      .catch(() => {
+        toast.error('이미지 업로드에 실패했습니다.');
+      });
+  };
 
   const changePage = (page: number) => {
     setPage(page);
@@ -207,9 +246,6 @@ const MarketPage = () => {
     }
   }, [me, accessToken]);
 
-  // 사진
-  const [imgs, setImgs] = useState<any>([]);
-
   return (
     <>
       <Gnb />
@@ -248,8 +284,8 @@ const MarketPage = () => {
 
       {openCreatePost && (
         <TradePostCreate
-          imgs={imgs}
-          setImgs={setImgs}
+          imgObject={imgObject}
+          setImgObject={setImgObject}
           values={values}
           handleChange={handleChange}
           handleSubmit={handleSubmitCreate}

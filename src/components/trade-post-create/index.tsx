@@ -14,8 +14,8 @@ interface TradePostCreateProps {
   handleChange: (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
-  imgs: any[];
-  setImgs: any;
+  imgObject: any[];
+  setImgObject: any;
 }
 
 const TradePostCreate = ({
@@ -23,8 +23,8 @@ const TradePostCreate = ({
   handleClose,
   handleSubmit,
   handleChange,
-  imgs,
-  setImgs,
+  imgObject,
+  setImgObject,
 }: TradePostCreateProps) => {
   return (
     <S.ModalOuterLayout>
@@ -50,7 +50,7 @@ const TradePostCreate = ({
           onChange={handleChange}
         />
 
-        <UploadImage imgs={imgs} setImgs={setImgs} />
+        <UploadImage imgObject={imgObject} setImgObject={setImgObject} />
 
         <S.PostPriceWrapper>
           <S.PostPriceUnit>₩</S.PostPriceUnit>

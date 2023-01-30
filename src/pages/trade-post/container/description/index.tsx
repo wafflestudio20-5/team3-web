@@ -1,4 +1,5 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import ReactS3Client from 'react-aws-s3-typescript';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
@@ -41,9 +42,8 @@ const Description = () => {
   const [candidatesLoading, setCandidatesLoading] = useState(false);
 
   const { accessToken } = useAppSelector(state => state.session);
-  const { candidates, tradePost, buyer, tradeStatus, isLiked } = useAppSelector(
-    state => state.tradePost,
-  );
+  const { candidates, tradePost, buyer, tradeStatus, isLiked, imageUrls } =
+    useAppSelector(state => state.tradePost);
 
   // DESC: 작성 날짜 한글로
   useEffect(() => {
@@ -245,7 +245,7 @@ const Description = () => {
     [values?.title, values?.desc, values?.price],
   );
 
-  const handleSubmitEdit = useCallback(() => {
+  const handleSubmitEdit = async () => {
     // VALID TODO: to function
     const numberReg = /^[0-9]+$/;
     if (!values.title?.trim() || !(values.title.length > 2)) {
@@ -266,40 +266,101 @@ const Description = () => {
     } else if (Number(values.price) % 10 !== 0) {
       toast.warn('1원 단위는 입력하실 수 없습니다.');
       return;
+    } else if (imgObject.length < 1) {
+      toast.warn('이미지는 최소 한 장 이상 등록해야 합니다.');
+      return;
     }
 
-    if (accessToken) {
-      dispatch(
-        updateTradePost({
-          postId: tradePost?.postId,
-          accessToken,
-          title: values.title,
-          desc: values.desc,
-          price: values.price,
-          imgs
-        }),
-      )
-        .unwrap()
-        .then(() => {
-          setOpenEditPost(false);
-          toast.success('성공적으로 수정되었습니다.');
-        })
-        .catch(err => {
-          if (axios.isAxiosError(err)) {
-            toast(`🥕 ${err.response?.data.error}`, {
-              position: 'top-center',
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: false,
-              pauseOnHover: false,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
+    // 삭제
+    // setUploadLoading(true);
+    // const s3 = new ReactS3Client(s3Config);
+    // try {
+    //   await s3.deleteFile(imgUrl);
+    //   console.log('File deleted');
+    //   const newImgs = imgObject.filter(url => {
+    //     return imgUrl !== url;
+    //   });
+    //   setImgObject(newImgs);
+    //   setUploadLoading(false);
+    // } catch (err) {
+    //   console.log(err);
+    //   setUploadLoading(false);
+    //   // toastify
+    //   /* handle the exception */
+    // }
+
+    uploadImage()
+      .then(imgs => {
+        if (accessToken && imgs && imgs.length === imgObject.length) {
+          dispatch(
+            updateTradePost({
+              postId: tradePost?.postId,
+              accessToken,
+              title: values.title,
+              desc: values.desc,
+              price: values.price,
+              imgs,
+            }),
+          )
+            .unwrap()
+            .then(() => {
+              setOpenEditPost(false);
+              setImgObject(
+                imgs?.map((url, index) => {
+                  return {
+                    id: index,
+                    img: url,
+                  };
+                }),
+              );
+              toast.success('성공적으로 수정되었습니다.');
+            })
+            .catch(err => {
+              if (axios.isAxiosError(err)) {
+                toast(`🥕 ${err.response?.data.error}`, {
+                  position: 'top-center',
+                  autoClose: 2000,
+                  hideProgressBar: true,
+                  closeOnClick: false,
+                  pauseOnHover: false,
+                  draggable: true,
+                  progress: undefined,
+                  theme: 'light',
+                });
+              }
             });
-          }
-        });
-    }
-  }, [values?.title, values?.desc, values?.price]);
+        }
+      })
+      .catch(() => {
+        toast.error('이미지 업로드에 실패했습니다.');
+      });
+  };
+
+  const uploadImage = async () => {
+    const s3Config = {
+      bucketName: process.env.REACT_APP_AWS_BUCKET_NAME || '',
+      region: process.env.REACT_APP_AWS_REGION || '',
+      accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY || '',
+      secretAccessKey: process.env.REACT_APP_AWS_SECRET_KEY || '',
+    };
+    const s3 = new ReactS3Client(s3Config);
+
+    const promises = imgObject.map(async elem => {
+      if (typeof elem.img === 'string') {
+        return elem.img;
+      } else {
+        return await s3
+          .uploadFile(elem.img)
+          .then(res => {
+            return res.location;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    });
+    return await Promise.all(promises);
+  };
 
   const handleDeletePost = useCallback(() => {
     if (accessToken && tradePost) {
@@ -338,10 +399,25 @@ const Description = () => {
       desc: tradePost?.desc,
       price: tradePost?.price,
     });
-  }, []);
+    setImgObject(
+      imageUrls.map((url: any, index: number) => {
+        return {
+          id: index,
+          img: url,
+        };
+      }),
+    );
+  }, [imageUrls]);
 
   // 사진
-  const [imgs, setImgs] = useState<any>([]);
+  const [imgObject, setImgObject] = useState<any[]>(
+    imageUrls.map((url: any, index: number) => {
+      return {
+        id: index,
+        img: url,
+      };
+    }),
+  );
 
   return (
     <>
@@ -471,8 +547,8 @@ const Description = () => {
 
       {openEditPost && (
         <TradePostUpdate
-          imgs={imgs}
-          setImgs={setImgs}
+          imgObject={imgObject}
+          setImgObject={setImgObject}
           values={values}
           handleChange={handleChange}
           handleSubmit={handleSubmitEdit}

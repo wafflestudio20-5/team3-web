@@ -46,7 +46,7 @@ export const createTradePost = createAsyncThunk(
     {
       accessToken,
       values,
-      imgs
+      imgs,
     }: {
       accessToken: string;
       values: {
@@ -54,7 +54,7 @@ export const createTradePost = createAsyncThunk(
         desc?: string;
         price?: string | null;
       };
-      imgs?: string[]
+      imgs?: string[];
     },
     { rejectWithValue },
   ) => {
@@ -85,7 +85,7 @@ export const updateTradePost = createAsyncThunk(
       title,
       desc,
       price,
-      imgs
+      imgs,
     }: {
       postId?: number;
       accessToken: string;
@@ -99,7 +99,7 @@ export const updateTradePost = createAsyncThunk(
     try {
       const res = await axios.patch<TradePostType>(
         `${BASE_URL}/tradepost/${postId}`,
-        { title, desc, price, imgUrls: imgs, },
+        { title, desc, price, imgUrls: imgs },
         { headers: auth(accessToken) },
       );
       return res.data;
@@ -218,6 +218,7 @@ interface tradePostSliceState {
   tradeStatus: any; // TODO: 타입 정보 수정
   isLiked: boolean;
   time: Date | null;
+  imageUrls: string[];
 }
 const initialState: tradePostSliceState = {
   seller: null,
@@ -227,6 +228,7 @@ const initialState: tradePostSliceState = {
   tradeStatus: null,
   isLiked: false,
   time: null,
+  imageUrls: [],
 };
 
 export const tradePostSlice = createSlice({
@@ -235,6 +237,7 @@ export const tradePostSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(getTradePost.fulfilled, (state, action) => {
+      state.imageUrls = action.payload.imageUrls;
       state.isLiked = action.payload.isLiked as boolean;
       state.seller = action.payload.seller as TxUser;
       state.buyer = action.payload.buyer as TxUser;
@@ -242,6 +245,7 @@ export const tradePostSlice = createSlice({
       state.tradeStatus = action.payload.tradeStatus;
     });
     builder.addCase(updateTradePost.fulfilled, (state, action) => {
+      state.imageUrls = action.payload.imageUrls;
       state.isLiked = action.payload.isLiked as boolean;
       state.seller = action.payload.seller as TxUser;
       state.buyer = action.payload.buyer as TxUser;
@@ -249,6 +253,7 @@ export const tradePostSlice = createSlice({
       state.tradeStatus = action.payload.tradeStatus;
     });
     builder.addCase(createTradePost.fulfilled, (state, action) => {
+      state.imageUrls = action.payload.imageUrls;
       state.isLiked = action.payload.isLiked as boolean;
       state.seller = action.payload.seller as TxUser;
       state.buyer = action.payload.buyer as TxUser;
@@ -256,6 +261,7 @@ export const tradePostSlice = createSlice({
       state.tradeStatus = action.payload.tradeStatus;
     });
     builder.addCase(deleteTradePost.fulfilled, (state, action) => {
+      state.imageUrls = [];
       state.isLiked = false;
       state.seller = null;
       state.buyer = null;

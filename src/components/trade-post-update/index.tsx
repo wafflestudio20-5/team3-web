@@ -13,8 +13,8 @@ interface TradePostUpdateProps {
   handleChange: (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
-  imgs: any[];
-  setImgs: any;
+  imgObject: any[];
+  setImgObject: any;
 }
 
 const TradePostUpdate = ({
@@ -22,8 +22,8 @@ const TradePostUpdate = ({
   handleClose,
   handleSubmit,
   handleChange,
-  imgs,
-  setImgs,
+  imgObject,
+  setImgObject,
 }: TradePostUpdateProps) => {
   return (
     <S.ModalOuterLayout>
@@ -49,7 +49,7 @@ const TradePostUpdate = ({
           onChange={handleChange}
         />
 
-        <UploadImage imgs={imgs} setImgs={setImgs} />
+        <UploadImage imgObject={imgObject} setImgObject={setImgObject} />
 
         <S.PostPriceWrapper>
           <S.PostPriceUnit>₩</S.PostPriceUnit>
