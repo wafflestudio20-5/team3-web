@@ -40,30 +40,3 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-input[type='range'] {
-  width: 100%;
-  -webkit-appearance: none;
-  background: transparent;
-}
-
-input[type='range']::-webkit-slider-thumb {
-  -webkit-appearance: none;
-}
-
-input[type='range']:focus {
-  outline: none;
-}
-
-input[type='range']::-ms-track {
-  width: 100%;
-  cursor: pointer;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
-}
-
-input[type='range']::-ms-track {
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
-}
