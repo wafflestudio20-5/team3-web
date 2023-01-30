@@ -5,19 +5,17 @@ export const Container = styled.div`
   flex-direction: row;
   position: relative;
   align-content: center;
-  width: 100%;
-  height: 160px;
-  border: 0.5px solid gray;
-  border-radius: 12px;
-  box-shadow: 3px 0px 5px rgba(0, 0, 0, 0.1);
-  padding: 0 20px;
+  width: 400px;
+  min-height: 100px;
+  border: 0.5px solid transparent;
   gap: 30px;
-  margin-bottom: 16px;
+  margin-top: 16px;
+  margin-bottom: 44px;
 `;
 
 export const Img = styled.img`
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   align-self: center;
   border: 0.5px solid transparent;
   border-radius: 50%;
@@ -34,7 +32,7 @@ export const Info = styled.div`
 
 export const User = styled.h3`
   width: 200px;
-  font-size: 19px;
+  font-size: 17px;
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -60,6 +58,7 @@ export const Time = styled.span`
 `;
 
 export const Content = styled.span`
+  width: 380px;
   margin-top: 6px;
 `;
 

@@ -62,6 +62,9 @@ const BuyHistoryPage = () => {
                 likes={post?.likeCount}
                 chats={post?.reservationCount}
                 created_at={post?.createdAt}
+                reviews={post?.reviews}
+                seller={post?.seller}
+                buyer={post?.buyer}
               />
             );
           })}

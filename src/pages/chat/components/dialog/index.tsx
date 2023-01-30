@@ -1,9 +1,12 @@
-import { useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Moment from 'react-moment';
 
 import { ChatMessageType } from '../../../../types/chat';
 import { toStringNumWithComma } from '../../../../utils/tradePost';
+import { BuySellType, ReviewHistory } from '../../../../types/review';
+import { TradeStatusType } from '../../../../types/tradePost';
+import ReviewCheckModal from '../../../../components/review-check-modal';
 
 import * as S from './dialog.styled';
 import defaultImg from '../../../../assets/default-profile.png';
@@ -17,6 +20,12 @@ interface DialogProps {
   publish: (msg: string) => void;
   setMessage: (msg: string) => void;
   chatMessages: ChatMessageType[];
+  postId: number;
+  meSeller: boolean;
+  youBuyer: boolean;
+  isReviewed: boolean;
+  handleSetReservation: () => void;
+  handleTradeConfirmation: () => void;
 }
 
 const Dialog = ({
@@ -27,9 +36,16 @@ const Dialog = ({
   publish,
   setMessage,
   chatMessages,
+  postId,
+  meSeller,
+  youBuyer,
+  isReviewed,
+  handleSetReservation,
+  handleTradeConfirmation,
 }: DialogProps) => {
   const navigate = useNavigate();
   const scrollRef = useRef<null | HTMLUListElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const scrollToBottom = useCallback(() => {
     if (scrollRef && scrollRef.current) {
@@ -50,7 +66,7 @@ const Dialog = ({
           <S.Temperature>{`${to?.temperature}°C`}</S.Temperature>
         </S.Header>
 
-        <S.Product onClick={() => navigate(`/tradepost/${product.postId}`)}>
+        <S.Product>
           <S.ProductImg
             src={
               product?.imageUrls && product?.imageUrls.length > 0
@@ -58,10 +74,44 @@ const Dialog = ({
                 : defaultProduct
             }
           />
-          <S.ProductInfo>
+          <S.ProductInfo
+            onClick={() => navigate(`/tradepost/${product.postId}`)}
+          >
             <S.ProductTitle>{product?.title}</S.ProductTitle>
-            <S.ProductPrice>{toStringNumWithComma(product?.price)}원</S.ProductPrice>
+            <S.ProductPrice>
+              {toStringNumWithComma(product?.price)}원
+            </S.ProductPrice>
           </S.ProductInfo>
+          {meSeller && product.tradeStatus === TradeStatusType.TRADING && (
+            <S.TradeButtonM onClick={handleSetReservation}>
+              예약하기
+            </S.TradeButtonM>
+          )}
+          {meSeller &&
+            youBuyer &&
+            product.tradeStatus === TradeStatusType.RESERVATION && (
+              <S.TradeButtonL onClick={handleTradeConfirmation}>
+                거래 확정하기
+              </S.TradeButtonL>
+            )}
+          {meSeller &&
+            youBuyer &&
+            product.tradeStatus === TradeStatusType.COMPLETED &&
+            !isReviewed && (
+              <S.TradeButtonM
+                onClick={() => navigate(`/tradePost/${postId}/review`)}
+              >
+                후기 보내기
+              </S.TradeButtonM>
+            )}
+          {meSeller &&
+            youBuyer &&
+            product.tradeStatus === TradeStatusType.COMPLETED &&
+            isReviewed && (
+              <S.TradeButtonL onClick={() => setIsModalOpen(true)}>
+                보낸 후기 보기
+              </S.TradeButtonL>
+            )}
         </S.Product>
 
         <S.MessageWrapper ref={scrollRef}>
@@ -128,6 +178,16 @@ const Dialog = ({
           </S.ButtonWrapper>
         </S.TextareaWrapper>
       </S.Wrapper>
+      {isModalOpen && (
+        <ReviewCheckModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          reviews={product.reviews}
+          seller={meSeller ? from : to}
+          buyer={youBuyer ? to : from}
+          
+        />
+      )}
     </S.OuterWrapper>
   );
 };

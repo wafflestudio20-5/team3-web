@@ -16,10 +16,12 @@ import {
   Date,
   More,
 } from './shortcut.styled';
+import ReviewCheckModal from '../../../../components/review-check-modal';
 import TradeStatusButton from '../../../../components/trade-status-button';
 import DropDown from '../drop-down';
 import alt from '../../../../assets/post-alt.png';
 import more from '../../../../assets/more.svg';
+import { ReviewHistory } from '../../../../types/review';
 
 interface ShortCut {
   postId: number;
@@ -31,6 +33,9 @@ interface ShortCut {
   likes: number;
   chats: number;
   created_at: Date;
+  reviews: ReviewHistory[];
+  seller: any;
+  buyer: any;
 }
 
 const ShortCut = ({
@@ -43,12 +48,29 @@ const ShortCut = ({
   likes,
   chats,
   created_at,
+  reviews,
+  seller,
+  buyer,
 }: ShortCut) => {
   const [isDropped, setIsDropped] = useState(false);
+  const [isCheckReviewModalOpen, setIsCheckReviewModalOpen] = useState(false);
   const dropDownRef = useRef<any>();
   const clickDropDown = () => {
     setIsDropped(prev => !prev);
   };
+  const checkIsReviewed = () => {
+    if (reviews[0]) {
+      for (let i = 0; i < reviews.length; i++) {
+        if (reviews[i].type === 'BUYER') {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    return false;
+  };
+  const isReviewed = checkIsReviewed();
   return (
     <Container>
       <Link to={`/tradepost/${postId}`}>
@@ -83,6 +105,18 @@ const ShortCut = ({
           isDropped={isDropped}
           setIsDropped={setIsDropped}
           postId={postId}
+          isReviewed={isReviewed}
+          tradeStatus={tradeStatus}
+          setIsCheckReviewModalOpen={setIsCheckReviewModalOpen}
+        />
+      )}
+      {isCheckReviewModalOpen && (
+        <ReviewCheckModal
+          isModalOpen={isCheckReviewModalOpen}
+          setIsModalOpen={setIsCheckReviewModalOpen}
+          reviews={reviews}
+          seller={seller}
+          buyer={buyer}
         />
       )}
     </Container>

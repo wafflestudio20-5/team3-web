@@ -13,13 +13,10 @@ import {
   Content,
   More,
 } from './review-info.styled';
-import DropDown from '../drop-down';
-import DeleteModal from '../delete-modal';
-import userImg from '../../../../assets/default-profile.png';
-import more from '../../../../assets/more.svg';
+import { shortenLocation } from '../../utils/location';
+import userImg from '../../assets/default-profile.png';
 
 interface ReviewInfo {
-  id: number;
   userId: number;
   img: string;
   username: string;
@@ -27,12 +24,9 @@ interface ReviewInfo {
   location: string;
   createdAt: Date;
   content: string;
-  isMyReview: boolean;
-  removeReview: (reviewId: number) => void;
 }
 
 const ReviewInfo = ({
-  id,
   userId,
   img,
   username,
@@ -40,16 +34,8 @@ const ReviewInfo = ({
   location,
   createdAt,
   content,
-  isMyReview,
-  removeReview,
 }: ReviewInfo) => {
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDropped, setIsDropped] = useState(false);
-  const dropDownRef = useRef<any>();
-  const deleteReview = () => {
-    removeReview(id);
-  };
   return (
     <Container>
       <Img
@@ -60,17 +46,15 @@ const ReviewInfo = ({
       <Info>
         <User onClick={() => navigate(`/profile/${userId}`)}>{username}</User>
         <Desc>
-          <Type>{type} · </Type>
-          <Location>{location} · </Location>
+          <Type>{type === 'BUYER' ? '구매자' : '판매자'} · </Type>
+          <Location>{shortenLocation(location)} · </Location>
           <Time>
             <Moment fromNow>{createdAt}</Moment>
           </Time>
         </Desc>
-        <Content>{content}</Content>
+        <Content>{content ? content : '내용 없음'}</Content>
       </Info>
-      {isMyReview && (
-        <More src={more} ref={dropDownRef} onClick={() => setIsDropped(true)} />
-      )}
+      {/* <More src={more} ref={dropDownRef} onClick={() => setIsDropped(true)} />
       {isDropped && (
         <DropDown
           dropDownRef={dropDownRef}
@@ -85,7 +69,7 @@ const ReviewInfo = ({
           setIsModalOpen={setIsModalOpen}
           deleteReview={deleteReview}
         />
-      )}
+      )} */}
     </Container>
   );
 };

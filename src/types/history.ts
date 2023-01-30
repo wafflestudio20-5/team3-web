@@ -1,5 +1,6 @@
 import { User } from './users';
 import { TradeStatusType } from './tradePost';
+import { ReviewHistory } from './review';
 
 export type TradeHistory = {
   postId: number;
@@ -17,4 +18,5 @@ export type TradeHistory = {
   isOwner: boolean;
   createdAt: Date;
   modifiedAt: Date;
+  reviews: ReviewHistory[];
 };

@@ -1,27 +1,27 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router';
-import * as S from './review-modal.styled';
+import * as S from './send-review-modal.styled';
 
-const ReviewModal = ({
-  isReviewModalOpen,
-  setIsReviewModalOpen,
+const SendReviewModal = ({
+  isSendReviewModalOpen,
+  setIsSendReviewModalOpen,
   onTradeConfirm,
   postId,
 }: {
-  isReviewModalOpen: boolean;
-  setIsReviewModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isSendReviewModalOpen: boolean;
+  setIsSendReviewModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onTradeConfirm: () => void;
   postId: number;
 }) => {
   const navigate = useNavigate();
   const modalRef = useRef<any>();
   const clickOutside = (e: MouseEvent) => {
-    if (isReviewModalOpen && !modalRef.current.contains(e.target)) {
-      setIsReviewModalOpen(false);
+    if (isSendReviewModalOpen && !modalRef.current.contains(e.target)) {
+      setIsSendReviewModalOpen(false);
     }
   };
   useEffect(() => {
-    if (isReviewModalOpen) {
+    if (isSendReviewModalOpen) {
       window.addEventListener('click', clickOutside);
       return () => {
         window.removeEventListener('click', clickOutside);
@@ -41,7 +41,7 @@ const ReviewModal = ({
               >
                 후기 보내기
               </S.ConfirmButton>
-              <S.CancelButton onClick={() => setIsReviewModalOpen(false)}>
+              <S.CancelButton onClick={() => setIsSendReviewModalOpen(false)}>
                 취소
               </S.CancelButton>
             </S.ButtonBox>
@@ -52,4 +52,4 @@ const ReviewModal = ({
   );
 };
 
-export default ReviewModal;
+export default SendReviewModal;

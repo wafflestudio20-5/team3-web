@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const Dim = styled.div`
-  min-width: 360px;
-  min-height: 100%;
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -25,15 +23,13 @@ export const FixedWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   position: fixed;
-  z-index: 1001;
   top: 0;
   left: 0;
   background-color: transparent;
+  z-index: 1002;
 `;
 
 export const Wrapper = styled.div`
-  position: fixed;
-  z-index: 1001;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -42,14 +38,13 @@ export const Wrapper = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-  position: fixed;
   display: flex;
   flex-direction: column;
-  width: 400px;
-  height: 200px;
+  position: fixed;
+  width: 600px;
   margin-bottom: 60px;
   padding: 32px 36px;
-  gap: 8px;
+  gap: 12px;
   overflow-y: auto;
   background-color: #fff;
   border-radius: 15px;
@@ -68,7 +63,14 @@ export const ModalContainer = styled.div`
   box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.4);
 `;
 
-export const Content = styled.h2`
+export const Close = styled.img`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 20px;
+`;
+
+export const Header = styled.h2`
   font-size: 20px;
   font-weight: 500;
 `;
@@ -77,6 +79,8 @@ export const Info = styled.span`
   color: gray;
   font-size: 16px;
 `;
+
+export const List = styled.div``;
 
 export const ButtonBox = styled.div`
   display: flex;

@@ -37,7 +37,7 @@ export const Header = styled.div`
   border-radius: 30px 30px 0 0;
   cursor: pointer;
   transition: 0.5s all;
-  
+
   &:hover {
     transform: translateY(-2px);
   }
@@ -285,3 +285,27 @@ export const Button = styled.button<Button>(
   ${length <= 255 ? `background: ${bgColor}` : 'background: #dcdee3'};
 `,
 );
+
+export const TradeButtonM = styled.button`
+  border-radius: 4px;
+  width: 80px;
+  height: 32px;
+  line-height: 150%;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: #ff6f0f;
+  color: rgb(255, 255, 255);
+  margin-left: auto;
+`;
+
+export const TradeButtonL = styled.button`
+  border-radius: 4px;
+  width: 88px;
+  height: 32px;
+  line-height: 150%;
+  font-weight: bold;
+  font-size: 13px;
+  background-color: #ff6f0f;
+  color: rgb(255, 255, 255);
+  margin-left: auto;
+`;
