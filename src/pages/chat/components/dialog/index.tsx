@@ -182,6 +182,10 @@ const Dialog = ({
         <ReviewCheckModal
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
+          reviews={product.reviews}
+          seller={meSeller ? from : to}
+          buyer={youBuyer ? to : from}
+          
         />
       )}
     </S.OuterWrapper>
