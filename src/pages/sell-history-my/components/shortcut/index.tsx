@@ -14,7 +14,7 @@ import { redirectWithMsg } from '../../../../utils/errors';
 import DeleteModal from '../delete-modal';
 import SendReviewModal from '../send-review-modal';
 import ReviewCheckModal from '../../../../components/review-check-modal';
-import TradePostUpdate from '../trade-post-update';
+// import TradePostUpdate from '../trade-post-update';
 import {
   Container,
   Img,
@@ -287,7 +287,7 @@ const ShortCut = ({
           setIsCheckReviewModalOpen={setIsCheckReviewModalOpen}
         />
       )}
-      {openEditPost && (
+      {/* {openEditPost && (
         <TradePostUpdate
           imgs={imgs}
           setImgs={setImgs}
@@ -296,7 +296,7 @@ const ShortCut = ({
           handleSubmit={handleSubmitEdit}
           handleClose={handleCloseEditModal}
         />
-      )}
+      )} */}
       {isDeleteModalOpen && (
         <DeleteModal
           isDeleteModalOpen={isDeleteModalOpen}
