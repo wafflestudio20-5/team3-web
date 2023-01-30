@@ -37,6 +37,7 @@ export const InnerWrapper = styled.div`
 `;
 
 export const LogoImg = styled.img`
+  cursor: pointer;
   margin-right: 30px;
 `;
 
