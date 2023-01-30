@@ -17,7 +17,7 @@ export const postReview = createAsyncThunk(
   ) => {
     try {
       const res = await axios.post(
-        `${BASE_URL}:81/tradepost/${postId}/review`,
+        `${BASE_URL}/tradepost/${postId}/review`,
         { score: score, content: content },
         { headers: auth(accessToken) },
       );
@@ -32,7 +32,7 @@ export const getReviews = createAsyncThunk(
   'tradePost/getReview',
   async (userId: number, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`${BASE_URL}:81/users/${userId}/reviews`);
+      const res = await axios.get(`${BASE_URL}/users/${userId}/reviews`);
       return res.data;
     } catch (err) {
       return rejectWithValue(err);

@@ -28,41 +28,11 @@ export const getTradePost = createAsyncThunk(
 
 export const getTop3 = createAsyncThunk(
   'tradePost/getTop3',
-  async (
-    { accessToken }: { accessToken: string },
-    { rejectWithValue },
-  ) => {
+  async ({ accessToken }: { accessToken: string }, { rejectWithValue }) => {
     try {
-      const res = await axios.get(
-        `${BASE_URL}/tradepost/top3`,
-        {
-          headers: auth(accessToken),
-        },
-      );
-      return res.data;
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  },
-);
-
-export const postTradePost = createAsyncThunk(
-  'tradePost/postTradePost',
-  async (
-    {
-      accessToken,
-      title,
-      desc,
-      price,
-    }: { accessToken: string; title: string; desc: string; price: string },
-    { rejectWithValue },
-  ) => {
-    try {
-      const res = await axios.post<TradePostType>(
-        `${BASE_URL}/tradepost`,
-        { title, desc, price },
-        { headers: auth(accessToken) },
-      );
+      const res = await axios.get(`${BASE_URL}/tradepost/top3`, {
+        headers: auth(accessToken),
+      });
       return res.data;
     } catch (err) {
       return rejectWithValue(err);
@@ -76,6 +46,7 @@ export const createTradePost = createAsyncThunk(
     {
       accessToken,
       values,
+      imgs,
     }: {
       accessToken: string;
       values: {
@@ -83,6 +54,7 @@ export const createTradePost = createAsyncThunk(
         desc?: string;
         price?: string | null;
       };
+      imgs?: string[];
     },
     { rejectWithValue },
   ) => {
@@ -93,6 +65,7 @@ export const createTradePost = createAsyncThunk(
           title: values?.title,
           desc: values?.desc,
           price: Number(values?.price),
+          imgUrls: imgs,
         },
         { headers: auth(accessToken) },
       );
@@ -112,19 +85,21 @@ export const updateTradePost = createAsyncThunk(
       title,
       desc,
       price,
+      imgs,
     }: {
       postId?: number;
       accessToken: string;
       title?: string;
       desc?: string;
       price?: number;
+      imgs?: string[];
     },
     { rejectWithValue },
   ) => {
     try {
       const res = await axios.patch<TradePostType>(
         `${BASE_URL}/tradepost/${postId}`,
-        { title, desc, price },
+        { title, desc, price, imgUrls: imgs },
         { headers: auth(accessToken) },
       );
       return res.data;
@@ -242,6 +217,8 @@ interface tradePostSliceState {
   candidates: any; // TODO: 타입 정보 수정
   tradeStatus: any; // TODO: 타입 정보 수정
   isLiked: boolean;
+  time: Date | null;
+  imageUrls: string[];
 }
 const initialState: tradePostSliceState = {
   seller: null,
@@ -250,6 +227,8 @@ const initialState: tradePostSliceState = {
   candidates: [],
   tradeStatus: null,
   isLiked: false,
+  time: null,
+  imageUrls: [],
 };
 
 export const tradePostSlice = createSlice({
@@ -258,6 +237,7 @@ export const tradePostSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(getTradePost.fulfilled, (state, action) => {
+      state.imageUrls = action.payload.imageUrls;
       state.isLiked = action.payload.isLiked as boolean;
       state.seller = action.payload.seller as TxUser;
       state.buyer = action.payload.buyer as TxUser;
@@ -265,6 +245,7 @@ export const tradePostSlice = createSlice({
       state.tradeStatus = action.payload.tradeStatus;
     });
     builder.addCase(updateTradePost.fulfilled, (state, action) => {
+      state.imageUrls = action.payload.imageUrls;
       state.isLiked = action.payload.isLiked as boolean;
       state.seller = action.payload.seller as TxUser;
       state.buyer = action.payload.buyer as TxUser;
@@ -272,6 +253,7 @@ export const tradePostSlice = createSlice({
       state.tradeStatus = action.payload.tradeStatus;
     });
     builder.addCase(createTradePost.fulfilled, (state, action) => {
+      state.imageUrls = action.payload.imageUrls;
       state.isLiked = action.payload.isLiked as boolean;
       state.seller = action.payload.seller as TxUser;
       state.buyer = action.payload.buyer as TxUser;
@@ -279,6 +261,7 @@ export const tradePostSlice = createSlice({
       state.tradeStatus = action.payload.tradeStatus;
     });
     builder.addCase(deleteTradePost.fulfilled, (state, action) => {
+      state.imageUrls = [];
       state.isLiked = false;
       state.seller = null;
       state.buyer = null;

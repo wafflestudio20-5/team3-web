@@ -18,3 +18,10 @@ export type Review = {
   content: string;
   type: BuySellType;
 };
+
+export type ReviewHistory = {
+  id: number;
+  type: BuySellType;
+  createdAt: Date;
+  content: string;
+};

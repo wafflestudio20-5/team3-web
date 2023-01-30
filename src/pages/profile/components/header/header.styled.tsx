@@ -2,14 +2,48 @@ import styled from 'styled-components';
 import { MD_SIZE } from '../../../../constant/breakpoint';
 
 export const Wrapper = styled.div`
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: flex-end;
   width: 100%;
-  height: 44px;
+  height: 54px;
   margin-bottom: 36px;
 
   @media ${MD_SIZE} {
     padding: 0 16px;
+  }
+`;
+
+export const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 98%;
+  height: auto;
+`;
+
+export const Unread = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  min-width: 23px;
+  padding: 0 4px;
+  width: auto;
+  height: 23px;
+  background: rgb(255, 92, 38);
+  border: 3px solid #fcfcfc;
+  color: #fff;
+  border-radius: 100px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.19);
+  top: 0;
+  right: 0;
+  font-weight: 400;
+  font-size: 12px;
+
+  @media ${MD_SIZE} {
+    top: 4px;
+    right: 10px;
   }
 `;
 
@@ -53,7 +87,6 @@ export const ChatBtn = styled.button`
   transition: all 0.3s;
 
   &:hover {
-    background-color: rgb(255, 92, 38);
     box-shadow: 0 5px 10px #e9e9e9;
     transform: translateY(-2px);
   }

@@ -39,6 +39,14 @@ export const EditModal = ({ post, handleClose }: EditModalProps) => {
       handleClose();
     }
   };
+
+  const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key == 'Enter') {
+      if (!e.shiftKey) {
+        handleClick();
+      }
+    }
+  };
   return (
     <S.Container>
       <S.TopWrapper>
@@ -47,17 +55,12 @@ export const EditModal = ({ post, handleClose }: EditModalProps) => {
         <S.SpanComplete onClick={handleClick}>완료</S.SpanComplete>
       </S.TopWrapper>
       <S.DescWrapper>
-        <S.TitleText
-          placeholder="제목을 입력하세요."
-          name="title"
-          value={title}
-          onChange={onChange}
-        />
         <S.Desc
           placeholder="우리 동네 관련된 질문이나 이야기를 해보세요."
           name="content"
           value={content}
           onChange={onChange}
+          onKeyPress={onKeyPress}
         />
       </S.DescWrapper>
       <S.NoticeWrapper>

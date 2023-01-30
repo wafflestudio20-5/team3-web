@@ -3,8 +3,8 @@ import { useAppSelector } from '../../../../store/hooks';
 import defaultImg from '../../../../assets/default-trade-img.svg';
 
 const ImgCarousel = () => {
-  const { tradePost } = useAppSelector(state => state.tradePost);
-  const imgCondition = tradePost?.imageUrls && tradePost?.imageUrls.length > 0;
+  const { imageUrls } = useAppSelector(state => state.tradePost);
+  const imgCondition = imageUrls && imageUrls.length > 0;
 
   return (
     <S.Wrapper
@@ -26,7 +26,7 @@ const ImgCarousel = () => {
       fullHeightHover={false}
     >
       {imgCondition ? (
-        tradePost?.imageUrls.map((url: string) => {
+        imageUrls.map((url: string) => {
           return <S.ImgItem key={url} src={url} alt="trade" />;
         })
       ) : (

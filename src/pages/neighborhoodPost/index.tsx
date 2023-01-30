@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { requestNeighborhoodPost } from '../../api/neighborhood';
+import ContentFooter from '../../components/content-footer';
 import Gnb from '../../components/gnb';
 import { LONG_TEXT } from '../../constant';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { setPost } from '../../store/slices/neighborhoodPostSlice';
 import { setComments } from '../../store/slices/neighborhoodSlice';
 import { neighborPost, comment } from '../../types/neighborhood';
 import { User } from '../../types/users';
@@ -17,7 +19,7 @@ import { Description } from './components/desc-container';
 import { EditDelete } from './components/edit-and-delete';
 import { EditModal } from './components/edit-modal';
 import { WriterInfo } from './components/writer-info';
-import { CommentContainer, Container } from './neighbor-post-styled';
+import { CommentContainer, Container, Wrapper } from './neighbor-post-styled';
 
 export const NeighborhoodPostPage = () => {
   const params = useParams();
@@ -25,7 +27,8 @@ export const NeighborhoodPostPage = () => {
   const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
   const { me } = useAppSelector(state => state.users);
-  const [post, setPost] = useState<neighborPost>({} as neighborPost);
+  const post = useAppSelector(state => state.neighborhoodPost);
+  // const [post, setPost] = useState<neighborPost>({} as neighborPost);
   // const [comments, setComments] = useState<Array<comment>>([]);
   const comments = useAppSelector(state => state.comments);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -35,7 +38,7 @@ export const NeighborhoodPostPage = () => {
     if (accessToken) {
       const res = (await requestNeighborhoodPost(id, accessToken)) as any;
       // console.log(res);
-      setPost(res.data);
+      dispatch(setPost(res.data));
       // setComments(res.data.comments);
       dispatch(setComments(res.data.comments));
     }
@@ -46,7 +49,7 @@ export const NeighborhoodPostPage = () => {
   }, [accessToken]);
 
   return (
-    <>
+    <Wrapper>
       <Gnb />
       <Container>
         <WriterInfo
@@ -74,9 +77,12 @@ export const NeighborhoodPostPage = () => {
         <Comment user={writer} content="안녕하세요" modifiedAt={new Date()} />
         <Comment user={writer2} content="반가워요" modifiedAt={new Date()} /> */}
         <CommentLikeCount
-          commentCount={comments.length}
-          likeCount={post.likeCount}
+          // isLiked={post.isLiked}
+          postId={id}
+          // commentCount={comments.length}
+          // likeCount={post.likeCount}
         />
+        <CommentInput postId={id} refreshPost={getPost} />
         <CommentContainer>
           {comments.map(comment => (
             <Comment
@@ -90,7 +96,8 @@ export const NeighborhoodPostPage = () => {
           ))}
         </CommentContainer>
       </Container>
-      <CommentInput postId={id} refreshPost={getPost} />
+
+      <ContentFooter />
       {isEditModalOpen && (
         <ModalWrapper handleClose={() => setIsEditModalOpen(false)}>
           <EditModal
@@ -113,6 +120,6 @@ export const NeighborhoodPostPage = () => {
           />
         </ModalWrapper>
       )}
-    </>
+    </Wrapper>
   );
 };

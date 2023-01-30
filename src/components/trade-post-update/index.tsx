@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+import UploadImage from '../upload-image';
 import * as S from './styles';
 
 interface TradePostUpdateProps {
@@ -12,6 +13,8 @@ interface TradePostUpdateProps {
   handleChange: (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
+  imgObject: any[];
+  setImgObject: any;
 }
 
 const TradePostUpdate = ({
@@ -19,6 +22,8 @@ const TradePostUpdate = ({
   handleClose,
   handleSubmit,
   handleChange,
+  imgObject,
+  setImgObject,
 }: TradePostUpdateProps) => {
   return (
     <S.ModalOuterLayout>
@@ -43,6 +48,9 @@ const TradePostUpdate = ({
           value={values?.desc}
           onChange={handleChange}
         />
+
+        <UploadImage imgObject={imgObject} setImgObject={setImgObject} />
+
         <S.PostPriceWrapper>
           <S.PostPriceUnit>₩</S.PostPriceUnit>
           <S.PostPrice

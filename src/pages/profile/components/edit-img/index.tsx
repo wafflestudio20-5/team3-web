@@ -26,7 +26,6 @@ const EditImg = ({ img, edit, handleClose }: EditImgProps) => {
   const [imgFile, setImgFile] = useState<string | Blob>('');
 
   const handleSaveImg = () => {
-    // TODO: 파일 업로드 부분으로 변경
     if (imgRef && imgRef.current && imgRef.current.files) {
       const file = imgRef.current.files[0];
       setImgFile(imgRef.current.files[0]);

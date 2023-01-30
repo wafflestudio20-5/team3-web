@@ -15,7 +15,7 @@ import {
 } from './review-info.styled';
 import DropDown from '../drop-down';
 import DeleteModal from '../delete-modal';
-import userImg from '../../../../assets/profile.svg';
+import userImg from '../../../../assets/default-profile.png';
 import more from '../../../../assets/more.svg';
 
 interface ReviewInfo {

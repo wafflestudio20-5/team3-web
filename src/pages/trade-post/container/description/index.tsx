@@ -1,4 +1,5 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import ReactS3Client from 'react-aws-s3-typescript';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
@@ -9,7 +10,6 @@ import Button from '../../components/button';
 import Candidate from '../../components/candidate';
 import ModalWrapper from '../../../../components/modal-wrapper';
 import TradePostUpdate from '../../../../components/trade-post-update';
-import TradePostUpdateImg from '../../../../components/trade-post-update-img';
 
 import {
   getTradeStatusKo,
@@ -42,9 +42,8 @@ const Description = () => {
   const [candidatesLoading, setCandidatesLoading] = useState(false);
 
   const { accessToken } = useAppSelector(state => state.session);
-  const { candidates, tradePost, buyer, tradeStatus, isLiked } = useAppSelector(
-    state => state.tradePost,
-  );
+  const { candidates, tradePost, buyer, tradeStatus, isLiked, imageUrls } =
+    useAppSelector(state => state.tradePost);
 
   // DESC: 작성 날짜 한글로
   useEffect(() => {
@@ -224,11 +223,10 @@ const Description = () => {
     }
   }, [accessToken]);
 
-  // 글 수정
+  // 글 수정 🚀🚀🚀
   const [active, setActive] = useState(false);
-  const [openEditPost, setOpenEditPost] = useState(false);
-  const [openEditPostImg, setOpenEditPostImg] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [openEditPost, setOpenEditPost] = useState(false);
 
   const [values, setValues] = useState({
     title: tradePost?.title,
@@ -247,7 +245,7 @@ const Description = () => {
     [values?.title, values?.desc, values?.price],
   );
 
-  const handleSubmitEdit = useCallback(() => {
+  const handleSubmitEdit = async () => {
     // VALID TODO: to function
     const numberReg = /^[0-9]+$/;
     if (!values.title?.trim() || !(values.title.length > 2)) {
@@ -268,39 +266,101 @@ const Description = () => {
     } else if (Number(values.price) % 10 !== 0) {
       toast.warn('1원 단위는 입력하실 수 없습니다.');
       return;
-    } 
-
-    if (accessToken) {
-      dispatch(
-        updateTradePost({
-          postId: tradePost?.postId,
-          accessToken,
-          title: values.title,
-          desc: values.desc,
-          price: values.price,
-        }),
-      )
-        .unwrap()
-        .then(() => {
-          setOpenEditPost(false);
-          toast.success('성공적으로 수정되었습니다.')
-        })
-        .catch(err => {
-          if (axios.isAxiosError(err)) {
-            toast(`🥕 ${err.response?.data.error}`, {
-              position: 'top-center',
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: false,
-              pauseOnHover: false,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-            });
-          }
-        });
+    } else if (imgObject.length < 1) {
+      toast.warn('이미지는 최소 한 장 이상 등록해야 합니다.');
+      return;
     }
-  }, [values?.title, values?.desc, values?.price]);
+
+    // 삭제
+    // setUploadLoading(true);
+    // const s3 = new ReactS3Client(s3Config);
+    // try {
+    //   await s3.deleteFile(imgUrl);
+    //   console.log('File deleted');
+    //   const newImgs = imgObject.filter(url => {
+    //     return imgUrl !== url;
+    //   });
+    //   setImgObject(newImgs);
+    //   setUploadLoading(false);
+    // } catch (err) {
+    //   console.log(err);
+    //   setUploadLoading(false);
+    //   // toastify
+    //   /* handle the exception */
+    // }
+
+    uploadImage()
+      .then(imgs => {
+        if (accessToken && imgs && imgs.length === imgObject.length) {
+          dispatch(
+            updateTradePost({
+              postId: tradePost?.postId,
+              accessToken,
+              title: values.title,
+              desc: values.desc,
+              price: values.price,
+              imgs,
+            }),
+          )
+            .unwrap()
+            .then(() => {
+              setOpenEditPost(false);
+              setImgObject(
+                imgs?.map((url, index) => {
+                  return {
+                    id: index,
+                    img: url,
+                  };
+                }),
+              );
+              toast.success('성공적으로 수정되었습니다.');
+            })
+            .catch(err => {
+              if (axios.isAxiosError(err)) {
+                toast(`🥕 ${err.response?.data.error}`, {
+                  position: 'top-center',
+                  autoClose: 2000,
+                  hideProgressBar: true,
+                  closeOnClick: false,
+                  pauseOnHover: false,
+                  draggable: true,
+                  progress: undefined,
+                  theme: 'light',
+                });
+              }
+            });
+        }
+      })
+      .catch(() => {
+        toast.error('이미지 업로드에 실패했습니다.');
+      });
+  };
+
+  const uploadImage = async () => {
+    const s3Config = {
+      bucketName: process.env.REACT_APP_AWS_BUCKET_NAME || '',
+      region: process.env.REACT_APP_AWS_REGION || '',
+      accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY || '',
+      secretAccessKey: process.env.REACT_APP_AWS_SECRET_KEY || '',
+    };
+    const s3 = new ReactS3Client(s3Config);
+
+    const promises = imgObject.map(async elem => {
+      if (typeof elem.img === 'string') {
+        return elem.img;
+      } else {
+        return await s3
+          .uploadFile(elem.img)
+          .then(res => {
+            return res.location;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    });
+    return await Promise.all(promises);
+  };
 
   const handleDeletePost = useCallback(() => {
     if (accessToken && tradePost) {
@@ -339,7 +399,25 @@ const Description = () => {
       desc: tradePost?.desc,
       price: tradePost?.price,
     });
-  }, []);
+    setImgObject(
+      imageUrls.map((url: any, index: number) => {
+        return {
+          id: index,
+          img: url,
+        };
+      }),
+    );
+  }, [imageUrls]);
+
+  // 사진
+  const [imgObject, setImgObject] = useState<any[]>(
+    imageUrls.map((url: any, index: number) => {
+      return {
+        id: index,
+        img: url,
+      };
+    }),
+  );
 
   return (
     <>
@@ -368,9 +446,6 @@ const Description = () => {
                   <S.ElemWrapper>
                     <S.Elem onClick={() => setOpenEditPost(true)}>
                       게시글 수정
-                    </S.Elem>
-                    <S.Elem onClick={() => setOpenEditPostImg(true)}>
-                      사진 수정
                     </S.Elem>
                     <S.Elem onClick={() => setOpenDelete(true)}>
                       <S.Delete>게시글 삭제</S.Delete>
@@ -472,19 +547,12 @@ const Description = () => {
 
       {openEditPost && (
         <TradePostUpdate
+          imgObject={imgObject}
+          setImgObject={setImgObject}
           values={values}
           handleChange={handleChange}
           handleSubmit={handleSubmitEdit}
           handleClose={handleCloseModal}
-        />
-      )}
-
-      {openEditPostImg && (
-        <TradePostUpdateImg
-          values={values}
-          handleChange={handleChange}
-          handleSubmit={handleSubmitEdit}
-          handleClose={() => setOpenEditPostImg(false)}
         />
       )}
 

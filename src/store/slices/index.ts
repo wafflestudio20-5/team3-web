@@ -4,6 +4,8 @@ import usersSlice from './usersSlice';
 import sessionSlice from './sessionSlice';
 import tradePostSlice from './tradePostSlice';
 import commentsSlice from './neighborhoodSlice';
+import neighborhoodPostSlice from './neighborhoodPostSlice';
+import neighborhoodPostListSlice from './neighborhoodPostListSlice';
 
 const rootReducer = combineReducers({
   chat: chatSlice,
@@ -11,6 +13,8 @@ const rootReducer = combineReducers({
   session: sessionSlice,
   tradePost: tradePostSlice,
   comments: commentsSlice,
+  neighborhoodPost: neighborhoodPostSlice,
+  neighborhoodPostList: neighborhoodPostListSlice,
 });
 
 export default rootReducer;

@@ -1,5 +1,6 @@
 import { ChangeEvent } from 'react';
 import * as S from './styles';
+import UploadImage from '../upload-image';
 
 interface TradePostCreateProps {
   values: {
@@ -13,6 +14,8 @@ interface TradePostCreateProps {
   handleChange: (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
+  imgObject: any[];
+  setImgObject: any;
 }
 
 const TradePostCreate = ({
@@ -20,6 +23,8 @@ const TradePostCreate = ({
   handleClose,
   handleSubmit,
   handleChange,
+  imgObject,
+  setImgObject,
 }: TradePostCreateProps) => {
   return (
     <S.ModalOuterLayout>
@@ -44,6 +49,9 @@ const TradePostCreate = ({
           value={values?.desc}
           onChange={handleChange}
         />
+
+        <UploadImage imgObject={imgObject} setImgObject={setImgObject} />
+
         <S.PostPriceWrapper>
           <S.PostPriceUnit>₩</S.PostPriceUnit>
           <S.PostPrice
@@ -56,7 +64,6 @@ const TradePostCreate = ({
           />
         </S.PostPriceWrapper>
 
-        
         <S.PostAnnounceWrapper>
           <S.Emphasize>글 작성하기 전에 알려드려요.</S.Emphasize>
           <S.Announce>허위 매물은 올리실 수 없어요.</S.Announce>

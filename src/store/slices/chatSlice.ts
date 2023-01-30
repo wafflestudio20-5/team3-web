@@ -64,11 +64,13 @@ interface chatSliceState {
   roomUUID: string | null;
   you: any;
   myChats: any;
+  unreadTotalCount: number;
 }
 const initialState: chatSliceState = {
   roomUUID: null,
   you: null,
   myChats: null,
+  unreadTotalCount: 0,
 };
 
 export const chatSlice = createSlice({
@@ -83,6 +85,7 @@ export const chatSlice = createSlice({
       state.you = action.payload.you;
     });
     builder.addCase(getMyChats.fulfilled, (state, action) => {
+      state.unreadTotalCount = action.payload.unreadTotalCount;
       state.myChats = action.payload.chats
         ?.sort((chat1: any, chat2: any) => {
           if (chat1.lastChat && chat2.lastChat) {

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+  flex: 1;
   padding: 10px 0px;
 `;
 
@@ -12,10 +13,12 @@ export const TitleWrapper = styled.div`
 
 export const DescriptionWrapper = styled.div`
   margin-bottom: 20px;
-  font-size: 18px;
+  font-family: 'Pretendard-Regular';
+  font-size: 15px;
+  white-space: pre-wrap;
 `;
 
 export const LocationWrapper = styled.div`
   color: rgba(0, 0, 0, 0.3);
-  font-size: 16px;
+  font-size: 12px;
 `;

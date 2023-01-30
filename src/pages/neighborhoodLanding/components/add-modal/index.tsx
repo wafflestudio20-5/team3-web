@@ -1,7 +1,11 @@
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
-import { requestPostNeighborhood } from '../../../../api/neighborhood';
+import {
+  requestNeighborhood,
+  requestPostNeighborhood,
+} from '../../../../api/neighborhood';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { setPosts } from '../../../../store/slices/neighborhoodPostListSlice';
 import * as S from './add-modal.styled';
 
 interface AddModalProps {
@@ -12,7 +16,7 @@ export const AddModal = ({ handleClose }: AddModalProps) => {
   const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
   // console.log(accessToken);
-
+  const posts = useAppSelector(state => state.neighborhoodPostList);
   const [inputs, setInputs] = useState({
     title: '',
     content: '',
@@ -31,12 +35,23 @@ export const AddModal = ({ handleClose }: AddModalProps) => {
       const res = await requestPostNeighborhood(
         { title, content },
         accessToken,
-      );
-      toast('글 작성이 완료되었습니다.');
-      handleClose();
-      // console.log(res);
+      ).then(async () => {
+        toast('글 작성이 완료되었습니다.');
+        const res = (await requestNeighborhood(accessToken, 1, '')) as any;
+        dispatch(setPosts(res.data));
+        handleClose();
+      });
     }
   };
+
+  const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key == 'Enter') {
+      if (!e.shiftKey) {
+        handleClick();
+      }
+    }
+  };
+
   return (
     <S.Container>
       <S.TopWrapper>
@@ -45,17 +60,12 @@ export const AddModal = ({ handleClose }: AddModalProps) => {
         <S.SpanComplete onClick={handleClick}>완료</S.SpanComplete>
       </S.TopWrapper>
       <S.DescWrapper>
-        <S.TitleText
-          placeholder="제목을 입력하세요."
-          name="title"
-          value={title}
-          onChange={onChange}
-        />
         <S.Desc
           placeholder="우리 동네 관련된 질문이나 이야기를 해보세요."
           name="content"
           value={content}
           onChange={onChange}
+          onKeyPress={onKeyPress}
         />
       </S.DescWrapper>
       <S.NoticeWrapper>

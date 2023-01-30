@@ -20,6 +20,8 @@ import SellHistoryMyPage from '../pages/sell-history-my';
 import SellHistoryOthersPage from '../pages/sell-history-others';
 import BuyHistoryPage from '../pages/buy-history';
 import LikeHistoryPage from '../pages/like-history';
+import { NeighborHistoryPage } from '../pages/neighbor-history';
+import { NeighborHistoryLikePage } from '../pages/neighbor-like-history';
 
 // DESC: 라우팅 관리를 위한 EntryRoute
 function EntryRoute() {
@@ -40,6 +42,14 @@ function EntryRoute() {
         <Route path="/profile/:id/sell" element={<SellHistoryOthersPage />} />
         <Route path="/profile/me/buy" element={<BuyHistoryPage />} />
         <Route path="/profile/me/like" element={<LikeHistoryPage />} />
+        <Route
+          path="/profile/me/neighborhood"
+          element={<NeighborHistoryPage />}
+        />
+        <Route
+          path="/profile/me/neighborhoodlike"
+          element={<NeighborHistoryLikePage />}
+        />
         <Route path="/market" element={<MarketPage />} />
         <Route path="/tradepost/:id" element={<TradePostPage />} />
         <Route path="/tradepost/:id/review" element={<SendReview />} />

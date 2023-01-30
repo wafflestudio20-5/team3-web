@@ -57,7 +57,7 @@ export const requestSignUpUser = async ({
       username: username,
       isEmailAuthed: isEmailAuthed,
       location: location,
-      coordinate: JSON.stringify(coordinate),
+      coordinate: coordinate,
     });
   } catch (e) {
     return e;
