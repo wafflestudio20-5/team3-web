@@ -55,38 +55,6 @@ export const NeighborContainer = () => {
     return () => clearTimeout(timer);
   }, [accessToken, keyword]);
 
-  // useEffect(() => {
-  //   if (accessToken) {
-  //     dispatch(
-  //       getNeighborhoodPostList({
-  //         accessToken: accessToken,
-  //         name: '',
-  //         page: pageNum,
-  //       }),
-  //     )
-  //       .unwrap()
-  //       .then(res => {
-  //         setPosts(res.reverse());
-  //       })
-  //       .catch(err => {
-  //         if (axios.isAxiosError(err)) {
-  //           if (err.response?.status === 404) {
-  //             redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
-  //           } else if (err.response?.status === 401) {
-  //             // TODO: refresh 후 재요청
-  //             redirectWithMsg(2, err.response?.data.error, () =>
-  //               navigate('/login'),
-  //             );
-  //           } else {
-  //             redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
-  //               navigate('/'),
-  //             );
-  //           }
-  //         }
-  //       });
-  //   }
-  // }, [accessToken, pageNum]);
-
   const handleMoreButtonClick = async () => {
     if (accessToken) {
       pageNum.current++;
@@ -107,6 +75,7 @@ export const NeighborContainer = () => {
       );
     }
   };
+
   return (
     <>
       <S.TopTextWrapper>

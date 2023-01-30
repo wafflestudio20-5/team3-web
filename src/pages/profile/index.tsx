@@ -150,15 +150,15 @@ const ProfilePage = () => {
             />
             <NavigationButton
               isLoading={sessionLoading}
-              img={mannerCommentIcon}
-              text="매너평가"
-              handleClick={() => navigate('/')}
+              img={lifeIcon}
+              text="동네생활"
+              handleClick={() => navigate('/profile/me/neighborhood')}
             />
             <NavigationButton
               isLoading={sessionLoading}
-              img={lifeIcon}
-              text="동네생활"
-              handleClick={() => navigate('/')}
+              img={likeIcon}
+              text="찜한 동네생활"
+              handleClick={() => navigate('/profile/me/neighborhoodlike')}
             />
           </S.NavigationWrapper>
         </S.ContentWrapper>

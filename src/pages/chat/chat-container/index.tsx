@@ -11,8 +11,13 @@ import { BASE_URL } from '../../../constant';
 import { redirectWithMsg } from '../../../utils/errors';
 import { getChats } from '../../../store/slices/chatSlice';
 import { ChatMessageType, SubBodyType } from '../../../types/chat';
-import { getTradePost } from '../../../store/slices/tradePostSlice';
+import {
+  getTradePost,
+  postReservation,
+  postConfirmation,
+} from '../../../store/slices/tradePostSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { BuySellType, ReviewHistory } from '../../../types/review';
 
 const ChatContainer = () => {
   const navigate = useNavigate();
@@ -31,6 +36,26 @@ const ChatContainer = () => {
   const [product, setProduct] = useState<any>(null);
   const [message, setMessage] = useState<string>('');
   const [chatMessages, setChatMessages] = useState<ChatMessageType[]>([]);
+  const [meSeller, setMeSeller] = useState(false);
+  const [youBuyer, setYouBuyer] = useState(false);
+  const [isReviewed, setIsReviewed] = useState(false);
+
+  // DESC: 리뷰 달렸는지 확인 (버튼 생성용)
+  const checkIsReviewed = (
+    reviews: ReviewHistory[],
+    buySellType: BuySellType,
+  ) => {
+    if (reviews[0]) {
+      for (let i = 0; i < reviews.length; i++) {
+        if (reviews[i].type === buySellType) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    return false;
+  };
 
   useEffect(() => {
     connect();
@@ -65,12 +90,32 @@ const ChatContainer = () => {
     }
   }, []);
 
-  useEffect(() => {
+  const getPost = () => {
     if (accessToken && postId) {
       dispatch(getTradePost({ accessToken, postId }))
         .unwrap()
         .then(res => {
           setProduct(res);
+          if (res?.seller.id === me?.id) {
+            setMeSeller(true);
+            if (checkIsReviewed(res?.reviews, BuySellType.SELLER)) {
+              setIsReviewed(true);
+            } else {
+              setIsReviewed(false);
+            }
+          } else {
+            setMeSeller(false);
+            if (checkIsReviewed(res?.reviews, BuySellType.BUYER)) {
+              setIsReviewed(true);
+            } else {
+              setIsReviewed(false);
+            }
+          }
+          if ((res?.buyer as any).id === you?.id) {
+            setYouBuyer(true);
+          } else {
+            setYouBuyer(false);
+          }
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -89,7 +134,10 @@ const ChatContainer = () => {
           }
         });
     }
-  }, [accessToken, postId]);
+  };
+  useEffect(() => {
+    getPost();
+  }, [accessToken, postId, you]);
 
   const connect = () => {
     // DESC: client 객체 만들기
@@ -159,6 +207,70 @@ const ChatContainer = () => {
     setMessage('');
   };
 
+  // DESC: seller 입장, 예약자 선정
+  const handleSetReservation = () => {
+    if (accessToken && product) {
+      dispatch(
+        postReservation({
+          accessToken,
+          postId: postId,
+          userId: you?.id,
+        }),
+      )
+        .unwrap()
+        .then(res => {
+          toast('예약중으로 변경되었습니다');
+          getPost();
+        })
+        .catch(err => {
+          if (axios.isAxiosError(err)) {
+            if (err.response?.status === 404) {
+              toast(err.response.data.message);
+            } else if (err.response?.status === 401) {
+              // TODO: refresh 후 재요청
+              redirectWithMsg(2, err.response?.data.error, () =>
+                navigate('/login'),
+              );
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
+            }
+          }
+        });
+    }
+  };
+
+  // DESC: seller 입장, 거래 확정
+  const handleTradeConfirmation = () => {
+    if (accessToken && postId) {
+      dispatch(postConfirmation({ accessToken: accessToken, postId: postId }))
+        .unwrap()
+        .then(() => {
+          toast('판매 완료로 변경되었습니다');
+          getPost();
+        })
+        .catch(err => {
+          if (axios.isAxiosError(err)) {
+            if (err.response?.status === 404) {
+              toast(err.response.data.message);
+            } else if (err.response?.status === 401) {
+              // TODO: refresh 후 재요청
+              redirectWithMsg(2, err.response?.data.error, () =>
+                navigate('/login'),
+              );
+            } else if (err.response?.status === 400) {
+              toast.error(err.response?.data.error);
+            } else {
+              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                navigate('/'),
+              );
+            }
+          }
+        });
+    }
+  };
+
   if (!roomUUID || !uid || !me) {
     return <Spinner />;
   }
@@ -172,6 +284,12 @@ const ChatContainer = () => {
       publish={publish}
       setMessage={setMessage}
       chatMessages={chatMessages}
+      postId={postId}
+      meSeller={meSeller}
+      youBuyer={youBuyer}
+      isReviewed={isReviewed}
+      handleSetReservation={handleSetReservation}
+      handleTradeConfirmation={handleTradeConfirmation}
     />
   );
 };

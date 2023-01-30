@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
 export const Header = styled.div`
   margin: 30px auto 20px auto;
   text-align: center;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
 
   @media ${MD_SIZE} {

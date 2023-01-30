@@ -12,7 +12,7 @@ export const Header = styled.h2`
   width: 400px;
   margin: 30px auto 30px auto;
   text-align: center;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
 `;
 
