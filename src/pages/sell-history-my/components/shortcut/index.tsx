@@ -49,6 +49,8 @@ interface ShortCut {
   desc: string;
   reviews: ReviewHistory[];
   getList: () => void;
+  buyer: any;
+  seller: any;
 }
 
 const ShortCut = ({
@@ -64,6 +66,8 @@ const ShortCut = ({
   desc,
   getList,
   reviews,
+  buyer,
+  seller,
 }: ShortCut) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -312,6 +316,9 @@ const ShortCut = ({
         <ReviewCheckModal
           isModalOpen={isCheckReviewModalOpen}
           setIsModalOpen={setIsCheckReviewModalOpen}
+          reviews={reviews}
+          seller={seller}
+          buyer={buyer}
         />
       )}
     </Container>

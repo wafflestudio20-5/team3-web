@@ -89,6 +89,8 @@ const SellHistoryMyPage = () => {
                 desc={post?.desc}
                 reviews={post?.reviews}
                 getList={getList}
+                buyer={post?.buyer}
+                seller={post?.seller}
               />
             );
           })}
