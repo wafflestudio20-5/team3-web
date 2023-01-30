@@ -1,5 +1,7 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 import Gnb from '../../components/gnb';
 import Header from './components/header';
@@ -10,6 +12,8 @@ import ModalWrapper from '../../components/modal-wrapper';
 import ContentFooter from '../../components/content-footer';
 import NavigationButton from './components/navigation-button';
 
+import { auth } from '../../api';
+import { BASE_URL } from '../../constant';
 import { useAuth } from '../../hooks/useAuth';
 import { getMyChats } from '../../store/slices/chatSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -34,24 +38,50 @@ const ProfilePage = () => {
   const { accessToken } = useAppSelector(state => state.session);
   const { myChats, unreadTotalCount } = useAppSelector(state => state.chat);
 
+  enum SearchScope {
+    NARROW = 'NARROW',
+    NORMAL = 'NORMAL',
+    WIDE = 'WIDE',
+  }
+
   const [rangeValue, setRangeValue] = useState(0);
   const [rangeImg, setRangeImg] = useState(scopeNarrow);
   const [rangeDistance, setRangeDistance] = useState(35);
+  const [searchScope, setSearchScope] = useState(SearchScope.NARROW);
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setRangeValue(Number(e.target.value));
   }, []);
 
+  const handleSubmit = async () => {
+    if (accessToken) {
+      try {
+        await axios.patch(
+          `${BASE_URL}/users/me/search-scope`,
+          { searchScope },
+          { headers: auth(accessToken) },
+        );
+        setOpenAreaModal(false);
+        toast.success('동네 범위가 변경되었습니다.');
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
   useEffect(() => {
     if (rangeValue === 0) {
       setRangeImg(scopeNarrow);
       setRangeDistance(35);
+      setSearchScope(SearchScope.NARROW);
     } else if (rangeValue === 1) {
       setRangeImg(scopeNormal);
       setRangeDistance(200);
+      setSearchScope(SearchScope.NORMAL);
     } else if (rangeValue === 2) {
       setRangeImg(scopeWide);
       setRangeDistance(400);
+      setSearchScope(SearchScope.WIDE);
     }
   }, [rangeValue]);
 
@@ -205,9 +235,7 @@ const ProfilePage = () => {
           <S.DisplayWrapper>
             <S.HeaderWrapper>
               <S.RangeTitle>동네 범위 선택</S.RangeTitle>
-              <S.SubmitRange onClick={() => alert('변경')}>
-                변경하기
-              </S.SubmitRange>
+              <S.SubmitRange onClick={handleSubmit}>변경하기</S.SubmitRange>
             </S.HeaderWrapper>
             <S.RangeAnnounce>
               선택한 범위의 게시글만 볼 수 있어요.
