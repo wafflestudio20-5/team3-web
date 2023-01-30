@@ -90,7 +90,7 @@ const ChatContainer = () => {
     }
   }, []);
 
-  useEffect(() => {
+  const getPost = () => {
     if (accessToken && postId) {
       dispatch(getTradePost({ accessToken, postId }))
         .unwrap()
@@ -134,6 +134,9 @@ const ChatContainer = () => {
           }
         });
     }
+  };
+  useEffect(() => {
+    getPost();
   }, [accessToken, postId, you]);
 
   const connect = () => {
@@ -217,6 +220,7 @@ const ChatContainer = () => {
         .unwrap()
         .then(res => {
           toast('예약중으로 변경되었습니다');
+          getPost();
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -244,6 +248,7 @@ const ChatContainer = () => {
         .unwrap()
         .then(() => {
           toast('판매 완료로 변경되었습니다');
+          getPost();
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
