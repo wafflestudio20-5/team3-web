@@ -32,15 +32,16 @@ export const AddModal = ({ handleClose }: AddModalProps) => {
 
   const handleClick = async () => {
     if (accessToken) {
-      const res = await requestPostNeighborhood(
-        { title, content },
-        accessToken,
-      ).then(async () => {
-        toast('글 작성이 완료되었습니다.');
-        const res = (await requestNeighborhood(accessToken, 1, '')) as any;
-        dispatch(setPosts(res.data));
-        handleClose();
-      });
+      const res = await requestPostNeighborhood({ title, content }, accessToken)
+        .then(async () => {
+          toast('글 작성이 완료되었습니다.');
+          const res = (await requestNeighborhood(accessToken, 1, '')) as any;
+          dispatch(setPosts(res.data));
+          handleClose();
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   };
 

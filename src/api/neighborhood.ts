@@ -1,8 +1,12 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { auth } from '.';
 import { BASE_URL } from '../constant';
 import { neighborPostComment, neighborPostInput } from '../types/neighborhood';
+import { redirectWithMsg } from '../utils/errors';
+
+const navigate = useNavigate();
 
 export const requestNeighborhood = async (
   accessToken: string,

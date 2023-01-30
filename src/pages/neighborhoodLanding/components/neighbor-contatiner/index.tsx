@@ -79,7 +79,7 @@ export const NeighborContainer = () => {
   return (
     <>
       <S.TopTextWrapper>
-        <S.TopText>동네정보</S.TopText>
+        <S.TopText>동네생활</S.TopText>
       </S.TopTextWrapper>
       <SearchBar
         keyword={keyword}
@@ -97,6 +97,7 @@ export const NeighborContainer = () => {
                 id={post.postId}
                 content={post.content}
                 location={post.publisher.location}
+                isLiked={post.isLiked}
                 modifiedAt={post.modifiedAt}
                 likeCount={post.likeCount}
                 commentCount={post.commentCount}
