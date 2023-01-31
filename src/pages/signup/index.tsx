@@ -238,7 +238,6 @@ const SignUpPage = () => {
         />
         {isEmailAuthButtonOpen && (
           <S.EmailAuthWrapper>
-            <S.P>{email} 로 인증 메일을 전송하였습니다.</S.P>
             <S.EmailInnerWrapper>
               <S.InputPositionWrapper>
                 <S.EmailVerifyInput

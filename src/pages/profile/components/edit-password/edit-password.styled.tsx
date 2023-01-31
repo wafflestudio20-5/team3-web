@@ -13,6 +13,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
+  margin-top: 20px;
 `;
 
 export const Label = styled.label`
@@ -23,14 +24,20 @@ export const Label = styled.label`
   color: #acacac;
 `;
 
-export const Input = styled.input`
+export const InputWrapper = styled.div`
   width: 90%;
+  height: 56px;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Input = styled.input`
+  width: 100%;
   height: 40px;
-  padding: 0 16px;
+  padding: 0 14px;
   background: #ffffff;
   border: 1px solid #d9d9d9;
   border-radius: 6px;
-  margin-bottom: 16px;
   font-weight: 400;
   font-size: 14px;
   color: #3d3d3d;
@@ -38,7 +45,13 @@ export const Input = styled.input`
   &:focus {
     outline: 1px solid #ff8e43;
   }
-  &:last-of-type {
-    margin-bottom: 40px;
-  }
+`;
+
+export const Announce = styled.span`
+  font-weight: 500;
+  font-size: 7px;
+  line-height: 20px;
+  color: ${props => props.color || '#000'};
+  height: 16px;
+  padding-left: 4px;
 `;
