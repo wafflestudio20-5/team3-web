@@ -7,7 +7,7 @@ export const url = (path: string, param?: Record<string, string>) =>
   (process.env.NODE_ENV === 'production' ? `${BASE_URL}${path}` : path) +
   (param ? '?' + new URLSearchParams(param).toString() : '');
 
-export const auth = (token: string) => ({ Authorization: `Bearer ${token}` });
+export const auth = (token: string | null) => ({ Authorization: `Bearer ${token}` });
 
 // 🚀❓ DESC: Response interceptor for API calls
 export const axiosApiInstance = axios.create();
