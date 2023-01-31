@@ -1,12 +1,12 @@
 import { useCallback, useRef, useState } from 'react';
 import axios from 'axios';
-
-import ButtonMd from '../button-md';
+import { toast } from 'react-toastify';
 import { postImg } from '../../../../store/slices/usersSlice';
 import { SetEditType, EditType } from '../../../../types/users';
 import { normalToast } from '../../../../utils/basic-toast-modal';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
+import ButtonMd from '../button-md';
 import * as S from './edit-img.styled';
 import defaultImg from '../../../../assets/default-profile.png';
 import { ReactComponent as CameraIcon } from '../../../../assets/modifycamera.svg';
@@ -54,7 +54,7 @@ const EditImg = ({ img, edit, handleClose }: EditImgProps) => {
         .unwrap()
         .then(() => {
           handleClose({ ...edit, img: false });
-          normalToast('성공적으로 변경되었습니다.');
+          toast.success('프로필 이미지가 변경되었습니다.');
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
