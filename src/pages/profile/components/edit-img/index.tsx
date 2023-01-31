@@ -1,13 +1,12 @@
 import { useCallback, useRef, useState } from 'react';
-import { toast } from 'react-toastify';
 import axios from 'axios';
-
-import ButtonMd from '../button-md';
+import { toast } from 'react-toastify';
 import { postImg } from '../../../../store/slices/usersSlice';
 import { SetEditType, EditType } from '../../../../types/users';
 import { normalToast } from '../../../../utils/basic-toast-modal';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
+import ButtonMd from '../button-md';
 import * as S from './edit-img.styled';
 import defaultImg from '../../../../assets/default-profile.png';
 import { ReactComponent as CameraIcon } from '../../../../assets/modifycamera.svg';
