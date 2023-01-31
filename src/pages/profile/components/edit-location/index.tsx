@@ -41,7 +41,7 @@ const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
           handleClose({ ...edit, location: false });
           normalToast('성공적으로 변경되었습니다.');
         })
-        .catch(err => {
+        .catch((err: { response: { data: { error: string } } }) => {
           if (axios.isAxiosError(err)) {
             normalToast(err.response?.data.error);
           }
