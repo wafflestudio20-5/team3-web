@@ -63,5 +63,5 @@ export const ModalContainer = styled.div`
     }
   }
   // DESC: box shadow 추가
-  box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.1);
 `;
