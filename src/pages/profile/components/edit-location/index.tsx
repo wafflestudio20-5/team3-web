@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
 import ButtonMd from '../button-md';
@@ -39,7 +40,7 @@ const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
         .unwrap()
         .then(() => {
           handleClose({ ...edit, location: false });
-          normalToast('성공적으로 변경되었습니다.');
+          toast.success('성공적으로 변경되었습니다.');
         })
         .catch((err: { response: { data: { error: string } } }) => {
           if (axios.isAxiosError(err)) {

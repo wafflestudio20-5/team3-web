@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
 import ButtonMd from '../button-md';
@@ -54,7 +55,7 @@ const EditImg = ({ img, edit, handleClose }: EditImgProps) => {
         .unwrap()
         .then(() => {
           handleClose({ ...edit, img: false });
-          normalToast('성공적으로 변경되었습니다.');
+          toast.success('프로필 이미지가 변경되었습니다.');
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
