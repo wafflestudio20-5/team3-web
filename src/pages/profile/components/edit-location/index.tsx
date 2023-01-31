@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import { toast } from 'react-toastify';
 import axios from 'axios';
 
 import ButtonMd from '../button-md';
+import { normalToast } from '../../../../utils/basic-toast-modal';
 
 import { SetEditType, EditType } from '../../../../types/users';
 import { postLocation } from '../../../../store/slices/usersSlice';
@@ -39,19 +39,11 @@ const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
         .unwrap()
         .then(() => {
           handleClose({ ...edit, location: false });
+          normalToast('성공적으로 변경되었습니다.');
         })
-        .catch(err => {
+        .catch((err: { response: { data: { error: string } } }) => {
           if (axios.isAxiosError(err)) {
-            toast(`🥕 ${err.response?.data.error}`, {
-              position: 'top-center',
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: false,
-              pauseOnHover: false,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-            });
+            normalToast(err.response?.data.error);
           }
         });
     }
