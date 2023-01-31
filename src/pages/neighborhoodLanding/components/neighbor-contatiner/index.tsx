@@ -15,6 +15,7 @@ import axios from 'axios';
 import { setPosts } from '../../../../store/slices/neighborhoodPostListSlice';
 import SearchBar from '../search-bar';
 import { devNull } from 'os';
+import Spinner from '../../../../components/spinner';
 
 export const NeighborContainer = () => {
   const dispatch = useAppDispatch();
@@ -25,6 +26,7 @@ export const NeighborContainer = () => {
   // const [posts, setPosts] = useState<Array<neighborPost>>([]);
   const posts = useAppSelector(state => state.neighborhoodPostList);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const handleModalClose = () => {
     setIsModalOpen(prev => !prev);
   };
@@ -37,6 +39,7 @@ export const NeighborContainer = () => {
         keyword,
       )) as any;
       dispatch(setPosts(res.data.posts));
+      setIsLoading(false);
     } else {
       redirectWithMsg(
         2,
@@ -79,48 +82,54 @@ export const NeighborContainer = () => {
 
   return (
     <>
-      <S.TopTextWrapper>
-        <S.TopText>동네생활</S.TopText>
-      </S.TopTextWrapper>
-      <SearchBar
-        keyword={keyword}
-        setKeyword={setKeyword}
-        searchClick={() => {
-          console.log('clicked');
-        }}
-        dong="내 동네"
-      />
-      <S.Container>
-        {posts
-          ? posts.map(post => (
-              <ShortCut
-                key={post.postId}
-                id={post.postId}
-                content={post.content}
-                location={post.publisher.location}
-                isLiked={post.isLiked}
-                modifiedAt={post.modifiedAt}
-                likeCount={post.likeCount}
-                commentCount={post.commentCount}
-              />
-            ))
-          : null}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <S.TopTextWrapper>
+            <S.TopText>동네생활</S.TopText>
+          </S.TopTextWrapper>
+          <SearchBar
+            keyword={keyword}
+            setKeyword={setKeyword}
+            searchClick={() => {
+              console.log('clicked');
+            }}
+            dong="내 동네"
+          />
+          <S.Container>
+            {posts
+              ? posts.map(post => (
+                  <ShortCut
+                    key={post.postId}
+                    id={post.postId}
+                    content={post.content}
+                    location={post.publisher.location}
+                    isLiked={post.isLiked}
+                    modifiedAt={post.modifiedAt}
+                    likeCount={post.likeCount}
+                    commentCount={post.commentCount}
+                  />
+                ))
+              : null}
 
-        <AddButton
-          handleClick={() => {
-            setIsModalOpen(prev => !prev);
-          }}
-        />
-        {isModalOpen && (
-          <ModalWrapper handleClose={handleModalClose}>
-            <AddModal
-              handleClose={() => {
-                handleModalClose();
+            <AddButton
+              handleClick={() => {
+                setIsModalOpen(prev => !prev);
               }}
             />
-          </ModalWrapper>
-        )}
-      </S.Container>
+            {isModalOpen && (
+              <ModalWrapper handleClose={handleModalClose}>
+                <AddModal
+                  handleClose={() => {
+                    handleModalClose();
+                  }}
+                />
+              </ModalWrapper>
+            )}
+          </S.Container>
+        </>
+      )}
     </>
   );
 };
