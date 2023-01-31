@@ -21,6 +21,7 @@ import { shortenLocation, getDong } from '../../utils/location';
 
 import { Wrapper, Header, List } from './market.styled';
 import defaultImg from '../../assets/default-trade-img.svg';
+import { loadItem } from '../../utils/storage';
 
 const MarketPage = () => {
   const navigate = useNavigate();
