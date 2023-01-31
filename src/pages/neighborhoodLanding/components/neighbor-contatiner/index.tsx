@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { setPosts } from '../../../../store/slices/neighborhoodPostListSlice';
 import SearchBar from '../search-bar';
+import { devNull } from 'os';
 
 export const NeighborContainer = () => {
   const dispatch = useAppDispatch();
@@ -35,7 +36,7 @@ export const NeighborContainer = () => {
         pageNum.current,
         keyword,
       )) as any;
-      dispatch(setPosts(res.data));
+      dispatch(setPosts(res.data.posts));
     } else {
       redirectWithMsg(
         2,
