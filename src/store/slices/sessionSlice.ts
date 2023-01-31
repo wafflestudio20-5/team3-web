@@ -4,6 +4,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { BASE_URL } from '../../constant';
 import { LoginInput } from '../../types/auth';
 import { clearItem, saveItem } from '../../utils/storage';
+import { useAppDispatch } from '../hooks';
+import { getMe } from './usersSlice';
 
 export const postLogin = createAsyncThunk(
   'session/postLogin',
@@ -13,7 +15,13 @@ export const postLogin = createAsyncThunk(
         email: email,
         password: password,
       });
-      return res.data;
+      console.log(res);
+      return {
+        accessToken: res.data.accessToken,
+        refreshToken: res.data.refreshToken,
+        expiryTime: Date.now() + 60 * 60 * 1000,
+        user: res.data.user,
+      };
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -27,7 +35,12 @@ export const postGoogleLogin = createAsyncThunk(
       const res = await axios.post(`${BASE_URL}/google/login`, {
         email: email,
       });
-      return res.data;
+      return {
+        accessToken: res.data.accessToken,
+        refreshToken: res.data.refreshToken,
+        expiryTime: Date.now() + 60 * 60 * 1000,
+        user: res.data.user,
+      };
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -39,7 +52,12 @@ export const postKakaoLogin = createAsyncThunk(
   async (code: string | null, { rejectWithValue }) => {
     try {
       const res = await axios.get(`${BASE_URL}/kakao/login/?code=${code}`);
-      return res.data;
+      return {
+        accessToken: res.data.accessToken,
+        refreshToken: res.data.refreshToken,
+        expiryTime: Date.now() + 60 * 60 * 1000,
+        user: res.data.user,
+      };
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -53,7 +71,12 @@ export const postRefresh = createAsyncThunk(
       const res = await axios.post(`${BASE_URL}/auth/refresh`, {
         refreshToken,
       });
-      return res.data;
+      return {
+        accessToken: res.data.accessToken,
+        refreshToken: res.data.refreshToken,
+        expiryTime: Date.now() + 60 * 60 * 1000,
+        user: res.data.user,
+      };
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -62,10 +85,12 @@ export const postRefresh = createAsyncThunk(
 
 interface sessionSliceState {
   accessToken: string | null;
+  expiryTime: number;
 }
 
 const initialState: sessionSliceState = {
   accessToken: null,
+  expiryTime: 0,
 };
 
 // DESC: slice 부분
@@ -76,23 +101,32 @@ export const sessionSlice = createSlice({
     logout: state => {
       state.accessToken = null;
       clearItem('refreshToken');
+      clearItem('isAuthed');
     },
   },
   extraReducers: builder => {
     builder.addCase(postLogin.fulfilled, (state, action) => {
-      state.accessToken = action.payload.accessToken;
+      const { accessToken, expiryTime } = action.payload;
+      state.accessToken = accessToken;
+      state.expiryTime = expiryTime;
       saveItem('refreshToken', action.payload.refreshToken);
     });
     builder.addCase(postRefresh.fulfilled, (state, action) => {
-      state.accessToken = action.payload.accessToken;
+      const { accessToken, expiryTime } = action.payload;
+      state.accessToken = accessToken;
+      state.expiryTime = expiryTime;
       saveItem('refreshToken', action.payload.refreshToken);
     });
     builder.addCase(postGoogleLogin.fulfilled, (state, action) => {
-      state.accessToken = action.payload.accessToken;
+      const { accessToken, expiryTime } = action.payload;
+      state.accessToken = accessToken;
+      state.expiryTime = expiryTime;
       saveItem('refreshToken', action.payload.refreshToken);
     });
     builder.addCase(postKakaoLogin.fulfilled, (state, action) => {
-      state.accessToken = action.payload.accessToken;
+      const { accessToken, expiryTime } = action.payload;
+      state.accessToken = accessToken;
+      state.expiryTime = expiryTime;
       saveItem('refreshToken', action.payload.refreshToken);
     });
   },
