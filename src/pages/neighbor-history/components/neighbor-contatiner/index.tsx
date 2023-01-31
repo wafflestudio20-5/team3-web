@@ -43,7 +43,7 @@ export const NeighborContainer = () => {
         keyword,
       )) as any;
       setIsLoading(false);
-      dispatch(setPosts(res.data.posts.reverse()));
+      dispatch(setPosts(res.data.posts));
     } else {
       redirectWithMsg(
         2,
