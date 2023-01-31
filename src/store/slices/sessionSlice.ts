@@ -101,7 +101,6 @@ export const sessionSlice = createSlice({
     logout: state => {
       state.accessToken = null;
       clearItem('refreshToken');
-      clearItem('isAuthed');
     },
   },
   extraReducers: builder => {
