@@ -2,7 +2,8 @@ import { useCallback, useState } from 'react';
 
 import * as S from './section0.styled';
 import scroll from '../../../assets/wheel.svg';
-import mockup from '../../../assets/sample.png';
+import landing1 from '../../../assets/landing1.svg';
+import landing2 from '../../../assets/landing2.svg';
 import click from '../../../assets/cursor-white.png';
 
 const Section0 = () => {
@@ -34,14 +35,7 @@ const Section0 = () => {
 
   return (
     <S.Wrapper>
-      <S.ContentWrapper
-        data-aos="zoom-in"
-        data-aos-offset="200"
-        data-aos-mirror={true}
-        data-aos-duration="1000"
-        data-aos-easing="ease-out-cubic"
-        data-aos-anchor-placement="top-center"
-      >
+      <S.ContentWrapper>
         <S.Typing>{text}</S.Typing>
         <S.WindowWrapper>
           <S.Window>
@@ -49,15 +43,20 @@ const Section0 = () => {
               <S.Close />
               <S.Hold />
               <S.Open />
-              {/* 우리 도메인으로 */}
-              <S.Domain>https://www.waffle-market.com</S.Domain>
+              <S.Domain>https://www.waffle-market.store</S.Domain>
             </S.Nav>
             <S.Main>
-              <S.MockUpImg src={mockup} />
+              <S.Video
+                src="https://user-images.githubusercontent.com/109863663/215331189-00359a1e-51e6-444f-a989-4d7f2baa8199.mov"
+                loop
+                autoPlay
+                playsInline
+              ></S.Video>
+              {/* <S.MockUpImg src={mockup} /> */}
             </S.Main>
           </S.Window>
-          <S.MockupImg2 />
-          <S.MockupImg3 />
+          <S.MockupImg2 src={landing1} alt="img" />
+          <S.MockupImg3 src={landing2} alt="img" />
           <S.Cursor src={click} alt="cursor" />
         </S.WindowWrapper>
 
