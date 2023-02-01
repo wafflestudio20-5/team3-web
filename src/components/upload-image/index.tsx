@@ -69,10 +69,11 @@ const UploadImage = ({ imgObject, setImgObject }: UploadImageProps) => {
           </S.Label>
           {previews &&
             previews.length > 0 &&
-            previews.map(elem => {
+            previews.map((elem, index) => {
               return (
                 <PreviewImage
                   key={elem?.id}
+                  order={index}
                   img={elem?.img || ''}
                   handleDelete={() => handleDeleteImg(elem?.id)}
                 />

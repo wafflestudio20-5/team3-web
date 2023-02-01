@@ -10,7 +10,6 @@ export const Container = styled.div`
   flex-direction: column;
   position: relative;
   width: 200px;
-  height: 300px;
   border: 1px solid white;
   border-radius: 12px;
   gap: 4px;
@@ -50,6 +49,11 @@ export const Heart = styled.img`
   top: 208px;
   width: 24px;
   z-index: 1;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 
   @media ${MD_SIZE} {
     top: 146px;

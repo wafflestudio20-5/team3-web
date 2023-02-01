@@ -44,6 +44,10 @@ export const Filter = styled.div`
   right: 20px;
   gap: 4px;
 
+  &:hover {
+    transform: translateY(-2px);
+  }
+
   @media ${MD_SIZE} {
     position: static;
     align-self: flex-end;

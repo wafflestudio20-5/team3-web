@@ -28,7 +28,7 @@ export const getTop3 = createAsyncThunk(
   'tradePost/getTop3',
   async ({ accessToken }: { accessToken: string }, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`${BASE_URL}/tradepost/top3`, {
+      const res = await axiosI.get(`/tradepost/top3`, {
         headers: auth(accessToken),
       });
       return res.data;
@@ -57,8 +57,8 @@ export const createTradePost = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.post<TradePostType>(
-        `${BASE_URL}/tradepost`,
+      const res = await axiosI.post<TradePostType>(
+        `/tradepost`,
         {
           title: values?.title,
           desc: values?.desc,
@@ -95,8 +95,8 @@ export const updateTradePost = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.patch<TradePostType>(
-        `${BASE_URL}/tradepost/${postId}`,
+      const res = await axiosI.patch<TradePostType>(
+        `/tradepost/${postId}`,
         { title, desc, price, imgUrls: imgs },
         { headers: auth(accessToken) },
       );
@@ -114,7 +114,7 @@ export const deleteTradePost = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.delete(`${BASE_URL}/tradepost/${postId}`, {
+      const res = await axiosI.delete(`/tradepost/${postId}`, {
         headers: auth(accessToken),
       });
       return res.data;
@@ -131,8 +131,8 @@ export const postLike = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.post(
-        `${BASE_URL}/tradepost/${postId}/like`,
+      const res = await axiosI.post(
+        `/tradepost/${postId}/like`,
         {},
         {
           headers: auth(accessToken),
@@ -153,12 +153,9 @@ export const getReservation = createAsyncThunk(
   ) => {
     try {
       // TODO: 타입 수정
-      const res = await axios.get(
-        `${BASE_URL}/tradepost/${postId}/reservation`,
-        {
-          headers: auth(accessToken),
-        },
-      );
+      const res = await axiosI.get(`/tradepost/${postId}/reservation`, {
+        headers: auth(accessToken),
+      });
       return res.data;
     } catch (err) {
       return rejectWithValue(err);
@@ -177,8 +174,8 @@ export const postReservation = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.post(
-        `${BASE_URL}/tradepost/${postId}/reservation/${userId}`,
+      const res = await axiosI.post(
+        `/tradepost/${postId}/reservation/${userId}`,
         {},
         { headers: auth(accessToken) },
       );
@@ -196,8 +193,8 @@ export const postConfirmation = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.post(
-        `${BASE_URL}/tradepost/${postId}/confirmation`,
+      const res = await axiosI.post(
+        `/tradepost/${postId}/confirmation`,
         {},
         { headers: auth(accessToken) },
       );

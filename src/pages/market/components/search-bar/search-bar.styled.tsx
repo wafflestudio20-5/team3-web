@@ -6,6 +6,11 @@ export const Wrapper = styled.div`
   flex-direction: row;
   gap: 8px;
 
+  &:hover {
+    box-shadow: 0 5px 10px #f1f1f1;
+    transform: translateY(-2px);
+  }
+
   @media ${MD_SIZE} {
     width: 100vw;
     align-items: center;

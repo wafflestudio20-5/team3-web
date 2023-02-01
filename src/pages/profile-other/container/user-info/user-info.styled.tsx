@@ -61,7 +61,6 @@ export const Email = styled.h3`
   font-weight: 400;
   font-size: 14px;
   color: #737373;
-  margin-bottom: 44px;
 `;
 
 export const ButtonWrapper = styled.div`

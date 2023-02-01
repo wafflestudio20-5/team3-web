@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { axiosI } from '../../api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { auth } from '../../api';
@@ -11,7 +12,7 @@ export const getUUID = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.get(`${BASE_URL}/chat/room/${postId}`, {
+      const res = await axiosI.get(`/chat/room/${postId}`, {
         headers: auth(accessToken),
       });
       return res.data;
@@ -33,8 +34,8 @@ export const getChats = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.get(
-        `${BASE_URL}/chat/messages/${roomUUID}/${uid}?buyer=${isBuyer}`,
+      const res = await axiosI.get(
+        `/chat/messages/${roomUUID}/${uid}?buyer=${isBuyer}`,
         {
           headers: auth(accessToken),
         },
@@ -50,7 +51,7 @@ export const getMyChats = createAsyncThunk(
   'chat/getMyChats',
   async (token: string, { rejectWithValue }) => {
     try {
-      const res = await axios.get<any>(`${BASE_URL}/users/chats`, {
+      const res = await axiosI.get<any>(`/users/chats`, {
         headers: auth(token),
       });
       return res.data;

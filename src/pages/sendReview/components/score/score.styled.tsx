@@ -14,6 +14,12 @@ export const Img = styled.img`
   height: 120px;
   border: 0px solid transparent;
   border-radius: 40px;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 5px 10px #f1f1f1;
+    transform: translateY(-4px);
+  }
 
   @media ${MD_SIZE} {
     width: 100px;

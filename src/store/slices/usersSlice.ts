@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { axiosI } from '../../api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { auth } from '../../api';
@@ -9,7 +10,7 @@ export const getMe = createAsyncThunk(
   'users/getMe',
   async (token: string | null, { rejectWithValue }) => {
     try {
-      const res = await axios.get<User>(`${BASE_URL}/users/me`, {
+      const res = await axiosI.get<User>(`/users/me`, {
         headers: auth(token),
       });
       return res.data;
@@ -23,7 +24,7 @@ export const getMyChats = createAsyncThunk(
   'users/getMyChats',
   async (token: string, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`${BASE_URL}/users/chats`, {
+      const res = await axiosI.get(`/users/chats`, {
         headers: auth(token),
       });
       return res.data;
@@ -37,7 +38,7 @@ export const getUser = createAsyncThunk(
   'users/getUser',
   async (userId: number, { rejectWithValue }) => {
     try {
-      const res = await axios.get<User>(`${BASE_URL}/users/${userId}`);
+      const res = await axiosI.get<User>(`/users/${userId}`);
       return res.data;
     } catch (err) {
       return rejectWithValue(err);
@@ -51,14 +52,20 @@ export const postLocation = createAsyncThunk(
     {
       accessToken,
       currLocation,
-    }: { accessToken: string; currLocation: string | null },
+      coordinate,
+    }: {
+      accessToken: string;
+      currLocation: string | null;
+      coordinate: { lat: number; lng: number };
+    },
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.patch<User>(
-        `${BASE_URL}/users/me/location`,
+      const res = await axiosI.patch<User>(
+        `/users/me/location`,
         {
           location: currLocation,
+          coordinate,
         },
         { headers: auth(accessToken) },
       );
@@ -79,8 +86,8 @@ export const postUsername = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.patch<User>(
-        `${BASE_URL}/users/me/username`,
+      const res = await axiosI.patch<User>(
+        `/users/me/username`,
         {
           username: currUsername,
         },
@@ -106,8 +113,8 @@ export const postPassword = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.patch<User>(
-        `${BASE_URL}/users/me/password`,
+      const res = await axiosI.patch<User>(
+        `/users/me/password`,
         {
           password: values.pw,
           newPassword: values.newPw,
@@ -135,7 +142,7 @@ export const postImg = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.patch(`${BASE_URL}/users/me/image`, formData, {
+      const res = await axiosI.patch(`/users/me/image`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${accessToken}`,
@@ -152,6 +159,7 @@ interface usersSliceState {
   me: User | null;
   currentUser: User | null;
 }
+
 const initialState: usersSliceState = {
   me: null,
   currentUser: null,

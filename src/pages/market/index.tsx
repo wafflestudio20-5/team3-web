@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router';
 import axios from 'axios';
 
 import { toast } from 'react-toastify';
-import { normalToast } from '../../utils/basic-toast-modal';
 import Spinner from '../../components/spinner';
 import Gnb from '../../components/gnb';
 import ShortCut from './components/shortcut';
@@ -18,6 +17,7 @@ import { createTradePost } from '../../store/slices/tradePostSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useAuth } from '../../hooks/useAuth';
 
+import { normalToast } from '../../utils/basic-toast-modal';
 import { redirectWithMsg } from '../../utils/errors';
 import { TradePostType } from '../../types/tradePost';
 import { shortenLocation, getDong } from '../../utils/location';
@@ -102,25 +102,25 @@ const MarketPage = () => {
     // VALID TODO: to function
     const numberReg = /^[0-9]+$/;
     if (!values.title?.trim() || !(values.title.length > 2)) {
-      toast.warn('제목은 3자 이상이어야 합니다.');
+      normalToast('제목은 3자 이상이어야 합니다.');
       return;
     } else if (!values.desc?.trim() || !(values.desc.length > 9)) {
-      toast.warn('내용은 10자 이상이어야 합니다.');
+      normalToast('내용은 10자 이상이어야 합니다.');
       return;
     } else if (!String(values.price).trim()) {
-      toast.warn('가격을 입력해주세요.');
+      normalToast('가격을 입력해주세요.');
       return;
     } else if (Number(values.price) < 0) {
-      toast.warn('음수는 입력하실 수 없습니다.');
+      normalToast('음수는 입력하실 수 없습니다.');
       return;
     } else if (!numberReg.test(String(values.price))) {
-      toast.warn('가격은 숫자만 입력가능합니다.');
+      normalToast('가격은 숫자만 입력가능합니다.');
       return;
     } else if (Number(values.price) % 10 !== 0) {
-      toast.warn('1원 단위는 입력하실 수 없습니다.');
+      normalToast('1원 단위는 입력하실 수 없습니다.');
       return;
     } else if (imgObject.length < 1) {
-      toast.warn('이미지는 최소 한 장 이상 등록해야 합니다.');
+      normalToast('이미지는 최소 한 장 이상 등록해야 합니다.');
       return;
     }
 
@@ -148,22 +148,13 @@ const MarketPage = () => {
             })
             .catch(err => {
               if (axios.isAxiosError(err)) {
-                toast(`🥕 ${err.response?.data.error}`, {
-                  position: 'top-center',
-                  autoClose: 2000,
-                  hideProgressBar: true,
-                  closeOnClick: false,
-                  pauseOnHover: false,
-                  draggable: true,
-                  progress: undefined,
-                  theme: 'light',
-                });
+                normalToast(err.response?.data.error);
               }
             });
         }
       })
       .catch(() => {
-        toast.error('이미지 업로드에 실패했습니다.');
+        normalToast('이미지 업로드에 실패했습니다.');
       });
   };
 

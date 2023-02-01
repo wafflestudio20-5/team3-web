@@ -33,11 +33,6 @@ export const Move = styled.button`
   background-color: transparent;
   font-size: 16px;
   font-weight: 400;
-
-  &:hover {
-    box-shadow: 0 5px 10px #f1f1f1;
-    transform: translateY(-2px);
-  }
 `;
 
 export const More = styled.span`
@@ -53,11 +48,6 @@ export const Button = styled.button<Button>(
   color: ${isCurrent ? 'black' : 'black'};
   background-color: ${isCurrent ? '#f1f3f5' : 'transparent'};
   font-size: 18px;
-  font-weight: ${isCurrent ? 600 : 400};
-  
-  &:hover {
-    box-shadow: 0 5px 10px #f1f1f1;
-    transform: translateY(-2px);
-  }
+  font-weight: ${isCurrent ? 600 : 400}
 `,
 );

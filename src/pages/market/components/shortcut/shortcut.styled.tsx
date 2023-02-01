@@ -10,10 +10,14 @@ export const Container = styled.div`
   flex-direction: column;
   position: relative;
   width: 200px;
-  height: 300px;
   border: 1px solid white;
   border-radius: 12px;
   gap: 4px;
+  transition: 0.3s all;
+  
+  &:hover {
+    transform: translateY(-6px);
+  }
 
   @media ${MD_SIZE} {
     display: flex;

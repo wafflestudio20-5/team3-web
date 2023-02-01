@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 import ButtonMd from '../button-md';
 import { normalToast } from '../../../../utils/basic-toast-modal';
 
+import { Coordinate } from '../../../../types/auth';
+import { getCoordinate } from '../../../../utils/map';
 import { SetEditType, EditType } from '../../../../types/users';
 import { postLocation } from '../../../../store/slices/usersSlice';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
@@ -23,6 +25,12 @@ const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
   const open = useDaumPostcodePopup();
   const { accessToken } = useAppSelector(state => state.session);
   const [currLocation, setCurrLocation] = useState(location || '');
+  const [coordinate, setCoordinate] = useState<Coordinate>({
+    lat: 0,
+    lng: 0,
+  });
+
+  getCoordinate(currLocation, coordinate, setCoordinate);
 
   const handleComplete = (data: any) => {
     const userAddress =
@@ -36,7 +44,7 @@ const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
 
   const handleSubmit = useCallback(() => {
     if (accessToken) {
-      dispatch(postLocation({ accessToken, currLocation }))
+      dispatch(postLocation({ accessToken, currLocation, coordinate }))
         .unwrap()
         .then(() => {
           handleClose({ ...edit, location: false });
