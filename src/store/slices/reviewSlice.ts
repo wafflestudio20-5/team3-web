@@ -48,7 +48,7 @@ export const deleteReview = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.delete(`${BASE_URL}/reviews/${reviewId}`, {
+      const res = await axiosI.delete(`/reviews/${reviewId}`, {
         headers: auth(accessToken),
       });
       return res.data;

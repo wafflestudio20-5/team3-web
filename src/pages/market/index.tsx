@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router';
 import axios from 'axios';
 
 import { toast } from 'react-toastify';
+import { normalToast } from '../../utils/basic-toast-modal';
+import Spinner from '../../components/spinner';
 import Gnb from '../../components/gnb';
 import ShortCut from './components/shortcut';
 import AddButton from './components/add-button';
@@ -14,13 +16,14 @@ import TradePostCreate from '../../components/trade-post-create';
 import { getTradePostList } from '../../store/slices/marketSlice';
 import { createTradePost } from '../../store/slices/tradePostSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAuth } from '../../hooks/useAuth';
 
 import { normalToast } from '../../utils/basic-toast-modal';
 import { redirectWithMsg } from '../../utils/errors';
 import { TradePostType } from '../../types/tradePost';
 import { shortenLocation, getDong } from '../../utils/location';
 
-import { Wrapper, Header, List } from './market.styled';
+import { Wrapper, Header, Filter, CheckBox, Span, List } from './market.styled';
 import defaultImg from '../../assets/default-trade-img.svg';
 import { loadItem } from '../../utils/storage';
 
@@ -29,11 +32,16 @@ const MarketPage = () => {
   const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
   const { me } = useAppSelector(state => state.users);
+  const [isLoading, setIsLoading] = useState(true);
   const [dong, setDong] = useState<string>('내 동네');
   const [keyword, setKeyword] = useState<string>('');
   const [data, setData] = useState<TradePostType[]>([]);
   const [totalPage, setTotalPage] = useState<number>(1);
   const [page, setPage] = useState<number>(1);
+  const [isTrading, setIsTrading] = useState(false);
+  const checkBoxChange = async ({ target }: any) => {
+    target.checked ? setIsTrading(true) : setIsTrading(false);
+  };
 
   // DESC: 중고거래 글쓰기
   const [imgObject, setImgObject] = useState<any>([]);
@@ -157,6 +165,7 @@ const MarketPage = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     if (accessToken) {
       dispatch(
         getTradePostList({
@@ -164,12 +173,14 @@ const MarketPage = () => {
           keyword: keyword,
           page: page,
           limit: 20,
+          isTrading: false,
         }),
       )
         .unwrap()
         .then(res => {
           setData(res.posts);
           setTotalPage(Math.ceil(res.paging.total / res.paging.limit));
+          setIsLoading(false);
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -191,6 +202,7 @@ const MarketPage = () => {
   }, [accessToken, page]);
 
   const searchHandler = () => {
+    setIsLoading(true);
     if (accessToken) {
       dispatch(
         getTradePostList({
@@ -198,6 +210,7 @@ const MarketPage = () => {
           keyword: keyword,
           page: page,
           limit: 20,
+          isTrading: isTrading,
         }),
       )
         .unwrap()
@@ -205,6 +218,7 @@ const MarketPage = () => {
           setData(res.posts);
           setPage(1);
           setTotalPage(Math.ceil(res.paging.total / res.paging.limit));
+          setIsLoading(false);
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -231,13 +245,23 @@ const MarketPage = () => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [accessToken, keyword]);
+  }, [accessToken, keyword, isTrading]);
 
   useEffect(() => {
     if (me) {
       setDong(getDong(me.location) as string);
     }
   }, [me, accessToken]);
+  const { sessionLoading, isAuthed } = useAuth();
+
+  if (!sessionLoading && !isAuthed) {
+    navigate('/login');
+    normalToast('로그인이 필요합니다.');
+  }
+
+  if (sessionLoading || !isAuthed) {
+    return <Spinner />;
+  }
 
   return (
     <>
@@ -245,6 +269,10 @@ const MarketPage = () => {
       {accessToken && (
         <Wrapper>
           <Header>
+            <Filter>
+              <CheckBox type="checkbox" onChange={checkBoxChange} />
+              <Span>거래완료 상품 제외</Span>
+            </Filter>
             <SearchBar
               keyword={keyword}
               setKeyword={setKeyword}
@@ -252,25 +280,30 @@ const MarketPage = () => {
               dong={dong}
             />
           </Header>
-          <List>
-            {data.map(post => {
-              return (
-                <ShortCut
-                  key={post?.postId}
-                  id={post?.postId}
-                  img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
-                  title={post?.title}
-                  tradeStatus={post?.tradeStatus}
-                  price={post?.price}
-                  location={shortenLocation(post?.seller.location)}
-                  likes={post?.likeCount}
-                  chats={post?.reservationCount}
-                  created_at={post?.createdAt}
-                />
-              );
-            })}
-          </List>
-          <Pagination total={totalPage} page={page} setPage={changePage} />
+          {isLoading && <Spinner />}
+          {!isLoading && (
+            <List>
+              {data.map(post => {
+                return (
+                  <ShortCut
+                    key={post?.postId}
+                    id={post?.postId}
+                    img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
+                    title={post?.title}
+                    tradeStatus={post?.tradeStatus}
+                    price={post?.price}
+                    location={shortenLocation(post?.seller.location)}
+                    likes={post?.likeCount}
+                    chats={post?.reservationCount}
+                    created_at={post?.createdAt}
+                  />
+                );
+              })}
+            </List>
+          )}
+          {!isLoading && (
+            <Pagination total={totalPage} page={page} setPage={changePage} />
+          )}
           <AddButton handleClick={() => setOpenCreatePost(true)} />
         </Wrapper>
       )}

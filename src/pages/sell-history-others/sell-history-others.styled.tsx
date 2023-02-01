@@ -68,6 +68,20 @@ export const List = styled.div`
   column-gap: 30px;
   row-gap: 100px;
 
+  animation: fadein 1s;
+  -moz-animation: fadein 1s; /* Firefox */
+  -webkit-animation: fadein 1s; /* Safari and Chrome */
+  -o-animation: fadein 1s; /* Opera */
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
   @media ${MD_SIZE} {
     display: flex;
     flex-direction: column;

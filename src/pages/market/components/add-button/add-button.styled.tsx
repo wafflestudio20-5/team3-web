@@ -10,6 +10,10 @@ export const Button = styled.img`
   cursor: pointer;
   transition: 0.3s all;
 
+  &:hover {
+    transform: translateY(-2px);
+  }
+
   @media ${MD_SIZE} {
     right: 30px;
     bottom: 30px;

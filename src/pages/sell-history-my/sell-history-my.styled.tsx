@@ -8,6 +8,20 @@ export const Wrapper = styled.div`
   align-content: center;
   align-items: center;
   justify-content: center;
+
+  animation: fadein 1s;
+  -moz-animation: fadein 1s; /* Firefox */
+  -webkit-animation: fadein 1s; /* Safari and Chrome */
+  -o-animation: fadein 1s; /* Opera */
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 export const Header = styled.div`
@@ -67,6 +81,20 @@ export const List = styled.div`
   grid-template-columns: repeat(4, 200px);
   column-gap: 30px;
   row-gap: 100px;
+
+  animation: fadein 1s;
+  -moz-animation: fadein 1s; /* Firefox */
+  -webkit-animation: fadein 1s; /* Safari and Chrome */
+  -o-animation: fadein 1s; /* Opera */
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 
   @media ${MD_SIZE} {
     display: flex;
