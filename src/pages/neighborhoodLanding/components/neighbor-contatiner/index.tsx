@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { requestNeighborhood } from '../../../../api/neighborhood';
 import { neighborPost } from '../../../../types/neighborhood';
 import { toast } from 'react-toastify';
+import { loadItem } from '../../../../utils/storage';
 import { redirectWithMsg } from '../../../../utils/errors';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -20,7 +21,7 @@ import Pagination from '../pagination';
 
 export const NeighborContainer = () => {
   const dispatch = useAppDispatch();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState('');
   // const [posts, setPosts] = useState<Array<neighborPost>>([]);

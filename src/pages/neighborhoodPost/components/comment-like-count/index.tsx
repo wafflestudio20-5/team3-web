@@ -1,6 +1,7 @@
 import * as S from './comment-like-count.style';
 import likeBlank from '../../../../assets/like-blank.svg';
 import likeFill from '../../../../assets/like-fill.svg';
+import { loadItem } from '../../../../utils/storage';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useEffect, useState } from 'react';
 import {
@@ -29,7 +30,7 @@ CommentLikeCountProps) => {
   const { isLiked, likeCount, commentCount } = useAppSelector(
     state => state.neighborhoodPost,
   );
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
 
   const [likeIcon, setLikeIcon] = useState(likeBlank);
   useEffect(() => {

@@ -12,6 +12,7 @@ import {
 import { accessToken, BASE_URL } from '../../../../constant';
 import defaultProfile from '../../../../assets/default-profile.png';
 
+import { loadItem } from '../../../../utils/storage';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { setComments } from '../../../../store/slices/neighborhoodSlice';
 import { User } from '../../../../types/users';
@@ -38,7 +39,7 @@ export const Comment = ({
   modifiedAt,
 }: CommentProps) => {
   const dispatch = useAppDispatch();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const { me } = useAppSelector(state => state.users);
   const [input, setInput] = useState(content);
   const [isEdit, setIsEdit] = useState(false);

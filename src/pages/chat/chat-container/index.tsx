@@ -8,6 +8,7 @@ import Dialog from '../components/dialog';
 import Spinner from '../../../components/spinner';
 
 import { BASE_URL } from '../../../constant';
+import { loadItem } from '../../../utils/storage';
 import { redirectWithMsg } from '../../../utils/errors';
 import { getChats } from '../../../store/slices/chatSlice';
 import { ChatMessageType, SubBodyType } from '../../../types/chat';
@@ -27,7 +28,7 @@ const ChatContainer = () => {
 
   const { me } = useAppSelector(state => state.users);
   const { you } = useAppSelector(state => state.chat);
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
 
   // TODO: client 타입 정보
   const client = useRef<any>({});
@@ -248,7 +249,9 @@ const ChatContainer = () => {
         .unwrap()
         .then(() => {
           toast('판매 완료로 변경되었습니다');
-          publish('🍀 [알림] 거래가 완료되었습니다.🍀\n거래가 어땠는지 후기를 남겨주세요!');
+          publish(
+            '🍀 [알림] 거래가 완료되었습니다.🍀\n거래가 어땠는지 후기를 남겨주세요!',
+          );
           getPost();
         })
         .catch(err => {

@@ -5,6 +5,7 @@ import axios from 'axios';
 import ButtonMd from '../button-md';
 import { SetEditType, EditType } from '../../../../types/users';
 import { postUsername } from '../../../../store/slices/usersSlice';
+import { loadItem } from '../../../../utils/storage';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 import * as S from './edit-username.styled';
@@ -26,7 +27,7 @@ const EditUsername = ({
 }: EditUsernameProps) => {
   const dispatch = useAppDispatch();
   const [currUsername, setCurrUsername] = useState(username);
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setCurrUsername(e.target.value);
@@ -48,7 +49,7 @@ const EditUsername = ({
           handleClose({ ...edit, username: false });
           toast.success('닉네임이 변경되었습니다.');
         })
-        .catch((err: { response: { data: { error: string; }; }; }) => {
+        .catch((err: { response: { data: { error: string } } }) => {
           if (axios.isAxiosError(err)) {
             normalToast(err.response?.data.error);
           }

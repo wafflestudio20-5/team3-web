@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { postImg } from '../../../../store/slices/usersSlice';
 import { SetEditType, EditType } from '../../../../types/users';
 import { normalToast } from '../../../../utils/basic-toast-modal';
+import { loadItem } from '../../../../utils/storage';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 import ButtonMd from '../button-md';
@@ -19,7 +20,7 @@ interface EditImgProps {
 
 const EditImg = ({ img, edit, handleClose }: EditImgProps) => {
   const dispatch = useAppDispatch();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
 
   const imgRef = useRef<HTMLInputElement | null>(null);
   const [preview, setPreview] = useState<string | null>(img);

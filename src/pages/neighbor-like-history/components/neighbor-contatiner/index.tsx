@@ -15,6 +15,7 @@ import { neighborPost } from '../../../../types/neighborhood';
 import { toast } from 'react-toastify';
 import { redirectWithMsg } from '../../../../utils/errors';
 import { useNavigate } from 'react-router-dom';
+import { loadItem } from '../../../../utils/storage';
 import axios from 'axios';
 import { setPosts } from '../../../../store/slices/neighborhoodPostListSlice';
 import SearchBar from '../search-bar';
@@ -22,7 +23,7 @@ import Spinner from '../../../../components/spinner';
 
 export const NeighborContainer = () => {
   const dispatch = useAppDispatch();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const { me } = useAppSelector(state => state.users);
   const navigate = useNavigate();
   const pageNum = useRef(1);

@@ -38,7 +38,7 @@ import { loadItem } from '../../utils/storage';
 const MarketPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const { me } = useAppSelector(state => state.users);
   const [isLoading, setIsLoading] = useState(true);
   const [dong, setDong] = useState<string>('내 동네');

@@ -4,6 +4,7 @@ import { requestNeighborhoodPost } from '../../api/neighborhood';
 import ContentFooter from '../../components/content-footer';
 import Gnb from '../../components/gnb';
 import { LONG_TEXT } from '../../constant';
+import { loadItem } from '../../utils/storage';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { setPost } from '../../store/slices/neighborhoodPostSlice';
 import { setComments } from '../../store/slices/neighborhoodSlice';
@@ -25,7 +26,7 @@ export const NeighborhoodPostPage = () => {
   const params = useParams();
   const id = Number(params.id);
   const dispatch = useAppDispatch();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const { me } = useAppSelector(state => state.users);
   const post = useAppSelector(state => state.neighborhoodPost);
   // const [post, setPost] = useState<neighborPost>({} as neighborPost);

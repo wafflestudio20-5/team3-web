@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { normalToast } from '../../utils/basic-toast-modal';
 import { useAuth } from '../../hooks/useAuth';
+import { loadItem } from '../../utils/storage';
 import Spinner from '../../components/spinner';
 import Gnb from '../../components/gnb';
 import ShortCut from './components/shortcut';
@@ -20,7 +21,7 @@ import defaultImg from '../../assets/default-trade-img.svg';
 const LikeHistoryPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const { me } = useAppSelector(state => state.users);
   const [data, setData] = useState<TradeHistory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
