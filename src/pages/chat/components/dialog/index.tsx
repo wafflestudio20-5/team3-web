@@ -82,21 +82,28 @@ const Dialog = ({
               {toStringNumWithComma(product?.price)}원
             </S.ProductPrice>
           </S.ProductInfo>
-          {meSeller && product.tradeStatus === TradeStatusType.TRADING && (
+          {meSeller && product?.tradeStatus === TradeStatusType.TRADING && (
             <S.TradeButtonM onClick={handleSetReservation}>
               예약하기
             </S.TradeButtonM>
           )}
           {meSeller &&
+            product?.tradeStatus === TradeStatusType.RESERVATION &&
+            product?.buyer.id === to.id && (
+              <S.TradeButtonL onClick={handleSetReservation}>
+                예약자 변경하기
+              </S.TradeButtonL>
+            )}
+          {meSeller &&
             youBuyer &&
-            product.tradeStatus === TradeStatusType.RESERVATION && (
+            product?.tradeStatus === TradeStatusType.RESERVATION && (
               <S.TradeButtonL onClick={handleTradeConfirmation}>
                 거래 확정하기
               </S.TradeButtonL>
             )}
           {meSeller &&
             youBuyer &&
-            product.tradeStatus === TradeStatusType.COMPLETED &&
+            product?.tradeStatus === TradeStatusType.COMPLETED &&
             !isReviewed && (
               <S.TradeButtonM
                 onClick={() => navigate(`/tradePost/${postId}/review`)}
@@ -106,11 +113,29 @@ const Dialog = ({
             )}
           {meSeller &&
             youBuyer &&
-            product.tradeStatus === TradeStatusType.COMPLETED &&
+            product?.tradeStatus === TradeStatusType.COMPLETED &&
             isReviewed && (
-              <S.TradeButtonL onClick={() => setIsModalOpen(true)}>
-                보낸 후기 보기
-              </S.TradeButtonL>
+              <S.TradeButtonM onClick={() => setIsModalOpen(true)}>
+                후기 보기
+              </S.TradeButtonM>
+            )}
+          {!meSeller &&
+            !youBuyer &&
+            product?.tradeStatus === TradeStatusType.COMPLETED &&
+            !isReviewed && (
+              <S.TradeButtonM
+                onClick={() => navigate(`/tradePost/${postId}/review`)}
+              >
+                후기 보내기
+              </S.TradeButtonM>
+            )}
+          {!meSeller &&
+            !youBuyer &&
+            product?.tradeStatus === TradeStatusType.COMPLETED &&
+            isReviewed && (
+              <S.TradeButtonM onClick={() => setIsModalOpen(true)}>
+                후기 보기
+              </S.TradeButtonM>
             )}
         </S.Product>
 
@@ -185,7 +210,6 @@ const Dialog = ({
           reviews={product.reviews}
           seller={meSeller ? from : to}
           buyer={youBuyer ? to : from}
-          
         />
       )}
     </S.OuterWrapper>
