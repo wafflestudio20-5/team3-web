@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 export const Container = styled(motion.div)`
   width: 120px;
   position: absolute;
+  z-index: 3;
   top: 240px;
   right: 4px;
   background-color: transparent;
