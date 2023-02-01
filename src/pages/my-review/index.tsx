@@ -110,7 +110,7 @@ const MyReviewPage = () => {
                 removeReview={removeReview}
               />
             ))}
-            {!data[0] && <Message>아직 리뷰가 없습니다</Message>}
+            {!data[0] && <Message>아직 후기가 없습니다</Message>}
           </List>
         )}
       </Wrapper>
