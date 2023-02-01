@@ -15,6 +15,11 @@ export const Container = styled.div`
   border-radius: 12px;
   gap: 4px;
 
+  transition: 0.3s all;
+  &:hover {
+    transform: translateY(-6px);
+  }
+
   @media ${MD_SIZE} {
     display: flex;
     flex-direction: row;
