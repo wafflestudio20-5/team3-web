@@ -38,6 +38,7 @@ const MarketPage = () => {
   const [totalPage, setTotalPage] = useState<number>(1);
   const [page, setPage] = useState<number>(1);
   const [isTrading, setIsTrading] = useState(false);
+  const [isFirst, setIsFirst] = useState(true);
   const checkBoxChange = async ({ target }: any) => {
     target.checked ? setIsTrading(true) : setIsTrading(false);
   };
@@ -163,7 +164,7 @@ const MarketPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  useEffect(() => {
+  const getFirstList = () => {
     setIsLoading(true);
     if (accessToken) {
       dispatch(
@@ -180,6 +181,7 @@ const MarketPage = () => {
           setData(res.posts);
           setTotalPage(Math.ceil(res.paging.total / res.paging.limit));
           setIsLoading(false);
+          setIsFirst(false);
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -198,6 +200,10 @@ const MarketPage = () => {
           }
         });
     }
+  };
+
+  useEffect(() => {
+    getFirstList();
   }, [accessToken, page]);
 
   const searchHandler = () => {
@@ -239,11 +245,13 @@ const MarketPage = () => {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      searchHandler();
-    }, 300);
+    if (!isFirst) {
+      const timer = setTimeout(() => {
+        searchHandler();
+      }, 300);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    }
   }, [accessToken, keyword, isTrading]);
 
   useEffect(() => {
