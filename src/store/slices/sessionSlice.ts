@@ -15,7 +15,6 @@ export const postLogin = createAsyncThunk(
         email: email,
         password: password,
       });
-      console.log(res);
       return {
         accessToken: res.data.accessToken,
         refreshToken: res.data.refreshToken,
