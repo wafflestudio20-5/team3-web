@@ -22,6 +22,7 @@ const TemperatureBar = ({ temperature }: TemperatureBarProps) => {
   const [width, setWidth] = useState(temperature);
   const [barColor, setBarColor] = useState('#EEEEEE');
   const [tempIcon, setTempIcon] = useState(COLOR_MANNER_DEFAULT);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (temperature) {
@@ -55,8 +56,24 @@ const TemperatureBar = ({ temperature }: TemperatureBarProps) => {
 
         <S.ProgressBg />
         <S.ProgressTemp width={width} bgColor={barColor} />
+        {openModal && (
+          <S.ArrowBox>
+            {
+              '와플동네는 현재 설정된 나의 동네를\n보여줘요. 범위를 설정하고 주변의\n따뜻한 이웃들과 거래하세요.'
+            }
+          </S.ArrowBox>
+        )}
       </S.Wrapper>
-      <S.MannerTemp>매너온도</S.MannerTemp>
+      <S.MannerTemp
+        onMouseOver={() => {
+          setOpenModal(true);
+        }}
+        onMouseOut={() => {
+          setOpenModal(false);
+        }}
+      >
+        매너온도
+      </S.MannerTemp>
     </>
   );
 };
