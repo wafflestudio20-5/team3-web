@@ -1,8 +1,12 @@
+import { useNavigate } from 'react-router-dom';
+
 import * as S from './section5.styled';
 import joinUs from '../../../assets/intro-joinus.png';
 import { ReactComponent as ArrowDown } from '../../../assets/arrow-down.svg';
 
 const Section5 = () => {
+  const navigate = useNavigate();
+
   return (
     <S.Wrapper>
       <S.BgWrapper>
@@ -20,6 +24,7 @@ const Section5 = () => {
           data-aos-duration="1000"
           data-aos-easing="ease-out-cubic"
           data-aos-anchor-placement="top-bottom"
+          onClick={() => navigate('/market')}
         >
           와플마켓 시작하기
         </S.Button>

@@ -2,9 +2,10 @@ import styled from 'styled-components';
 
 export const PositionWrapper = styled.div`
   position: relative;
-  width: 155px;
-  height: 155px;
-  margin-bottom: 24px;
+  width: 170px;
+  height: 170px;
+  margin-bottom: 30px;
+  margin-top: 10px;
 `;
 
 export const ProflieImg = styled.img`
@@ -12,6 +13,7 @@ export const ProflieImg = styled.img`
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
+  border: 1px solid #f2f2f2;
 `;
 
 export const BadgeWrapper = styled.div`

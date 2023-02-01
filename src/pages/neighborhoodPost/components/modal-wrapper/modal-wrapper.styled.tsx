@@ -1,6 +1,3 @@
-// DESC: 아직 PR에 있는 코드를 pull 받지 못하여, PR #30에 있는 코드를 그대로 복사하였습니다..
-// pull 이후 삭제할지 말지 결정하겠습니다. (변동사항 있으면 현재 파일에 코멘트 후 그대로 남겨두겠습니다.)
-
 import styled from 'styled-components';
 
 export const Dim = styled.div`
@@ -11,8 +8,9 @@ export const Dim = styled.div`
   position: fixed;
   top: 0;
   background-color: #00000072;
-  z-index: 1000;
+  z-index: 999;
   animation: modalBgShow 0.3s;
+
   @keyframes modalBgShow {
     from {
       opacity: 0;
@@ -30,6 +28,7 @@ export const FixedWrapper = styled.div`
   height: 100vh;
   position: fixed;
   top: 0;
+  left: -20px;
   background-color: transparent;
 `;
 
@@ -50,8 +49,9 @@ export const ModalContainer = styled.div`
   padding-bottom: 30px;
   background-color: #fff;
   border-radius: 15px;
-  z-index: 1001;
+  z-index: 1000;
   animation: modalShow 0.3s;
+
   @keyframes modalShow {
     from {
       opacity: 0;
@@ -62,6 +62,4 @@ export const ModalContainer = styled.div`
       margin-top: 0;
     }
   }
-  // DESC: box shadow 추가
-  box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.1);
 `;

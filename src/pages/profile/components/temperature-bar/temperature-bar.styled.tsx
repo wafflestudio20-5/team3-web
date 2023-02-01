@@ -56,20 +56,21 @@ export const ProgressTemp = styled.div<DivProps>(
   background: ${bgColor || '#EEEEEE'};
   border-radius: 6px;
 
-  animation-name: run;
-  animation-delay: 0.5s;
-  animation-duration: 1.5s;
-  animation-fill-mode: forwards;
+  // animation-name: run;
+  // animation-delay: 0.5s;
+  // animation-duration: 1.5s;
+  // animation-fill-mode: forwards;
   
-  // DESC: progress animation
-  @keyframes run {
-    from {
-      width: 0%;
-    }
-    to {
-      width: ${width || 36.5}%;
-    }
-  }
+  width: ${width}%;
+  // // DESC: progress animation
+  // @keyframes run {
+  //   from {
+  //     width: 0%;
+  //   }
+  //   to {
+  //     width: ${width}%;
+  //   }
+  // }
 `,
 );
 

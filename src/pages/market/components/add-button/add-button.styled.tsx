@@ -5,9 +5,10 @@ export const Button = styled.img`
   position: fixed;
   right: 50px;
   bottom: 50px;
-  width: 90px;
-  height: 90px;
+  width: 88px;
+  height: 88px;
   cursor: pointer;
+  transition: 0.3s all;
 
   &:hover {
     transform: translateY(-2px);
@@ -16,5 +17,9 @@ export const Button = styled.img`
   @media ${MD_SIZE} {
     right: 30px;
     bottom: 30px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
   }
 `;

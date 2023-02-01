@@ -1,7 +1,11 @@
+import { useNavigate } from 'react-router-dom';
+
 import * as S from './section4.styled';
 import sampleImg from '../../../assets/intro-web/phono-image-2.png';
 
 const Section4 = () => {
+  const navigate = useNavigate();
+
   return (
     <S.Wrapper>
       <S.BgWrapper id="anchor6">
@@ -33,7 +37,7 @@ const Section4 = () => {
             <S.Subtitle>가장 먼저 예약하세요!</S.Subtitle>
           </S.SubtitleWrapper>
 
-          <S.Button onClick={() => alert('인기 상품 이동')}>
+          <S.Button onClick={() => navigate('/market')}>
             현재 인기매물 보러가기
           </S.Button>
         </S.TitleWrapper>

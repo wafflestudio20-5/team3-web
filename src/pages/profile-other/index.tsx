@@ -5,13 +5,14 @@ import axios from 'axios';
 import Gnb from '../../components/gnb';
 import Header from './components/header';
 import UserInfo from './container/user-info';
+import Spinner from '../../components/spinner';
 import TxInfo from './container/transaction-info';
 import ContentFooter from '../../components/content-footer';
 import NavigationButton from './components/navigation-button';
 
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { redirectWithMsg } from '../../utils/errors';
 import { getUser } from '../../store/slices/usersSlice';
+import { normalToast } from '../../utils/basic-toast-modal';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import * as S from './profile.styled';
 import lifeIcon from '../../assets/life-icon.svg';
@@ -35,12 +36,20 @@ const ProfileOtherPage = () => {
         .catch(err => {
           if (axios.isAxiosError(err)) {
             if (err.response?.status === 404) {
-              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
+              normalToast(err.response?.data.error);
+              navigate(-1);
+            } else {
+              normalToast('요청을 수행할 수 없습니다.');
+              navigate(-1);
             }
           }
         });
     }
   }, [userId]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <S.Wrapper>

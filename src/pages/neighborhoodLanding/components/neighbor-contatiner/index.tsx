@@ -14,16 +14,21 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { setPosts } from '../../../../store/slices/neighborhoodPostListSlice';
 import SearchBar from '../search-bar';
+import { devNull } from 'os';
+import Spinner from '../../../../components/spinner';
+import Pagination from '../pagination';
 
 export const NeighborContainer = () => {
   const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
   const navigate = useNavigate();
-  const pageNum = useRef(1);
   const [keyword, setKeyword] = useState('');
   // const [posts, setPosts] = useState<Array<neighborPost>>([]);
   const posts = useAppSelector(state => state.neighborhoodPostList);
+  const [totalPage, setTotalPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const handleModalClose = () => {
     setIsModalOpen(prev => !prev);
   };
@@ -32,10 +37,12 @@ export const NeighborContainer = () => {
     if (accessToken) {
       const res = (await requestNeighborhood(
         accessToken,
-        pageNum.current,
+        page,
         keyword,
       )) as any;
-      dispatch(setPosts(res.data));
+      dispatch(setPosts(res.data.posts));
+      setTotalPage(Math.ceil(res.data.paging?.total / res.data.paging?.limit));
+      setIsLoading(false);
     } else {
       redirectWithMsg(
         2,
@@ -53,72 +60,63 @@ export const NeighborContainer = () => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [accessToken, keyword]);
+  }, [accessToken, page, keyword]);
 
-  const handleMoreButtonClick = async () => {
-    if (accessToken) {
-      pageNum.current++;
-      const res = (await requestNeighborhood(
-        accessToken,
-        pageNum.current,
-        keyword,
-      )) as any;
-      console.log(pageNum.current);
-      dispatch(setPosts(res.data.reverse().concat(posts)));
-    } else {
-      redirectWithMsg(
-        2,
-        '액세스 토큰이 유효하지 않습니다. 다시 로그인해 주세요.',
-        () => {
-          navigate('/login');
-        },
-      );
-    }
+  const changePage = (page: number) => {
+    setPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <>
-      <S.TopTextWrapper>
-        <S.TopText>동네정보</S.TopText>
-      </S.TopTextWrapper>
-      <SearchBar
-        keyword={keyword}
-        setKeyword={setKeyword}
-        searchClick={() => {
-          console.log('clicked');
-        }}
-        dong="내 동네"
-      />
-      <S.Container>
-        {posts
-          ? posts.map(post => (
-              <ShortCut
-                key={post.postId}
-                id={post.postId}
-                content={post.content}
-                location={post.publisher.location}
-                modifiedAt={post.modifiedAt}
-                likeCount={post.likeCount}
-                commentCount={post.commentCount}
-              />
-            ))
-          : null}
-
-        <AddButton
-          handleClick={() => {
-            setIsModalOpen(prev => !prev);
-          }}
-        />
-        {isModalOpen && (
-          <ModalWrapper handleClose={handleModalClose}>
-            <AddModal
-              handleClose={() => {
-                handleModalClose();
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <S.TopTextWrapper>
+            <S.TopText>동네생활</S.TopText>
+          </S.TopTextWrapper>
+          <SearchBar
+            keyword={keyword}
+            setKeyword={setKeyword}
+            searchClick={() => {
+              console.log('clicked');
+            }}
+            dong="내 동네"
+          />
+          <S.Container>
+            {posts
+              ? posts.map(post => (
+                  <ShortCut
+                    key={post.postId}
+                    id={post.postId}
+                    content={post.content}
+                    location={post.publisher.location}
+                    isLiked={post.isLiked}
+                    modifiedAt={post.modifiedAt}
+                    likeCount={post.likeCount}
+                    commentCount={post.commentCount}
+                  />
+                ))
+              : null}
+            <Pagination total={totalPage} page={page} setPage={changePage} />
+            <AddButton
+              handleClick={() => {
+                setIsModalOpen(prev => !prev);
               }}
             />
-          </ModalWrapper>
-        )}
-      </S.Container>
+            {isModalOpen && (
+              <ModalWrapper handleClose={handleModalClose}>
+                <AddModal
+                  handleClose={() => {
+                    handleModalClose();
+                  }}
+                />
+              </ModalWrapper>
+            )}
+          </S.Container>
+        </>
+      )}
     </>
   );
 };

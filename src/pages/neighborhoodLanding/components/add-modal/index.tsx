@@ -32,15 +32,16 @@ export const AddModal = ({ handleClose }: AddModalProps) => {
 
   const handleClick = async () => {
     if (accessToken) {
-      const res = await requestPostNeighborhood(
-        { title, content },
-        accessToken,
-      ).then(async () => {
-        toast('글 작성이 완료되었습니다.');
-        const res = (await requestNeighborhood(accessToken, 1, '')) as any;
-        dispatch(setPosts(res.data));
-        handleClose();
-      });
+      const res = await requestPostNeighborhood({ title, content }, accessToken)
+        .then(async () => {
+          toast('글 작성이 완료되었습니다.');
+          const res = (await requestNeighborhood(accessToken, 1, '')) as any;
+          dispatch(setPosts(res.data.posts));
+          handleClose();
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   };
 
@@ -59,8 +60,10 @@ export const AddModal = ({ handleClose }: AddModalProps) => {
         <S.SpanTitle>동네생활 글쓰기</S.SpanTitle>
         <S.SpanComplete onClick={handleClick}>완료</S.SpanComplete>
       </S.TopWrapper>
+
       <S.DescWrapper>
         <S.Desc
+          required
           placeholder="우리 동네 관련된 질문이나 이야기를 해보세요."
           name="content"
           value={content}
@@ -68,6 +71,7 @@ export const AddModal = ({ handleClose }: AddModalProps) => {
           onKeyPress={onKeyPress}
         />
       </S.DescWrapper>
+
       <S.NoticeWrapper>
         <S.NoticeTitleSpan>글 작성하기 전에 알려드려요.</S.NoticeTitleSpan>
         <S.NoticeSpan>

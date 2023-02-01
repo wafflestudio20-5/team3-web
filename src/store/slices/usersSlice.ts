@@ -52,7 +52,12 @@ export const postLocation = createAsyncThunk(
     {
       accessToken,
       currLocation,
-    }: { accessToken: string; currLocation: string | null },
+      coordinate,
+    }: {
+      accessToken: string;
+      currLocation: string | null;
+      coordinate: { lat: number; lng: number };
+    },
     { rejectWithValue },
   ) => {
     try {
@@ -60,6 +65,7 @@ export const postLocation = createAsyncThunk(
         `/users/me/location`,
         {
           location: currLocation,
+          coordinate,
         },
         { headers: auth(accessToken) },
       );
@@ -153,6 +159,7 @@ interface usersSliceState {
   me: User | null;
   currentUser: User | null;
 }
+
 const initialState: usersSliceState = {
   me: null,
   currentUser: null,
