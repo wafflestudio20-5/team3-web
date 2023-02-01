@@ -98,6 +98,7 @@ const SellHistoryMyPage = () => {
                   key={post?.postId}
                   postId={post?.postId}
                   img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
+                  imageUrls={post?.imageUrls}
                   title={post?.title}
                   tradeStatus={post?.tradeStatus}
                   price={post?.price}

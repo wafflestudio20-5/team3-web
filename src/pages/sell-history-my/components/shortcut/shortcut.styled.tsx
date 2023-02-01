@@ -29,6 +29,11 @@ export const Container = styled.div`
     border-collapse: collapse;
     border-radius: 0;
     gap: 4px;
+
+    &:hover {
+      box-shadow: 0 0 0 0;
+      transform: none;
+    }
   }
 `;
 
@@ -127,5 +132,25 @@ export const More = styled.img`
     top: 20px;
     right: 16px;
     width: 24px;
+  }
+`;
+
+export const ReviewButton = styled.button`
+  display: none;
+
+  @media ${MD_SIZE} {
+    display: block;
+    position: absolute;
+    z-index: -1;
+    right: 30px;
+    bottom: 30px;
+    border-radius: 4px;
+    padding: 4px 10px;
+    line-height: 150%;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: #ff6f0f;
+    color: rgb(255, 255, 255);
+    margin-left: auto;
   }
 `;

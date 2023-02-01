@@ -121,3 +121,22 @@ export const More = styled.img`
     width: 24px;
   }
 `;
+
+export const ReviewButton = styled.button`
+  display: none;
+
+  @media ${MD_SIZE} {
+    display: block;
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    border-radius: 4px;
+    padding: 4px 10px;
+    line-height: 150%;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: #ff6f0f;
+    color: rgb(255, 255, 255);
+    margin-left: auto;
+  }
+`;
