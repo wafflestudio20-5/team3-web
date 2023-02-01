@@ -17,6 +17,20 @@ export const Wrapper = styled.div`
   height: auto;
   max-width: 740px;
   width: 100%;
+
+  animation: fadein 2s;
+  -moz-animation: fadein 2s; /* Firefox */
+  -webkit-animation: fadein 2s; /* Safari and Chrome */
+  -o-animation: fadein 2s; /* Opera */
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 export const ContentWrapper = styled.div`

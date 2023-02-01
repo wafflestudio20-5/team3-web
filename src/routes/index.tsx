@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import PrivateRoute from './PrivateRoute';
+
 import HomePage from '../pages/home';
 import ErrorPage from '../pages/error';
 import LoginPage from '../pages/login';
@@ -30,32 +32,68 @@ function EntryRoute() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/*" element={<ErrorPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route element={<PrivateRoute authentication={false} />}>
+          <Route path="/signup" element={<SignUpPage />} />
+        </Route>
+        <Route element={<PrivateRoute authentication={false} />}>
+          <Route path="/login" element={<LoginPage />} />
+        </Route>
         <Route path="/login/kakao" element={<KaKaoLogin />} />
         <Route path="/login/google" element={<GoogleLoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/profile/me" element={<ProfilePage />} />
-        <Route path="/profile/me/review" element={<MyReviewPage />} />
-        <Route path="/profile/:id" element={<ProfileOtherPage />} />
-        <Route path="/profile/:id/review" element={<OthersReviewPage />} />
-        <Route path="/profile/me/sell" element={<SellHistoryMyPage />} />
-        <Route path="/profile/:id/sell" element={<SellHistoryOthersPage />} />
-        <Route path="/profile/me/buy" element={<BuyHistoryPage />} />
-        <Route path="/profile/me/like" element={<LikeHistoryPage />} />
-        <Route
-          path="/profile/me/neighborhood"
-          element={<NeighborHistoryPage />}
-        />
-        <Route
-          path="/profile/me/neighborhoodlike"
-          element={<NeighborHistoryLikePage />}
-        />
-        <Route path="/market" element={<MarketPage />} />
-        <Route path="/tradepost/:id" element={<TradePostPage />} />
-        <Route path="/tradepost/:id/review" element={<SendReview />} />
-        <Route path="/chat/messages/:UUID/:uid/:pid" element={<ChatPage />} />
-        <Route path="/neighborhood" element={<NeighborhoodLanding />} />
-        <Route path="/neighborhood/:id" element={<NeighborhoodPostPage />} />
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route path="/profile/me" element={<ProfilePage />} />
+        </Route>
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route path="/profile/me/review" element={<MyReviewPage />} />
+        </Route>
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route path="/profile/:id" element={<ProfileOtherPage />} />
+        </Route>
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route path="/profile/:id/review" element={<OthersReviewPage />} />
+        </Route>
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route path="/profile/me/sell" element={<SellHistoryMyPage />} />
+        </Route>
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route path="/profile/:id/sell" element={<SellHistoryOthersPage />} />
+        </Route>
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route path="/profile/me/buy" element={<BuyHistoryPage />} />
+        </Route>
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route path="/profile/me/like" element={<LikeHistoryPage />} />
+        </Route>
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route
+            path="/profile/me/neighborhood"
+            element={<NeighborHistoryPage />}
+          />
+        </Route>
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route
+            path="/profile/me/neighborhoodlike"
+            element={<NeighborHistoryLikePage />}
+          />
+        </Route>
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route path="/market" element={<MarketPage />} />
+        </Route>
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route path="/tradepost/:id" element={<TradePostPage />} />
+        </Route>
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route path="/tradepost/:id/review" element={<SendReview />} />
+        </Route>
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route path="/chat/messages/:UUID/:uid/:pid" element={<ChatPage />} />
+        </Route>
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route path="/neighborhood" element={<NeighborhoodLanding />} />
+        </Route>
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route path="/neighborhood/:id" element={<NeighborhoodPostPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

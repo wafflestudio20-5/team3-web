@@ -31,7 +31,7 @@ const Gnb = ({ isColored }: GnbProps) => {
   const dispatch = useAppDispatch();
   const { active, handleToggleDrawer } = useDrawer();
   const { me } = useAppSelector(state => state.users);
-  const { accessToken, expiryTime } = useAppSelector(state => state.session);
+  const expiryTime = Number(loadItem('expiryTime'));
 
   const [selected, setSelected] = useState({
     intro: false,
@@ -48,7 +48,7 @@ const Gnb = ({ isColored }: GnbProps) => {
 
   useEffect(() => {
     const refreshToken = loadItem('refreshToken');
-    if (!accessToken || !expiryTime) {
+    if (!loadItem('accessToken') || !expiryTime) {
       if (refreshToken) {
         dispatch(postRefresh(refreshToken as string))
           .unwrap()
@@ -56,10 +56,10 @@ const Gnb = ({ isColored }: GnbProps) => {
       }
     } else {
       if (refreshToken) {
-        dispatch(getMe(accessToken));
+        dispatch(getMe(loadItem('accessToken')));
       }
     }
-  }, [accessToken, expiryTime]);
+  }, [loadItem('accessToken'), expiryTime]);
 
   // DESC: 토큰 만료시간 1분 전에 refresh
   useEffect(() => {
@@ -79,7 +79,7 @@ const Gnb = ({ isColored }: GnbProps) => {
       );
       return () => clearTimeout(timeout);
     }
-  }, [accessToken, expiryTime]);
+  }, [loadItem('accessToken'), expiryTime]);
 
   useEffect(() => {
     switch (pathname) {
@@ -148,7 +148,7 @@ const Gnb = ({ isColored }: GnbProps) => {
                 로그인
               </S.Auth>
             )}
-            {accessToken && (
+            {loadItem('accessToken') && (
               <span>
                 남은시간= {minute}:{second}
               </span>
