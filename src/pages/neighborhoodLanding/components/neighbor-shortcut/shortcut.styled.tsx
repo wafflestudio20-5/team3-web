@@ -5,12 +5,16 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  height: 120px;
+  height: 150px;
   padding: 15px 0px;
 
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
   gap: 3px;
   cursor: pointer;
+
+  &:last-of-type {
+    border: none;
+  }
 `;
 
 export const TopWrapper = styled.div`
@@ -61,5 +65,6 @@ export const IconsContainer = styled.div`
 `;
 
 export const CountSpan = styled.span`
+  font-size: 12px;
   margin: 0px 5px;
 `;

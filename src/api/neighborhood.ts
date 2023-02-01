@@ -1,8 +1,10 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { auth } from '.';
 import { BASE_URL } from '../constant';
 import { neighborPostComment, neighborPostInput } from '../types/neighborhood';
+import { redirectWithMsg } from '../utils/errors';
 
 export const requestNeighborhood = async (
   accessToken: string,
@@ -31,15 +33,23 @@ export const requestPostNeighborhood = async (
   { title, content }: neighborPostInput,
   accessToken: string,
 ) => {
-  try {
-    return await axios.post(
+  await axios
+    .post(
       `${BASE_URL}/neighborhood`,
       { title: title, content: content },
       { headers: auth(accessToken) },
-    );
-  } catch (e) {
-    return e;
-  }
+    )
+    .then(res => {
+      return res;
+    })
+    .catch(err => {
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 400) {
+          toast.error(err.response?.data[0]['error']);
+        }
+        // console.log(err);
+      }
+    });
 };
 
 export const requestNeighborhoodPost = async (

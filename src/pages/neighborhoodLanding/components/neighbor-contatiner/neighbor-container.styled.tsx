@@ -21,6 +21,7 @@ export const Container = styled.div`
 
   @media ${MD_SIZE} {
     padding: 0px 20px;
+    margin-top: 30px;
     width: 100%;
   }
 `;
