@@ -2,9 +2,10 @@ import styled from 'styled-components';
 
 export const PositionWrapper = styled.div`
   position: relative;
-  width: 155px;
-  height: 155px;
-  margin-bottom: 24px;
+  width: 170px;
+  height: 170px;
+  margin-bottom: 30px;
+  margin-top: 10px;
 `;
 
 export const ProflieImg = styled.img`
