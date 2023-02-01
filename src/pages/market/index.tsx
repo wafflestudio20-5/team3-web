@@ -11,6 +11,7 @@ import AddButton from './components/add-button';
 import SearchBar from './components/search-bar';
 import Pagination from './components/pagination';
 import TradePostCreate from '../../components/trade-post-create';
+import ContentFooter from '../../components/content-footer';
 
 import { getTradePostList } from '../../store/slices/marketSlice';
 import { createTradePost } from '../../store/slices/tradePostSlice';
@@ -281,49 +282,46 @@ const MarketPage = () => {
   return (
     <>
       <Gnb />
-      {accessToken && (
-        <Wrapper>
-          <Header>
-            <Filter>
-              <CheckBox type="checkbox" onChange={checkBoxChange} />
-              <Span>거래완료 상품 제외</Span>
-            </Filter>
-            <SearchBar
-              keyword={keyword}
-              setKeyword={setKeyword}
-              searchClick={searchHandler}
-              dong={dong}
-            />
-          </Header>
-          {isLoading && <Spinner />}
-          {!isLoading && (
-            <List>
-              {data.map(post => {
-                return (
-                  <ShortCut
-                    key={post?.postId}
-                    id={post?.postId}
-                    img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
-                    title={post?.title}
-                    tradeStatus={post?.tradeStatus}
-                    price={post?.price}
-                    location={shortenLocation(post?.seller.location)}
-                    likes={post?.likeCount}
-                    chats={post?.reservationCount}
-                    created_at={post?.createdAt}
-                  />
-                );
-              })}
-            </List>
-          )}
-          {!isLoading && data[0] && (
-            <Pagination total={totalPage} page={page} setPage={changePage} />
-          )}
-          {!data[0] && <Message>판매중인 상품이 없습니다</Message>}
-          <AddButton handleClick={() => setOpenCreatePost(true)} />
-        </Wrapper>
-      )}
-
+      <Wrapper>
+        <Header>
+          <Filter>
+            <CheckBox type="checkbox" onChange={checkBoxChange} />
+            <Span>거래완료 상품 제외</Span>
+          </Filter>
+          <SearchBar
+            keyword={keyword}
+            setKeyword={setKeyword}
+            searchClick={searchHandler}
+            dong={dong}
+          />
+        </Header>
+        {isLoading && <Spinner />}
+        {!isLoading && (
+          <List>
+            {data.map(post => {
+              return (
+                <ShortCut
+                  key={post?.postId}
+                  id={post?.postId}
+                  img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
+                  title={post?.title}
+                  tradeStatus={post?.tradeStatus}
+                  price={post?.price}
+                  location={shortenLocation(post?.seller.location)}
+                  likes={post?.likeCount}
+                  chats={post?.reservationCount}
+                  created_at={post?.createdAt}
+                />
+              );
+            })}
+          </List>
+        )}
+        {!data[0] && <Message>판매중인 상품이 없습니다</Message>}
+        {!isLoading && data[0] && (
+          <Pagination total={totalPage} page={page} setPage={changePage} />
+        )}
+        <AddButton handleClick={() => setOpenCreatePost(true)} />
+      </Wrapper>
       {openCreatePost && (
         <TradePostCreate
           imgObject={imgObject}
@@ -334,6 +332,7 @@ const MarketPage = () => {
           handleClose={handleCloseModal}
         />
       )}
+      <ContentFooter />
     </>
   );
 };
