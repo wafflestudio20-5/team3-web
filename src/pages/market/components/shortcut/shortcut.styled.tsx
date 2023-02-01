@@ -68,7 +68,7 @@ export const Title = styled.h3`
   text-overflow: ellipsis;
 
   @media ${MD_SIZE} {
-    width: 100%;
+    width: 360px;
     height: 24px;
     font-size: 18px;
   }
