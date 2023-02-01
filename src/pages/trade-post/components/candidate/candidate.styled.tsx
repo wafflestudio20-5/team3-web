@@ -53,6 +53,7 @@ export const InnerWrapper = styled.div`
 export const User = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const Img = styled.img`
