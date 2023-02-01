@@ -31,7 +31,7 @@ const Gnb = ({ isColored }: GnbProps) => {
   const dispatch = useAppDispatch();
   const { active, handleToggleDrawer } = useDrawer();
   const { me } = useAppSelector(state => state.users);
-  const { expiryTime } = useAppSelector(state => state.session);
+  const expiryTime = Number(loadItem('expiryTime'));
 
   const [selected, setSelected] = useState({
     intro: false,

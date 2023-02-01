@@ -89,7 +89,7 @@ interface sessionSliceState {
 }
 
 const initialState: sessionSliceState = {
-  expiryTime: 0,
+  expiryTime: Number(loadItem('expiryTime')),
   accessToken: loadItem('accessToken'),
   refreshToken: loadItem('refreshToken'),
 };
@@ -101,6 +101,7 @@ export const sessionSlice = createSlice({
   reducers: {
     logout: state => {
       state.accessToken = null;
+      clearItem('expiryTime');
       clearItem('accessToken');
       clearItem('refreshToken');
     },
@@ -109,28 +110,28 @@ export const sessionSlice = createSlice({
     builder.addCase(postLogin.fulfilled, (state, action) => {
       const { accessToken, expiryTime } = action.payload;
       state.accessToken = accessToken;
-      state.expiryTime = expiryTime;
+      saveItem('expiryTime', String(expiryTime));
       saveItem('accessToken', action.payload.accessToken);
       saveItem('refreshToken', action.payload.refreshToken);
     });
     builder.addCase(postRefresh.fulfilled, (state, action) => {
       const { accessToken, expiryTime } = action.payload;
       state.accessToken = accessToken;
-      state.expiryTime = expiryTime;
+      saveItem('expiryTime', String(expiryTime));
       saveItem('accessToken', action.payload.accessToken);
       saveItem('refreshToken', action.payload.refreshToken);
     });
     builder.addCase(postGoogleLogin.fulfilled, (state, action) => {
       const { accessToken, expiryTime } = action.payload;
       state.accessToken = accessToken;
-      state.expiryTime = expiryTime;
+      saveItem('expiryTime', String(expiryTime));
       saveItem('accessToken', action.payload.accessToken);
       saveItem('refreshToken', action.payload.refreshToken);
     });
     builder.addCase(postKakaoLogin.fulfilled, (state, action) => {
       const { accessToken, expiryTime } = action.payload;
       state.accessToken = accessToken;
-      state.expiryTime = expiryTime;
+      saveItem('expiryTime', String(expiryTime));
       saveItem('accessToken', action.payload.accessToken);
       saveItem('refreshToken', action.payload.refreshToken);
     });
