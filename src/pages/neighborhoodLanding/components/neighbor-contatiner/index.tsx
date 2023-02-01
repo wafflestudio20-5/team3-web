@@ -74,7 +74,7 @@ export const NeighborContainer = () => {
         2,
         '액세스 토큰이 유효하지 않습니다. 다시 로그인해 주세요.',
         () => {
-          navigate('/login');
+          // navigate('/login');
         },
       );
     }
