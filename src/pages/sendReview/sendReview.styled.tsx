@@ -70,6 +70,8 @@ export const Button = styled.div`
   border-radius: 6px;
   margin-top: 16px;
   align-self: center;
+  margin-bottom: 60px;
+  cursor: pointer;
 
   @media ${MD_SIZE} {
     width: 400px;

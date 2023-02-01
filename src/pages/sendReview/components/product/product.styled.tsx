@@ -19,6 +19,10 @@ export const Img = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 12px;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 `;
 
 export const Info = styled.div`
@@ -32,4 +36,8 @@ export const Title = styled.span`
   font-weight: 500;
 `;
 
-export const Neighbor = styled.span``;
+export const Neighbor = styled.span`
+  &:hover {
+    transform: translateY(-2px);
+  }
+`;
