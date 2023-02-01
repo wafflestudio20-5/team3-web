@@ -26,6 +26,7 @@ import {
 import { loadItem } from '../../../../utils/storage';
 import { redirectWithMsg } from '../../../../utils/errors';
 import { getUUID } from '../../../../store/slices/chatSlice';
+import { normalToast } from '../../../../utils/basic-toast-modal';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 import * as S from './description.styled';
@@ -147,7 +148,7 @@ const Description = () => {
                 navigate('/login'),
               );
             } else if (err.response?.status === 400) {
-              toast.error(err.response?.data.error);
+              normalToast(err.response?.data.error);
             } else {
               redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
                 navigate('/'),
@@ -192,25 +193,25 @@ const Description = () => {
     // VALID TODO: to function
     const numberReg = /^[0-9]+$/;
     if (!values.title?.trim() || !(values.title.length > 2)) {
-      toast.warn('제목은 3자 이상이어야 합니다.');
+      normalToast('제목은 3자 이상이어야 합니다.');
       return;
     } else if (!values.desc?.trim() || !(values.desc.length > 9)) {
-      toast.warn('내용은 10자 이상이어야 합니다.');
+      normalToast('내용은 10자 이상이어야 합니다.');
       return;
     } else if (!String(values.price).trim()) {
-      toast.warn('가격을 입력해주세요.');
+      normalToast('가격을 입력해주세요.');
       return;
     } else if (Number(values.price) < 0) {
-      toast.warn('음수는 입력하실 수 없습니다.');
+      normalToast('음수는 입력하실 수 없습니다.');
       return;
     } else if (!numberReg.test(String(values.price))) {
-      toast.warn('가격은 숫자만 입력가능합니다.');
+      normalToast('가격은 숫자만 입력가능합니다.');
       return;
     } else if (Number(values.price) % 10 !== 0) {
-      toast.warn('1원 단위는 입력하실 수 없습니다.');
+      normalToast('1원 단위는 입력하실 수 없습니다.');
       return;
     } else if (imgObject.length < 1) {
-      toast.warn('이미지는 최소 한 장 이상 등록해야 합니다.');
+      normalToast('이미지는 최소 한 장 이상 등록해야 합니다.');
       return;
     }
 
@@ -260,22 +261,13 @@ const Description = () => {
             })
             .catch(err => {
               if (axios.isAxiosError(err)) {
-                toast(`🥕 ${err.response?.data.error}`, {
-                  position: 'top-center',
-                  autoClose: 2000,
-                  hideProgressBar: true,
-                  closeOnClick: false,
-                  pauseOnHover: false,
-                  draggable: true,
-                  progress: undefined,
-                  theme: 'light',
-                });
+                normalToast(err.response?.data.error);
               }
             });
         }
       })
       .catch(() => {
-        toast.error('이미지 업로드에 실패했습니다.');
+        normalToast('이미지 업로드에 실패했습니다.');
       });
   };
 
@@ -324,7 +316,7 @@ const Description = () => {
                 navigate('/login'),
               );
             } else if (err.response?.status === 400) {
-              toast.error(err.response?.data.error);
+              normalToast(err.response?.data.error);
             } else {
               redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
                 navigate('/'),
