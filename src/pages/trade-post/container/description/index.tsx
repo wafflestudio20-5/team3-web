@@ -454,8 +454,10 @@ const Description = () => {
           <S.Desc>{tradePost?.desc}</S.Desc>
 
           <S.DetailInfo>
-            <S.DetailText>{`관심 ${tradePost?.likeCount}`}</S.DetailText>
-            <S.DetailText>{`∙ 채팅 ${tradePost?.reservationCount}`}</S.DetailText>
+            {tradePost?.isOwner && (
+              <S.DetailText>{`관심 ${tradePost?.likeCount} ∙ `}</S.DetailText>
+            )}
+            <S.DetailText>{`채팅 ${tradePost?.reservationCount}`}</S.DetailText>
             <S.DetailText>{`∙ 조회 ${tradePost?.viewCount}`}</S.DetailText>
           </S.DetailInfo>
         </S.Content>
