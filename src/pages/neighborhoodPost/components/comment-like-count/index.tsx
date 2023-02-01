@@ -42,10 +42,7 @@ CommentLikeCountProps) => {
 
   const handleLikeButtonClicked = () => {
     if (accessToken) {
-      requestPostNeighborhoodLike(postId, accessToken).then(async () => {
-        const res = (await requestNeighborhoodPost(postId, accessToken)) as any;
-        // console.log(res);
-        // TODO: response로 온 post 데이터 받아 post 업데이트
+      requestPostNeighborhoodLike(postId, accessToken).then(res => {
         dispatch(setPost(res.data));
       });
     }

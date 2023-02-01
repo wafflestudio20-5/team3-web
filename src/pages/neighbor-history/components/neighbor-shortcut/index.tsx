@@ -1,16 +1,19 @@
 import * as S from './shortcut.styled';
 
-import LikeIcon from '../../../../assets/like-blank.svg';
+import LikeBlank from '../../../../assets/like-blank.svg';
+import LikeFill from '../../../../assets/like-fill.svg';
 import CommentIcon from '../../../../assets/neighbor-comment-icon.svg';
 import { useNavigate } from 'react-router-dom';
 import { shortenLocation } from '../../../../utils/location';
 import moment from 'moment';
+import { useState } from 'react';
 
 interface ShortCutProps {
   id: number;
   content: string;
   location?: string;
   modifiedAt: Date;
+  isLiked: boolean;
   likeCount?: number;
   commentCount?: number;
 }
@@ -21,6 +24,7 @@ export const ShortCut = ({
   content,
   location = '',
   modifiedAt,
+  isLiked,
   likeCount = 0,
   commentCount = 0,
 }: ShortCutProps) => {
@@ -29,6 +33,7 @@ export const ShortCut = ({
     // console.log(id);
     navigate(`/neighborhood/${id}`);
   };
+
   return (
     <S.Container onClick={handleClick}>
       <S.TopWrapper>
@@ -43,13 +48,13 @@ export const ShortCut = ({
         <S.Location></S.Location>
 
         <S.IconsContainer>
-          {likeCount > 0 && (
+          {likeCount >= 0 && (
             <S.ImgWrapper>
-              <S.IconImg src={LikeIcon} />
+              <S.IconImg src={isLiked ? LikeFill : LikeBlank} />
               <S.CountSpan>{likeCount}</S.CountSpan>
             </S.ImgWrapper>
           )}
-          {commentCount > 0 && (
+          {commentCount >= 0 && (
             <S.ImgWrapper>
               <S.IconImg src={CommentIcon} />
               <S.CountSpan>{commentCount}</S.CountSpan>
