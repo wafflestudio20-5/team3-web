@@ -31,6 +31,7 @@ const MarketPage = () => {
   const dispatch = useAppDispatch();
   const { accessToken } = useAppSelector(state => state.session);
   const { me } = useAppSelector(state => state.users);
+  const [isLoading, setIsLoading] = useState(true);
   const [dong, setDong] = useState<string>('내 동네');
   const [keyword, setKeyword] = useState<string>('');
   const [data, setData] = useState<TradePostType[]>([]);
@@ -172,6 +173,7 @@ const MarketPage = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     if (accessToken) {
       dispatch(
         getTradePostList({
@@ -186,6 +188,7 @@ const MarketPage = () => {
         .then(res => {
           setData(res.posts);
           setTotalPage(Math.ceil(res.paging.total / res.paging.limit));
+          setIsLoading(false);
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -207,6 +210,7 @@ const MarketPage = () => {
   }, [accessToken, page]);
 
   const searchHandler = () => {
+    setIsLoading(true);
     if (accessToken) {
       dispatch(
         getTradePostList({
@@ -222,6 +226,7 @@ const MarketPage = () => {
           setData(res.posts);
           setPage(1);
           setTotalPage(Math.ceil(res.paging.total / res.paging.limit));
+          setIsLoading(false);
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -283,24 +288,27 @@ const MarketPage = () => {
               dong={dong}
             />
           </Header>
-          <List>
-            {data.map(post => {
-              return (
-                <ShortCut
-                  key={post?.postId}
-                  id={post?.postId}
-                  img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
-                  title={post?.title}
-                  tradeStatus={post?.tradeStatus}
-                  price={post?.price}
-                  location={shortenLocation(post?.seller.location)}
-                  likes={post?.likeCount}
-                  chats={post?.reservationCount}
-                  created_at={post?.createdAt}
-                />
-              );
-            })}
-          </List>
+          {isLoading && <Spinner />}
+          {!isLoading && (
+            <List>
+              {data.map(post => {
+                return (
+                  <ShortCut
+                    key={post?.postId}
+                    id={post?.postId}
+                    img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
+                    title={post?.title}
+                    tradeStatus={post?.tradeStatus}
+                    price={post?.price}
+                    location={shortenLocation(post?.seller.location)}
+                    likes={post?.likeCount}
+                    chats={post?.reservationCount}
+                    created_at={post?.createdAt}
+                  />
+                );
+              })}
+            </List>
+          )}
           <Pagination total={totalPage} page={page} setPage={changePage} />
           <AddButton handleClick={() => setOpenCreatePost(true)} />
         </Wrapper>

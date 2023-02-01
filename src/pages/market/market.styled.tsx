@@ -8,6 +8,20 @@ export const Wrapper = styled.div`
   align-content: center;
   align-items: center;
   justify-content: center;
+
+  animation: fadein 2s;
+  -moz-animation: fadein 2s; /* Firefox */
+  -webkit-animation: fadein 2s; /* Safari and Chrome */
+  -o-animation: fadein 2s; /* Opera */
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 export const Header = styled.div`
@@ -54,7 +68,6 @@ export const Filter = styled.div`
   @media ${Market_MD} {
     grid-template-columns: repeat(3, 200px);
   }
-
 `;
 
 export const CheckBox = styled.input`
@@ -68,6 +81,20 @@ export const List = styled.div`
   grid-template-columns: repeat(4, 200px);
   column-gap: 30px;
   row-gap: 100px;
+
+  animation: fadein 0.5s;
+  -moz-animation: fadein 0.5s; /* Firefox */
+  -webkit-animation: fadein 0.5s; /* Safari and Chrome */
+  -o-animation: fadein 0.5s; /* Opera */
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 
   @media ${MD_SIZE} {
     display: flex;
