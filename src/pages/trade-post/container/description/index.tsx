@@ -18,9 +18,7 @@ import {
 import {
   deleteTradePost,
   getReservation,
-  postConfirmation,
   postLike,
-  postReservation,
   updateTradePost,
 } from '../../../../store/slices/tradePostSlice';
 import { redirectWithMsg } from '../../../../utils/errors';
@@ -77,73 +75,6 @@ const Description = () => {
               redirectWithMsg(2, err.response?.data.error, () =>
                 navigate('/login'),
               );
-            } else {
-              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
-                navigate('/'),
-              );
-            }
-          }
-        });
-    }
-  }, [accessToken, tradePost, tradeStatus]);
-
-  // DESC: seller 입장, 예약자 선정
-  const handleSetReservation = useCallback(
-    (candidateId: number) => {
-      if (accessToken && tradePost) {
-        dispatch(
-          postReservation({
-            accessToken,
-            postId: tradePost.postId,
-            userId: candidateId,
-          }),
-        )
-          .unwrap()
-          .then(() => {
-            // setCandidatesLoading(false);
-          })
-          .catch(err => {
-            if (axios.isAxiosError(err)) {
-              if (err.response?.status === 404) {
-                redirectWithMsg(2, err.response?.data.error, () =>
-                  navigate(-1),
-                );
-              } else if (err.response?.status === 401) {
-                // TODO: refresh 후 재요청
-                redirectWithMsg(2, err.response?.data.error, () =>
-                  navigate('/login'),
-                );
-              } else {
-                redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
-                  navigate('/'),
-                );
-              }
-            }
-          });
-      }
-    },
-    [accessToken, tradePost, tradeStatus],
-  );
-
-  // DESC: seller 입장, 예약자 확정 (거래 완료)
-  const handleSetConfirmation = useCallback(() => {
-    if (accessToken && tradePost) {
-      dispatch(postConfirmation({ accessToken, postId: tradePost.postId }))
-        .unwrap()
-        .then(() => {
-          // setCandidatesLoading(false);
-        })
-        .catch(err => {
-          if (axios.isAxiosError(err)) {
-            if (err.response?.status === 404) {
-              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
-            } else if (err.response?.status === 401) {
-              // TODO: refresh 후 재요청
-              redirectWithMsg(2, err.response?.data.error, () =>
-                navigate('/login'),
-              );
-            } else if (err.response?.status === 400) {
-              toast.error(err.response?.data.error);
             } else {
               redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
                 navigate('/'),
@@ -514,7 +445,6 @@ const Description = () => {
                   imgUrl={buyer?.imgUrl}
                   username={buyer?.username}
                   handleChatStart={() => handleSellerGetChat(buyer)}
-                  handleSetReservation={handleSetConfirmation}
                 />
               )}
               <ul>
@@ -530,9 +460,6 @@ const Description = () => {
                           imgUrl={candidate?.imgUrl}
                           username={candidate?.username}
                           handleChatStart={() => handleSellerGetChat(candidate)}
-                          handleSetReservation={() =>
-                            handleSetReservation(candidate?.id)
-                          }
                         />
                       );
                     }
