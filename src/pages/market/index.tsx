@@ -11,6 +11,7 @@ import AddButton from './components/add-button';
 import SearchBar from './components/search-bar';
 import Pagination from './components/pagination';
 import TradePostCreate from '../../components/trade-post-create';
+import ContentFooter from '../../components/content-footer';
 
 import { getTradePostList } from '../../store/slices/marketSlice';
 import { createTradePost } from '../../store/slices/tradePostSlice';
@@ -22,7 +23,15 @@ import { redirectWithMsg } from '../../utils/errors';
 import { TradePostType } from '../../types/tradePost';
 import { shortenLocation, getDong } from '../../utils/location';
 
-import { Wrapper, Header, Filter, CheckBox, Span, List } from './market.styled';
+import {
+  Wrapper,
+  Header,
+  Filter,
+  CheckBox,
+  Span,
+  List,
+  Message,
+} from './market.styled';
 import defaultImg from '../../assets/default-trade-img.svg';
 import { loadItem } from '../../utils/storage';
 
@@ -38,6 +47,7 @@ const MarketPage = () => {
   const [totalPage, setTotalPage] = useState<number>(1);
   const [page, setPage] = useState<number>(1);
   const [isTrading, setIsTrading] = useState(false);
+  const [isFirst, setIsFirst] = useState(true);
   const checkBoxChange = async ({ target }: any) => {
     target.checked ? setIsTrading(true) : setIsTrading(false);
   };
@@ -163,7 +173,7 @@ const MarketPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  useEffect(() => {
+  const getFirstList = () => {
     setIsLoading(true);
     if (accessToken) {
       dispatch(
@@ -180,6 +190,7 @@ const MarketPage = () => {
           setData(res.posts);
           setTotalPage(Math.ceil(res.paging.total / res.paging.limit));
           setIsLoading(false);
+          setIsFirst(false);
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
@@ -198,6 +209,10 @@ const MarketPage = () => {
           }
         });
     }
+  };
+
+  useEffect(() => {
+    getFirstList();
   }, [accessToken, page]);
 
   const searchHandler = () => {
@@ -239,11 +254,13 @@ const MarketPage = () => {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      searchHandler();
-    }, 300);
+    if (!isFirst) {
+      const timer = setTimeout(() => {
+        searchHandler();
+      }, 300);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    }
   }, [accessToken, keyword, isTrading]);
 
   useEffect(() => {
@@ -265,48 +282,46 @@ const MarketPage = () => {
   return (
     <>
       <Gnb />
-      {accessToken && (
-        <Wrapper>
-          <Header>
-            <Filter>
-              <CheckBox type="checkbox" onChange={checkBoxChange} />
-              <Span>거래완료 상품 제외</Span>
-            </Filter>
-            <SearchBar
-              keyword={keyword}
-              setKeyword={setKeyword}
-              searchClick={searchHandler}
-              dong={dong}
-            />
-          </Header>
-          {isLoading && <Spinner />}
-          {!isLoading && (
-            <List>
-              {data.map(post => {
-                return (
-                  <ShortCut
-                    key={post?.postId}
-                    id={post?.postId}
-                    img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
-                    title={post?.title}
-                    tradeStatus={post?.tradeStatus}
-                    price={post?.price}
-                    location={shortenLocation(post?.seller.location)}
-                    likes={post?.likeCount}
-                    chats={post?.reservationCount}
-                    created_at={post?.createdAt}
-                  />
-                );
-              })}
-            </List>
-          )}
-          {!isLoading && (
-            <Pagination total={totalPage} page={page} setPage={changePage} />
-          )}
-          <AddButton handleClick={() => setOpenCreatePost(true)} />
-        </Wrapper>
-      )}
-
+      <Wrapper>
+        <Header>
+          <Filter>
+            <CheckBox type="checkbox" onChange={checkBoxChange} />
+            <Span>거래완료 상품 제외</Span>
+          </Filter>
+          <SearchBar
+            keyword={keyword}
+            setKeyword={setKeyword}
+            searchClick={searchHandler}
+            dong={dong}
+          />
+        </Header>
+        {isLoading && <Spinner />}
+        {!isLoading && (
+          <List>
+            {data.map(post => {
+              return (
+                <ShortCut
+                  key={post?.postId}
+                  id={post?.postId}
+                  img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
+                  title={post?.title}
+                  tradeStatus={post?.tradeStatus}
+                  price={post?.price}
+                  location={shortenLocation(post?.seller.location)}
+                  likes={post?.likeCount}
+                  chats={post?.reservationCount}
+                  created_at={post?.createdAt}
+                />
+              );
+            })}
+          </List>
+        )}
+        {!isLoading && !data[0] && <Message>판매중인 상품이 없습니다</Message>}
+        {!isLoading && data[0] && (
+          <Pagination total={totalPage} page={page} setPage={changePage} />
+        )}
+        <AddButton handleClick={() => setOpenCreatePost(true)} />
+      </Wrapper>
       {openCreatePost && (
         <TradePostCreate
           imgObject={imgObject}
@@ -317,6 +332,7 @@ const MarketPage = () => {
           handleClose={handleCloseModal}
         />
       )}
+      <ContentFooter />
     </>
   );
 };

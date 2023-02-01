@@ -23,6 +23,7 @@ export const List = styled.div`
   position: relative;
   width: 95%;
   max-width: 600px;
+  min-height: 500px;
   align-content: center;
   justify-content: center;
 
@@ -42,7 +43,11 @@ export const List = styled.div`
 `;
 
 export const Message = styled.h2`
-  margin-top: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 20px;
   font-weight: 500;
+  text-align: center;
 `;
