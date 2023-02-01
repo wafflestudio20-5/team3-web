@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router';
 import axios from 'axios';
 
 import { toast } from 'react-toastify';
-import { normalToast } from '../../utils/basic-toast-modal';
 import Spinner from '../../components/spinner';
 import Gnb from '../../components/gnb';
 import ShortCut from './components/shortcut';

@@ -13,10 +13,10 @@ export const Container = styled.div`
   border: 1px solid white;
   border-radius: 12px;
   gap: 4px;
+  transition: 0.3s all;
   
   &:hover {
-    box-shadow: 0 5px 10px #f1f1f1;
-    transform: translateY(-2px);
+    transform: translateY(-6px);
   }
 
   @media ${MD_SIZE} {
