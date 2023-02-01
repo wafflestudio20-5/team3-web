@@ -141,7 +141,6 @@ export const ReviewButton = styled.button`
   @media ${MD_SIZE} {
     display: block;
     position: absolute;
-    z-index: -1;
     right: 30px;
     bottom: 30px;
     border-radius: 4px;
