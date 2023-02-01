@@ -11,6 +11,7 @@ import TemperatureBar from '../../components/temperature-bar';
 import { redirectWithMsg } from '../../../../utils/errors';
 import { getTradePost } from '../../../../store/slices/tradePostSlice';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { shortenLocation } from '../../../../utils/location';
 
 import * as S from './trade-info.styled';
 import { ReactComponent as TradeInfoIcon } from '../../../../assets/txinfo-icon.svg';
@@ -79,7 +80,9 @@ const TradeInfo = () => {
           />
           <S.NameWrapper>
             <S.Username>{seller?.username || null}</S.Username>
-            <S.Location>{seller?.location || null}</S.Location>
+            <S.Location>
+              {shortenLocation(seller?.location as string) || null}
+            </S.Location>
           </S.NameWrapper>
         </S.InfoWrapper>
 
