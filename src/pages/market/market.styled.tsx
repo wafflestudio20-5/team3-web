@@ -14,34 +14,54 @@ export const Header = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  position: relative;
+  width: 900px;
   align-content: center;
   justify-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 
   @media ${MD_SIZE} {
     width: 100vw;
+    margin-top: 0;
     margin-bottom: 0;
+  }
+
+  @media ${Market_MD} {
+    width: 740px;
+  }
+
+  @media ${Market_XL} {
+    width: 1140px;
   }
 `;
 
-// export const List = styled.div`
-//   display: grid;
-//   grid-template-columns: repeat(auto-fit, minmax(160px, 200px));
-//   column-gap: 30px;
-//   row-gap: 100px;
-//   max-width: 1080px;
-//   align-content: center;
+export const Filter = styled.div`
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  right: 20px;
+  gap: 4px;
 
-//   @media ${MD_SIZE} {
-//     display: flex;
-//     flex-direction: column;
-//     row-gap: 0;
-//     column-gap: 0;
-//     width: 100vw;
-//     padding: 0;
-//   }
-// `;
+  @media ${MD_SIZE} {
+    position: static;
+    align-self: flex-end;
+    margin-right: 16px;
+    margin-bottom: 3px;
+  }
+
+  @media ${Market_MD} {
+    grid-template-columns: repeat(3, 200px);
+  }
+
+`;
+
+export const CheckBox = styled.input`
+  width: 18px;
+`;
+
+export const Span = styled.span``;
 
 export const List = styled.div`
   display: grid;
