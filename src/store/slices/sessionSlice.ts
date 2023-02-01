@@ -104,7 +104,6 @@ export const sessionSlice = createSlice({
       state.accessToken = null;
       clearItem('accessToken');
       clearItem('refreshToken');
-      window.location.href = '/';
     },
   },
   extraReducers: builder => {
