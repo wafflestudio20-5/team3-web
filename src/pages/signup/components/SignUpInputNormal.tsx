@@ -13,6 +13,7 @@ interface SignUpInputNormal {
   type?: string;
   required?: boolean;
   placeholder: string;
+  isValid?: boolean;
   validationText?: string;
   isWithButton?: boolean;
   isReadOnly?: boolean;
@@ -42,13 +43,13 @@ export const SignUpButtonNormal = ({
 };
 
 const SignUpInputNormal = ({
-  label,
   valueName,
   value,
   color = 'black',
   type = 'text',
   required = false,
   placeholder,
+  isValid,
   validationText,
   isWithButton = false,
   isReadOnly = false,
@@ -83,7 +84,9 @@ const SignUpInputNormal = ({
         )}
         <S.InputIcon src={getSignupIcon(valueName)} alt="icon" />
       </S.SignUpInput>
-      <S.SignUpInputSpan color="#D94D11">{validationText}</S.SignUpInputSpan>
+      <S.SignUpInputSpan color={isValid ? '#219ED3' : '#D94D11'}>
+        {validationText}
+      </S.SignUpInputSpan>
     </S.SignUpInputWrapper>
   );
 };

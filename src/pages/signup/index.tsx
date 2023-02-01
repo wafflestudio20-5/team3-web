@@ -151,7 +151,9 @@ const SignUpPage = () => {
       dispatch(postLogin({ email, password }))
         .unwrap()
         .then(res => {
-          toast.success(`${res.user?.username}님, 환영합니다!`);
+          toast.success(
+            `회원가입에 성공하였습니다. ${res.user?.username}님, 환영합니다!`,
+          );
           navigate('/');
         })
         .catch(err => {
@@ -168,10 +170,8 @@ const SignUpPage = () => {
             }
           }
         });
-      alert('회원가입에 성공하였습니다'); // 로그인 페이지로 넘어가기 전에 사용자에게 알려주기
-      navigate('/login');
     } else {
-      toast('회원가입에 실패하였습니다.');
+      toast.error('회원가입에 실패하였습니다.');
     }
   };
 
@@ -224,6 +224,7 @@ const SignUpPage = () => {
           color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
           required={true}
           placeholder="이메일"
+          isValid={V.valEmail(email)}
           validationText={V.valEmailToMsg(email)}
           handleChange={e => {
             onChange(e);
@@ -284,6 +285,7 @@ const SignUpPage = () => {
           type="password"
           required={true}
           placeholder="비밀번호"
+          isValid={V.valPassword(password)}
           validationText={V.valPasswordToMsg(password)}
           handleChange={onChange}
           isReadOnly={isSocialLogin}
@@ -296,6 +298,7 @@ const SignUpPage = () => {
           type="password"
           required={true}
           placeholder="비밀번호를 한 번 더 입력하세요"
+          isValid={password === passwordConfirm}
           validationText={V.confirmPasswordToMsg(password, passwordConfirm)}
           handleChange={onChange}
           isReadOnly={isSocialLogin}
@@ -306,6 +309,7 @@ const SignUpPage = () => {
           value={username}
           required={true}
           placeholder="유저 이름"
+          isValid={V.valUsername(username)}
           validationText={V.valUsernameToMsg(username)}
           handleChange={e => {
             onChange(e);
