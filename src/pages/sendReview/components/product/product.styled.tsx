@@ -19,6 +19,7 @@ export const Img = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 12px;
+  object-fit: cover;
 
   &:hover {
     transform: translateY(-2px);
