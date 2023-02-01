@@ -22,7 +22,15 @@ import { redirectWithMsg } from '../../utils/errors';
 import { TradePostType } from '../../types/tradePost';
 import { shortenLocation, getDong } from '../../utils/location';
 
-import { Wrapper, Header, Filter, CheckBox, Span, List } from './market.styled';
+import {
+  Wrapper,
+  Header,
+  Filter,
+  CheckBox,
+  Span,
+  List,
+  Message,
+} from './market.styled';
 import defaultImg from '../../assets/default-trade-img.svg';
 import { loadItem } from '../../utils/storage';
 
@@ -308,9 +316,10 @@ const MarketPage = () => {
               })}
             </List>
           )}
-          {!isLoading && (
+          {!isLoading && data[0] && (
             <Pagination total={totalPage} page={page} setPage={changePage} />
           )}
+          {!data[0] && <Message>판매중인 상품이 없습니다</Message>}
           <AddButton handleClick={() => setOpenCreatePost(true)} />
         </Wrapper>
       )}

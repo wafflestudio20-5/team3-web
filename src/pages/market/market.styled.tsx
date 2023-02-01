@@ -104,3 +104,13 @@ export const List = styled.div`
     grid-template-columns: repeat(5, 200px);
   }
 `;
+
+export const Message = styled.h2`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+`;
