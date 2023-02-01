@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { setPosts } from '../../../../store/slices/neighborhoodPostListSlice';
 import SearchBar from '../search-bar';
+import Spinner from '../../../../components/spinner';
 
 export const NeighborContainer = () => {
   const dispatch = useAppDispatch();
@@ -28,6 +29,7 @@ export const NeighborContainer = () => {
   // const [posts, setPosts] = useState<Array<neighborPost>>([]);
   const posts = useAppSelector(state => state.neighborhoodPostList);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const handleModalClose = () => {
     setIsModalOpen(prev => !prev);
   };
@@ -40,8 +42,8 @@ export const NeighborContainer = () => {
         pageNum.current,
         keyword,
       )) as any;
-      console.log(res);
-      dispatch(setPosts(res.data.reverse()));
+      setIsLoading(false);
+      dispatch(setPosts(res.data.posts));
     } else {
       redirectWithMsg(
         2,
@@ -84,10 +86,14 @@ export const NeighborContainer = () => {
   };
   return (
     <>
-      <S.TopTextWrapper>
-        <S.TopText>{me?.username} 님의 동네정보</S.TopText>
-      </S.TopTextWrapper>
-      {/* <SearchBar
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <S.TopTextWrapper>
+            <S.TopText>{me?.username} 님의 동네생활</S.TopText>
+          </S.TopTextWrapper>
+          {/* <SearchBar
         keyword={keyword}
         setKeyword={setKeyword}
         searchClick={() => {
@@ -95,22 +101,23 @@ export const NeighborContainer = () => {
         }}
         dong="내 동네"
       /> */}
-      <S.Container>
-        {posts
-          ? posts.map(post => (
-              <ShortCut
-                key={post.postId}
-                id={post.postId}
-                content={post.content}
-                location={post.publisher.location}
-                modifiedAt={post.modifiedAt}
-                likeCount={post.likeCount}
-                commentCount={post.commentCount}
-              />
-            ))
-          : null}
+          <S.Container>
+            {posts
+              ? posts.map(post => (
+                  <ShortCut
+                    key={post.postId}
+                    id={post.postId}
+                    content={post.content}
+                    location={post.publisher.location}
+                    isLiked={post.isLiked} // 사실 나의 동네생활엔 필요 없지만.. 혹시 몰라서 넣어두었습니다
+                    modifiedAt={post.modifiedAt}
+                    likeCount={post.likeCount}
+                    commentCount={post.commentCount}
+                  />
+                ))
+              : null}
 
-        {/* <AddButton
+            {/* <AddButton
           handleClick={() => {
             setIsModalOpen(prev => !prev);
           }}
@@ -124,7 +131,9 @@ export const NeighborContainer = () => {
             />
           </ModalWrapper>
         )} */}
-      </S.Container>
+          </S.Container>
+        </>
+      )}
     </>
   );
 };

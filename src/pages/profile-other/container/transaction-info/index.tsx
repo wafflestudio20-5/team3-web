@@ -22,11 +22,7 @@ const TxInfo = ({ me, isLoading }: TxInfoProps) => {
 
       <S.TempWrapper>
         <TxTitle text="와플온도" />
-        {!isLoading ? (
-          <TemperatureBar temperature={me?.temperature || null} />
-        ) : (
-          <S.SkeletonTemp />
-        )}
+        {!isLoading ? <TemperatureBar /> : <S.SkeletonTemp />}
       </S.TempWrapper>
 
       <S.LocationWrapper>

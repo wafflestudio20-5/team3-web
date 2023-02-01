@@ -1,16 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Description from '../description';
 import ImgCarousel from '../../components/carousel';
-import Spinner from '../../../../components/spinner';
 import ProfileImage from '../../components/profile-image';
 import TemperatureBar from '../../components/temperature-bar';
 
-import { redirectWithMsg } from '../../../../utils/errors';
-import { getTradePost } from '../../../../store/slices/tradePostSlice';
-import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { useAppSelector } from '../../../../store/hooks';
 import { shortenLocation } from '../../../../utils/location';
 
 import * as S from './trade-info.styled';
@@ -18,38 +14,8 @@ import { ReactComponent as TradeInfoIcon } from '../../../../assets/txinfo-icon.
 
 const TradeInfo = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const postId = Number(useParams().id);
-  const [dataLoading, setDataLoading] = useState(true);
   const { me } = useAppSelector(state => state.users);
   const { seller } = useAppSelector(state => state.tradePost);
-  const { accessToken } = useAppSelector(state => state.session);
-
-  useEffect(() => {
-    if (accessToken && postId) {
-      dispatch(getTradePost({ accessToken, postId }))
-        .unwrap()
-        .then(() => {
-          setDataLoading(false);
-        })
-        .catch(err => {
-          if (axios.isAxiosError(err)) {
-            if (err.response?.status === 404) {
-              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
-            } else if (err.response?.status === 401) {
-              // TODO: refresh 후 재요청
-              redirectWithMsg(2, err.response?.data.error, () =>
-                navigate('/login'),
-              );
-            } else {
-              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
-                navigate('/'),
-              );
-            }
-          }
-        });
-    }
-  }, [accessToken, postId]);
 
   const handleClick = useCallback(() => {
     if (me && me.id === seller?.id) {
@@ -58,10 +24,6 @@ const TradeInfo = () => {
       navigate(`/profile/${seller?.id}`);
     }
   }, [seller?.id]);
-
-  if (dataLoading) {
-    return <Spinner />;
-  }
 
   return (
     <S.Wrapper>

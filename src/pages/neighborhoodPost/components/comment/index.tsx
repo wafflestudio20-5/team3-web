@@ -20,6 +20,7 @@ import { CommentDeleteModal } from '../comment-delete-modal';
 import { DeleteModal } from '../delete-modal';
 import { EditDelete } from '../edit-and-delete';
 import * as S from './comment.styled';
+import ModalWrapper from '../modal-wrapper';
 
 interface CommentProps {
   commentId: number;
@@ -127,13 +128,19 @@ export const Comment = ({
         <S.Date>{`${moment(modifiedAt).fromNow()}`}</S.Date>
       </S.CommentWrapper>
       {isDeleteModalOpen && (
-        <CommentDeleteModal
-          postId={postId}
-          commentId={commentId}
+        <ModalWrapper
           handleClose={() => {
             setIsDeleteModalOpen(false);
           }}
-        />
+        >
+          <CommentDeleteModal
+            postId={postId}
+            commentId={commentId}
+            handleClose={() => {
+              setIsDeleteModalOpen(false);
+            }}
+          />
+        </ModalWrapper>
       )}
     </>
   );

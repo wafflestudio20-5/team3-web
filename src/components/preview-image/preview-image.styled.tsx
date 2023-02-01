@@ -12,6 +12,20 @@ export const PositionWrapper = styled.div`
   }
 `;
 
+export const Representive = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 20.5px;
+  border-radius: 0 0 4px 4px;
+  width: 91%;
+  height: 15px;
+  background: #171717bb;
+  color: #fff;
+  font-size: 8px;
+`;
+
 export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -46,7 +60,6 @@ export const Delete = styled.div`
   &:hover {
     background: #00000078;
   }
-
 `;
 
 export const Icon = styled.img`

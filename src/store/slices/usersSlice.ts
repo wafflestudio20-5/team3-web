@@ -153,6 +153,7 @@ interface usersSliceState {
   me: User | null;
   currentUser: User | null;
 }
+
 const initialState: usersSliceState = {
   me: null,
   currentUser: null,

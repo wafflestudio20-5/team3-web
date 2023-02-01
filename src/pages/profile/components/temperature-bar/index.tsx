@@ -1,4 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+import { loadItem } from '../../../../utils/storage';
+import { getMe } from '../../../../store/slices/usersSlice';
+import { normalToast } from '../../../../utils/basic-toast-modal';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 import * as S from './temperature-bar.styled';
 import level1Icon from '../../../../assets/temp-1-icon.svg';
@@ -15,34 +22,52 @@ import {
   COLOR_MANNER_LEVEL_4,
 } from '../../../../constant';
 
-interface TemperatureBarProps {
-  temperature: number | null;
-}
-
-const TemperatureBar = ({ temperature }: TemperatureBarProps) => {
-  const [width, setWidth] = useState(temperature);
+const TemperatureBar = () => {
+  const [width, setWidth] = useState<number>();
   const [barColor, setBarColor] = useState('#EEEEEE');
   const [tempIcon, setTempIcon] = useState(COLOR_MANNER_DEFAULT);
 
-  useEffect(() => {
-    if (temperature) {
-      setWidth(temperature);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-      if (temperature < 36.5) {
+  useEffect(() => {
+    if (loadItem('accessToken')) {
+      dispatch(getMe(loadItem('accessToken')))
+        .unwrap()
+        .then(res => {
+          setWidth(res?.temperature);
+        })
+        .catch(err => {
+          if (axios.isAxiosError(err)) {
+            if (err.response?.status === 404) {
+              normalToast(err.response?.data.error);
+              navigate(-1);
+            } else {
+              normalToast('요청을 수행할 수 없습니다.');
+              navigate(-1);
+            }
+          }
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (width) {
+      if (width < 36.5) {
         setTempIcon(level1Icon);
         setBarColor(COLOR_MANNER_LEVEL_1);
-      } else if (36.5 <= temperature && temperature < 40.0) {
+      } else if (36.5 <= width && width < 40.0) {
         setTempIcon(level2Icon);
         setBarColor(COLOR_MANNER_LEVEL_2);
-      } else if (40.0 <= temperature && temperature < 50.0) {
+      } else if (40.0 <= width && width < 50.0) {
         setTempIcon(level3Icon);
         setBarColor(COLOR_MANNER_LEVEL_3);
-      } else if (50.0 <= temperature) {
+      } else if (50.0 <= width) {
         setTempIcon(level4Icon);
         setBarColor(COLOR_MANNER_LEVEL_4);
       }
     }
-  }, [temperature]);
+  }, [width]);
 
   return (
     <S.Wrapper>
@@ -52,15 +77,13 @@ const TemperatureBar = ({ temperature }: TemperatureBarProps) => {
       </S.InitialTemp>
 
       <S.CurrentTempWrapper>
-        <S.CurrentTempText
-          color={barColor}
-        >{`${temperature}°C`}</S.CurrentTempText>
+        <S.CurrentTempText color={barColor}>{`${width}°C`}</S.CurrentTempText>
         <S.CurrentIcon src={tempIcon} />
       </S.CurrentTempWrapper>
 
       {/* ProgressBar */}
       <S.ProgressBg />
-      <S.ProgressTemp width={width} bgColor={barColor} />
+      {width && <S.ProgressTemp width={width} bgColor={barColor} />}
     </S.Wrapper>
   );
 };

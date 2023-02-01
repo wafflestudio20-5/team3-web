@@ -67,21 +67,24 @@ const Dialog = ({
         </S.Header>
 
         <S.Product>
-          <S.ProductImg
-            src={
-              product?.imageUrls && product?.imageUrls.length > 0
-                ? product?.imageUrls[0]
-                : defaultProduct
-            }
-          />
-          <S.ProductInfo
-            onClick={() => navigate(`/tradepost/${product.postId}`)}
-          >
-            <S.ProductTitle>{product?.title}</S.ProductTitle>
-            <S.ProductPrice>
-              {toStringNumWithComma(product?.price)}원
-            </S.ProductPrice>
-          </S.ProductInfo>
+          <S.ProductInfoWrapper>
+            <S.ProductImg
+              src={
+                product?.imageUrls && product?.imageUrls.length > 0
+                  ? product?.imageUrls[0]
+                  : defaultProduct
+              }
+            />
+            <S.ProductInfo
+              onClick={() => navigate(`/tradepost/${product.postId}`)}
+            >
+              <S.ProductTitle>{product?.title}</S.ProductTitle>
+              <S.ProductPrice>
+                {toStringNumWithComma(product?.price)}원
+              </S.ProductPrice>
+            </S.ProductInfo>
+          </S.ProductInfoWrapper>
+
           {meSeller && product?.tradeStatus === TradeStatusType.TRADING && (
             <S.TradeButtonM onClick={handleSetReservation}>
               예약하기
@@ -97,9 +100,9 @@ const Dialog = ({
           {meSeller &&
             youBuyer &&
             product?.tradeStatus === TradeStatusType.RESERVATION && (
-              <S.TradeButtonL onClick={handleTradeConfirmation}>
+              <S.TradeButtonM onClick={handleTradeConfirmation}>
                 거래 확정하기
-              </S.TradeButtonL>
+              </S.TradeButtonM>
             )}
           {meSeller &&
             youBuyer &&
