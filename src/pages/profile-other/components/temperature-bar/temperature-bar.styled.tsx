@@ -55,21 +55,22 @@ export const ProgressTemp = styled.div<DivProps>(
   height: 13px;
   background: ${bgColor || '#EEEEEE'};
   border-radius: 6px;
+  width: ${width || 36.5}%;
 
-  animation-name: run;
-  animation-delay: 0.5s;
-  animation-duration: 1.5s;
-  animation-fill-mode: forwards;
+  // animation-name: run;
+  // animation-delay: 0.5s;
+  // animation-duration: 1.5s;
+  // animation-fill-mode: forwards;
   
-  // DESC: progress animation
-  @keyframes run {
-    from {
-      width: 0%;
-    }
-    to {
-      width: ${width || 36.5}%;
-    }
-  }
+  // // DESC: progress animation
+  // @keyframes run {
+  //   from {
+  //     width: 0%;
+  //   }
+  //   to {
+  //     width: ${width || 36.5}%;
+  //   }
+  // }
 `,
 );
 

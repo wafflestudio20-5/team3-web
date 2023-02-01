@@ -4,13 +4,15 @@ import defaultImg from '../../assets/default-product.svg';
 
 interface PreviewImageProps {
   img?: string | null;
+  order?: number;
   handleDelete?: () => void;
 }
 
-const PreviewImage = ({ img, handleDelete }: PreviewImageProps) => {
+const PreviewImage = ({ img, order, handleDelete }: PreviewImageProps) => {
   return (
     <S.PositionWrapper>
       <S.Wrapper>
+        {order === 0 && <S.Representive>대표 사진</S.Representive>}
         <S.Img src={img || defaultImg} alt="preview" />
         <S.Delete onClick={handleDelete}>
           <S.Icon src={deleteIcon || defaultImg} alt="delete" />

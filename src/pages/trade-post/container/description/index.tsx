@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import ReactS3Client from 'react-aws-s3-typescript';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 import 'moment/locale/ko';
@@ -18,13 +18,15 @@ import {
 import {
   deleteTradePost,
   getReservation,
-  postConfirmation,
+  getTradePost,
   postLike,
-  postReservation,
   updateTradePost,
 } from '../../../../store/slices/tradePostSlice';
+
+import { loadItem } from '../../../../utils/storage';
 import { redirectWithMsg } from '../../../../utils/errors';
 import { getUUID } from '../../../../store/slices/chatSlice';
+import { normalToast } from '../../../../utils/basic-toast-modal';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 import * as S from './description.styled';
@@ -36,12 +38,13 @@ import likeBlank from '../../../../assets/like-blank.svg';
 const Description = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const postId = Number(useParams().id);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [likeIcon, setLikeIcon] = useState(likeBlank);
   const [candidatesLoading, setCandidatesLoading] = useState(false);
 
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const { candidates, tradePost, buyer, tradeStatus, isLiked, imageUrls } =
     useAppSelector(state => state.tradePost);
 
@@ -77,73 +80,6 @@ const Description = () => {
               redirectWithMsg(2, err.response?.data.error, () =>
                 navigate('/login'),
               );
-            } else {
-              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
-                navigate('/'),
-              );
-            }
-          }
-        });
-    }
-  }, [accessToken, tradePost, tradeStatus]);
-
-  // DESC: seller 입장, 예약자 선정
-  const handleSetReservation = useCallback(
-    (candidateId: number) => {
-      if (accessToken && tradePost) {
-        dispatch(
-          postReservation({
-            accessToken,
-            postId: tradePost.postId,
-            userId: candidateId,
-          }),
-        )
-          .unwrap()
-          .then(() => {
-            // setCandidatesLoading(false);
-          })
-          .catch(err => {
-            if (axios.isAxiosError(err)) {
-              if (err.response?.status === 404) {
-                redirectWithMsg(2, err.response?.data.error, () =>
-                  navigate(-1),
-                );
-              } else if (err.response?.status === 401) {
-                // TODO: refresh 후 재요청
-                redirectWithMsg(2, err.response?.data.error, () =>
-                  navigate('/login'),
-                );
-              } else {
-                redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
-                  navigate('/'),
-                );
-              }
-            }
-          });
-      }
-    },
-    [accessToken, tradePost, tradeStatus],
-  );
-
-  // DESC: seller 입장, 예약자 확정 (거래 완료)
-  const handleSetConfirmation = useCallback(() => {
-    if (accessToken && tradePost) {
-      dispatch(postConfirmation({ accessToken, postId: tradePost.postId }))
-        .unwrap()
-        .then(() => {
-          // setCandidatesLoading(false);
-        })
-        .catch(err => {
-          if (axios.isAxiosError(err)) {
-            if (err.response?.status === 404) {
-              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
-            } else if (err.response?.status === 401) {
-              // TODO: refresh 후 재요청
-              redirectWithMsg(2, err.response?.data.error, () =>
-                navigate('/login'),
-              );
-            } else if (err.response?.status === 400) {
-              toast.error(err.response?.data.error);
             } else {
               redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
                 navigate('/'),
@@ -212,7 +148,7 @@ const Description = () => {
                 navigate('/login'),
               );
             } else if (err.response?.status === 400) {
-              toast.error(err.response?.data.error);
+              normalToast(err.response?.data.error);
             } else {
               redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
                 navigate('/'),
@@ -221,7 +157,7 @@ const Description = () => {
           }
         });
     }
-  }, [accessToken]);
+  }, [tradePost, accessToken]);
 
   // 글 수정 🚀🚀🚀
   const [active, setActive] = useState(false);
@@ -233,6 +169,14 @@ const Description = () => {
     desc: tradePost?.desc,
     price: tradePost?.price,
   });
+
+  useEffect(() => {
+    setValues({
+      title: tradePost?.title,
+      desc: tradePost?.desc,
+      price: tradePost?.price,
+    });
+  }, [postId, modalOpen, setModalOpen]);
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -249,25 +193,25 @@ const Description = () => {
     // VALID TODO: to function
     const numberReg = /^[0-9]+$/;
     if (!values.title?.trim() || !(values.title.length > 2)) {
-      toast.warn('제목은 3자 이상이어야 합니다.');
+      normalToast('제목은 3자 이상이어야 합니다.');
       return;
     } else if (!values.desc?.trim() || !(values.desc.length > 9)) {
-      toast.warn('내용은 10자 이상이어야 합니다.');
+      normalToast('내용은 10자 이상이어야 합니다.');
       return;
     } else if (!String(values.price).trim()) {
-      toast.warn('가격을 입력해주세요.');
+      normalToast('가격을 입력해주세요.');
       return;
     } else if (Number(values.price) < 0) {
-      toast.warn('음수는 입력하실 수 없습니다.');
+      normalToast('음수는 입력하실 수 없습니다.');
       return;
     } else if (!numberReg.test(String(values.price))) {
-      toast.warn('가격은 숫자만 입력가능합니다.');
+      normalToast('가격은 숫자만 입력가능합니다.');
       return;
     } else if (Number(values.price) % 10 !== 0) {
-      toast.warn('1원 단위는 입력하실 수 없습니다.');
+      normalToast('1원 단위는 입력하실 수 없습니다.');
       return;
     } else if (imgObject.length < 1) {
-      toast.warn('이미지는 최소 한 장 이상 등록해야 합니다.');
+      normalToast('이미지는 최소 한 장 이상 등록해야 합니다.');
       return;
     }
 
@@ -317,22 +261,13 @@ const Description = () => {
             })
             .catch(err => {
               if (axios.isAxiosError(err)) {
-                toast(`🥕 ${err.response?.data.error}`, {
-                  position: 'top-center',
-                  autoClose: 2000,
-                  hideProgressBar: true,
-                  closeOnClick: false,
-                  pauseOnHover: false,
-                  draggable: true,
-                  progress: undefined,
-                  theme: 'light',
-                });
+                normalToast(err.response?.data.error);
               }
             });
         }
       })
       .catch(() => {
-        toast.error('이미지 업로드에 실패했습니다.');
+        normalToast('이미지 업로드에 실패했습니다.');
       });
   };
 
@@ -381,7 +316,7 @@ const Description = () => {
                 navigate('/login'),
               );
             } else if (err.response?.status === 400) {
-              toast.error(err.response?.data.error);
+              normalToast(err.response?.data.error);
             } else {
               redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
                 navigate('/'),
@@ -392,6 +327,32 @@ const Description = () => {
     }
   }, [accessToken]);
 
+  const handleOpenModal = () => {
+    if (accessToken && postId) {
+      dispatch(getTradePost({ accessToken, postId }))
+        .unwrap()
+        .then(res => {
+          setOpenEditPost(true);
+          setValues({
+            title: res?.title,
+            desc: res?.desc,
+            price: res?.price,
+          });
+          setImgObject(
+            res?.imageUrls.map((url: any, index: number) => {
+              return {
+                id: index,
+                img: url,
+              };
+            }),
+          );
+        })
+        .catch(() => {
+          setOpenEditPost(false);
+        });
+    }
+  };
+
   const handleCloseModal = useCallback(() => {
     setOpenEditPost(false);
     setValues({
@@ -399,6 +360,7 @@ const Description = () => {
       desc: tradePost?.desc,
       price: tradePost?.price,
     });
+
     setImgObject(
       imageUrls.map((url: any, index: number) => {
         return {
@@ -407,7 +369,7 @@ const Description = () => {
         };
       }),
     );
-  }, [imageUrls]);
+  }, [imageUrls, tradePost]);
 
   // 사진
   const [imgObject, setImgObject] = useState<any[]>(
@@ -444,9 +406,7 @@ const Description = () => {
                   }}
                 >
                   <S.ElemWrapper>
-                    <S.Elem onClick={() => setOpenEditPost(true)}>
-                      게시글 수정
-                    </S.Elem>
+                    <S.Elem onClick={handleOpenModal}>게시글 수정</S.Elem>
                     <S.Elem onClick={() => setOpenDelete(true)}>
                       <S.Delete>게시글 삭제</S.Delete>
                     </S.Elem>
@@ -514,7 +474,6 @@ const Description = () => {
                   imgUrl={buyer?.imgUrl}
                   username={buyer?.username}
                   handleChatStart={() => handleSellerGetChat(buyer)}
-                  handleSetReservation={handleSetConfirmation}
                 />
               )}
               <ul>
@@ -530,9 +489,6 @@ const Description = () => {
                           imgUrl={candidate?.imgUrl}
                           username={candidate?.username}
                           handleChatStart={() => handleSellerGetChat(candidate)}
-                          handleSetReservation={() =>
-                            handleSetReservation(candidate?.id)
-                          }
                         />
                       );
                     }

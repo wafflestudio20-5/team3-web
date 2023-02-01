@@ -36,11 +36,6 @@ export const Header = styled.div`
   border-bottom: 1px solid #0017580d;
   border-radius: 30px 30px 0 0;
   cursor: pointer;
-  transition: 0.5s all;
-
-  &:hover {
-    transform: translateY(-2px);
-  }
 `;
 
 export const ProfileImg = styled.img`
@@ -67,7 +62,7 @@ export const Temperature = styled.span`
 
 export const Product = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 64px;
@@ -76,10 +71,16 @@ export const Product = styled.div`
   background-color: #fff;
   border-bottom: 1px solid #0017580d;
   cursor: pointer;
-  transition: 0.5s all;
+`;
 
-  &:hover {
-    transform: translateY(-2px);
+export const ProductInfoWrapper = styled.div`
+  display: flex;
+  width: 70%;
+  height: auto;
+  justify-content: flex-start;
+
+  @media ${MD_SIZE} {
+    width: 60%;
   }
 `;
 
@@ -94,19 +95,27 @@ export const ProductImg = styled.img`
 `;
 
 export const ProductInfo = styled.div`
+  width: 86%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  transition: 0.5s all;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 `;
 
 export const ProductTitle = styled.h1`
+  width: 100%;
   font-size: 14px;
   white-space: nowrap;
-  overflow: hidden;
+  overflow-x: hidden;
   text-overflow: ellipsis;
 `;
 
 export const ProductPrice = styled.h3`
+  width: 100%;
   font-size: 14px;
   font-family: 'LINESeedKR-Bd';
   white-space: nowrap;
@@ -177,6 +186,10 @@ export const FromMessageBox = styled.span`
   border-radius: 20px 2px 20px 20px;
   background-color: #ff6f0f;
   color: rgb(255, 255, 255);
+
+  @media ${MD_SIZE} {
+    font-size: 12px;
+  }
 `;
 
 export const ToMessageBox = styled.span`
@@ -192,6 +205,10 @@ export const ToMessageBox = styled.span`
   border-radius: 2px 20px 20px;
   background-color: #eaebee;
   color: #212124;
+
+  @media ${MD_SIZE} {
+    font-size: 12px;
+  }
 `;
 
 export const ToMessageProfile = styled.img`
@@ -287,25 +304,22 @@ export const Button = styled.button<Button>(
 );
 
 export const TradeButtonM = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 4px;
-  width: 80px;
-  height: 32px;
-  line-height: 150%;
-  font-weight: bold;
-  font-size: 14px;
-  background-color: #ff6f0f;
-  color: rgb(255, 255, 255);
-  margin-left: auto;
-`;
-
-export const TradeButtonL = styled.button`
-  border-radius: 4px;
-  width: 88px;
-  height: 32px;
+  width: auto;
+  height: 36px;
   line-height: 150%;
   font-weight: bold;
   font-size: 13px;
+  padding: 0 12px;
   background-color: #ff6f0f;
   color: rgb(255, 255, 255);
-  margin-left: auto;
+  margin-left: 4px;
+  transition: 0.5s all;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 `;

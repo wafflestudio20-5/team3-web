@@ -9,7 +9,7 @@ export const Wrapper = styled.div<Div>(
   ({ animation }) => `
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   height: 50px;
   margin-top: 10px;
@@ -43,6 +43,13 @@ export const Wrapper = styled.div<Div>(
 `,
 );
 
+export const InnerWrapper = styled.div`
+  display: flex;
+  width: 96%;
+  height: auto;
+  justify-content: space-between;
+`
+
 export const User = styled.div`
   display: flex;
   align-items: center;
@@ -58,7 +65,7 @@ export const Img = styled.img`
 export const Text = styled.span`
   font-size: 13px;
   line-height: 21px;
-  margin-left: 3px;
+  margin-left: 8px;
   text-align: center;
 `;
 
@@ -113,17 +120,18 @@ export const TradingButton = styled.button`
 `;
 
 export const Badge = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  margin-left: 6px;
+  margin-right: 6px;
+  border: 2px solid #ffcf3e;
 `;
 
 export const Complete = styled.span`
-  font-size: 13px;
+  font-size: 11px;
   line-height: 21px;
   margin-left: 6px;
   text-align: center;
-  color: #ff6f0f;
+  color: #686868;
   font-weight: 600;
 `;
