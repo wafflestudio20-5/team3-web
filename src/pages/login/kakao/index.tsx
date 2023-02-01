@@ -6,6 +6,7 @@ import { postKakaoLogin } from '../../../store/slices/sessionSlice';
 import { useAppDispatch } from '../../../store/hooks';
 import { redirectWithMsg } from '../../../utils/errors';
 import { requestKakaoLogin } from '../../../api/auth';
+import Spinner from '../../../components/spinner';
 
 const KaKaoLogin = () => {
   const navigate = useNavigate();
@@ -45,7 +46,11 @@ const KaKaoLogin = () => {
     const code = url.searchParams.get('code');
     loginKakao(code);
   }, []);
-  return <div>로딩중입니다... 곧 로그인이 완료됩니다...</div>;
+  return (
+    <>
+      <Spinner />
+    </>
+  );
 };
 
 export default KaKaoLogin;
