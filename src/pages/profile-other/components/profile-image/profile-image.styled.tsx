@@ -12,6 +12,7 @@ export const ProflieImg = styled.img`
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
+  border: 1px solid #f2f2f2;
 `;
 
 export const BadgeWrapper = styled.div`
