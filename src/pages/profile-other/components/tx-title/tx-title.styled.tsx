@@ -24,7 +24,8 @@ export const Text = styled.span`
 
 export const ArrowBox = styled.p`
   position: absolute;
-  width: 170px;
+  text-align: center;
+  width: 160px;
   height: auto;
   padding: 8px;
   top: -10px;

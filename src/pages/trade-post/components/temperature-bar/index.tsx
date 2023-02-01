@@ -59,7 +59,7 @@ const TemperatureBar = ({ temperature }: TemperatureBarProps) => {
         {openModal && (
           <S.ArrowBox>
             {
-              '와플동네는 현재 설정된 나의 동네를\n보여줘요. 범위를 설정하고 주변의\n따뜻한 이웃들과 거래하세요.'
+              '와플온도는 와플마켓 사용자로부터\n받은 칭찬, 후기, 등을 종합해서 만든\n매너 지표예요.'
             }
           </S.ArrowBox>
         )}
@@ -72,7 +72,7 @@ const TemperatureBar = ({ temperature }: TemperatureBarProps) => {
           setOpenModal(false);
         }}
       >
-        매너온도
+        와플온도
       </S.MannerTemp>
     </>
   );
