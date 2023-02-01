@@ -5,6 +5,7 @@ import {
   requestPostNeighborhood,
 } from '../../../../api/neighborhood';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { loadItem } from '../../../../utils/storage';
 import { setPosts } from '../../../../store/slices/neighborhoodPostListSlice';
 import * as S from './add-modal.styled';
 
@@ -14,7 +15,7 @@ interface AddModalProps {
 
 export const AddModal = ({ handleClose }: AddModalProps) => {
   const dispatch = useAppDispatch();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   // console.log(accessToken);
   const posts = useAppSelector(state => state.neighborhoodPostList);
   const [inputs, setInputs] = useState({

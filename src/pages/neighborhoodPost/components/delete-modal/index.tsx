@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { requestDeleteNeighborhood } from '../../../../api/neighborhood';
+import { loadItem } from '../../../../utils/storage';
 import { useAppSelector } from '../../../../store/hooks';
 import { neighborPost } from '../../../../types/neighborhood';
 import * as S from './delete-modal.style';
@@ -11,7 +12,7 @@ interface DeleteModalProps {
 
 export const DeleteModal = ({ post, handleClose }: DeleteModalProps) => {
   const navigate = useNavigate();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const handleDeleteButtonClick = () => {
     if (accessToken) {
       requestDeleteNeighborhood(post.postId, accessToken).then(() =>

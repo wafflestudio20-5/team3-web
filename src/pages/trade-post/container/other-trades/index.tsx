@@ -4,12 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './other-trades.styled';
 import ShortCut from '../../components/shortcut';
 import { getTop3 } from '../../../../store/slices/tradePostSlice';
+import { loadItem } from '../../../../utils/storage';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 const OtherTrades = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const [trades, setTrades] = useState<any[]>([]);
 
   // TODO: 응답으로 처리하기

@@ -108,30 +108,22 @@ export const sessionSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(postLogin.fulfilled, (state, action) => {
-      const { accessToken, expiryTime } = action.payload;
-      state.accessToken = accessToken;
-      saveItem('expiryTime', String(expiryTime));
+      saveItem('expiryTime', String(action.payload.expiryTime));
       saveItem('accessToken', action.payload.accessToken);
       saveItem('refreshToken', action.payload.refreshToken);
     });
     builder.addCase(postRefresh.fulfilled, (state, action) => {
-      const { accessToken, expiryTime } = action.payload;
-      state.accessToken = accessToken;
-      saveItem('expiryTime', String(expiryTime));
+      saveItem('expiryTime', String(action.payload.expiryTime));
       saveItem('accessToken', action.payload.accessToken);
       saveItem('refreshToken', action.payload.refreshToken);
     });
     builder.addCase(postGoogleLogin.fulfilled, (state, action) => {
-      const { accessToken, expiryTime } = action.payload;
-      state.accessToken = accessToken;
-      saveItem('expiryTime', String(expiryTime));
+      saveItem('expiryTime', String(action.payload.expiryTime));
       saveItem('accessToken', action.payload.accessToken);
       saveItem('refreshToken', action.payload.refreshToken);
     });
     builder.addCase(postKakaoLogin.fulfilled, (state, action) => {
-      const { accessToken, expiryTime } = action.payload;
-      state.accessToken = accessToken;
-      saveItem('expiryTime', String(expiryTime));
+      saveItem('expiryTime', String(action.payload.expiryTime));
       saveItem('accessToken', action.payload.accessToken);
       saveItem('refreshToken', action.payload.refreshToken);
     });

@@ -7,6 +7,7 @@ import { normalToast } from '../../../../utils/basic-toast-modal';
 
 import { SetEditType, EditType } from '../../../../types/users';
 import { postPassword } from '../../../../store/slices/usersSlice';
+import { loadItem } from '../../../../utils/storage';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 import * as S from './edit-password.styled';
@@ -18,7 +19,7 @@ interface EditPasswordProps {
 
 const EditPassword = ({ edit, handleClose }: EditPasswordProps) => {
   const dispatch = useAppDispatch();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const [newPwAnnounce, setNewPwAnnounce] = useState('');
   const [newPwSuccess, setNewPwSuccess] = useState(false);
   const [confirmAnnounce, setconfirmAnnounce] = useState('');

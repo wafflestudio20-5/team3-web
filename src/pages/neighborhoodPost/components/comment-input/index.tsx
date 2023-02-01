@@ -5,6 +5,7 @@ import {
   requestNeighborhoodPost,
   requestPostNeighborhoodComment,
 } from '../../../../api/neighborhood';
+import { loadItem } from '../../../../utils/storage';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import {
   addComment,
@@ -21,7 +22,7 @@ export const CommentInput = ({ postId, refreshPost }: CommentInputProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const comments = useAppSelector(state => state.comments);
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const [input, setInput] = useState('');
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

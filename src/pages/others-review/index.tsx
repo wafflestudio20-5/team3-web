@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { normalToast } from '../../utils/basic-toast-modal';
 import { useAuth } from '../../hooks/useAuth';
+import { loadItem } from '../../utils/storage';
 import Spinner from '../../components/spinner';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { deleteReview, getReviews } from '../../store/slices/reviewSlice';
@@ -19,7 +20,7 @@ const OthersReviewPage = () => {
   const params = useParams();
   const userId = Number(params.id);
   const dispatch = useAppDispatch();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const { me } = useAppSelector(state => state.users);
   const [data, setData] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -124,7 +125,7 @@ const OthersReviewPage = () => {
                 removeReview={removeReview}
               />
             ))}
-            {!data[0] && <Message>아직 리뷰가 없습니다</Message>}
+            {!data[0] && <Message>아직 후기가 없습니다</Message>}
           </List>
         )}
       </Wrapper>

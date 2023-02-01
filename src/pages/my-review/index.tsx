@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { normalToast } from '../../utils/basic-toast-modal';
 import { useAuth } from '../../hooks/useAuth';
+import { loadItem } from '../../utils/storage';
 import Spinner from '../../components/spinner';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { deleteReview, getReviews } from '../../store/slices/reviewSlice';
@@ -17,7 +18,7 @@ import { Wrapper, Header, List, Message } from './my-review.styled';
 const MyReviewPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const { me } = useAppSelector(state => state.users);
   const userId = me?.id;
   const [data, setData] = useState<Review[]>([]);

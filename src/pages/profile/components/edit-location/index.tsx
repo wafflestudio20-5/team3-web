@@ -10,6 +10,7 @@ import { Coordinate } from '../../../../types/auth';
 import { getCoordinate } from '../../../../utils/map';
 import { SetEditType, EditType } from '../../../../types/users';
 import { postLocation } from '../../../../store/slices/usersSlice';
+import { loadItem } from '../../../../utils/storage';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 import * as S from './edit-location.styled';
@@ -23,7 +24,7 @@ interface EditLocationProps {
 const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
   const dispatch = useAppDispatch();
   const open = useDaumPostcodePopup();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const [currLocation, setCurrLocation] = useState(location || '');
   const [coordinate, setCoordinate] = useState<Coordinate>({
     lat: 0,

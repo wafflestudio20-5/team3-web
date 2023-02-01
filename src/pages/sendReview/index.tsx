@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import Gnb from '../../components/gnb';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { loadItem } from '../../utils/storage';
 import { getTradePost } from '../../store/slices/tradePostSlice';
 import { postReview } from '../../store/slices/reviewSlice';
 import { redirectWithMsg } from '../../utils/errors';
@@ -20,7 +21,7 @@ const SendReview = () => {
   const postId = Number(params.id);
   const dispatch = useAppDispatch();
   const { me } = useAppSelector(state => state.users);
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const defaultEmotion = { bad: false, good: false, great: false };
   const [selected, setSelected] = useState(defaultEmotion);
   const [score, setScore] = useState(0);

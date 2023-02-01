@@ -5,6 +5,7 @@ import {
   requestDeleteNeighborhoodComment,
   requestNeighborhoodPost,
 } from '../../../../api/neighborhood';
+import { loadItem } from '../../../../utils/storage';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { setComments } from '../../../../store/slices/neighborhoodSlice';
 import { neighborPost } from '../../../../types/neighborhood';
@@ -22,7 +23,7 @@ export const CommentDeleteModal = ({
   handleClose,
 }: CommentDeleteModalProps) => {
   const dispatch = useAppDispatch();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const handleDeleteButtonClick = async () => {
     if (accessToken) {
       await requestDeleteNeighborhoodComment(commentId, accessToken);
