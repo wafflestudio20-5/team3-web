@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Gnb from '../../components/gnb';
@@ -23,6 +24,8 @@ const TradePostPage = () => {
   if (sessionLoading || !isAuthed) {
     return <Spinner />;
   }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
     <S.Wrapper>
