@@ -78,6 +78,10 @@ export const ProductInfoWrapper = styled.div`
   width: 70%;
   height: auto;
   justify-content: flex-start;
+
+  @media ${MD_SIZE} {
+    width: 60%;
+  }
 `;
 
 export const ProductImg = styled.img`
@@ -182,6 +186,10 @@ export const FromMessageBox = styled.span`
   border-radius: 20px 2px 20px 20px;
   background-color: #ff6f0f;
   color: rgb(255, 255, 255);
+
+  @media ${MD_SIZE} {
+    font-size: 12px;
+  }
 `;
 
 export const ToMessageBox = styled.span`
@@ -197,6 +205,10 @@ export const ToMessageBox = styled.span`
   border-radius: 2px 20px 20px;
   background-color: #eaebee;
   color: #212124;
+
+  @media ${MD_SIZE} {
+    font-size: 12px;
+  }
 `;
 
 export const ToMessageProfile = styled.img`
