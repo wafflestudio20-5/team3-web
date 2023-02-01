@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import ReactS3Client from 'react-aws-s3-typescript';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 import 'moment/locale/ko';
@@ -18,9 +18,12 @@ import {
 import {
   deleteTradePost,
   getReservation,
+  getTradePost,
   postLike,
   updateTradePost,
 } from '../../../../store/slices/tradePostSlice';
+
+import { loadItem } from '../../../../utils/storage';
 import { redirectWithMsg } from '../../../../utils/errors';
 import { getUUID } from '../../../../store/slices/chatSlice';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
@@ -34,12 +37,13 @@ import likeBlank from '../../../../assets/like-blank.svg';
 const Description = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const postId = Number(useParams().id);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [likeIcon, setLikeIcon] = useState(likeBlank);
   const [candidatesLoading, setCandidatesLoading] = useState(false);
 
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const { candidates, tradePost, buyer, tradeStatus, isLiked, imageUrls } =
     useAppSelector(state => state.tradePost);
 
@@ -152,7 +156,7 @@ const Description = () => {
           }
         });
     }
-  }, [accessToken]);
+  }, [tradePost, accessToken]);
 
   // 글 수정 🚀🚀🚀
   const [active, setActive] = useState(false);
@@ -164,6 +168,14 @@ const Description = () => {
     desc: tradePost?.desc,
     price: tradePost?.price,
   });
+
+  useEffect(() => {
+    setValues({
+      title: tradePost?.title,
+      desc: tradePost?.desc,
+      price: tradePost?.price,
+    });
+  }, [postId, modalOpen, setModalOpen]);
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -323,6 +335,32 @@ const Description = () => {
     }
   }, [accessToken]);
 
+  const handleOpenModal = () => {
+    if (accessToken && postId) {
+      dispatch(getTradePost({ accessToken, postId }))
+        .unwrap()
+        .then(res => {
+          setOpenEditPost(true);
+          setValues({
+            title: res?.title,
+            desc: res?.desc,
+            price: res?.price,
+          });
+          setImgObject(
+            res?.imageUrls.map((url: any, index: number) => {
+              return {
+                id: index,
+                img: url,
+              };
+            }),
+          );
+        })
+        .catch(() => {
+          setOpenEditPost(false);
+        });
+    }
+  };
+
   const handleCloseModal = useCallback(() => {
     setOpenEditPost(false);
     setValues({
@@ -330,6 +368,7 @@ const Description = () => {
       desc: tradePost?.desc,
       price: tradePost?.price,
     });
+
     setImgObject(
       imageUrls.map((url: any, index: number) => {
         return {
@@ -338,7 +377,7 @@ const Description = () => {
         };
       }),
     );
-  }, [imageUrls]);
+  }, [imageUrls, tradePost]);
 
   // 사진
   const [imgObject, setImgObject] = useState<any[]>(
@@ -375,9 +414,7 @@ const Description = () => {
                   }}
                 >
                   <S.ElemWrapper>
-                    <S.Elem onClick={() => setOpenEditPost(true)}>
-                      게시글 수정
-                    </S.Elem>
+                    <S.Elem onClick={handleOpenModal}>게시글 수정</S.Elem>
                     <S.Elem onClick={() => setOpenDelete(true)}>
                       <S.Delete>게시글 삭제</S.Delete>
                     </S.Elem>

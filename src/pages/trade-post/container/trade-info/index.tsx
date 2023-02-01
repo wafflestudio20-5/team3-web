@@ -8,7 +8,8 @@ import Spinner from '../../../../components/spinner';
 import ProfileImage from '../../components/profile-image';
 import TemperatureBar from '../../components/temperature-bar';
 
-import { redirectWithMsg } from '../../../../utils/errors';
+import { loadItem } from '../../../../utils/storage';
+import { normalToast } from '../../../../utils/basic-toast-modal';
 import { getTradePost } from '../../../../store/slices/tradePostSlice';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
@@ -22,7 +23,7 @@ const TradeInfo = () => {
   const [dataLoading, setDataLoading] = useState(true);
   const { me } = useAppSelector(state => state.users);
   const { seller } = useAppSelector(state => state.tradePost);
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
 
   useEffect(() => {
     if (accessToken && postId) {
@@ -34,16 +35,10 @@ const TradeInfo = () => {
         .catch(err => {
           if (axios.isAxiosError(err)) {
             if (err.response?.status === 404) {
-              redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
-            } else if (err.response?.status === 401) {
-              // TODO: refresh 후 재요청
-              redirectWithMsg(2, err.response?.data.error, () =>
-                navigate('/login'),
-              );
+              normalToast(err.response?.data.error);
             } else {
-              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
-                navigate('/'),
-              );
+              normalToast('요청을 수행할 수 없습니다.');
+              navigate(-1);
             }
           }
         });
