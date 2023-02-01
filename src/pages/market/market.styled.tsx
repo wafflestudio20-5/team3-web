@@ -8,20 +8,6 @@ export const Wrapper = styled.div`
   align-content: center;
   align-items: center;
   justify-content: center;
-
-  animation: fadein 2s;
-  -moz-animation: fadein 2s; /* Firefox */
-  -webkit-animation: fadein 2s; /* Safari and Chrome */
-  -o-animation: fadein 2s; /* Opera */
-
-  @keyframes fadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
 `;
 
 export const Header = styled.div`

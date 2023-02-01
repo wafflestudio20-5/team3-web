@@ -181,7 +181,7 @@ const MarketPage = () => {
           keyword: keyword,
           page: page,
           limit: 20,
-          isTrading: isTrading,
+          isTrading: false,
         }),
       )
         .unwrap()
@@ -309,7 +309,9 @@ const MarketPage = () => {
               })}
             </List>
           )}
-          <Pagination total={totalPage} page={page} setPage={changePage} />
+          {!isLoading && (
+            <Pagination total={totalPage} page={page} setPage={changePage} />
+          )}
           <AddButton handleClick={() => setOpenCreatePost(true)} />
         </Wrapper>
       )}
