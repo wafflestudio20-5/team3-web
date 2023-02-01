@@ -213,6 +213,12 @@ const Description = () => {
     } else if (imgObject.length < 1) {
       normalToast('이미지는 최소 한 장 이상 등록해야 합니다.');
       return;
+    } else if (values.title.length > 255) {
+      normalToast('제목은 255자까지만 입력 가능합니다.');
+      return;
+    } else if (values.desc.length > 1000) {
+      normalToast('본문은 1000자까지만 입력 가능합니다.');
+      return;
     }
 
     // 삭제
