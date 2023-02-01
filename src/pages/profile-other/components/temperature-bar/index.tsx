@@ -51,8 +51,6 @@ const TemperatureBar = () => {
         });
     }
   }, [userId]);
-  console.log('남의 프로필에서', width);
-  console.log('currentUser', currentUser?.temperature);
 
   useEffect(() => {
     if (width) {

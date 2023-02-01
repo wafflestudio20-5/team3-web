@@ -29,14 +29,12 @@ const TemperatureBar = () => {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { me } = useAppSelector(state => state.users);
 
   useEffect(() => {
     if (loadItem('accessToken')) {
       dispatch(getMe(loadItem('accessToken')))
         .unwrap()
         .then(res => {
-          console.log('res?.temperature', res?.temperature);
           setWidth(res?.temperature);
         })
         .catch(err => {
@@ -52,8 +50,7 @@ const TemperatureBar = () => {
         });
     }
   }, []);
-  console.log('나의 프로필에서', width);
-  console.log('현재 나의 온도', me?.temperature);
+
   useEffect(() => {
     if (width) {
       if (width < 36.5) {
