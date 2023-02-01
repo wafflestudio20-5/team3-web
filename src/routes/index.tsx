@@ -22,6 +22,7 @@ import BuyHistoryPage from '../pages/buy-history';
 import LikeHistoryPage from '../pages/like-history';
 import { NeighborHistoryPage } from '../pages/neighbor-history';
 import { NeighborHistoryLikePage } from '../pages/neighbor-like-history';
+import PrivateRoute from './PrivateRoute';
 
 // DESC: 라우팅 관리를 위한 EntryRoute
 function EntryRoute() {
@@ -30,13 +31,17 @@ function EntryRoute() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/*" element={<ErrorPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route element={<PrivateRoute authentication={false} />}>
+          <Route path="/login" element={<LoginPage />} />
+        </Route>
         <Route path="/login/kakao" element={<KaKaoLogin />} />
         <Route path="/login/google" element={<GoogleLoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/profile/me" element={<ProfilePage />} />
         <Route path="/profile/me/review" element={<MyReviewPage />} />
-        <Route path="/profile/:id" element={<ProfileOtherPage />} />
+        <Route element={<PrivateRoute authentication={true} />}>
+          <Route path="/profile/:id" element={<ProfileOtherPage />} />
+        </Route>
         <Route path="/profile/:id/review" element={<OthersReviewPage />} />
         <Route path="/profile/me/sell" element={<SellHistoryMyPage />} />
         <Route path="/profile/:id/sell" element={<SellHistoryOthersPage />} />
