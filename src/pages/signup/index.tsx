@@ -23,7 +23,10 @@ import { redirectWithMsg } from '../../utils/errors';
 
 import * as S from './signup.styled';
 import logo from '../../assets/logo.svg';
+import diceIcon from '../../assets/dice-icon.png';
 import 'react-toastify/dist/ReactToastify.css';
+import { normalToast } from '../../utils/basic-toast-modal';
+import { BASE_URL } from '../../constant';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -53,6 +56,7 @@ const SignUpPage = () => {
   const [isSocialLogin, setIsSocialLogin] = useState(isSocialLoginProp);
   // DESC: 이메일 인증 기능을 회원가입 페이지에서 구현
   const [isEmailAuthButtonOpen, setIsEmailAuthButtonOpen] = useState(false);
+  const [isDiceModalOpen, setIsDiceModalOpen] = useState(false);
 
   const [inputs, setInputs] = useState({
     email: '',
@@ -151,7 +155,9 @@ const SignUpPage = () => {
       dispatch(postLogin({ email, password }))
         .unwrap()
         .then(res => {
-          toast.success(`${res.user?.username}님, 환영합니다!`);
+          toast.success(
+            `회원가입에 성공하였습니다. ${res.user?.username}님, 환영합니다!`,
+          );
           navigate('/');
         })
         .catch(err => {
@@ -168,10 +174,8 @@ const SignUpPage = () => {
             }
           }
         });
-      alert('회원가입에 성공하였습니다'); // 로그인 페이지로 넘어가기 전에 사용자에게 알려주기
-      navigate('/login');
     } else {
-      toast('회원가입에 실패하였습니다.');
+      toast.error('회원가입에 실패하였습니다.');
     }
   };
 
@@ -210,6 +214,17 @@ const SignUpPage = () => {
     return () => clearInterval(timerId.current);
   }, []);
 
+  const onDiceClick = () => {
+    axios
+      .get(`${BASE_URL}/users/random-nickname`)
+      .then(res => {
+        setInputs({ ...inputs, username: res.data.randomNickname });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   return (
     <S.OuterWrapper>
       <S.Logo src={logo} alt="logo" />
@@ -224,6 +239,7 @@ const SignUpPage = () => {
           color={isSocialLogin ? 'rgba(0,0,0,0.3)' : 'black'}
           required={true}
           placeholder="이메일"
+          isValid={V.valEmail(email)}
           validationText={V.valEmailToMsg(email)}
           handleChange={e => {
             onChange(e);
@@ -233,7 +249,6 @@ const SignUpPage = () => {
           isWithButton={!isSocialLogin}
           isReadOnly={isSocialLogin}
           buttonText="이메일 인증"
-          // TODO: 변경된 회원가입 플로우에 따라 이 버튼으로 중복체크 & 메일 인증 되도록 바꿔주기
           handleClick={checkEmail}
         />
         {isEmailAuthButtonOpen && (
@@ -249,7 +264,6 @@ const SignUpPage = () => {
                   onChange={e => {
                     onChange(e);
                   }}
-                  // TODO: 변경된 회원가입 플로우에 따라 이 버튼으로 중복체크 & 메일 인증 되도록 바꿔주기
                 />
                 {min <= 0 && sec <= 0 ? (
                   <S.Timer isTimesUp>00:00</S.Timer>
@@ -284,6 +298,7 @@ const SignUpPage = () => {
           type="password"
           required={true}
           placeholder="비밀번호"
+          isValid={V.valPassword(password)}
           validationText={V.valPasswordToMsg(password)}
           handleChange={onChange}
           isReadOnly={isSocialLogin}
@@ -296,25 +311,41 @@ const SignUpPage = () => {
           type="password"
           required={true}
           placeholder="비밀번호를 한 번 더 입력하세요"
+          isValid={password === passwordConfirm}
           validationText={V.confirmPasswordToMsg(password, passwordConfirm)}
           handleChange={onChange}
           isReadOnly={isSocialLogin}
         />
-        <SignUpInputNormal
-          label="username"
-          valueName="username"
-          value={username}
-          required={true}
-          placeholder="유저 이름"
-          validationText={V.valUsernameToMsg(username)}
-          handleChange={e => {
-            onChange(e);
-            setIsUsernameUnique(false);
-          }}
-          isWithButton={true}
-          buttonText="중복 확인"
-          handleClick={checkUsername}
-        />
+        <S.UsernameWrapper>
+          <SignUpInputNormal
+            label="username"
+            valueName="username"
+            value={username}
+            required={true}
+            placeholder="유저 이름"
+            isValid={V.valUsername(username)}
+            validationText={V.valUsernameToMsg(username)}
+            handleChange={e => {
+              onChange(e);
+              setIsUsernameUnique(false);
+            }}
+            isWithButton={true}
+            buttonText="중복 확인"
+            handleClick={checkUsername}
+          />
+          {isDiceModalOpen && <S.DiceInfo>랜덤 닉네임 생성</S.DiceInfo>}
+          <S.DiceImg
+            src={diceIcon}
+            alt="diceIcon"
+            onClick={onDiceClick}
+            onMouseOver={() => {
+              setIsDiceModalOpen(true);
+            }}
+            onMouseOut={() => {
+              setIsDiceModalOpen(false);
+            }}
+          />
+        </S.UsernameWrapper>
 
         <SignUpInputNormal
           label="location"
@@ -338,7 +369,7 @@ const SignUpPage = () => {
               } else if (isSocialLogin) {
                 signUpUser();
               } else {
-                alert('이메일과 닉네임 중복 여부를 확인해주세요.');
+                normalToast('이메일과 닉네임 중복 여부를 확인해주세요.');
               }
             }}
           >
