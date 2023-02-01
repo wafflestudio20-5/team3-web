@@ -51,7 +51,12 @@ export const postLocation = createAsyncThunk(
     {
       accessToken,
       currLocation,
-    }: { accessToken: string; currLocation: string | null },
+      coordinate,
+    }: {
+      accessToken: string;
+      currLocation: string | null;
+      coordinate: { lat: number; lng: number };
+    },
     { rejectWithValue },
   ) => {
     try {
@@ -59,6 +64,7 @@ export const postLocation = createAsyncThunk(
         `${BASE_URL}/users/me/location`,
         {
           location: currLocation,
+          coordinate,
         },
         { headers: auth(accessToken) },
       );
