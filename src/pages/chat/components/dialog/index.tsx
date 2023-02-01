@@ -93,9 +93,9 @@ const Dialog = ({
           {meSeller &&
             product?.tradeStatus === TradeStatusType.RESERVATION &&
             product?.buyer.id === to.id && (
-              <S.TradeButtonL onClick={handleSetReservation}>
+              <S.TradeButtonM onClick={handleSetReservation}>
                 예약자 변경하기
-              </S.TradeButtonL>
+              </S.TradeButtonM>
             )}
           {meSeller &&
             youBuyer &&
