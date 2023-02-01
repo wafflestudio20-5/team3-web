@@ -2,6 +2,7 @@ import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { auth } from '../../api';
+import { axiosI } from '../../api';
 import { BASE_URL } from '../../constant';
 import { TradePostType, TxUser } from '../../types/tradePost';
 
@@ -13,12 +14,9 @@ export const getTradePost = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.get<TradePostType>(
-        `${BASE_URL}/tradepost/${postId}`,
-        {
-          headers: auth(accessToken),
-        },
-      );
+      const res = await axiosI.get<TradePostType>(`/tradepost/${postId}`, {
+        headers: auth(accessToken),
+      });
       return res.data;
     } catch (err) {
       return rejectWithValue(err);
