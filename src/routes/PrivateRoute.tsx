@@ -14,7 +14,6 @@ export default function PrivateRoute({
   authentication,
 }: PrivateRouteProps): React.ReactElement | null {
   const { isAuthed, sessionLoading } = useAuth();
-  console.log(sessionLoading, isAuthed);
 
   if (sessionLoading) {
     return <Spinner />;
