@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import * as S from './candidate.styled';
 import { TradeStatusType } from '../../../../types/tradePost';
 
@@ -10,6 +12,7 @@ interface CandidateProps {
   username?: string | null;
   status?: TradeStatusType;
   isBuyer?: boolean;
+  youId?: number;
   handleChatStart: () => void;
   animation: boolean;
 }
@@ -19,13 +22,16 @@ const Candidate = ({
   username,
   status,
   isBuyer,
+  youId,
   handleChatStart,
   animation,
 }: CandidateProps) => {
+  const navigate = useNavigate();
+
   return (
     <S.Wrapper animation={animation}>
       <S.InnerWrapper>
-        <S.User>
+        <S.User onClick={() => navigate(`/profile/${youId}`)}>
           <S.Img src={imgUrl || defaultImg} alt="user" />
           <S.Text>{username}</S.Text>
         </S.User>

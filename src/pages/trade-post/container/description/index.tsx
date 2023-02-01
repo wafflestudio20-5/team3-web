@@ -471,6 +471,7 @@ const Description = () => {
                   key={buyer?.id}
                   animation={true}
                   status={tradeStatus}
+                  youId={buyer.id}
                   imgUrl={buyer?.imgUrl}
                   username={buyer?.username}
                   handleChatStart={() => handleSellerGetChat(buyer)}
@@ -486,6 +487,7 @@ const Description = () => {
                           animation={false}
                           key={candidate.id}
                           status={tradeStatus}
+                          youId={candidate.id}
                           imgUrl={candidate?.imgUrl}
                           username={candidate?.username}
                           handleChatStart={() => handleSellerGetChat(candidate)}
@@ -496,7 +498,7 @@ const Description = () => {
               </ul>
             </>
           ) : (
-            <>TODO: 로딩중 스켈레톤 넣기</>
+            <>로딩중...</>
           )}
         </ModalWrapper>
       )}
