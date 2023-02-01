@@ -209,6 +209,14 @@ export const Main = styled.main`
   }
 `;
 
+export const Video = styled.video`
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: none;
+  object-fit: cover;
+`;
+
 export const MockUpImg = styled.img`
   width: 100%;
   height: 100%;
@@ -220,7 +228,7 @@ export const MockUpImg = styled.img`
   }
 `;
 
-export const MockupImg2 = styled.div`
+export const MockupImg2 = styled.img`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -230,8 +238,6 @@ export const MockupImg2 = styled.div`
   width: 180px;
   height: 122px;
   z-index: 9;
-  background-color: #fff;
-  border: 8px solid #ffffff66;
   border-radius: 5px;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
   object-fit: cover;
@@ -246,7 +252,7 @@ export const MockupImg2 = styled.div`
       transform: scale(1);
     }
     50% {
-      transform: scale(1.08);
+      transform: scale(1.1);
     }
     100% {
       transform: scale(1);
@@ -254,7 +260,7 @@ export const MockupImg2 = styled.div`
   }
 `;
 
-export const MockupImg3 = styled.div`
+export const MockupImg3 = styled.img`
   display: block;
   position: absolute;
   right: 10px;
@@ -262,8 +268,6 @@ export const MockupImg3 = styled.div`
   width: 140px;
   height: 100px;
   animation: none;
-  border: 8px solid #ffffff66;
-  background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
 

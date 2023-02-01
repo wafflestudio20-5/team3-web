@@ -11,6 +11,7 @@ import {
   updateTradePost,
 } from '../../../../store/slices/tradePostSlice';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { loadItem } from '../../../../utils/storage';
 import { redirectWithMsg } from '../../../../utils/errors';
 import DeleteModal from '../delete-modal';
 import SendReviewModal from '../send-review-modal';
@@ -75,7 +76,7 @@ const ShortCut = ({
 }: ShortCut) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   const [isDropped, setIsDropped] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isSendReviewModalOpen, setIsSendReviewModalOpen] = useState(false);

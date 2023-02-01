@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { axiosI } from '.';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { auth } from '.';
@@ -13,7 +14,7 @@ export const requestNeighborhood = async (
 ) => {
   try {
     if (keyword === '') {
-      return await axios.get(`${BASE_URL}/neighborhood/?page=${page}`, {
+      return await axiosI.get(`/neighborhood/?page=${page}`, {
         headers: auth(accessToken),
       });
     } else {
@@ -33,9 +34,9 @@ export const requestPostNeighborhood = async (
   { title, content }: neighborPostInput,
   accessToken: string,
 ) => {
-  await axios
+  await axiosI
     .post(
-      `${BASE_URL}/neighborhood`,
+      `/neighborhood`,
       { title: title, content: content },
       { headers: auth(accessToken) },
     )
@@ -57,7 +58,7 @@ export const requestNeighborhoodPost = async (
   accessToken: string,
 ) => {
   try {
-    return await axios.get(`${BASE_URL}/neighborhood/${postId}`, {
+    return await axiosI.get(`/neighborhood/${postId}`, {
       headers: auth(accessToken),
     });
   } catch (e) {
@@ -71,8 +72,8 @@ export const requestEditNeighborhood = async (
   accessToken: string,
 ) => {
   try {
-    return await axios.patch(
-      `${BASE_URL}/neighborhood/${postId}`,
+    return await axiosI.patch(
+      `/neighborhood/${postId}`,
       { title: title, content: content },
       { headers: auth(accessToken) },
     );
@@ -86,7 +87,7 @@ export const requestDeleteNeighborhood = async (
   accessToken: string,
 ) => {
   try {
-    return await axios.delete(`${BASE_URL}/neighborhood/${postId}`, {
+    return await axiosI.delete(`/neighborhood/${postId}`, {
       headers: auth(accessToken),
     });
   } catch (e) {
@@ -100,8 +101,8 @@ export const requestPostNeighborhoodComment = async (
   accessToken: string,
 ) => {
   try {
-    return await axios.post(
-      `${BASE_URL}/neighborhood/${postId}/comment`,
+    return await axiosI.post(
+      `/neighborhood/${postId}/comment`,
       { comment: comment, isHidden: false },
       { headers: auth(accessToken) },
     );
@@ -116,8 +117,8 @@ export const requestPatchNeighborhoodComment = async (
   accessToken: string,
 ) => {
   try {
-    return await axios.patch(
-      `${BASE_URL}/neighborhood/comment/${commentId}`,
+    return await axiosI.patch(
+      `/neighborhood/comment/${commentId}`,
       { comment },
       { headers: auth(accessToken) },
     );
@@ -131,7 +132,7 @@ export const requestDeleteNeighborhoodComment = async (
   accessToken: string,
 ) => {
   try {
-    return await axios.delete(`${BASE_URL}/neighborhood/comment/${commentId}`, {
+    return await axiosI.delete(`/neighborhood/comment/${commentId}`, {
       headers: auth(accessToken),
     });
   } catch (e) {
@@ -144,7 +145,7 @@ export const requestPostNeighborhoodLike = async (
   accessToken: string,
 ) => {
   try {
-    return await axios.post(`${BASE_URL}/neighborhood/${postId}/like`, null, {
+    return await axiosI.post(`/neighborhood/${postId}/like`, null, {
       headers: auth(accessToken),
     });
   } catch (e: any) {
@@ -163,15 +164,15 @@ export const requestMyNeighborhood = async (
 ) => {
   try {
     if (keyword === '') {
-      return await axios.get(
-        `${BASE_URL}/users/neighborhood-post/?page=${page}`,
+      return await axiosI.get(
+        `/users/neighborhood-post/?page=${page}`,
         {
           headers: auth(accessToken),
         },
       );
     } else {
-      return await axios.get(
-        `${BASE_URL}/users/neighborhood-post/?page=${page}&keyword=${keyword}`,
+      return await axiosI.get(
+        `/users/neighborhood-post/?page=${page}&keyword=${keyword}`,
         {
           headers: auth(accessToken),
         },
@@ -189,15 +190,15 @@ export const requestMyLikeNeighborhood = async (
 ) => {
   try {
     if (keyword === '') {
-      return await axios.get(
-        `${BASE_URL}/users/like-neighborhood/?page=${page}`,
+      return await axiosI.get(
+        `/users/like-neighborhood/?page=${page}`,
         {
           headers: auth(accessToken),
         },
       );
     } else {
-      return await axios.get(
-        `${BASE_URL}/users/like-neighborhood/?page=${page}&keyword=${keyword}`,
+      return await axiosI.get(
+        `/users/like-neighborhood/?page=${page}&keyword=${keyword}`,
         {
           headers: auth(accessToken),
         },

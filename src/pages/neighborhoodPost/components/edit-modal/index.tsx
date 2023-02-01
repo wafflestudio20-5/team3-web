@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 import { requestEditNeighborhood } from '../../../../api/neighborhood';
+import { loadItem } from '../../../../utils/storage';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { neighborPost } from '../../../../types/neighborhood';
 import * as S from './edit-modal.styled';
@@ -12,7 +13,7 @@ interface EditModalProps {
 
 export const EditModal = ({ post, handleClose }: EditModalProps) => {
   const dispatch = useAppDispatch();
-  const { accessToken } = useAppSelector(state => state.session);
+  const accessToken = loadItem('accessToken');
   // console.log(accessToken);
 
   const [inputs, setInputs] = useState({

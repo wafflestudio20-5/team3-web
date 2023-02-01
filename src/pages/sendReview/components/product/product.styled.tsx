@@ -19,6 +19,7 @@ export const Img = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 12px;
+  object-fit: cover;
 
   &:hover {
     transform: translateY(-2px);
@@ -32,8 +33,12 @@ export const Info = styled.div`
 `;
 
 export const Title = styled.span`
+  width: 300px;
   font-size: 18px;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Neighbor = styled.span`
