@@ -60,9 +60,9 @@ const DropDown = ({
       }}
     >
       <S.ElemWrapper>
-        {tradeStatus === 'RESERVATION' && (
+        {/* {tradeStatus === 'RESERVATION' && (
           <S.Elem onClick={onConfirmation}>판매완료로 변경</S.Elem>
-        )}
+        )} */}
         {tradeStatus === 'COMPLETED' && !isReviewed && (
           <S.Elem onClick={() => navigate(`/tradepost/${postId}/review`)}>
             후기 보내기
@@ -70,7 +70,7 @@ const DropDown = ({
         )}
         {tradeStatus === 'COMPLETED' && isReviewed && (
           <S.Elem onClick={() => setIsCheckReviewModalOpen(true)}>
-            보낸 후기 보기
+            후기 보기
           </S.Elem>
         )}
         <S.Elem onClick={() => setOpenEditPost(true)}>수정하기</S.Elem>
