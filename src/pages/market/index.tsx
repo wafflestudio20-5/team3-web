@@ -316,7 +316,7 @@ const MarketPage = () => {
             })}
           </List>
         )}
-        {!data[0] && <Message>판매중인 상품이 없습니다</Message>}
+        {!isLoading && !data[0] && <Message>판매중인 상품이 없습니다</Message>}
         {!isLoading && data[0] && (
           <Pagination total={totalPage} page={page} setPage={changePage} />
         )}
