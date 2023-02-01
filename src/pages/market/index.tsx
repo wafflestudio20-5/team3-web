@@ -286,7 +286,7 @@ const MarketPage = () => {
         <Header>
           <Filter>
             <CheckBox type="checkbox" onChange={checkBoxChange} />
-            <Span>거래완료 상품 제외</Span>
+            <Span>거래가능만 보기</Span>
           </Filter>
           <SearchBar
             keyword={keyword}
