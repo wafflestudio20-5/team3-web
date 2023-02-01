@@ -14,12 +14,7 @@ export const Container = styled.div`
   border-radius: 12px;
   gap: 4px;
   transition: 0.3s all;
-
-  &:hover {
-    transform: translateY(-6px);
-  }
-
-  transition: 0.3s all;
+  
   &:hover {
     transform: translateY(-6px);
   }
