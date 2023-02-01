@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { normalToast } from '../../utils/basic-toast-modal';
+import { useAuth } from '../../hooks/useAuth';
+import Spinner from '../../components/spinner';
 import Gnb from '../../components/gnb';
 import ShortCut from './components/shortcut';
 import { getSellHistory } from '../../store/slices/tradeHistorySlice';
@@ -22,7 +25,9 @@ const SellHistoryOthersPage = () => {
   const [data, setData] = useState<TradeHistory[]>([]);
   const [status, setStatus] = useState<string>('TRADING');
   const [username, setUsername] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(`${BASE_URL}/users/${userId}`)
       .then(res => {
@@ -46,6 +51,7 @@ const SellHistoryOthersPage = () => {
             })
             .reverse(),
         );
+        setIsLoading(false);
       })
       .catch(err => {
         if (axios.isAxiosError(err)) {
@@ -65,6 +71,17 @@ const SellHistoryOthersPage = () => {
       });
   }, [accessToken, me, status]);
 
+  const { sessionLoading, isAuthed } = useAuth();
+
+  if (!sessionLoading && !isAuthed) {
+    navigate('/login');
+    normalToast('로그인이 필요합니다.');
+  }
+
+  if (sessionLoading || !isAuthed) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <Gnb />
@@ -77,25 +94,28 @@ const SellHistoryOthersPage = () => {
             <S.Option value="COMPLETED">거래완료</S.Option>
           </S.Filter>
         </S.FilterBox>
-        <S.List>
-          {data.map(post => {
-            return (
-              <ShortCut
-                key={post?.postId}
-                postId={post?.postId}
-                img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
-                title={post?.title}
-                tradeStatus={post?.tradeStatus}
-                price={post?.price}
-                location={shortenLocation(post?.seller.location)}
-                likes={post?.likeCount}
-                chats={post?.reservationCount}
-                created_at={post?.createdAt}
-              />
-            );
-          })}
-          {!data[0] && <S.Message>판매 내역이 없습니다</S.Message>}
-        </S.List>
+        {isLoading && <Spinner />}
+        {!isLoading && (
+          <S.List>
+            {data.map(post => {
+              return (
+                <ShortCut
+                  key={post?.postId}
+                  postId={post?.postId}
+                  img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
+                  title={post?.title}
+                  tradeStatus={post?.tradeStatus}
+                  price={post?.price}
+                  location={shortenLocation(post?.seller.location)}
+                  likes={post?.likeCount}
+                  chats={post?.reservationCount}
+                  created_at={post?.createdAt}
+                />
+              );
+            })}
+            {!data[0] && <S.Message>판매 내역이 없습니다</S.Message>}
+          </S.List>
+        )}
       </S.Wrapper>
     </>
   );

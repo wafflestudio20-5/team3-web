@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import Drawer from '../drawer';
@@ -31,7 +31,7 @@ const Gnb = ({ isColored }: GnbProps) => {
   const dispatch = useAppDispatch();
   const { active, handleToggleDrawer } = useDrawer();
   const { me } = useAppSelector(state => state.users);
-  const { accessToken } = useAppSelector(state => state.session);
+  const expiryTime = Number(loadItem('expiryTime'));
 
   const [selected, setSelected] = useState({
     intro: false,
@@ -47,17 +47,39 @@ const Gnb = ({ isColored }: GnbProps) => {
   }, [me]);
 
   useEffect(() => {
-    if (accessToken) {
-      dispatch(getMe(accessToken));
-    } else {
-      const refreshToken = loadItem('refreshToken');
+    const refreshToken = loadItem('refreshToken');
+    if (!loadItem('accessToken') || !expiryTime) {
       if (refreshToken) {
-        dispatch(postRefresh(refreshToken))
+        dispatch(postRefresh(refreshToken as string))
           .unwrap()
           .then(res => dispatch(getMe(res.accessToken)));
       }
+    } else {
+      if (refreshToken) {
+        dispatch(getMe(loadItem('accessToken')));
+      }
     }
-  }, [accessToken]);
+  }, [loadItem('accessToken'), expiryTime]);
+
+  // DESC: 토큰 만료시간 1분 전에 refresh
+  useEffect(() => {
+    const refreshToken = loadItem('refreshToken');
+    if (refreshToken) {
+      const refreshSession = () => {
+        dispatch(postRefresh(refreshToken as string))
+          .unwrap()
+          .then(res => {
+            // console.log('refresh!!!', res);
+            dispatch(getMe(res.accessToken));
+          });
+      };
+      const timeout = setTimeout(
+        refreshSession,
+        expiryTime - Date.now() - 60 * 1000,
+      );
+      return () => clearTimeout(timeout);
+    }
+  }, [loadItem('accessToken'), expiryTime]);
 
   useEffect(() => {
     switch (pathname) {
@@ -82,6 +104,20 @@ const Gnb = ({ isColored }: GnbProps) => {
     dispatch(sessionActions.logout());
     window.location.href = '/';
   }, []);
+
+  // 임시: 토큰 만료 전 refresh 확인용
+  const [minute, setMinute] = useState<any>();
+  const [second, setSecond] = useState<any>();
+  const interval = useRef(null);
+  useEffect(() => {
+    // console.log(new Date(expiryTime));
+    // console.log(accessToken);
+    (interval.current as any) = setInterval(() => {
+      setMinute(new Date(expiryTime - Date.now()).getMinutes());
+      setSecond(new Date(expiryTime - Date.now()).getSeconds());
+    }, 1000);
+    return () => clearInterval(interval.current as any);
+  }, [expiryTime]);
 
   return (
     <S.Wrapper isColored={isColored}>
@@ -112,7 +148,11 @@ const Gnb = ({ isColored }: GnbProps) => {
                 로그인
               </S.Auth>
             )}
-
+            {loadItem('accessToken') && (
+              <span>
+                남은시간= {minute}:{second}
+              </span>
+            )}
             <Footer />
           </>
         </Drawer>

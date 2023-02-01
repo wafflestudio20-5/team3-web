@@ -2,6 +2,7 @@ import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { auth } from '../../api';
+import { axiosI } from '../../api';
 import { BASE_URL } from '../../constant';
 
 export const postReview = createAsyncThunk(
@@ -16,8 +17,8 @@ export const postReview = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const res = await axios.post(
-        `${BASE_URL}/tradepost/${postId}/review`,
+      const res = await axiosI.post(
+        `/tradepost/${postId}/review`,
         { score: score, content: content },
         { headers: auth(accessToken) },
       );

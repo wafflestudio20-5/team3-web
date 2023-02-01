@@ -300,7 +300,7 @@ export const TradeButtonM = styled.button`
 
 export const TradeButtonL = styled.button`
   border-radius: 4px;
-  width: 88px;
+  width: 100px;
   height: 32px;
   line-height: 150%;
   font-weight: bold;

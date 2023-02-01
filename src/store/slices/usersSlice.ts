@@ -7,7 +7,7 @@ import { BASE_URL } from '../../constant';
 
 export const getMe = createAsyncThunk(
   'users/getMe',
-  async (token: string, { rejectWithValue }) => {
+  async (token: string | null, { rejectWithValue }) => {
     try {
       const res = await axios.get<User>(`${BASE_URL}/users/me`, {
         headers: auth(token),

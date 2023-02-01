@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 import * as S from './edit-username.styled';
 import defaultImg from '../../../../assets/default-profile.png';
+import { normalToast } from '../../../../utils/basic-toast-modal';
 
 interface EditUsernameProps {
   img: string | null;
@@ -32,10 +33,9 @@ const EditUsername = ({
   }, []);
 
   const handleSubmit = useCallback(() => {
-    // TODO: 함수로 빼기
     const USERNAME_REG = /^([a-zA-Z0-9가-힣]){2,10}$/;
     if (!USERNAME_REG.test(currUsername || '')) {
-      toast.warn(
+      normalToast(
         '닉네임은 한글, 영어, 숫자 중 하나를 포함한 형태의 2~10자리여야 합니다.',
       );
       return;
@@ -48,18 +48,9 @@ const EditUsername = ({
           handleClose({ ...edit, username: false });
           toast.success('닉네임이 변경되었습니다.');
         })
-        .catch(err => {
+        .catch((err: { response: { data: { error: string; }; }; }) => {
           if (axios.isAxiosError(err)) {
-            toast(`🥕 ${err.response?.data.error}`, {
-              position: 'top-center',
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: false,
-              pauseOnHover: false,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-            });
+            normalToast(err.response?.data.error);
           }
         });
     }

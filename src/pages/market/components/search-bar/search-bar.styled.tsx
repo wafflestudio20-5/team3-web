@@ -1,11 +1,9 @@
 import styled from 'styled-components';
-import { MD_SIZE, MD_to_XL_SIZE } from '../../../../constant/breakpoint';
+import { MD_SIZE, Market_MD, Market_XL } from '../../../../constant/breakpoint';
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 30px;
-  margin-bottom: 10px;
   gap: 8px;
 
   @media ${MD_SIZE} {
@@ -26,6 +24,10 @@ export const Div = styled.div`
   padding-right: 8px;
   border: 0.5px solid #8a8a8a;
   border-radius: 12px;
+
+  @media ${Market_MD} {
+    width: 360px;
+  }
 
   @media ${MD_SIZE} {
     width: 100vw;
@@ -54,6 +56,10 @@ export const Bar = styled.input`
   border: 0px solid transparent;
   margin-bottom: 1px;
   outline: none;
+
+  @media ${Market_MD} {
+    width: 300px;
+  }
 
   @media ${MD_SIZE} {
     width: 80%;

@@ -1,15 +1,15 @@
 import { useCallback, useRef, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
-import ButtonMd from '../button-md';
 import { postImg } from '../../../../store/slices/usersSlice';
 import { SetEditType, EditType } from '../../../../types/users';
+import { normalToast } from '../../../../utils/basic-toast-modal';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
+import ButtonMd from '../button-md';
 import * as S from './edit-img.styled';
 import defaultImg from '../../../../assets/default-profile.png';
-import { ReactComponent as CameraIcon } from '../../../../assets/camera.svg';
+import { ReactComponent as CameraIcon } from '../../../../assets/modifycamera.svg';
 
 interface EditImgProps {
   edit: EditType;
@@ -42,6 +42,11 @@ const EditImg = ({ img, edit, handleClose }: EditImgProps) => {
   };
 
   const handleSubmit = useCallback(() => {
+    if (!imgFile) {
+      normalToast('새로운 이미지 파일을 등록해주세요.');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('image', imgFile);
     if (accessToken) {
@@ -49,19 +54,11 @@ const EditImg = ({ img, edit, handleClose }: EditImgProps) => {
         .unwrap()
         .then(() => {
           handleClose({ ...edit, img: false });
+          toast.success('프로필 이미지가 변경되었습니다.');
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
-            toast(`🥕 ${err.response?.data.error}`, {
-              position: 'top-center',
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: false,
-              pauseOnHover: false,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-            });
+            normalToast(err.response?.data.error);
           }
         });
     }

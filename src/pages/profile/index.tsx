@@ -1,5 +1,7 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 import Gnb from '../../components/gnb';
 import Header from './components/header';
@@ -10,8 +12,12 @@ import ModalWrapper from '../../components/modal-wrapper';
 import ContentFooter from '../../components/content-footer';
 import NavigationButton from './components/navigation-button';
 
+import { auth } from '../../api';
+import { BASE_URL } from '../../constant';
 import { useAuth } from '../../hooks/useAuth';
+import { loadItem } from '../../utils/storage';
 import { getMyChats } from '../../store/slices/chatSlice';
+import { normalToast } from '../../utils/basic-toast-modal';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 import * as S from './profile.styled';
@@ -20,40 +26,65 @@ import lifeIcon from '../../assets/life-icon.svg';
 import likeIcon from '../../assets/like-icon.svg';
 import sellIcon from '../../assets/sell-icon.svg';
 import reviewIcon from '../../assets/review-icon.svg';
-// import scopeWide from '../../assets/scope-wide.png';
-// import scopeNarrow from '../../assets/scope-narrow.png';
-// import scopeNormal from '../../assets/scope-normal.png';
-// import defaultImg from '../../assets/default-profile.png';
-import mannerCommentIcon from '../../assets/manner-comment-icon.svg';
+import scopeWide from '../../assets/scopewide.png';
+import scopeNarrow from '../../assets/scopenarrow.png';
+import scopeNormal from '../../assets/scopenormal.png';
+import Spinner from '../../components/spinner';
 
 const ProfilePage = () => {
+  const { me, isAuthed, sessionLoading } = useAuth();
+  const accessToken = loadItem('accessToken');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { sessionLoading } = useAuth();
+
   const [modalOpen, setModalOpen] = useState(false);
-  const { me } = useAppSelector(state => state.users);
   const [openAreaModal, setOpenAreaModal] = useState(false);
-  const { accessToken } = useAppSelector(state => state.session);
   const { myChats, unreadTotalCount } = useAppSelector(state => state.chat);
 
+  enum SearchScope {
+    NARROW = 'NARROW',
+    NORMAL = 'NORMAL',
+    WIDE = 'WIDE',
+  }
+
   const [rangeValue, setRangeValue] = useState(0);
-  // const [rangeImg, setRangeImg] = useState(scopeNarrow);
+  const [rangeImg, setRangeImg] = useState(scopeNarrow);
   const [rangeDistance, setRangeDistance] = useState(35);
+  const [searchScope, setSearchScope] = useState(SearchScope.NARROW);
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setRangeValue(Number(e.target.value));
   }, []);
 
+  const handleSubmit = async () => {
+    if (accessToken) {
+      try {
+        await axios.patch(
+          `${BASE_URL}/users/me/search-scope`,
+          { searchScope },
+          { headers: auth(accessToken) },
+        );
+        setOpenAreaModal(false);
+        toast.success('동네 범위가 변경되었습니다.');
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
   useEffect(() => {
     if (rangeValue === 0) {
-      // setRangeImg(scopeNarrow);
+      setRangeImg(scopeNarrow);
       setRangeDistance(35);
+      setSearchScope(SearchScope.NARROW);
     } else if (rangeValue === 1) {
-      // setRangeImg(scopeNormal);
+      setRangeImg(scopeNormal);
       setRangeDistance(200);
+      setSearchScope(SearchScope.NORMAL);
     } else if (rangeValue === 2) {
-      // setRangeImg(scopeWide);
+      setRangeImg(scopeWide);
       setRangeDistance(400);
+      setSearchScope(SearchScope.WIDE);
     }
   }, [rangeValue]);
 
@@ -95,75 +126,85 @@ const ProfilePage = () => {
     };
   }, [accessToken, modalOpen]);
 
+  if (!sessionLoading && !isAuthed) {
+    navigate('/login');
+    normalToast('로그인이 필요합니다.');
+  }
+
   return (
     <S.OuterWrapper>
-      <Gnb isColored />
+      {sessionLoading || !me || !isAuthed ? (
+        <Spinner />
+      ) : (
+        <>
+          <Gnb isColored />
+          <S.Wrapper>
+            <S.ContentWrapper>
+              <Header
+                username={me?.username || null}
+                handleClick={() => setModalOpen(true)}
+                isLoading={sessionLoading}
+                unread={unreadTotalCount}
+              />
+              <S.InfoWrapper>
+                <UserInfo
+                  me={me || null}
+                  edit={edit}
+                  isLoading={sessionLoading}
+                  setEdit={setEdit}
+                />
+                <TxInfo
+                  me={me || null}
+                  edit={edit}
+                  isLoading={sessionLoading}
+                  setEdit={setEdit}
+                  setOpenAreaModal={setOpenAreaModal}
+                />
+              </S.InfoWrapper>
 
-      <S.Wrapper>
-        <S.ContentWrapper>
-          <Header
-            username={me?.username || null}
-            handleClick={() => setModalOpen(true)}
-            isLoading={sessionLoading}
-            unread={unreadTotalCount}
-          />
-          <S.InfoWrapper>
-            <UserInfo
-              me={me || null}
-              edit={edit}
-              isLoading={sessionLoading}
-              setEdit={setEdit}
-            />
-            <TxInfo
-              me={me || null}
-              edit={edit}
-              isLoading={sessionLoading}
-              setEdit={setEdit}
-              setOpenAreaModal={setOpenAreaModal}
-            />
-          </S.InfoWrapper>
-
-          <S.NavigationWrapper>
-            <NavigationButton
-              isLoading={sessionLoading}
-              img={sellIcon}
-              text="판매내역"
-              handleClick={() => navigate('/profile/me/sell')}
-            />
-            <NavigationButton
-              isLoading={sessionLoading}
-              img={buyIcon}
-              text="구매내역"
-              handleClick={() => navigate('/profile/me/buy')}
-            />
-            <NavigationButton
-              isLoading={sessionLoading}
-              img={likeIcon}
-              text="찜한 상품"
-              handleClick={() => navigate('/profile/me/like')}
-            />
-            <NavigationButton
-              isLoading={sessionLoading}
-              img={reviewIcon}
-              text="거래후기"
-              handleClick={() => navigate('/profile/me/review')}
-            />
-            <NavigationButton
-              isLoading={sessionLoading}
-              img={lifeIcon}
-              text="동네생활"
-              handleClick={() => navigate('/profile/me/neighborhood')}
-            />
-            <NavigationButton
-              isLoading={sessionLoading}
-              img={likeIcon}
-              text="찜한 동네생활"
-              handleClick={() => navigate('/profile/me/neighborhoodlike')}
-            />
-          </S.NavigationWrapper>
-        </S.ContentWrapper>
-      </S.Wrapper>
-      <ContentFooter />
+              <S.NavigationWrapper>
+                <NavigationButton
+                  isLoading={sessionLoading}
+                  img={sellIcon}
+                  text="판매내역"
+                  handleClick={() => navigate('/profile/me/sell')}
+                />
+                <NavigationButton
+                  isLoading={sessionLoading}
+                  img={buyIcon}
+                  text="구매내역"
+                  handleClick={() => navigate('/profile/me/buy')}
+                />
+                <NavigationButton
+                  isLoading={sessionLoading}
+                  img={likeIcon}
+                  text="찜한 상품"
+                  handleClick={() => navigate('/profile/me/like')}
+                />
+                <NavigationButton
+                  isLoading={sessionLoading}
+                  img={reviewIcon}
+                  text="거래후기"
+                  handleClick={() => navigate('/profile/me/review')}
+                />
+                <NavigationButton
+                  isLoading={sessionLoading}
+                  img={lifeIcon}
+                  text="동네생활"
+                  handleClick={() => navigate('/profile/me/neighborhood')}
+                />
+                <NavigationButton
+                  isLoading={sessionLoading}
+                  img={likeIcon}
+                  text="찜한 동네생활"
+                  handleClick={() => navigate('/profile/me/neighborhoodlike')}
+                />
+              </S.NavigationWrapper>
+            </S.ContentWrapper>
+          </S.Wrapper>
+          <ContentFooter />
+        </>
+      )}
 
       {modalOpen && (
         <ModalWrapper handleClose={() => setModalOpen(false)}>
@@ -207,9 +248,7 @@ const ProfilePage = () => {
           <S.DisplayWrapper>
             <S.HeaderWrapper>
               <S.RangeTitle>동네 범위 선택</S.RangeTitle>
-              <S.SubmitRange onClick={() => alert('변경')}>
-                변경하기
-              </S.SubmitRange>
+              <S.SubmitRange onClick={handleSubmit}>변경하기</S.SubmitRange>
             </S.HeaderWrapper>
             <S.RangeAnnounce>
               선택한 범위의 게시글만 볼 수 있어요.
@@ -226,7 +265,7 @@ const ProfilePage = () => {
               <S.Desc>가까운 동네</S.Desc>
               <S.Desc>먼 동네</S.Desc>
             </S.RangeDesc>
-            {/* <S.ScopeImg src={rangeImg || defaultImg} alt="scope" /> */}
+            <S.ScopeImg src={rangeImg} alt="scope" />
           </S.DisplayWrapper>
         </ModalWrapper>
       )}
