@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Moment from 'react-moment';
 import { toStringNumWithComma } from '../../../../utils/tradePost';
 import {
@@ -15,6 +15,7 @@ import {
   Chats,
   Date,
   More,
+  ReviewButton,
 } from './shortcut.styled';
 import ReviewCheckModal from '../../../../components/review-check-modal';
 import TradeStatusButton from '../../../../components/trade-status-button';
@@ -52,6 +53,7 @@ const ShortCut = ({
   seller,
   buyer,
 }: ShortCut) => {
+  const navigate = useNavigate();
   const [isDropped, setIsDropped] = useState(false);
   const [isCheckReviewModalOpen, setIsCheckReviewModalOpen] = useState(false);
   const dropDownRef = useRef<any>();
@@ -72,44 +74,56 @@ const ShortCut = ({
   };
   const isReviewed = checkIsReviewed();
   return (
-    <Container>
-      <Link to={`/tradepost/${postId}`}>
-        <Img
-          src={img ? img : alt}
-          onError={e => ((e.target as HTMLImageElement).src = alt)}
-        />
-      </Link>
-      <Info>
+    <>
+      <Container>
         <Link to={`/tradepost/${postId}`}>
-          <Title>{title}</Title>
+          <Img
+            src={img ? img : alt}
+            onError={e => ((e.target as HTMLImageElement).src = alt)}
+          />
         </Link>
-        <PriceBox>
-          {tradeStatus !== 'TRADING' && (
-            <TradeStatusButton tradeStatus={tradeStatus} />
-          )}
-          <Price>{toStringNumWithComma(price)}원</Price>
-        </PriceBox>
-        <Location>{location}</Location>
-        <Detail>
-          <Likes>관심 {likes} · </Likes>
-          <Chats>채팅 {chats} · </Chats>
-          <Date>
-            <Moment fromNow>{created_at}</Moment>
-          </Date>
-        </Detail>
-      </Info>
-      <More src={more} ref={dropDownRef} onClick={clickDropDown} />
-      {isDropped && (
-        <DropDown
-          dropDownRef={dropDownRef}
-          isDropped={isDropped}
-          setIsDropped={setIsDropped}
-          postId={postId}
-          isReviewed={isReviewed}
-          tradeStatus={tradeStatus}
-          setIsCheckReviewModalOpen={setIsCheckReviewModalOpen}
-        />
-      )}
+        <Info>
+          <Link to={`/tradepost/${postId}`}>
+            <Title>{title}</Title>
+          </Link>
+          <PriceBox>
+            {tradeStatus !== 'TRADING' && (
+              <TradeStatusButton tradeStatus={tradeStatus} />
+            )}
+            <Price>{toStringNumWithComma(price)}원</Price>
+          </PriceBox>
+          <Location>{location}</Location>
+          <Detail>
+            <Likes>관심 {likes} · </Likes>
+            <Chats>채팅 {chats} · </Chats>
+            <Date>
+              <Moment fromNow>{created_at}</Moment>
+            </Date>
+          </Detail>
+        </Info>
+        <More src={more} ref={dropDownRef} onClick={clickDropDown} />
+        {isDropped && (
+          <DropDown
+            dropDownRef={dropDownRef}
+            isDropped={isDropped}
+            setIsDropped={setIsDropped}
+            postId={postId}
+            isReviewed={isReviewed}
+            tradeStatus={tradeStatus}
+            setIsCheckReviewModalOpen={setIsCheckReviewModalOpen}
+          />
+        )}
+        {!isReviewed && (
+          <ReviewButton onClick={() => navigate(`/tradepost/${postId}/review`)}>
+            후기 보내기
+          </ReviewButton>
+        )}
+        {tradeStatus === 'COMPLETED' && isReviewed && (
+          <ReviewButton onClick={() => setIsCheckReviewModalOpen(true)}>
+            후기 확인하기
+          </ReviewButton>
+        )}
+      </Container>
       {isCheckReviewModalOpen && (
         <ReviewCheckModal
           isModalOpen={isCheckReviewModalOpen}
@@ -119,7 +133,7 @@ const ShortCut = ({
           buyer={buyer}
         />
       )}
-    </Container>
+    </>
   );
 };
 
