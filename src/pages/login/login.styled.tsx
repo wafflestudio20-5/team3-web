@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { MD_SIZE } from '../../constant/breakpoint';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -35,6 +36,10 @@ export const Container = styled.div`
   border-radius: 12px;
   padding: 28px 12px 16px 12px;
   gap: 22px;
+
+  @media ${MD_SIZE} {
+    width: 380px;
+  }
 `;
 
 export const Title = styled.img`
