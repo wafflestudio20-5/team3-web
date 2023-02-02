@@ -16,6 +16,7 @@ import { auth } from '../../api';
 import { BASE_URL } from '../../constant';
 import { useAuth } from '../../hooks/useAuth';
 import { loadItem } from '../../utils/storage';
+import { SearchScope } from '../../types/users';
 import { getMyChats } from '../../store/slices/chatSlice';
 import { normalToast } from '../../utils/basic-toast-modal';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -41,20 +42,33 @@ const ProfilePage = () => {
   const [openAreaModal, setOpenAreaModal] = useState(false);
   const { myChats, unreadTotalCount } = useAppSelector(state => state.chat);
 
-  enum SearchScope {
-    NARROW = 'NARROW',
-    NORMAL = 'NORMAL',
-    WIDE = 'WIDE',
-  }
-
-  const [rangeValue, setRangeValue] = useState(0);
-  const [rangeImg, setRangeImg] = useState(scopeNarrow);
-  const [rangeDistance, setRangeDistance] = useState(35);
-  const [searchScope, setSearchScope] = useState(SearchScope.NARROW);
+  const [rangeValue, setRangeValue] = useState<number>();
+  const [rangeImg, setRangeImg] = useState<string>();
+  const [rangeDistance, setRangeDistance] = useState<number>();
+  const [searchScope, setSearchScope] = useState<SearchScope>();
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setRangeValue(Number(e.target.value));
   }, []);
+
+  useEffect(() => {
+    if (me?.searchScope === SearchScope.NARROW) {
+      setRangeImg(scopeNarrow);
+      setRangeDistance(35);
+      setSearchScope(SearchScope.NARROW);
+      setRangeValue(0);
+    } else if (me?.searchScope === SearchScope.NORMAL) {
+      setRangeImg(scopeNormal);
+      setRangeDistance(200);
+      setSearchScope(SearchScope.NORMAL);
+      setRangeValue(1);
+    } else if (me?.searchScope === SearchScope.WIDE) {
+      setRangeImg(scopeWide);
+      setRangeDistance(400);
+      setSearchScope(SearchScope.WIDE);
+      setRangeValue(2);
+    }
+  }, [me]);
 
   const handleSubmit = async () => {
     if (accessToken) {
@@ -86,7 +100,7 @@ const ProfilePage = () => {
       setRangeDistance(400);
       setSearchScope(SearchScope.WIDE);
     }
-  }, [rangeValue]);
+  }, [rangeValue, me?.searchScope]);
 
   const [edit, setEdit] = useState({
     img: false,
@@ -243,7 +257,7 @@ const ProfilePage = () => {
         </ModalWrapper>
       )}
 
-      {openAreaModal && (
+      {openAreaModal && me?.searchScope && (
         <ModalWrapper handleClose={() => setOpenAreaModal(false)}>
           <S.DisplayWrapper>
             <S.HeaderWrapper>

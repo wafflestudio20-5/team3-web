@@ -9,7 +9,14 @@ export type User = {
   imgUrl: string | null;
   createdAt: Date;
   updatedAt: Date;
+  searchScope: SearchScope;
 };
+
+export enum SearchScope {
+  NARROW = 'NARROW',
+  NORMAL = 'NORMAL',
+  WIDE = 'WIDE',
+}
 
 export type EditType = {
   img: boolean;

@@ -21,7 +21,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { normalToast } from '../../utils/basic-toast-modal';
 import { redirectWithMsg } from '../../utils/errors';
 import { TradePostType } from '../../types/tradePost';
-import { shortenLocation, getDong } from '../../utils/location';
+import { shortenLocation, getDong, UTCtoKST } from '../../utils/location';
 
 import {
   Wrapper,
@@ -131,6 +131,12 @@ const MarketPage = () => {
       return;
     } else if (imgObject.length < 1) {
       normalToast('이미지는 최소 한 장 이상 등록해야 합니다.');
+      return;
+    } else if (values.title.length > 255) {
+      normalToast('제목은 255자까지만 입력 가능합니다.');
+      return;
+    } else if (values.desc.length > 1000) {
+      normalToast('본문은 1000자까지만 입력 가능합니다.');
       return;
     }
 
@@ -310,7 +316,7 @@ const MarketPage = () => {
                   location={shortenLocation(post?.seller.location)}
                   likes={post?.likeCount}
                   chats={post?.reservationCount}
-                  created_at={post?.createdAt}
+                  created_at={UTCtoKST(post?.createdAt)}
                 />
               );
             })}
