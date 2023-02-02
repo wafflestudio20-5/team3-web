@@ -39,13 +39,13 @@ export const Comment = ({
   content,
   modifiedAt,
 }: CommentProps) => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const accessToken = loadItem('accessToken');
   const { me } = useAppSelector(state => state.users);
   const [input, setInput] = useState(content);
   const [isEdit, setIsEdit] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const navigate = useNavigate();
 
   const handleEdit = () => {
     if (!input.trim()) {
@@ -90,7 +90,7 @@ export const Comment = ({
     <>
       <S.CommentWrapper>
         <S.TopWrapper>
-          <S.ProfileWrapper>
+          <S.ProfileWrapper onClick={() => navigate(`/profile/${user?.id}`)}>
             <S.ProfileImage
               src={user.imgUrl === null ? defaultProfile : user.imgUrl}
             />

@@ -22,6 +22,7 @@ export const TopWrapper = styled.div`
 export const ProfileWrapper = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const EditDeleteWrapper = styled.div`
