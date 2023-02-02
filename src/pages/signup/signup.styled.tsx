@@ -193,7 +193,6 @@ export const UsernameWrapper = styled.div`
   position: relative;
   display: flex;
   width: 100%;
-  margin-bottom: 16px;
 `;
 
 export const InputPositionWrapper = styled.div`
