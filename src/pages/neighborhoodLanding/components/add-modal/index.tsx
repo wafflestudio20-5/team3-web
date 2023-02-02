@@ -59,13 +59,13 @@ export const AddModal = ({ handleClose }: AddModalProps) => {
     }
   };
 
-  const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key == 'Enter') {
-      if (!e.shiftKey) {
-        handleClick();
-      }
-    }
-  };
+  // const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  //   if (e.key == 'Enter') {
+  //     if (!e.shiftKey) {
+  //       handleClick();
+  //     }
+  //   }
+  // };
 
   return (
     <S.Container>
@@ -82,7 +82,7 @@ export const AddModal = ({ handleClose }: AddModalProps) => {
           name="content"
           value={content}
           onChange={onChange}
-          onKeyPress={onKeyPress}
+          // onKeyPress={onKeyPress}
         />
       </S.DescWrapper>
 
