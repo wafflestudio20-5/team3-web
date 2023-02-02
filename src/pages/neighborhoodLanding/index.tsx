@@ -7,10 +7,12 @@ import { Wrapper } from './neighbor.styled';
 
 export const NeighborhoodLanding = () => {
   return (
-    <Wrapper>
+    <>
       <Gnb isColored />
-      <NeighborContainer />
-      <ContentFooter />
-    </Wrapper>
+      <Wrapper>
+        <NeighborContainer />
+        <ContentFooter />
+      </Wrapper>
+    </>
   );
 };
