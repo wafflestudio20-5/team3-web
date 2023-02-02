@@ -64,10 +64,14 @@ export const LocationInnerWrapper = styled.div`
 `;
 
 export const LocationText = styled.span`
+  width: 190px;
   font-weight: 400;
   font-size: 12px;
   line-height: 21px;
   color: #5d5d71;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const ButtonWrapper = styled.div`
