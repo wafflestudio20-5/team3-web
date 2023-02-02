@@ -33,8 +33,8 @@ const SignUpPage = () => {
   const dispatch = useAppDispatch();
   const [location, setLocation] = useState('');
   const [coordinate, setCoordinate] = useState<Coordinate>({
-    lat: 0,
-    lng: 0,
+    lat: 37.481277765,
+    lng: 126.95275023,
   });
   getCoordinate(location, coordinate, setCoordinate);
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { auth } from '../../../../api';
@@ -22,6 +22,7 @@ import { DeleteModal } from '../delete-modal';
 import { EditDelete } from '../edit-and-delete';
 import * as S from './comment.styled';
 import ModalWrapper from '../modal-wrapper';
+import { normalToast } from '../../../../utils/basic-toast-modal';
 
 interface CommentProps {
   commentId: number;
@@ -38,15 +39,21 @@ export const Comment = ({
   content,
   modifiedAt,
 }: CommentProps) => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const accessToken = loadItem('accessToken');
   const { me } = useAppSelector(state => state.users);
   const [input, setInput] = useState(content);
   const [isEdit, setIsEdit] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const navigate = useNavigate();
 
   const handleEdit = () => {
+    if (!input.trim()) {
+      normalToast('공백 제외 최소 1자 이상 작성해야 합니다.');
+      setInput('');
+      return;
+    }
+
     if (accessToken) {
       // alert('댓글 수정');
       // TODO: 밑에 requestPatchNeighborhoodComment 수행 도중 auth/refresh 에서 403 오류가 뜹니다..ㅠㅠ
@@ -68,18 +75,22 @@ export const Comment = ({
   };
 
   const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key == 'Enter') {
+    if (e.key === 'Enter') {
       if (!e.shiftKey) {
         handleEdit();
       }
     }
   };
 
+  useEffect(() => {
+    setInput(content);
+  }, [isEdit]);
+
   return (
     <>
       <S.CommentWrapper>
         <S.TopWrapper>
-          <S.ProfileWrapper>
+          <S.ProfileWrapper onClick={() => navigate(`/profile/${user?.id}`)}>
             <S.ProfileImage
               src={user.imgUrl === null ? defaultProfile : user.imgUrl}
             />
@@ -105,6 +116,7 @@ export const Comment = ({
         {isEdit ? (
           <S.Form>
             <S.EditText
+              placeholder="한 글자 이상의 댓글을 남겨주세요."
               value={input}
               onChange={e => {
                 setInput(e.target.value);

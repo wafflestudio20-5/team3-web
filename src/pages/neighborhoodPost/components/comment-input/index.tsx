@@ -6,6 +6,7 @@ import {
   requestPostNeighborhoodComment,
 } from '../../../../api/neighborhood';
 import { loadItem } from '../../../../utils/storage';
+import { normalToast } from '../../../../utils/basic-toast-modal';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import {
   addComment,
@@ -26,6 +27,13 @@ export const CommentInput = ({ postId, refreshPost }: CommentInputProps) => {
   const [input, setInput] = useState('');
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!input.trim()) {
+      normalToast('댓글에는 내용이 있어야 합니다.');
+      setInput('');
+      return;
+    }
+
     if (accessToken) {
       await requestPostNeighborhoodComment(
         postId,

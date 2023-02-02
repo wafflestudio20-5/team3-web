@@ -5,8 +5,10 @@ import {
   requestPostNeighborhood,
 } from '../../../../api/neighborhood';
 import { loadItem } from '../../../../utils/storage';
+import { normalToast } from '../../../../utils/basic-toast-modal';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { setPosts } from '../../../../store/slices/neighborhoodPostListSlice';
+
 import * as S from './add-modal.styled';
 
 interface AddModalProps {
@@ -32,6 +34,17 @@ export const AddModal = ({ handleClose }: AddModalProps) => {
   };
 
   const handleClick = async () => {
+    if (!inputs.content.trim()) {
+      normalToast('내용을 입력해주세요.');
+      return;
+    } else if (inputs.content.length < 5) {
+      normalToast('내용은 5자 이상이어야 합니다.');
+      return;
+    } else if (inputs.content.length > 800) {
+      normalToast('내용은 800자 이하여야 합니다.');
+      return;
+    }
+
     if (accessToken) {
       const res = await requestPostNeighborhood({ title, content }, accessToken)
         .then(async () => {

@@ -27,10 +27,10 @@ const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
   const accessToken = loadItem('accessToken');
   const [currLocation, setCurrLocation] = useState(location || '');
   const [coordinate, setCoordinate] = useState<Coordinate>({
-    lat: 0,
-    lng: 0,
+    lat: 37.481277765,
+    lng: 126.95275023,
   });
-
+  
   getCoordinate(currLocation, coordinate, setCoordinate);
 
   const handleComplete = (data: any) => {
