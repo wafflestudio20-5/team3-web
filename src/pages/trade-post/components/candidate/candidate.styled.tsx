@@ -48,7 +48,7 @@ export const InnerWrapper = styled.div`
   width: 96%;
   height: auto;
   justify-content: space-between;
-`
+`;
 
 export const User = styled.div`
   display: flex;
@@ -136,4 +136,38 @@ export const Complete = styled.span`
   text-align: center;
   color: #686868;
   font-weight: 600;
+`;
+
+export const ArrowWrapper = styled.div`
+  width: auto;
+  height: auto;
+  position: relative;
+`;
+
+export const ArrowBox = styled.p`
+  position: absolute;
+  text-align: center;
+  width: 144px;
+  height: auto;
+  padding: 8px;
+  top: -40px;
+  right: 50px;
+  border-radius: 4px;
+  background: #000000be;
+  color: #fff;
+  font-size: 8px;
+  z-index: 100;
+  white-space: pre-wrap;
+
+  &:hover {
+    display: none;
+  }
+  &:after {
+    font-size: 14px;
+    color: #000000be;
+    content: '▶';
+    position: absolute;
+    top: 50px;
+    right: -11px;
+  }
 `;
