@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../../../store/hooks';
 import { shortenLocation } from '../../../../utils/location';
 import ProfileImage from '../../../trade-post/components/profile-image';
 import TemperatureBar from '../../../trade-post/components/temperature-bar';
@@ -20,11 +21,16 @@ export const WriterInfo = ({
   imgUrl,
 }: WriterInfoProps) => {
   const navigate = useNavigate();
+  const { me } = useAppSelector(state => state.users);
   return (
     <S.UserWrapper>
       <S.InfoWrapper
         onClick={() => {
-          navigate(`/profile/${userId}`);
+          if (me && me.id === userId) {
+            navigate(`/profile/me`);
+          } else {
+            navigate(`/profile/${userId}`);
+          }
         }}
       >
         <ProfileImage
