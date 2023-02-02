@@ -270,7 +270,7 @@ export const ButtonWrapper = styled.div`
 export const Cancel = styled.button`
   width: 60px;
   height: 40px;
-  background: #e78111;
+  background: #ff6f0f;
   color: #fff;
   margin-left: 8px;
   border-radius: 6px;

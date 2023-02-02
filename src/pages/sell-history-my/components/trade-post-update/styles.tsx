@@ -70,7 +70,7 @@ export const ModalClose = styled.button`
   color: #494949;
   transition: 0.3s all;
   &:hover {
-    color: #e78111;
+    color: #FF6F0F;
   }
 `;
 
@@ -78,10 +78,10 @@ export const ModalSubmit = styled.button`
   font-family: 'Inter';
   font-weight: 600;
   font-size: 17px;
-  color: #e78111;
+  color: #FF6F0F;
   transition: 0.3s all;
   &:hover {
-    color: #ff6a00;
+    color: #FF6F0F;
   }
 `;
 

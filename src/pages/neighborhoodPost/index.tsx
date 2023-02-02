@@ -51,7 +51,7 @@ export const NeighborhoodPostPage = () => {
 
   return (
     <Wrapper>
-      <Gnb />
+      <Gnb isColored />
       <Container>
         <WriterInfo
           userId={post.publisher?.id}
