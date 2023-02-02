@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { MD_SIZE } from '../../constant/breakpoint';
 
 export const Container = styled.div`
   display: flex;
@@ -20,6 +21,11 @@ export const Img = styled.img`
   border: 0.5px solid transparent;
   border-radius: 50%;
   object-fit: cover;
+
+  @media ${MD_SIZE} {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 export const Info = styled.div`
@@ -28,6 +34,10 @@ export const Info = styled.div`
   justify-content: center;
   align-content: center;
   gap: 6px;
+
+  @media ${MD_SIZE} {
+    font-size: 14px;
+  }
 `;
 
 export const User = styled.h3`
@@ -37,12 +47,20 @@ export const User = styled.h3`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media ${MD_SIZE} {
+    font-size: 15px;
+  }
 `;
 
 export const Desc = styled.div`
   display: flex;
   flex-direction: row;
   gap: 6px;
+
+  @media ${MD_SIZE} {
+    font-size: 13px;
+  }
 `;
 
 export const Type = styled.span`
@@ -60,6 +78,10 @@ export const Time = styled.span`
 export const Content = styled.span`
   width: 380px;
   margin-top: 6px;
+
+  @media ${MD_SIZE} {
+    width: 260px;
+  }
 `;
 
 export const More = styled.img`
