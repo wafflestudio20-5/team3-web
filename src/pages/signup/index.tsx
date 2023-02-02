@@ -333,7 +333,9 @@ const SignUpPage = () => {
             buttonText="중복 확인"
             handleClick={checkUsername}
           />
-          {isDiceModalOpen && <S.DiceInfo>랜덤 닉네임 생성</S.DiceInfo>}
+          {isDiceModalOpen && (
+            <S.DiceInfo>고민은 그만! 랜덤 닉네임을 사용해보세요</S.DiceInfo>
+          )}
           <S.DiceImg
             src={diceIcon}
             alt="diceIcon"
