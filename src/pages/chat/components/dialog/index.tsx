@@ -92,7 +92,7 @@ const Dialog = ({
           )}
           {meSeller &&
             product?.tradeStatus === TradeStatusType.RESERVATION &&
-            product?.buyer.id === to.id && (
+            product?.buyer.id !== to.id && (
               <S.TradeButtonM onClick={handleSetReservation}>
                 예약자 변경하기
               </S.TradeButtonM>
