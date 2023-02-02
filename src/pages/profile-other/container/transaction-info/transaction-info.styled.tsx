@@ -67,6 +67,11 @@ export const LocationText = styled.span`
   font-size: 12px;
   line-height: 21px;
   color: #5d5d71;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  width: auto;
 `;
 
 export const MapWrapper = styled.div`

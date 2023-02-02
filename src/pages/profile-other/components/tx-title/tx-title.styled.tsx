@@ -34,7 +34,7 @@ export const ArrowBox = styled.p`
   background: #333;
   color: #fff;
   font-size: 8px;
-  z-index: 10;
+  z-index: 100;
   white-space: pre-wrap;
 
   &:hover {
