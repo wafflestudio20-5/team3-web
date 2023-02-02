@@ -35,6 +35,7 @@ import {
 } from './market.styled';
 import defaultImg from '../../assets/default-trade-img.svg';
 import { loadItem } from '../../utils/storage';
+import { toNumberWithoutComma } from '../../utils/price';
 
 const MarketPage = () => {
   const navigate = useNavigate();
@@ -56,18 +57,30 @@ const MarketPage = () => {
   // DESC: 중고거래 글쓰기
   const [imgObject, setImgObject] = useState<any>([]);
   const [openCreatePost, setOpenCreatePost] = useState(false);
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<{
+    title: string;
+    desc: string;
+    price?: number;
+  }>({
     title: '',
     desc: '',
-    price: '',
+    price: '' as unknown as number,
   });
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const { value, name } = e.target;
+      const target = {
+        name: e.target.name,
+        value: e.target.value,
+      };
+      if (target.name === 'price') {
+        target.value = String(
+          toNumberWithoutComma(String(e.target.value.replace(/[^0-9]/g, ''))),
+        );
+      }
       setValues({
         ...values,
-        [name]: value,
+        [target.name]: target.value,
       });
     },
     [values?.title, values?.desc, values?.price],
@@ -78,7 +91,7 @@ const MarketPage = () => {
     setValues({
       title: '',
       desc: '',
-      price: '',
+      price: '' as unknown as number,
     });
     setImgObject([]);
   }, []);
@@ -139,6 +152,9 @@ const MarketPage = () => {
     } else if (values.desc.length > 1000) {
       normalToast('본문은 1000자까지만 입력 가능합니다.');
       return;
+    } else if (toNumberWithoutComma(String(values?.price)) >= 100000000) {
+      normalToast('1억 원 이상은 입력할 수 없습니다.');
+      return;
     }
 
     uploadImage()
@@ -159,7 +175,7 @@ const MarketPage = () => {
               setValues({
                 title: '',
                 desc: '',
-                price: '',
+                price: '' as unknown as number,
               });
               setImgObject([]);
             })

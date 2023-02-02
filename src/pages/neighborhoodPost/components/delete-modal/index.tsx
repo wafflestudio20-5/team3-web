@@ -23,7 +23,7 @@ export const DeleteModal = ({ post, handleClose }: DeleteModalProps) => {
   return (
     <S.Container>
       <S.Title>정말로 이 게시물을 삭제하시겠습니까?</S.Title>
-      <S.Text>삭제한 게시물은 되돌릴 수 없어요</S.Text>
+      <S.Text>삭제한 게시물은 되돌릴 수 없어요.</S.Text>
       <S.ButtonWrapper>
         <S.ConfirmButton onClick={handleDeleteButtonClick}>
           삭제

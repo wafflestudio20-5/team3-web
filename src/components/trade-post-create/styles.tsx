@@ -57,7 +57,7 @@ export const ModalClose = styled.button`
   color: #494949;
   transition: 0.3s all;
   &:hover {
-    color: #e78111;
+    color: #ff6f0f;
   }
 `;
 
@@ -65,10 +65,10 @@ export const ModalSubmit = styled.button`
   font-family: 'Inter';
   font-weight: 600;
   font-size: 17px;
-  color: #e78111;
+  color: #ff6f0f;
   transition: 0.3s all;
   &:hover {
-    color: #ff6a00;
+    color: #000;
   }
 `;
 
@@ -92,6 +92,8 @@ export const PostTitle = styled.input`
   &::placeholder {
     color: #a1a1a1;
   }
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
 `;
 
 export const PostDesc = styled.textarea`
@@ -111,6 +113,9 @@ export const PostDesc = styled.textarea`
   &::placeholder {
     color: #a1a1a1;
   }
+
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
 `;
 
 export const PostPriceWrapper = styled.div`
@@ -151,6 +156,9 @@ export const PostPrice = styled.input`
   &::placeholder {
     color: #a1a1a1;
   }
+
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
 `;
 
 export const PostAnnounceWrapper = styled.div`
@@ -163,7 +171,7 @@ export const PostAnnounceWrapper = styled.div`
   font-weight: 400;
   font-size: 14px;
   display: flex;
-  color: #d27e22;
+  color: #ff6f0f;
 `;
 
 export const Emphasize = styled.h5`

@@ -35,6 +35,7 @@ import price from '../../../../assets/price.svg';
 import editPost from '../../../../assets/edit-post.svg';
 import likeFill from '../../../../assets/like-fill.svg';
 import likeBlank from '../../../../assets/like-blank.svg';
+import { toNumberWithoutComma } from '../../../../utils/price';
 
 const Description = () => {
   const navigate = useNavigate();
@@ -165,26 +166,38 @@ const Description = () => {
   const [openDelete, setOpenDelete] = useState(false);
   const [openEditPost, setOpenEditPost] = useState(false);
 
-  const [values, setValues] = useState({
-    title: tradePost?.title,
-    desc: tradePost?.desc,
+  const [values, setValues] = useState<{
+    title: string;
+    desc: string;
+    price?: number;
+  }>({
+    title: tradePost?.title || '',
+    desc: tradePost?.desc || '',
     price: tradePost?.price,
   });
 
   useEffect(() => {
     setValues({
-      title: tradePost?.title,
-      desc: tradePost?.desc,
+      title: tradePost?.title || '',
+      desc: tradePost?.desc || '',
       price: tradePost?.price,
     });
   }, [postId, modalOpen, setModalOpen]);
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const { value, name } = e.target;
+      const target = {
+        name: e.target.name,
+        value: e.target.value,
+      };
+      if (target.name === 'price') {
+        target.value = String(
+          toNumberWithoutComma(String(e.target.value.replace(/[^0-9]/g, ''))),
+        );
+      }
       setValues({
         ...values,
-        [name]: value,
+        [target.name]: target.value,
       });
     },
     [values?.title, values?.desc, values?.price],
@@ -219,6 +232,9 @@ const Description = () => {
       return;
     } else if (values.desc.length > 1000) {
       normalToast('본문은 1000자까지만 입력 가능합니다.');
+      return;
+    } else if (toNumberWithoutComma(String(values?.price)) >= 100000000) {
+      normalToast('1억 원 이상은 입력할 수 없습니다.');
       return;
     }
 
@@ -363,8 +379,8 @@ const Description = () => {
   const handleCloseModal = useCallback(() => {
     setOpenEditPost(false);
     setValues({
-      title: tradePost?.title,
-      desc: tradePost?.desc,
+      title: tradePost?.title || '',
+      desc: tradePost?.desc || '',
       price: tradePost?.price,
     });
 

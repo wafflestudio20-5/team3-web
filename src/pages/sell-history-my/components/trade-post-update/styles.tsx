@@ -70,7 +70,7 @@ export const ModalClose = styled.button`
   color: #494949;
   transition: 0.3s all;
   &:hover {
-    color: #e78111;
+    color: #FF6F0F;
   }
 `;
 
@@ -78,10 +78,10 @@ export const ModalSubmit = styled.button`
   font-family: 'Inter';
   font-weight: 600;
   font-size: 17px;
-  color: #e78111;
+  color: #FF6F0F;
   transition: 0.3s all;
   &:hover {
-    color: #ff6a00;
+    color: #FF6F0F;
   }
 `;
 
@@ -98,7 +98,8 @@ export const PostTitle = styled.input`
   border-bottom: 0.5px solid #a9a9a9;
   font-size: 15px;
   color: #212124;
-
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
   &:focus {
     outline: none;
   }
@@ -124,6 +125,8 @@ export const PostDesc = styled.textarea`
   &::placeholder {
     color: #a1a1a1;
   }
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
 `;
 
 export const PostPriceWrapper = styled.div`
@@ -157,7 +160,8 @@ export const PostPrice = styled.input`
 
   font-size: 15px;
   color: #212124;
-
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
   &:focus {
     outline: none;
   }

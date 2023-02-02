@@ -8,7 +8,7 @@ import { Wrapper } from './neighbor.styled';
 export const NeighborhoodLanding = () => {
   return (
     <Wrapper>
-      <Gnb />
+      <Gnb isColored />
       <NeighborContainer />
       <ContentFooter />
     </Wrapper>

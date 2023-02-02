@@ -4,12 +4,9 @@ import { MD_SIZE, Market_MD, Market_XL } from '../../../../constant/breakpoint';
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 8px;
-
-  &:hover {
-    box-shadow: 0 5px 10px #f1f1f1;
-    transform: translateY(-2px);
-  }
+  transition: 0.3s all;
 
   @media ${MD_SIZE} {
     width: 100vw;
@@ -24,11 +21,11 @@ export const Div = styled.div`
   display: flex;
   flex-direction: row;
   width: 430px;
-  height: 40px;
+  height: 47px;
   align-items: center;
   padding-right: 8px;
-  border: 0.5px solid #8a8a8a;
   border-radius: 12px;
+  background: #f5f5f5;
 
   @media ${Market_MD} {
     width: 360px;
@@ -45,10 +42,10 @@ export const Div = styled.div`
 `;
 
 export const Img = styled.img`
-  width: 22px;
-  height: 22px;
-  margin-left: 8px;
-  margin-right: 6px;
+  width: 16px;
+  height: 16px;
+  margin-left: 18px;
+  margin-right: 12px;
 
   @media ${MD_SIZE} {
     margin-left: 12px;
@@ -56,11 +53,17 @@ export const Img = styled.img`
 `;
 
 export const Bar = styled.input`
-  width: 360px;
+  width: 346px;
   height: 36px;
   border: 0px solid transparent;
   margin-bottom: 1px;
   outline: none;
+  background: #f5f5f5;
+  border-radius: 12px;
+  font-size: 15px;
+
+  -webkit-box-shadow: 0 0 0 1000px #f5f5f5 inset;
+  box-shadow: 0 0 0 1000px #f5f5f5 inset;
 
   @media ${Market_MD} {
     width: 300px;
@@ -72,9 +75,11 @@ export const Bar = styled.input`
 `;
 
 export const Clear = styled.img`
-  width: 22px;
-  height: 22px;
-  margin-left: auto;
+  width: 20px;
+  height: 20px;
+  margin: auto;
+  cursor: pointer;
+
   @media ${MD_SIZE} {
   }
 `;

@@ -40,8 +40,6 @@ export const ScoreBox = styled.div`
   }
 `;
 
-
-
 export const Review = styled.textarea`
   width: 500px;
   height: 200px;
@@ -62,7 +60,7 @@ export const Button = styled.div`
   padding: 8px;
   text-align: center;
   line-height: 17px;
-  background-color: #FF6F0F;
+  background-color: #ff6f0f;
   color: white;
   font-size: 16px;
   font-weight: 500;
@@ -76,4 +74,4 @@ export const Button = styled.div`
   @media ${MD_SIZE} {
     width: 400px;
   }
-`
+`;

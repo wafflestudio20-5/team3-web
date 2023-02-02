@@ -24,7 +24,7 @@ export const Container = styled.div`
   height: auto;
 
   margin-top: 30px;
-  padding: 0px 46px;
+  padding: 25px 46px 40px 46px;
   border-radius: 10px;
 
   background-color: white;

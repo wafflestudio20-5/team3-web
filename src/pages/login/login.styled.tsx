@@ -33,7 +33,7 @@ export const Container = styled.div`
   align-items: center;
   border: 1px solid #ced4da;
   border-radius: 12px;
-  padding: 12px;
+  padding: 28px 12px 16px 12px;
   gap: 22px;
 `;
 
@@ -57,10 +57,14 @@ export const Input = styled.input`
   border: 1px solid white;
   border-bottom: 1px solid gray;
   outline: none;
+  padding-left: 6px;
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
 `;
 
 export const H3 = styled.h1`
   margin-top: 20px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 400;
+  color: #000;
 `;

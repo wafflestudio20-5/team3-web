@@ -10,7 +10,7 @@ import { Wrapper } from './neighbor-history.styled';
 export const NeighborHistoryLikePage = () => {
   return (
     <Wrapper>
-      <Gnb />
+      <Gnb isColored />
       <NeighborContainer />
       <ContentFooter />
     </Wrapper>

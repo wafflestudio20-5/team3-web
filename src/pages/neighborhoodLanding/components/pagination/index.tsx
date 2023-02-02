@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { Wrapper, Move, More, Button } from './pagination.styled';
+import { Wrapper, Move, More, Button, MoveIcon } from './pagination.styled';
+
+import prevhead from '../../../../assets/prevhead.svg';
+import nexthead from '../../../../assets/nexthead.svg';
+import prevpage from '../../../../assets/prevpage.svg';
+import nextpage from '../../../../assets/nextpage.svg';
 
 const Pagination = ({
   total,
@@ -59,8 +64,12 @@ const Pagination = ({
 
   return (
     <Wrapper>
-      <Move onClick={prevHead}>{'<<'}</Move>
-      <Move onClick={prevPage}>{'<'}</Move>
+      <Move onClick={prevHead}>
+        <MoveIcon src={prevhead} alt="prev" />
+      </Move>
+      <Move onClick={prevPage}>
+        <MoveIcon src={prevpage} alt="prev" />
+      </Move>
       {pageHead - n > 0 && <More>...</More>}
       {Array(pageHead + n <= total ? n : total - pageHead + 1)
         .fill(0)
@@ -74,8 +83,12 @@ const Pagination = ({
           </Button>
         ))}
       {pageHead + n <= total && <More>...</More>}
-      <Move onClick={nextPage}>{'>'}</Move>
-      <Move onClick={nextHead}>{'>>'}</Move>
+      <Move onClick={nextPage}>
+        <MoveIcon src={nextpage} alt="next" />
+      </Move>
+      <Move onClick={nextHead}>
+        <MoveIcon src={nexthead} alt="next" />
+      </Move>
     </Wrapper>
   );
 };
