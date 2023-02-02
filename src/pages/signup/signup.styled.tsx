@@ -203,13 +203,19 @@ export const InputPositionWrapper = styled.div`
 
 export const DiceInfo = styled.div`
   position: absolute;
-  right: 80px;
-  width: 120px;
-  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 40px;
+  left: 230px;
+  width: 220px;
+  height: 36px;
 
-  border-radius: 10px;
+  border-radius: 5px;
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.5);
+  background-color: white;
+
+  box-shadow: 0px 6px 24px 0px #00000030;
 `;
 
 export const DiceImg = styled.img`
@@ -218,6 +224,7 @@ export const DiceImg = styled.img`
   right: 120px;
   width: 26px;
   height: 26px;
+  cursor: pointer;
 `;
 
 export const EmailVerifyInput = styled.input`
