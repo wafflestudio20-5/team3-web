@@ -10,7 +10,7 @@ import Gnb from '../../components/gnb';
 import ShortCut from './components/shortcut';
 import { getSellHistory } from '../../store/slices/tradeHistorySlice';
 import { postConfirmation } from '../../store/slices/tradePostSlice';
-import { shortenLocation } from '../../utils/location';
+import { shortenLocation, UTCtoKST } from '../../utils/location';
 import { TradeHistory } from '../../types/history';
 import { redirectWithMsg } from '../../utils/errors';
 import * as S from './sell-history-my.styled';
@@ -107,7 +107,7 @@ const SellHistoryMyPage = () => {
                   location={shortenLocation(post?.seller.location)}
                   likes={post?.likeCount}
                   chats={post?.reservationCount}
-                  created_at={post?.createdAt}
+                  created_at={UTCtoKST(post?.createdAt)}
                   desc={post?.desc}
                   reviews={post?.reviews}
                   getList={getList}
