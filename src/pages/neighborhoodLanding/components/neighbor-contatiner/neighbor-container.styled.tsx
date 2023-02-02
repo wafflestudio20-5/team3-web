@@ -58,3 +58,17 @@ export const MoreText = styled.span`
   font-size: 20px;
   color: rgba(0, 0, 0, 0.5);
 `;
+
+export const NotFoundWrapper = styled.div`
+  width: 100%;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 60px;
+`;
+
+export const NotFoundImg = styled.img`
+  width: 270px;
+  height: auto;
+`;

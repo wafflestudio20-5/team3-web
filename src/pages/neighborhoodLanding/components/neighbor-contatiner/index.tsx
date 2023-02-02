@@ -18,6 +18,8 @@ import SearchBar from '../search-bar';
 import { devNull } from 'os';
 import Spinner from '../../../../components/spinner';
 import Pagination from '../pagination';
+import notFound from '../../../../assets/not-found.svg';
+import { UTCtoKST } from '../../../../utils/location';
 
 export const NeighborContainer = () => {
   const dispatch = useAppDispatch();
@@ -86,21 +88,28 @@ export const NeighborContainer = () => {
             dong="내 동네"
           />
           <S.Container>
-            {posts
-              ? posts.map(post => (
-                  <ShortCut
-                    key={post.postId}
-                    id={post.postId}
-                    content={post.content}
-                    location={post.publisher.location}
-                    isLiked={post.isLiked}
-                    modifiedAt={post.modifiedAt}
-                    likeCount={post.likeCount}
-                    commentCount={post.commentCount}
-                  />
-                ))
-              : null}
-            <Pagination total={totalPage} page={page} setPage={changePage} />
+            {posts && posts?.length > 0 ? (
+              posts.map(post => (
+                <ShortCut
+                  key={post.postId}
+                  id={post.postId}
+                  content={post.content}
+                  location={post.publisher.location}
+                  isLiked={post.isLiked}
+                  createdAt={UTCtoKST(post.createdAt)}
+                  likeCount={post.likeCount}
+                  commentCount={post.commentCount}
+                />
+              ))
+            ) : (
+              <S.NotFoundWrapper>
+                <S.NotFoundImg src={notFound} alt="notFound" />
+              </S.NotFoundWrapper>
+            )}
+            {posts && posts?.length > 0 && (
+              <Pagination total={totalPage} page={page} setPage={changePage} />
+            )}
+
             <AddButton
               handleClick={() => {
                 setIsModalOpen(prev => !prev);
