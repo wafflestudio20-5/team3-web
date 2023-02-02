@@ -143,7 +143,7 @@ const ChatContainer = () => {
   const connect = () => {
     // DESC: client 객체 만들기
     client.current = new Client({
-      brokerURL: 'ws://3.37.61.115/ws-stomp',
+      brokerURL: 'wss://api.waffle-market.store/ws-stomp',
       debug: function (str) {
         console.log(str);
       },
