@@ -20,7 +20,7 @@ export const Header = styled.div`
   justify-items: center;
   justify-content: center;
   margin-top: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 45px;
 
   @media ${MD_SIZE} {
     width: 100vw;
@@ -43,6 +43,7 @@ export const Filter = styled.div`
   position: absolute;
   right: 20px;
   gap: 4px;
+  transition: 0.3s all;
 
   &:hover {
     transform: translateY(-2px);
@@ -51,8 +52,7 @@ export const Filter = styled.div`
   @media ${MD_SIZE} {
     position: static;
     align-self: flex-end;
-    margin-right: 16px;
-    margin-bottom: 3px;
+    margin: 4px 16px 4px 0;
   }
 
   @media ${Market_MD} {
@@ -61,10 +61,15 @@ export const Filter = styled.div`
 `;
 
 export const CheckBox = styled.input`
-  width: 18px;
+  width: 16px;
+  cursor: pointer;
+  accent-color: #03996c;
 `;
 
-export const Span = styled.span``;
+export const Span = styled.span`
+  font-size: 15px;
+  color: #4b4b4b;
+`;
 
 export const List = styled.div`
   display: grid;
