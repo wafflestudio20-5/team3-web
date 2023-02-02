@@ -96,7 +96,7 @@ export const NeighborContainer = () => {
                   content={post.content}
                   location={post.publisher.location}
                   isLiked={post.isLiked}
-                  createdAt={UTCtoKST(post.createdAt)}
+                  createdAt={post.createdAt}
                   likeCount={post.likeCount}
                   commentCount={post.commentCount}
                 />

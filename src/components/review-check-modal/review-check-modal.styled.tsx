@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { MD_SIZE } from '../../constant/breakpoint';
 
 export const Dim = styled.div`
   width: 100vw;
@@ -61,6 +62,10 @@ export const ModalContainer = styled.div`
     }
   }
   box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.4);
+
+  @media ${MD_SIZE} {
+    width: 400px;
+  }
 `;
 
 export const Close = styled.img`

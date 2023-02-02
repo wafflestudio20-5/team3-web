@@ -72,7 +72,7 @@ const ReviewCheckModal = ({
                 {buyerReview.id && (
                   <ReviewInfo
                     userId={buyer.id}
-                    img={buyer.imgUrl ? seller.imgUrl : defaultImg}
+                    img={buyer.imgUrl ? buyer.imgUrl : defaultImg}
                     username={buyer.username}
                     type={'BUYER'}
                     location={buyer.location}

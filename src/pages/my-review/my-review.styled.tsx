@@ -23,7 +23,6 @@ export const List = styled.div`
   position: relative;
   width: 95%;
   max-width: 600px;
-  min-height: 500px;
   align-content: center;
   justify-content: center;
 
