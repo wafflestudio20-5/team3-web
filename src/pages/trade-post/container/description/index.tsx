@@ -233,6 +233,9 @@ const Description = () => {
     } else if (values.desc.length > 1000) {
       normalToast('본문은 1000자까지만 입력 가능합니다.');
       return;
+    } else if (toNumberWithoutComma(String(values?.price)) >= 100000000) {
+      normalToast('1억 원 이상은 입력할 수 없습니다.');
+      return;
     }
 
     // 삭제
