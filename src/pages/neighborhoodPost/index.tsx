@@ -22,6 +22,7 @@ import { EditModal } from './components/edit-modal';
 import { WriterInfo } from './components/writer-info';
 import { CommentContainer, Container, Wrapper } from './neighbor-post-styled';
 import { UTCtoKST } from '../../utils/location';
+import Spinner from '../../components/spinner';
 
 export const NeighborhoodPostPage = () => {
   const params = useParams();
@@ -49,6 +50,10 @@ export const NeighborhoodPostPage = () => {
   useEffect(() => {
     getPost();
   }, [accessToken]);
+
+  if (!post) {
+    return <Spinner />;
+  }
 
   return (
     <Wrapper>

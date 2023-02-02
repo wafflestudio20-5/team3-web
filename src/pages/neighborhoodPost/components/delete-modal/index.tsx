@@ -4,6 +4,7 @@ import { loadItem } from '../../../../utils/storage';
 import { useAppSelector } from '../../../../store/hooks';
 import { neighborPost } from '../../../../types/neighborhood';
 import * as S from './delete-modal.style';
+import { toast } from 'react-toastify';
 
 interface DeleteModalProps {
   post: neighborPost;
@@ -15,11 +16,17 @@ export const DeleteModal = ({ post, handleClose }: DeleteModalProps) => {
   const accessToken = loadItem('accessToken');
   const handleDeleteButtonClick = () => {
     if (accessToken) {
-      requestDeleteNeighborhood(post.postId, accessToken).then(() =>
-        navigate('/neighborhood'),
-      );
+      requestDeleteNeighborhood(post.postId, accessToken)
+        .then(() => {
+          toast.success('게시글이 삭제되었어요.');
+          navigate('/neighborhood');
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   };
+
   return (
     <S.Container>
       <S.Title>정말로 이 게시물을 삭제하시겠습니까?</S.Title>

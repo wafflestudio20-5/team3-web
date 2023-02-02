@@ -5,10 +5,11 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   height: auto;
   min-width: 360px;
+  min-height: 100vh;
   background-color: #f5f5f5;
 `;
 
@@ -24,7 +25,8 @@ export const Container = styled.div`
   height: auto;
 
   margin-top: 30px;
-  padding: 25px 46px 40px 46px;
+  margin-bottom: 80px;
+  padding: 22px 46px 40px 46px;
   border-radius: 10px;
 
   background-color: white;
