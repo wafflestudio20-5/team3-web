@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+import { toStringNumberWithComma } from '../../utils/price';
 import UploadImage from '../upload-image';
 import * as S from './styles';
 
@@ -57,7 +58,7 @@ const TradePostUpdate = ({
             placeholder="가격 (원)"
             required
             name="price"
-            value={values?.price}
+            value={toStringNumberWithComma(String(values?.price))}
             type="text"
             onChange={handleChange}
           />

@@ -1,12 +1,13 @@
 import { ChangeEvent } from 'react';
 import * as S from './styles';
 import UploadImage from '../upload-image';
+import { toStringNumberWithComma } from '../../utils/price';
 
 interface TradePostCreateProps {
   values: {
     title?: string;
     desc?: string;
-    price?: string;
+    price?: number;
     imgUrls?: any[];
   };
   handleClose: () => void;
@@ -58,7 +59,7 @@ const TradePostCreate = ({
             placeholder="가격 (원)"
             required
             name="price"
-            value={values?.price}
+            value={toStringNumberWithComma(String(values?.price))}
             type="text"
             onChange={handleChange}
           />

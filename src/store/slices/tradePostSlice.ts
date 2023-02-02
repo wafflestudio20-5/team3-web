@@ -50,7 +50,7 @@ export const createTradePost = createAsyncThunk(
       values: {
         title?: string;
         desc?: string;
-        price?: string | null;
+        price?: number;
       };
       imgs?: string[];
     },
@@ -62,7 +62,7 @@ export const createTradePost = createAsyncThunk(
         {
           title: values?.title,
           desc: values?.desc,
-          price: Number(values?.price),
+          price: values?.price,
           imgUrls: imgs,
         },
         { headers: auth(accessToken) },
