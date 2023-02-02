@@ -57,6 +57,7 @@ export const Form = styled.form`
   align-items: flex-start;
   justify-content: center;
   height: auto;
+  width: 98%;
 `;
 
 export const ButtonWrapper = styled.div`
@@ -81,7 +82,7 @@ export const CancelButton = styled.button`
 
 export const EditText = styled.textarea`
   padding-left: 5px;
-  width: 84%;
+  flex-grow: 1;
   height: auto;
   min-height: 90px;
   max-height: 200px;
