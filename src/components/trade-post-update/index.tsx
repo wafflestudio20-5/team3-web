@@ -43,7 +43,7 @@ const TradePostUpdate = ({
           onChange={handleChange}
         />
         <S.PostDesc
-          placeholder="봉천동에 올릴 게시글 내용을 작성해주세요. (가품 및 판매 금지 품목은 게시가 제한될 수 있어요.)"
+          placeholder="중고거래 게시글 내용을 작성해주세요. (가품 및 판매 금지 품목은 게시가 제한될 수 있어요.)"
           required
           name="desc"
           value={values?.desc}
