@@ -73,7 +73,7 @@ export const FlexWrapper = styled.div`
 `;
 
 export const SliderImg = styled.img`
-  width: 371px;
+  width: 375px;
   height: auto;
 `;
 
@@ -128,6 +128,11 @@ export const PhraseC1 = styled.img`
   width: 277px;
   height: auto;
   margin-bottom: 22px;
+  margin-top: 100px;
+
+  @media ${MD_SIZE} {
+    margin-top: 0;
+  }
 `;
 
 export const PhraseC2 = styled.div`
