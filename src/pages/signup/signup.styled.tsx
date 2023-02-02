@@ -75,7 +75,9 @@ export const Input = styled.input`
   background: #ebe9e9;
   font-size: 18px;
   transition: border-bottom 0s ease-out 0s;
-
+  -webkit-box-shadow: 0 0 0 1000px #ebe9e9 inset;
+  box-shadow: 0 0 0 1000px #ebe9e9 inset;
+  
   &:focus {
     outline: none;
     border-bottom: 1px solid ${COLOR_CARROT};

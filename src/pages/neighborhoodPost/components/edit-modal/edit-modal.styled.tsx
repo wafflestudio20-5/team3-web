@@ -75,7 +75,8 @@ export const TitleText = styled.textarea`
   box-sizing: border-box;
   border: none;
   resize: none;
-
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
   &:focus {
     outline: none;
   }
@@ -87,7 +88,8 @@ export const Desc = styled.textarea`
   padding: 10px 0;
   box-sizing: border-box;
   border: none;
-
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
   resize: none;
 
   &:focus {

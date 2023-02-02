@@ -252,6 +252,8 @@ export const Textarea = styled.textarea`
   outline: none;
   color: #212124;
   background-color: #fff;
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
 `;
 
 export const ButtonWrapper = styled.div`

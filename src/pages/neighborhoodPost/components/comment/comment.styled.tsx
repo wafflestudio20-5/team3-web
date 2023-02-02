@@ -93,7 +93,8 @@ export const EditText = styled.textarea`
   margin-bottom: 12px;
   padding: 8px;
   font-size: 14px;
-
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
   &:focus {
     outline: none;
   }

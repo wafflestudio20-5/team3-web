@@ -33,6 +33,8 @@ export const Input = styled.input`
   font-weight: 400;
   font-size: 14px;
   color: #212124;
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
 
   &:focus {
     outline: 1px solid #ff8e43;
