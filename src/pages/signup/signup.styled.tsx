@@ -77,7 +77,7 @@ export const Input = styled.input`
   transition: border-bottom 0s ease-out 0s;
   -webkit-box-shadow: 0 0 0 1000px #ebe9e9 inset;
   box-shadow: 0 0 0 1000px #ebe9e9 inset;
-  
+
   &:focus {
     outline: none;
     border-bottom: 1px solid ${COLOR_CARROT};
@@ -193,7 +193,6 @@ export const UsernameWrapper = styled.div`
   position: relative;
   display: flex;
   width: 100%;
-  margin-bottom: 16px;
 `;
 
 export const InputPositionWrapper = styled.div`
