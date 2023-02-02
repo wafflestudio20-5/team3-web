@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background: #f5f5f5;
 `;
 
 export const SpinnerGif = styled.img`
