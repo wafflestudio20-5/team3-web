@@ -17,12 +17,19 @@ export const getCoordinate = (
               const lat = data[0].y;
               const lng = data[0].x;
               setCoordinate({ lat, lng });
+            } else {
+              setCoordinate({ lat: 0, lng: 0 });
             }
+          } else {
+            setCoordinate({ lat: 0, lng: 0 });
           }
         });
+      } else {
+        setCoordinate({ lat: 0, lng: 0 });
       }
     } catch (err) {
       console.log(err);
+      setCoordinate({ lat: 0, lng: 0 });
     }
   }, [location]);
 };
