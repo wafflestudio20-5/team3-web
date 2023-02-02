@@ -33,8 +33,8 @@ const SignUpPage = () => {
   const dispatch = useAppDispatch();
   const [location, setLocation] = useState('');
   const [coordinate, setCoordinate] = useState<Coordinate>({
-    lat: 37.481277765,
-    lng: 126.95275023,
+    lat: 0,
+    lng: 0,
   });
   getCoordinate(location, coordinate, setCoordinate);
 
@@ -74,11 +74,6 @@ const SignUpPage = () => {
       [name]: value,
     });
   };
-
-  // DESC: 랜덤 닉네임 설정
-  // axios
-  //   .get('https://nickname.hwanmoo.kr/?format=text&count=1&max_length=10&')
-  //   .then(res => console.log(res));
 
   useEffect(() => {
     if (isSocialLogin) {
@@ -143,39 +138,43 @@ const SignUpPage = () => {
   };
 
   const signUpUser = async () => {
-    const res = (await requestSignUpUser({
-      email,
-      password,
-      username,
-      isEmailAuthed,
-      location,
-      coordinate,
-    })) as any;
-    if (res.status === 200) {
-      dispatch(postLogin({ email, password }))
-        .unwrap()
-        .then(res => {
-          toast.success(
-            `회원가입에 성공하였습니다. ${res.user?.username}님, 환영합니다!`,
-          );
-          navigate('/');
-        })
-        .catch(err => {
-          if (axios.isAxiosError(err)) {
-            if (err.response?.status === 403) {
-              // 이메일, 비밀번호 잘못됨
-              toast.error(err.response?.data.error);
-            } else if (err.response?.status === 400) {
-              // error: 이메일 인증이 필요합니다. 적절한 처리
-            } else {
-              redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
-                navigate('/'),
-              );
-            }
-          }
-        });
+    if (coordinate.lat === 0 && coordinate.lng === 0) {
+      normalToast('아직 지원하지 않는 동네에요. 🥲');
     } else {
-      toast.error('회원가입에 실패하였습니다.');
+      const res = (await requestSignUpUser({
+        email,
+        password,
+        username,
+        isEmailAuthed,
+        location,
+        coordinate,
+      })) as any;
+      if (res.status === 200) {
+        dispatch(postLogin({ email, password }))
+          .unwrap()
+          .then(res => {
+            toast.success(
+              `회원가입에 성공하였습니다. ${res.user?.username}님, 환영합니다!`,
+            );
+            navigate('/');
+          })
+          .catch(err => {
+            if (axios.isAxiosError(err)) {
+              if (err.response?.status === 403) {
+                // 이메일, 비밀번호 잘못됨
+                toast.error(err.response?.data.error);
+              } else if (err.response?.status === 400) {
+                // error: 이메일 인증이 필요합니다. 적절한 처리
+              } else {
+                redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
+                  navigate('/'),
+                );
+              }
+            }
+          });
+      } else {
+        toast.error('회원가입에 실패하였습니다.');
+      }
     }
   };
 
@@ -333,7 +332,9 @@ const SignUpPage = () => {
             buttonText="중복 확인"
             handleClick={checkUsername}
           />
-          {isDiceModalOpen && <S.DiceInfo>랜덤 닉네임 생성</S.DiceInfo>}
+          {isDiceModalOpen && (
+            <S.DiceInfo>고민은 그만! 랜덤 닉네임을 사용해보세요</S.DiceInfo>
+          )}
           <S.DiceImg
             src={diceIcon}
             alt="diceIcon"

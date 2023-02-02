@@ -27,10 +27,10 @@ const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
   const accessToken = loadItem('accessToken');
   const [currLocation, setCurrLocation] = useState(location || '');
   const [coordinate, setCoordinate] = useState<Coordinate>({
-    lat: 37.481277765,
-    lng: 126.95275023,
+    lat: 0,
+    lng: 0,
   });
-  
+
   getCoordinate(currLocation, coordinate, setCoordinate);
 
   const handleComplete = (data: any) => {
@@ -44,6 +44,11 @@ const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
   }, [open, handleComplete]);
 
   const handleSubmit = useCallback(() => {
+    if (coordinate.lat === 0 && coordinate.lng === 0) {
+      normalToast('아직 지원하지 않는 동네에요. 🥲');
+      return;
+    }
+
     if (accessToken) {
       dispatch(postLocation({ accessToken, currLocation, coordinate }))
         .unwrap()
@@ -57,7 +62,7 @@ const EditLocation = ({ edit, location, handleClose }: EditLocationProps) => {
           }
         });
     }
-  }, [currLocation]);
+  }, [currLocation, coordinate, setCoordinate]);
 
   return (
     <S.Wrapper>

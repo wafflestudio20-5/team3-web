@@ -13,6 +13,7 @@ import {
   setComments,
 } from '../../../../store/slices/neighborhoodSlice';
 import * as S from './comment-input.styled';
+import { setPost } from '../../../../store/slices/neighborhoodPostSlice';
 
 interface CommentInputProps {
   postId: number;
@@ -41,10 +42,9 @@ export const CommentInput = ({ postId, refreshPost }: CommentInputProps) => {
         accessToken,
       ).then(async () => {
         toast('댓글을 등록하였습니다.');
-        // 원래는 refreshPost() 로 post 정보를 다시 받아오고 싶었는데.. auth/refresh 403 에러
-        // TODO: 뒤로 가지 않고 바로 작성한 댓글 보여주기
         const res = (await requestNeighborhoodPost(postId, accessToken)) as any;
         dispatch(setComments(res.data.comments));
+        dispatch(setPost(res.data));
         setInput('');
         // navigate(-1);
       });
