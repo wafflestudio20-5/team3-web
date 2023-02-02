@@ -9,12 +9,13 @@ import Spinner from '../../components/spinner';
 import Gnb from '../../components/gnb';
 import ShortCut from './components/shortcut';
 import { getSellHistory } from '../../store/slices/tradeHistorySlice';
-import { shortenLocation } from '../../utils/location';
+import { shortenLocation, UTCtoKST } from '../../utils/location';
 import { TradeHistory } from '../../types/history';
 import { redirectWithMsg } from '../../utils/errors';
 import * as S from './sell-history-others.styled';
 import { BASE_URL } from '../../constant';
 import defaultImg from '../../assets/default-trade-img.svg';
+import notFound from '../../assets/notFoundSellHistory.svg';
 
 const SellHistoryOthersPage = () => {
   const navigate = useNavigate();
@@ -110,13 +111,13 @@ const SellHistoryOthersPage = () => {
                   location={shortenLocation(post?.seller.location)}
                   likes={post?.likeCount}
                   chats={post?.reservationCount}
-                  created_at={post?.createdAt}
+                  created_at={UTCtoKST(post?.createdAt)}
                 />
               );
             })}
-            {!data[0] && <S.Message>판매 내역이 없습니다</S.Message>}
           </S.List>
         )}
+        {!data[0] && <S.NotFound src={notFound} />}
       </S.Wrapper>
     </>
   );

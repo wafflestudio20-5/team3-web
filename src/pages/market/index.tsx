@@ -21,6 +21,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { normalToast } from '../../utils/basic-toast-modal';
 import { redirectWithMsg } from '../../utils/errors';
 import { TradePostType } from '../../types/tradePost';
+import notFound from '../../assets/notFoundPost.svg';
 import { shortenLocation, getDong, UTCtoKST } from '../../utils/location';
 
 import {
@@ -30,7 +31,7 @@ import {
   CheckBox,
   Span,
   List,
-  Message,
+  NotFound,
 } from './market.styled';
 import defaultImg from '../../assets/default-trade-img.svg';
 import { loadItem } from '../../utils/storage';
@@ -322,7 +323,7 @@ const MarketPage = () => {
             })}
           </List>
         )}
-        {!isLoading && !data[0] && <Message>판매중인 상품이 없습니다</Message>}
+        {!isLoading && !data[0] && <NotFound src={notFound} />}
         {!isLoading && data[0] && (
           <Pagination total={totalPage} page={page} setPage={changePage} />
         )}
@@ -338,7 +339,7 @@ const MarketPage = () => {
           handleClose={handleCloseModal}
         />
       )}
-      <ContentFooter />
+      {/* {!isLoading && <ContentFooter />} */}
     </>
   );
 };
