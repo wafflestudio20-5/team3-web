@@ -1,9 +1,11 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { requestEditNeighborhood } from '../../../../api/neighborhood';
 import { loadItem } from '../../../../utils/storage';
+import { normalToast } from '../../../../utils/basic-toast-modal';
+import { requestEditNeighborhood } from '../../../../api/neighborhood';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { neighborPost } from '../../../../types/neighborhood';
+
 import * as S from './edit-modal.styled';
 
 interface EditModalProps {
@@ -30,6 +32,17 @@ export const EditModal = ({ post, handleClose }: EditModalProps) => {
   };
 
   const handleClick = async () => {
+    if (!inputs.content.trim()) {
+      normalToast('내용을 입력해주세요.');
+      return;
+    } else if (inputs.content.length < 5) {
+      normalToast('내용은 5자 이상이어야 합니다.');
+      return;
+    } else if (inputs.content.length > 800) {
+      normalToast('내용은 800자 이하여야 합니다.');
+      return;
+    }
+
     if (accessToken) {
       const res = await requestEditNeighborhood(
         post?.postId,
@@ -48,6 +61,15 @@ export const EditModal = ({ post, handleClose }: EditModalProps) => {
       }
     }
   };
+
+  useEffect(() => {
+    () =>
+      setInputs({
+        title: post?.title,
+        content: post?.content,
+      });
+  }, []);
+
   return (
     <S.Container>
       <S.TopWrapper>
