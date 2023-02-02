@@ -21,7 +21,8 @@ import { useAuth } from '../../hooks/useAuth';
 import { normalToast } from '../../utils/basic-toast-modal';
 import { redirectWithMsg } from '../../utils/errors';
 import { TradePostType } from '../../types/tradePost';
-import { shortenLocation, getDong } from '../../utils/location';
+import notFound from '../../assets/notFoundPost.svg';
+import { shortenLocation, getDong, UTCtoKST } from '../../utils/location';
 
 import {
   Wrapper,
@@ -30,7 +31,7 @@ import {
   CheckBox,
   Span,
   List,
-  Message,
+  NotFound,
 } from './market.styled';
 import defaultImg from '../../assets/default-trade-img.svg';
 import { loadItem } from '../../utils/storage';
@@ -131,6 +132,12 @@ const MarketPage = () => {
       return;
     } else if (imgObject.length < 1) {
       normalToast('이미지는 최소 한 장 이상 등록해야 합니다.');
+      return;
+    } else if (values.title.length > 255) {
+      normalToast('제목은 255자까지만 입력 가능합니다.');
+      return;
+    } else if (values.desc.length > 1000) {
+      normalToast('본문은 1000자까지만 입력 가능합니다.');
       return;
     }
 
@@ -286,7 +293,7 @@ const MarketPage = () => {
         <Header>
           <Filter>
             <CheckBox type="checkbox" onChange={checkBoxChange} />
-            <Span>거래완료 상품 제외</Span>
+            <Span>거래가능만 보기</Span>
           </Filter>
           <SearchBar
             keyword={keyword}
@@ -310,13 +317,13 @@ const MarketPage = () => {
                   location={shortenLocation(post?.seller.location)}
                   likes={post?.likeCount}
                   chats={post?.reservationCount}
-                  created_at={post?.createdAt}
+                  created_at={UTCtoKST(post?.createdAt)}
                 />
               );
             })}
           </List>
         )}
-        {!isLoading && !data[0] && <Message>판매중인 상품이 없습니다</Message>}
+        {!isLoading && !data[0] && <NotFound src={notFound} />}
         {!isLoading && data[0] && (
           <Pagination total={totalPage} page={page} setPage={changePage} />
         )}
@@ -332,7 +339,7 @@ const MarketPage = () => {
           handleClose={handleCloseModal}
         />
       )}
-      <ContentFooter />
+      {/* {!isLoading && <ContentFooter />} */}
     </>
   );
 };

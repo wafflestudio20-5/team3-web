@@ -22,6 +22,7 @@ const TemperatureBar = ({ temperature }: TemperatureBarProps) => {
   const [width, setWidth] = useState(temperature);
   const [barColor, setBarColor] = useState('#EEEEEE');
   const [tempIcon, setTempIcon] = useState(COLOR_MANNER_DEFAULT);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (temperature) {
@@ -55,8 +56,24 @@ const TemperatureBar = ({ temperature }: TemperatureBarProps) => {
 
         <S.ProgressBg />
         <S.ProgressTemp width={width} bgColor={barColor} />
+        {openModal && (
+          <S.ArrowBox>
+            {
+              '와플온도는 와플마켓 사용자로부터\n받은 칭찬, 후기, 등을 종합해서 만든\n매너 지표예요.'
+            }
+          </S.ArrowBox>
+        )}
       </S.Wrapper>
-      <S.MannerTemp>매너온도</S.MannerTemp>
+      <S.MannerTemp
+        onMouseOver={() => {
+          setOpenModal(true);
+        }}
+        onMouseOut={() => {
+          setOpenModal(false);
+        }}
+      >
+        와플온도
+      </S.MannerTemp>
     </>
   );
 };

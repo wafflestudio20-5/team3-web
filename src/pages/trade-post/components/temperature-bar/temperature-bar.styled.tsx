@@ -89,3 +89,22 @@ export const MannerTemp = styled.div`
   color: #868e96;
   text-decoration: underline;
 `;
+
+export const ArrowBox = styled.p`
+  position: absolute;
+  width: 160px;
+  height: auto;
+  padding: 8px;
+  top: 50px;
+  left: -40px;
+  border-radius: 4px;
+  background: #333;
+  color: #fff;
+  font-size: 8px;
+  z-index: 10;
+  white-space: pre-wrap;
+
+  &:hover {
+    display: none;
+  }
+`;

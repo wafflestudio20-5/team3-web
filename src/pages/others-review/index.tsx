@@ -8,12 +8,13 @@ import { loadItem } from '../../utils/storage';
 import Spinner from '../../components/spinner';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { deleteReview, getReviews } from '../../store/slices/reviewSlice';
-import { shortenLocation } from '../../utils/location';
+import { shortenLocation, UTCtoKST } from '../../utils/location';
 import { redirectWithMsg } from '../../utils/errors';
 import Gnb from '../../components/gnb';
 import ReviewInfo from './components/review-info';
 import { Review } from '../../types/review';
-import { Wrapper, Header, List, Message } from './others-review.styled';
+import { Wrapper, Header, List, NotFound } from './others-review.styled';
+import notFound from '../../assets/notFoundReview.svg';
 
 const OthersReviewPage = () => {
   const navigate = useNavigate();
@@ -119,15 +120,15 @@ const OthersReviewPage = () => {
                 username={review.user?.username}
                 type={review.type === 'BUYER' ? '구매자' : '판매자'}
                 location={shortenLocation(review.user.location)}
-                createdAt={review.createdAt}
+                createdAt={UTCtoKST(review.createdAt)}
                 content={review.content}
                 isMyReview={checkIsMyReview(review.user.id)}
                 removeReview={removeReview}
               />
             ))}
-            {!data[0] && <Message>아직 후기가 없습니다</Message>}
           </List>
         )}
+        {!data[0] && <NotFound src={notFound} />}
       </Wrapper>
     </>
   );

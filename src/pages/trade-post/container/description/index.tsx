@@ -24,6 +24,7 @@ import {
 } from '../../../../store/slices/tradePostSlice';
 
 import { loadItem } from '../../../../utils/storage';
+import { UTCtoKST } from '../../../../utils/location';
 import { redirectWithMsg } from '../../../../utils/errors';
 import { getUUID } from '../../../../store/slices/chatSlice';
 import { normalToast } from '../../../../utils/basic-toast-modal';
@@ -212,6 +213,12 @@ const Description = () => {
       return;
     } else if (imgObject.length < 1) {
       normalToast('이미지는 최소 한 장 이상 등록해야 합니다.');
+      return;
+    } else if (values.title.length > 255) {
+      normalToast('제목은 255자까지만 입력 가능합니다.');
+      return;
+    } else if (values.desc.length > 1000) {
+      normalToast('본문은 1000자까지만 입력 가능합니다.');
       return;
     }
 
@@ -442,14 +449,18 @@ const Description = () => {
           <S.Price>
             <S.PriceImg src={price} alt="price" />
             {`${toStringNumWithComma(tradePost?.price)}원`}
-            <S.Date>{` ∙ ${moment(tradePost?.modifiedAt).fromNow()}`}</S.Date>
+            <S.Date>{` ∙ ${moment(
+              UTCtoKST(tradePost?.createdAt),
+            ).fromNow()}`}</S.Date>
           </S.Price>
 
           <S.Desc>{tradePost?.desc}</S.Desc>
 
           <S.DetailInfo>
-            <S.DetailText>{`관심 ${tradePost?.likeCount}`}</S.DetailText>
-            <S.DetailText>{`∙ 채팅 ${tradePost?.reservationCount}`}</S.DetailText>
+            {tradePost?.isOwner && (
+              <S.DetailText>{`관심 ${tradePost?.likeCount} ∙ `}</S.DetailText>
+            )}
+            <S.DetailText>{`채팅 ${tradePost?.reservationCount}`}</S.DetailText>
             <S.DetailText>{`∙ 조회 ${tradePost?.viewCount}`}</S.DetailText>
           </S.DetailInfo>
         </S.Content>

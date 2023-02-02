@@ -74,7 +74,7 @@ export const Info = styled.div`
 `;
 
 export const Title = styled.h3`
-  width: 176px;
+  width: 168px;
   font-size: 17px;
   white-space: nowrap;
   overflow: hidden;

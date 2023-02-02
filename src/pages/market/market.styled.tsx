@@ -105,12 +105,10 @@ export const List = styled.div`
   }
 `;
 
-export const Message = styled.div`
-  display: flex;
-  height: 500px;
-  align-items: center;
-  font-size: 20px;
-  font-weight: 500;
-  text-align: center;
-  margin-bottom: 100px;
+export const NotFound = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 360px;
 `;

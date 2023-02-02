@@ -4,7 +4,7 @@ import LikeBlank from '../../../../assets/like-blank.svg';
 import LikeFill from '../../../../assets/like-fill.svg';
 import CommentIcon from '../../../../assets/neighbor-comment-icon.svg';
 import { useNavigate } from 'react-router-dom';
-import { shortenLocation } from '../../../../utils/location';
+import { shortenLocation, UTCtoKST } from '../../../../utils/location';
 import moment from 'moment';
 import { useState } from 'react';
 
@@ -39,7 +39,7 @@ export const ShortCut = ({
       <S.TopWrapper>
         <S.Location>{shortenLocation(location)}</S.Location>
         <S.Location>
-          {moment(new Date(modifiedAt).getTime()).fromNow()}
+          {moment(new Date(UTCtoKST(modifiedAt)).getTime()).fromNow()}
         </S.Location>
       </S.TopWrapper>
       <S.ContentP>{content}</S.ContentP>

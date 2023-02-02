@@ -7,13 +7,15 @@ import { useAuth } from '../../hooks/useAuth';
 import { loadItem } from '../../utils/storage';
 import Spinner from '../../components/spinner';
 import Gnb from '../../components/gnb';
+import ContentFooter from '../../components/content-footer';
 import ShortCut from './components/shortcut';
 import { getBuyHistory } from '../../store/slices/tradeHistorySlice';
-import { shortenLocation } from '../../utils/location';
+import { shortenLocation, UTCtoKST } from '../../utils/location';
 import { TradeHistory } from '../../types/history';
 import { redirectWithMsg } from '../../utils/errors';
 import * as S from './buy-history.styled';
 import defaultImg from '../../assets/default-trade-img.svg';
+import notFound from '../../assets/notFoundBuyHistory.svg';
 
 const BuyHistoryPage = () => {
   const navigate = useNavigate();
@@ -68,28 +70,30 @@ const BuyHistoryPage = () => {
       {isLoading && <Spinner />}
       {!isLoading && (
         <S.Wrapper>
-          <S.List>
-            {data.map(post => {
-              return (
-                <ShortCut
-                  key={post?.postId}
-                  postId={post?.postId}
-                  img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
-                  title={post?.title}
-                  tradeStatus={post?.tradeStatus}
-                  price={post?.price}
-                  location={shortenLocation(post?.seller.location)}
-                  likes={post?.likeCount}
-                  chats={post?.reservationCount}
-                  created_at={post?.createdAt}
-                  reviews={post?.reviews}
-                  seller={post?.seller}
-                  buyer={post?.buyer}
-                />
-              );
-            })}
-            {!data[0] && <S.Message>구매 내역이 없습니다</S.Message>}
-          </S.List>
+          {data[0] && (
+            <S.List>
+              {data.map(post => {
+                return (
+                  <ShortCut
+                    key={post?.postId}
+                    postId={post?.postId}
+                    img={post?.imageUrls[0] ? post?.imageUrls[0] : defaultImg}
+                    title={post?.title}
+                    tradeStatus={post?.tradeStatus}
+                    price={post?.price}
+                    location={shortenLocation(post?.seller.location)}
+                    likes={post?.likeCount}
+                    chats={post?.reservationCount}
+                    created_at={UTCtoKST(post?.createdAt)}
+                    reviews={post?.reviews}
+                    seller={post?.seller}
+                    buyer={post?.buyer}
+                  />
+                );
+              })}
+            </S.List>
+          )}
+          {!data[0] && <S.NotFound src={notFound} />}
         </S.Wrapper>
       )}
     </>

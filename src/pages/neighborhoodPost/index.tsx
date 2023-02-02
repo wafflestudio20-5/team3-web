@@ -21,6 +21,7 @@ import { EditDelete } from './components/edit-and-delete';
 import { EditModal } from './components/edit-modal';
 import { WriterInfo } from './components/writer-info';
 import { CommentContainer, Container, Wrapper } from './neighbor-post-styled';
+import { UTCtoKST } from '../../utils/location';
 
 export const NeighborhoodPostPage = () => {
   const params = useParams();
@@ -71,7 +72,7 @@ export const NeighborhoodPostPage = () => {
         <Description
           title={post.title}
           content={post.content}
-          modifiedAt={post.createdAt}
+          modifiedAt={UTCtoKST(post.createdAt)}
           viewCount={post.viewCount}
         />
         {/* <CommentLikeCount commentCount={2} likeCount={1} />
@@ -92,7 +93,7 @@ export const NeighborhoodPostPage = () => {
               commentId={comment.commentId}
               user={comment.commenter}
               content={comment.comment}
-              modifiedAt={comment.modifiedAt}
+              modifiedAt={UTCtoKST(comment.modifiedAt)}
             />
           ))}
         </CommentContainer>

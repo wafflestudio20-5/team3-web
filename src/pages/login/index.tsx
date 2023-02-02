@@ -90,8 +90,8 @@ const LoginPage = () => {
   };
 
   /* DESC: 카카오 로그인하기 - 외부 링크로 이동해 동의하면 redirect page 쿼리로 인가코드 보내줌 */
-  const KAKAO_REDIRECT_URI =
-    'http://waffle-market.store.s3-website.ap-northeast-2.amazonaws.com/login/kakao';
+  const KAKAO_REDIRECT_URI = 'https://waffle-market.store/login/kakao';
+  // 'http://waffle-market.store.s3-website.ap-northeast-2.amazonaws.com/login/kakao';
   // const KAKAO_REDIRECT_URI = 'http://localhost:3000/login/kakao';
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
   const linkToKakao = () => {
@@ -126,7 +126,9 @@ const LoginPage = () => {
   return (
     <Wrapper>
       <Container>
-        <Title src={logoImg} />
+        <Link to="/">
+          <Title src={logoImg} />
+        </Link>
         <Input
           name="email"
           value={email}
