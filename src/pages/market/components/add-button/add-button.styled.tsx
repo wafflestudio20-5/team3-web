@@ -15,8 +15,10 @@ export const Button = styled.img`
   }
 
   @media ${MD_SIZE} {
-    right: 30px;
-    bottom: 30px;
+    width: 60px;
+    height: 60px;
+    right: 20px;
+    bottom: 20px;
   }
 
   &:hover {

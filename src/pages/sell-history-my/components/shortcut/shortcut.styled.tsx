@@ -9,14 +9,16 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 200px;
-  border: 1px solid transparent;
+  width: auto;
+  height: auto;
+  margin: auto;
+  border: 1px solid white;
   border-radius: 12px;
   gap: 4px;
+  transition: 0.3s all;
 
   &:hover {
-    box-shadow: 0 5px 10px #f1f1f1;
-    transform: translateY(-2px);
+    transform: translateY(-4px);
   }
 
   @media ${MD_SIZE} {
@@ -24,15 +26,13 @@ export const Container = styled.div`
     flex-direction: row;
     align-content: center;
     width: 100%;
-    height: 180px;
-    border-top: 0.5px solid #8a8a8a;
-    border-collapse: collapse;
+    height: 160px;
+    border-top: 0.5px solid #d1d0d0;
     border-radius: 0;
     gap: 4px;
 
-    &:hover {
-      box-shadow: 0 0 0 0;
-      transform: none;
+    &:last-of-type {
+      border-bottom: none;
     }
   }
 `;
@@ -46,17 +46,30 @@ export const Img = styled.img`
   object-fit: cover;
 
   @media ${MD_SIZE} {
-    width: 160px;
-    height: 160px;
-    margin-top: 10px;
-    margin-right: 20px;
+    width: 130px;
+    height: 130px;
+    margin-top: 14px;
+    margin-right: 10px;
     margin-left: 16px;
   }
 `;
 
-export const Div = styled.div`
-  display: flex;
-  flex-direction: row;
+export const Heart = styled.img`
+  position: absolute;
+  right: 4px;
+  top: 208px;
+  width: 24px;
+  z-index: 1;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  @media ${MD_SIZE} {
+    top: 128px;
+    right: 8px;
+  }
 `;
 
 export const Info = styled.div`
@@ -64,17 +77,17 @@ export const Info = styled.div`
   flex-direction: column;
   justify-content: center;
   align-content: center;
-  width: 180px;
   gap: 6px;
 
   @media ${MD_SIZE} {
-    width: 50vw;
-    gap: 10px;
+    width: 175px;
+    gap: 8px;
+    flex-grow: 1;
   }
 `;
 
 export const Title = styled.h3`
-  width: 176px;
+  width: 168px;
   font-size: 17px;
   white-space: nowrap;
   overflow: hidden;
@@ -83,7 +96,7 @@ export const Title = styled.h3`
   @media ${MD_SIZE} {
     width: 100%;
     height: 24px;
-    font-size: 18px;
+    font-size: 16px;
   }
 `;
 
@@ -96,18 +109,30 @@ export const PriceBox = styled.div`
 export const Price = styled.span`
   font-size: 18px;
   font-weight: 600;
+
+  @media ${MD_SIZE} {
+    font-size: 16px;
+  }
 `;
 
 export const Location = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media ${MD_SIZE} {
+    font-size: 13px;
+  }
 `;
 
 export const Detail = styled.div`
   display: flex;
   flex-direction: row;
   gap: 6px;
+
+  @media ${MD_SIZE} {
+    font-size: 12px;
+  }
 `;
 
 export const Likes = styled.span`
@@ -133,6 +158,11 @@ export const More = styled.img`
     right: 16px;
     width: 24px;
   }
+`;
+
+export const Div = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 export const ReviewButton = styled.button`
