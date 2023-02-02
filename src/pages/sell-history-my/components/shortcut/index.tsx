@@ -92,10 +92,9 @@ const ShortCut = ({
       for (let i = 0; i < reviews.length; i++) {
         if (reviews[i].type === 'SELLER') {
           return true;
-        } else {
-          return false;
         }
       }
+      return false;
     }
     return false;
   };
