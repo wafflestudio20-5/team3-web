@@ -10,7 +10,7 @@ import Gnb from '../../components/gnb';
 import ShortCut from './components/shortcut';
 import { getLikeHistory } from '../../store/slices/tradeHistorySlice';
 import { postLike } from '../../store/slices/tradePostSlice';
-import { shortenLocation } from '../../utils/location';
+import { shortenLocation, UTCtoKST } from '../../utils/location';
 import { TradeHistory } from '../../types/history';
 import { redirectWithMsg } from '../../utils/errors';
 import * as S from './like-history.styled';
@@ -114,7 +114,7 @@ const LikeHistoryPage = () => {
                   location={shortenLocation(post?.seller.location)}
                   likes={post?.likeCount}
                   chats={post?.reservationCount}
-                  created_at={post?.createdAt}
+                  created_at={UTCtoKST(post?.createdAt)}
                   isLiked={post?.isLiked}
                   handleLike={handleLike}
                 />

@@ -8,7 +8,7 @@ import { loadItem } from '../../utils/storage';
 import Spinner from '../../components/spinner';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { deleteReview, getReviews } from '../../store/slices/reviewSlice';
-import { shortenLocation } from '../../utils/location';
+import { shortenLocation, UTCtoKST } from '../../utils/location';
 import { redirectWithMsg } from '../../utils/errors';
 import Gnb from '../../components/gnb';
 import ReviewInfo from './components/review-info';
@@ -120,7 +120,7 @@ const OthersReviewPage = () => {
                 username={review.user?.username}
                 type={review.type === 'BUYER' ? '구매자' : '판매자'}
                 location={shortenLocation(review.user.location)}
-                createdAt={review.createdAt}
+                createdAt={UTCtoKST(review.createdAt)}
                 content={review.content}
                 isMyReview={checkIsMyReview(review.user.id)}
                 removeReview={removeReview}

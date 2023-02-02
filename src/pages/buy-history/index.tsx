@@ -10,7 +10,7 @@ import Gnb from '../../components/gnb';
 import ContentFooter from '../../components/content-footer';
 import ShortCut from './components/shortcut';
 import { getBuyHistory } from '../../store/slices/tradeHistorySlice';
-import { shortenLocation } from '../../utils/location';
+import { shortenLocation, UTCtoKST } from '../../utils/location';
 import { TradeHistory } from '../../types/history';
 import { redirectWithMsg } from '../../utils/errors';
 import * as S from './buy-history.styled';
@@ -84,7 +84,7 @@ const BuyHistoryPage = () => {
                     location={shortenLocation(post?.seller.location)}
                     likes={post?.likeCount}
                     chats={post?.reservationCount}
-                    created_at={post?.createdAt}
+                    created_at={UTCtoKST(post?.createdAt)}
                     reviews={post?.reviews}
                     seller={post?.seller}
                     buyer={post?.buyer}
