@@ -18,10 +18,10 @@ export const Wrapper = styled.div`
   max-width: 740px;
   width: 100%;
 
-  animation: fadein 2s;
-  -moz-animation: fadein 2s; /* Firefox */
-  -webkit-animation: fadein 2s; /* Safari and Chrome */
-  -o-animation: fadein 2s; /* Opera */
+  animation: fadein 1s;
+  -moz-animation: fadein 1s; /* Firefox */
+  -webkit-animation: fadein 1s; /* Safari and Chrome */
+  -o-animation: fadein 1s; /* Opera */
 
   @keyframes fadein {
     from {
