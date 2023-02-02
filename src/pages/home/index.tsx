@@ -4,6 +4,7 @@ import Section2 from './section2';
 import Section3 from './section3';
 import Section4 from './section4';
 import Section5 from './section5';
+import WarmPeople from './warm-people';
 import Gnb from '../../components/gnb';
 import Footer from '../../components/footer';
 
@@ -15,6 +16,7 @@ const HomePage = () => {
       <Gnb isColored />
       <Section0 />
       <Section1 />
+      <WarmPeople />
       <Section2 />
       <Section3 />
       <Section4 />
