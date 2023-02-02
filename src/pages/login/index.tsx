@@ -126,7 +126,9 @@ const LoginPage = () => {
   return (
     <Wrapper>
       <Container>
-        <Title src={logoImg} />
+        <Link to="/">
+          <Title src={logoImg} />
+        </Link>
         <Input
           name="email"
           value={email}
