@@ -337,28 +337,26 @@ const ShortCut = ({
             onError={e => ((e.target as HTMLImageElement).src = alt)}
           />
         </Link>
-        <Div>
-          <Info>
-            <Link to={`/tradepost/${postId}`}>
-              <Title>{title}</Title>
-            </Link>
-            <PriceBox>
-              {tradeStatus !== 'TRADING' && (
-                <TradeStatusButton tradeStatus={tradeStatus} />
-              )}
-              <Price>{toStringNumWithComma(price)}원</Price>
-            </PriceBox>
-            <Location>{location}</Location>
-            <Detail>
-              <Likes>관심 {likes} · </Likes>
-              <Chats>채팅 {chats} · </Chats>
-              <Date>
-                <Moment fromNow>{created_at}</Moment>
-              </Date>
-            </Detail>
-          </Info>
-          <More src={more} ref={dropDownRef} onClick={clickDropDown} />
-        </Div>
+        <Info>
+          <Link to={`/tradepost/${postId}`}>
+            <Title>{title}</Title>
+          </Link>
+          <PriceBox>
+            {tradeStatus !== 'TRADING' && (
+              <TradeStatusButton tradeStatus={tradeStatus} />
+            )}
+            <Price>{toStringNumWithComma(price)}원</Price>
+          </PriceBox>
+          <Location>{location}</Location>
+          <Detail>
+            <Likes>관심 {likes} · </Likes>
+            <Chats>채팅 {chats} · </Chats>
+            <Date>
+              <Moment fromNow>{created_at}</Moment>
+            </Date>
+          </Detail>
+        </Info>
+        <More src={more} ref={dropDownRef} onClick={clickDropDown} />
         {isDropped && (
           <DropDown
             postId={postId}

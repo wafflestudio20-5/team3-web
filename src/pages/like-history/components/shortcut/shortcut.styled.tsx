@@ -9,18 +9,25 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 200px;
+  width: auto;
+  height: auto;
+  margin: auto;
   border: 1px solid white;
   border-radius: 12px;
   gap: 4px;
+  transition: 0.3s all;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
 
   @media ${MD_SIZE} {
     display: flex;
     flex-direction: row;
     align-content: center;
     width: 100%;
-    height: 180px;
-    border-top: 0.5px solid #8a8a8a;
+    height: 160px;
+    border-top: 0.5px solid #d1d0d0;
     border-radius: 0;
     gap: 4px;
   }
@@ -35,10 +42,10 @@ export const Img = styled.img`
   object-fit: cover;
 
   @media ${MD_SIZE} {
-    width: 160px;
-    height: 160px;
-    margin-top: 10px;
-    margin-right: 20px;
+    width: 130px;
+    height: 130px;
+    margin-top: 14px;
+    margin-right: 10px;
     margin-left: 16px;
   }
 `;
@@ -56,8 +63,8 @@ export const Heart = styled.img`
   }
 
   @media ${MD_SIZE} {
-    top: 146px;
-    right: 10px;
+    top: 128px;
+    right: 8px;
   }
 `;
 
@@ -69,7 +76,9 @@ export const Info = styled.div`
   gap: 6px;
 
   @media ${MD_SIZE} {
-    gap: 10px;
+    width: 175px;
+    gap: 8px;
+    flex-grow: 1;
   }
 `;
 
@@ -83,7 +92,7 @@ export const Title = styled.h3`
   @media ${MD_SIZE} {
     width: 100%;
     height: 24px;
-    font-size: 18px;
+    font-size: 16px;
   }
 `;
 
@@ -96,18 +105,30 @@ export const PriceBox = styled.div`
 export const Price = styled.span`
   font-size: 18px;
   font-weight: 600;
+
+  @media ${MD_SIZE} {
+    font-size: 16px;
+  }
 `;
 
 export const Location = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media ${MD_SIZE} {
+    font-size: 13px;
+  }
 `;
 
 export const Detail = styled.div`
   display: flex;
   flex-direction: row;
   gap: 6px;
+
+  @media ${MD_SIZE} {
+    font-size: 12px;
+  }
 `;
 
 export const Likes = styled.span`
