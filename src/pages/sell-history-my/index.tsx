@@ -15,6 +15,7 @@ import { TradeHistory } from '../../types/history';
 import { redirectWithMsg } from '../../utils/errors';
 import * as S from './sell-history-my.styled';
 import defaultImg from '../../assets/default-trade-img.svg';
+import notFound from '../../assets/notFoundSellHistory.svg';
 
 const SellHistoryMyPage = () => {
   const navigate = useNavigate();
@@ -115,9 +116,9 @@ const SellHistoryMyPage = () => {
                 />
               );
             })}
-            {!data[0] && <S.Message>판매 내역이 없습니다</S.Message>}
           </S.List>
         )}
+        {!data[0] && <S.NotFound src={notFound} />}
       </S.Wrapper>
     </>
   );

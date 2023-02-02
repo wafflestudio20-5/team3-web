@@ -101,12 +101,10 @@ export const List = styled.div`
   }
 `;
 
-export const Message = styled.h2`
+export const NotFound = styled.img`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 20px;
-  font-weight: 500;
-  text-align: center;
+  width: 300px;
 `;

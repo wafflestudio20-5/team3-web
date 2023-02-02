@@ -13,7 +13,8 @@ import { redirectWithMsg } from '../../utils/errors';
 import Gnb from '../../components/gnb';
 import ReviewInfo from './components/review-info';
 import { Review } from '../../types/review';
-import { Wrapper, Header, List, Message } from './my-review.styled';
+import { Wrapper, Header, List, NotFound } from './my-review.styled';
+import notFound from '../../assets/notFoundReview.svg';
 
 const MyReviewPage = () => {
   const navigate = useNavigate();
@@ -111,9 +112,9 @@ const MyReviewPage = () => {
                 removeReview={removeReview}
               />
             ))}
-            {!data[0] && <Message>아직 후기가 없습니다</Message>}
           </List>
         )}
+        {!data[0] && <NotFound src={notFound} />}
       </Wrapper>
     </>
   );

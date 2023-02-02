@@ -17,6 +17,7 @@ import * as S from './like-history.styled';
 import { stringify } from 'querystring';
 import { toast } from 'react-toastify';
 import defaultImg from '../../assets/default-trade-img.svg';
+import notFound from '../../assets/notFoundLikeHistory.svg';
 
 const LikeHistoryPage = () => {
   const navigate = useNavigate();
@@ -119,9 +120,9 @@ const LikeHistoryPage = () => {
                 />
               );
             })}
-            {!data[0] && <S.Message>찜한 상품이 없습니다</S.Message>}
           </S.List>
         )}
+        {!data[0] && <S.NotFound src={notFound} />}
       </S.Wrapper>
     </>
   );
