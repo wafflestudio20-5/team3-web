@@ -44,6 +44,7 @@ export const Move = styled.button`
 
 export const More = styled.span`
   color: #7d7d7d;
+  font-size: 16px;
 `;
 
 export const Button = styled.button<Button>(
