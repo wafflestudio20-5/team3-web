@@ -20,6 +20,7 @@ import axios from 'axios';
 import { setPosts } from '../../../../store/slices/neighborhoodPostListSlice';
 import SearchBar from '../search-bar';
 import Spinner from '../../../../components/spinner';
+import notFound from '../../../../assets/neighbor-like.svg';
 
 export const NeighborContainer = () => {
   const dispatch = useAppDispatch();
@@ -97,20 +98,24 @@ export const NeighborContainer = () => {
             <S.TopText>{me?.username} 님이 좋아한 동네생활</S.TopText>
           </S.TopTextWrapper>
           <S.Container>
-            {posts
-              ? posts.map(post => (
-                  <ShortCut
-                    key={post.postId}
-                    id={post.postId}
-                    content={post.content}
-                    location={post.publisher.location}
-                    isLiked={post.isLiked}
-                    modifiedAt={post.modifiedAt}
-                    likeCount={post.likeCount}
-                    commentCount={post.commentCount}
-                  />
-                ))
-              : null}
+            {posts && posts?.length > 0 ? (
+              posts.map(post => (
+                <ShortCut
+                  key={post.postId}
+                  id={post.postId}
+                  content={post.content}
+                  location={post.publisher.location}
+                  isLiked={post.isLiked}
+                  modifiedAt={post.modifiedAt}
+                  likeCount={post.likeCount}
+                  commentCount={post.commentCount}
+                />
+              ))
+            ) : (
+              <S.NotFoundWrapper>
+                <S.NotFoundImg src={notFound} alt="notFound" />
+              </S.NotFoundWrapper>
+            )}
           </S.Container>
         </>
       )}

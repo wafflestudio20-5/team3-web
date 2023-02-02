@@ -19,6 +19,7 @@ import axios from 'axios';
 import { setPosts } from '../../../../store/slices/neighborhoodPostListSlice';
 import SearchBar from '../search-bar';
 import Spinner from '../../../../components/spinner';
+import notFound from '../../../../assets/neighbor-history.svg';
 
 export const NeighborContainer = () => {
   const dispatch = useAppDispatch();
@@ -103,20 +104,24 @@ export const NeighborContainer = () => {
         dong="내 동네"
       /> */}
           <S.Container>
-            {posts
-              ? posts.map(post => (
-                  <ShortCut
-                    key={post.postId}
-                    id={post.postId}
-                    content={post.content}
-                    location={post.publisher.location}
-                    isLiked={post.isLiked} // 사실 나의 동네생활엔 필요 없지만.. 혹시 몰라서 넣어두었습니다
-                    modifiedAt={post.modifiedAt}
-                    likeCount={post.likeCount}
-                    commentCount={post.commentCount}
-                  />
-                ))
-              : null}
+            {posts && posts?.length > 0 ? (
+              posts.map(post => (
+                <ShortCut
+                  key={post.postId}
+                  id={post.postId}
+                  content={post.content}
+                  location={post.publisher.location}
+                  isLiked={post.isLiked} // 사실 나의 동네생활엔 필요 없지만.. 혹시 몰라서 넣어두었습니다
+                  modifiedAt={post.modifiedAt}
+                  likeCount={post.likeCount}
+                  commentCount={post.commentCount}
+                />
+              ))
+            ) : (
+              <S.NotFoundWrapper>
+                <S.NotFoundImg src={notFound} alt="notFound" />
+              </S.NotFoundWrapper>
+            )}
 
             {/* <AddButton
           handleClick={() => {

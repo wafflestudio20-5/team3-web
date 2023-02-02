@@ -12,8 +12,9 @@ export const Container = styled.div`
 
   width: 711px;
   height: auto;
-
   padding: 20px 46px;
+  margin-top: 30px;
+  margin-bottom: 80px;
   border-radius: 10px;
 
   background-color: white;
@@ -30,13 +31,14 @@ export const TopTextWrapper = styled.div`
   justify-content: center;
   width: 100%;
   margin: 20px 0px;
+  margin-top: 40px;
 `;
 
 export const TopText = styled.span`
   font-size: 25px;
 
   @media ${MD_SIZE} {
-    font-size: 30px;
+    font-size: 20px;
   }
 `;
 
@@ -53,4 +55,18 @@ export const MoreTextWrapper = styled.div`
 export const MoreText = styled.span`
   font-size: 20px;
   color: rgba(0, 0, 0, 0.5);
+`;
+
+export const NotFoundWrapper = styled.div`
+  width: 100%;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+`;
+
+export const NotFoundImg = styled.img`
+  width: 270px;
+  height: auto;
 `;
