@@ -30,10 +30,6 @@ export const Container = styled.div`
     border-top: 0.5px solid #d1d0d0;
     border-radius: 0;
     gap: 4px;
-
-    &:first-of-type {
-      border-top: none;
-    }
   }
 `;
 
