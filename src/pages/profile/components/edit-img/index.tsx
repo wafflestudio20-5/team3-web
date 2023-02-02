@@ -31,7 +31,7 @@ const EditImg = ({ img, edit, handleClose }: EditImgProps) => {
       const file = imgRef.current.files[0];
       const maxSize = 5 * 1024 * 1024;
 
-      if (imgRef.current.files[0].size > maxSize) {
+      if (imgRef.current.files[0].size >= maxSize) {
         normalToast('이미지 용량은 5MB 이내만 등록 가능합니다.');
         return;
       }
