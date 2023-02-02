@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
-import { shortenLocation } from '../../../../utils/location';
+import { shortenLocation, UTCtoKST } from '../../../../utils/location';
 
 import * as S from './shortcut.styled';
 import alt from '../../../../assets/default-others.svg';
@@ -39,7 +39,7 @@ const ShortCut = ({ tradeData }: ShortCut) => {
           <S.Likes>관심 {tradeData?.likeCount} · </S.Likes>
           <S.Chats>채팅 {tradeData?.reservationCount} · </S.Chats>
           <S.Date>
-            <Moment fromNow>{tradeData?.createdAt}</Moment>
+            <Moment fromNow>{UTCtoKST(tradeData?.createdAt)}</Moment>
           </S.Date>
         </S.Detail>
       </S.Info>
