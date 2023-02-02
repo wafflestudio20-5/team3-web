@@ -105,20 +105,6 @@ const Gnb = ({ isColored }: GnbProps) => {
     window.location.href = '/';
   }, []);
 
-  // 임시: 토큰 만료 전 refresh 확인용
-  const [minute, setMinute] = useState<any>();
-  const [second, setSecond] = useState<any>();
-  const interval = useRef(null);
-  useEffect(() => {
-    // console.log(new Date(expiryTime));
-    // console.log(accessToken);
-    (interval.current as any) = setInterval(() => {
-      setMinute(new Date(expiryTime - Date.now()).getMinutes());
-      setSecond(new Date(expiryTime - Date.now()).getSeconds());
-    }, 1000);
-    return () => clearInterval(interval.current as any);
-  }, [expiryTime]);
-
   return (
     <S.Wrapper isColored={isColored}>
       <S.InnerWrapper>
@@ -147,11 +133,6 @@ const Gnb = ({ isColored }: GnbProps) => {
                 <S.LockIcon alt="lock" src={lock} />
                 로그인
               </S.Auth>
-            )}
-            {loadItem('accessToken') && (
-              <span>
-                남은시간= {minute}:{second}
-              </span>
             )}
             <Footer />
           </>
