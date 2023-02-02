@@ -66,5 +66,5 @@ export const IconsContainer = styled.div`
 
 export const CountSpan = styled.span`
   font-size: 12px;
-  margin: 0px 5px;
+  margin: 0px 6px 0px 2px;
 `;

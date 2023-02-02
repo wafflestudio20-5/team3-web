@@ -21,13 +21,13 @@ export const Div = styled.div`
   display: flex;
   flex-direction: row;
   width: 430px;
-  height: 40px;
+  height: 45px;
   align-items: center;
   padding-right: 8px;
-  border: 0.5px solid #8a8a8a;
+  border: 0.5px solid #ececec;
   border-radius: 12px;
+  background-color: #fff;
 
-  background-color: white;
   @media ${MD_SIZE} {
     width: 100vw;
     border-left: 0px solid transparent;
@@ -39,34 +39,32 @@ export const Div = styled.div`
 `;
 
 export const Img = styled.img`
-  width: 22px;
-  height: 22px;
-  margin-left: 8px;
-  margin-right: 6px;
-
-  @media ${MD_SIZE} {
-    margin-left: 12px;
-  }
+  width: 16px;
+  height: 16px;
+  margin-left: 16px;
+  margin-right: 12px;
 `;
 
 export const Bar = styled.input`
-  width: 360px;
+  width: 346px;
   height: 36px;
   border: 0px solid transparent;
   margin-bottom: 1px;
   outline: none;
-
+  font-size: 15px;
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
+  
   @media ${MD_SIZE} {
     width: 80%;
   }
 `;
 
 export const Clear = styled.img`
-  width: 22px;
-  height: 22px;
-  margin-left: auto;
-  @media ${MD_SIZE} {
-  }
+  width: 20px;
+  height: 20px;
+  margin: auto;
+  cursor: pointer;
 `;
 
 export const Button = styled.button`

@@ -14,6 +14,8 @@ export const Container = styled.div`
   height: auto;
 
   padding: 0px 46px;
+  padding-top: 20px;
+  margin-top: 20px;
   border-radius: 10px;
 
   background-color: white;
@@ -21,6 +23,7 @@ export const Container = styled.div`
 
   @media ${MD_SIZE} {
     padding: 0px 20px;
+    padding-top: 8px;
     margin-top: 30px;
     width: 100%;
   }
