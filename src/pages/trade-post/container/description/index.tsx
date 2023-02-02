@@ -24,6 +24,7 @@ import {
 } from '../../../../store/slices/tradePostSlice';
 
 import { loadItem } from '../../../../utils/storage';
+import { UTCtoKST } from '../../../../utils/location';
 import { redirectWithMsg } from '../../../../utils/errors';
 import { getUUID } from '../../../../store/slices/chatSlice';
 import { normalToast } from '../../../../utils/basic-toast-modal';
@@ -448,7 +449,9 @@ const Description = () => {
           <S.Price>
             <S.PriceImg src={price} alt="price" />
             {`${toStringNumWithComma(tradePost?.price)}원`}
-            <S.Date>{` ∙ ${moment(tradePost?.modifiedAt).fromNow()}`}</S.Date>
+            <S.Date>{` ∙ ${moment(
+              UTCtoKST(tradePost?.createdAt),
+            ).fromNow()}`}</S.Date>
           </S.Price>
 
           <S.Desc>{tradePost?.desc}</S.Desc>

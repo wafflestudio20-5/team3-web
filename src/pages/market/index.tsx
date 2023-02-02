@@ -21,7 +21,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { normalToast } from '../../utils/basic-toast-modal';
 import { redirectWithMsg } from '../../utils/errors';
 import { TradePostType } from '../../types/tradePost';
-import { shortenLocation, getDong } from '../../utils/location';
+import { shortenLocation, getDong, UTCtoKST } from '../../utils/location';
 
 import {
   Wrapper,
@@ -316,7 +316,7 @@ const MarketPage = () => {
                   location={shortenLocation(post?.seller.location)}
                   likes={post?.likeCount}
                   chats={post?.reservationCount}
-                  created_at={post?.createdAt}
+                  created_at={UTCtoKST(post?.createdAt)}
                 />
               );
             })}

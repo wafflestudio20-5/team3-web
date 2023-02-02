@@ -23,3 +23,11 @@ export const getDong = (fullLocation: string) => {
     }
   }
 };
+
+export const UTCtoKST = (date?: Date) => {
+  const newDate = new Date(date || '');
+  const kr_newDate = new Date(
+    newDate?.getTime() - newDate?.getTimezoneOffset() * 60 * 1000,
+  );
+  return new Date(kr_newDate);
+};
