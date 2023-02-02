@@ -47,3 +47,13 @@ jobs:
             --recursive \
             --region ap-northeast-2 \
             build s3://waffle-market.store
+      
+      - name: Invalidate Cache
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_EC2_METADATA_DISABLED: true
+        run: |
+          aws cloudfront create-invalidation \
+          --distribution-id {{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+          --paths "/*"
