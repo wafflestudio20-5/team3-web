@@ -8,9 +8,15 @@ export const Button = styled.img`
   bottom: 60px;
   width: 80px;
   height: 80px;
+  cursor: pointer;
+  transition: 0.3s all;
 
   @media ${MD_SIZE} {
     right: 40px;
     bottom: 40px;
+  }
+
+  &:hover{
+    transform: translateY(-4px);
   }
 `;

@@ -12,7 +12,7 @@ interface ShortCutProps {
   id: number;
   content: string;
   location?: string;
-  modifiedAt: Date;
+  createdAt: Date;
   isLiked: boolean;
   likeCount?: number;
   commentCount?: number;
@@ -23,7 +23,7 @@ export const ShortCut = ({
   id,
   content,
   location = '',
-  modifiedAt,
+  createdAt,
   isLiked,
   likeCount = 0,
   commentCount = 0,
@@ -39,7 +39,7 @@ export const ShortCut = ({
       <S.TopWrapper>
         <S.Location>{shortenLocation(location)}</S.Location>
         <S.Location>
-          {moment(new Date(UTCtoKST(modifiedAt)).getTime()).fromNow()}
+          {moment(new Date(UTCtoKST(createdAt)).getTime()).fromNow()}
         </S.Location>
       </S.TopWrapper>
       <S.ContentP>{content}</S.ContentP>

@@ -33,6 +33,7 @@ export const UserWrapper = styled.div`
   height: 76px;
   padding-right: 20px;
   border-bottom: 2px solid #eaebee7c;
+  margin-bottom: 15px;
 `;
 
 export const InfoWrapper = styled.div`
@@ -56,7 +57,7 @@ export const NameWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 8px;
+  margin-left: 12px;
 `;
 
 export const Username = styled.h3`

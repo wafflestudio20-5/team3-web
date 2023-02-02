@@ -290,7 +290,7 @@ export const EmailVerifyButton = styled.button<Button>(
   ${
     isEmailAuthed &&
     isVerifyButton &&
-    '&:hover { background: #E78111; color: #fff; cursor: default; }'
+    '&:hover { background: #FF6F0F; color: #fff; cursor: default; }'
   }
 `,
 );

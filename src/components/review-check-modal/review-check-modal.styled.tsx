@@ -94,7 +94,7 @@ export const ButtonBox = styled.div`
 `;
 
 export const ConfirmButton = styled.button`
-  background-color: #e78111;
+  background-color: #FF6F0F;
   color: white;
   text-align: center;
   width: 56px;

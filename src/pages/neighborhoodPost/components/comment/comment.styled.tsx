@@ -6,7 +6,8 @@ export const CommentWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   margin: 20px 0px;
-  height: 100px;
+  padding: 8px 0 4px 0;
+  height: auto;
   border-top: 0.5px solid rgba(0, 0, 0, 0.2);
 `;
 
@@ -38,51 +39,74 @@ export const ProfileImage = styled.img`
 export const UserName = styled.span`
   margin: 0px 10px;
   font-family: 'Pretendard-Regular';
-  font-size: 15px;
+  font-size: 14px;
   white-space: pre-wrap;
 `;
 
 export const Location = styled.span`
   font-family: 'Pretendard-Regular';
-  font-size: 12px;
+  font-size: 11px;
   white-space: pre-wrap;
+  color: #969696;
 `;
 
 export const Form = styled.form`
   display: flex;
-  gap: 10px;
+  gap: 8px;
   margin-top: 10px;
+  align-items: flex-start;
+  justify-content: center;
+  height: auto;
 `;
 
 export const ButtonWrapper = styled.div`
   display: flex;
-  gap: 5px;
+  align-items: center;
+  width: 65px;
+  gap: 7px;
 `;
 
 export const ConfirmButton = styled.button`
   width: 40px;
-  border-radius: 10px;
+  height: 30px;
+  border-radius: 4px;
+  font-size: 13px;
   color: white;
   background-color: ${COLOR_CARROT};
 `;
 
-export const CancelButton = styled.button``;
+export const CancelButton = styled.button`
+  font-size: 13px;
+`;
 
 export const EditText = styled.textarea`
   padding-left: 5px;
-  width: 80%;
-  height: 30px;
-  border-radius: 10px;
+  width: 84%;
+  height: auto;
+  min-height: 90px;
+  max-height: 200px;
+  border-radius: 4px;
   resize: none;
+  border: 1px solid #d0d0d0;
+  margin: 0 0 12px 12px;
+  margin-bottom: 12px;
+  padding: 8px;
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const Content = styled.div`
   font-family: 'Pretendard-Regular';
-  font-size: 15px;
+  font-size: 14px;
   white-space: pre-wrap;
+  margin: 12px;
 `;
 
 export const Date = styled.span`
-  font-size: 14px;
+  font-size: 12px;
   color: rgba(0, 0, 0, 0.3);
+  margin-left: 12px;
 `;

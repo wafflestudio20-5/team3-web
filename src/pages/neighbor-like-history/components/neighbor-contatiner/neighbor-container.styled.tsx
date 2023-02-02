@@ -13,7 +13,7 @@ export const Container = styled.div`
   width: 711px;
   height: auto;
 
-  padding: 0px 46px;
+  padding: 20px 46px;
   border-radius: 10px;
 
   background-color: white;

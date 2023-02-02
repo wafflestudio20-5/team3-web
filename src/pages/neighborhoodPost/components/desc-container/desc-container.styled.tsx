@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   flex: 1;
-  padding: 10px 0px;
+  padding: 14px 0px 14px 0;
 `;
 
 export const TitleWrapper = styled.div`
@@ -12,7 +12,7 @@ export const TitleWrapper = styled.div`
 `;
 
 export const DescriptionWrapper = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 26px;
   font-family: 'Pretendard-Regular';
   font-size: 15px;
   white-space: pre-wrap;

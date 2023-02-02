@@ -14,9 +14,9 @@ export const Container = styled.div`
   border-radius: 12px;
   gap: 4px;
   transition: 0.3s all;
-  
+
   &:hover {
-    transform: translateY(-6px);
+    transform: translateY(-4px);
   }
 
   @media ${MD_SIZE} {
@@ -25,9 +25,13 @@ export const Container = styled.div`
     align-content: center;
     width: 100%;
     height: 180px;
-    border-top: 0.5px solid #8a8a8a;
+    border-top: 0.5px solid #d1d0d0;
     border-radius: 0;
     gap: 4px;
+
+    &:first-of-type {
+      border-top: none;
+    }
   }
 `;
 
