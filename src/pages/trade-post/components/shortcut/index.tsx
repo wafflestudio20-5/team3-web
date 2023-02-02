@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
+import { shortenLocation, UTCtoKST } from '../../../../utils/location';
+
 import * as S from './shortcut.styled';
 import alt from '../../../../assets/default-others.svg';
 import { TradeStatusType } from '../../../../types/tradePost';
@@ -13,10 +15,12 @@ interface ShortCut {
 }
 
 const ShortCut = ({ tradeData }: ShortCut) => {
+  const imgCondition = tradeData?.imageUrls && tradeData?.imageUrls.length > 0;
+
   return (
     <S.Container>
       <Link to={`/tradepost/${tradeData?.postId}`}>
-        <S.Img src={tradeData?.img || alt} />
+        <S.Img src={imgCondition ? tradeData?.imageUrls[0] : alt} />
       </Link>
       <S.Info>
         <Link to={`/tradepost/${tradeData?.id}`}>
@@ -28,12 +32,14 @@ const ShortCut = ({ tradeData }: ShortCut) => {
           )}
           <S.Price>{toStringNumWithComma(tradeData?.price)}원</S.Price>
         </S.PriceBox>
-        <S.Location>{tradeData?.seller?.location}</S.Location>
+        <S.Location>
+          {shortenLocation(tradeData?.seller?.location || '')}
+        </S.Location>
         <S.Detail>
           <S.Likes>관심 {tradeData?.likeCount} · </S.Likes>
           <S.Chats>채팅 {tradeData?.reservationCount} · </S.Chats>
           <S.Date>
-            <Moment fromNow>{tradeData?.createdAt}</Moment>
+            <Moment fromNow>{UTCtoKST(tradeData?.createdAt)}</Moment>
           </S.Date>
         </S.Detail>
       </S.Info>

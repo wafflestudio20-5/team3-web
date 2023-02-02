@@ -187,10 +187,36 @@ export const EmailInnerWrapper = styled.div`
   gap: 18px;
 `;
 
+export const UsernameWrapper = styled.div`
+  position: relative;
+  display: flex;
+  width: 100%;
+  margin-bottom: 16px;
+`;
+
 export const InputPositionWrapper = styled.div`
   position: relative;
   width: 161px;
   height: 35px;
+`;
+
+export const DiceInfo = styled.div`
+  position: absolute;
+  right: 80px;
+  width: 120px;
+  height: 50px;
+
+  border-radius: 10px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+`;
+
+export const DiceImg = styled.img`
+  position: absolute;
+  top: 15px;
+  right: 120px;
+  width: 26px;
+  height: 26px;
 `;
 
 export const EmailVerifyInput = styled.input`
