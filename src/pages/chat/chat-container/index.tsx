@@ -50,10 +50,9 @@ const ChatContainer = () => {
       for (let i = 0; i < reviews.length; i++) {
         if (reviews[i].type === buySellType) {
           return true;
-        } else {
-          return false;
         }
       }
+      return false;
     }
     return false;
   };
