@@ -103,7 +103,7 @@ export const List = styled.div`
     column-gap: 0;
     width: 100vw;
     padding: 0;
-    border-bottom: 0.5px solid #8a8a8a;
+    border-bottom: 0.5px solid #d1d0d0;
   }
 
   @media ${Market_MD} {
