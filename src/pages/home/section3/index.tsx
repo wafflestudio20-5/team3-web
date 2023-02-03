@@ -2,6 +2,7 @@ import * as S from './section3.styled';
 import card4 from '../../../assets/card4.png';
 import card5 from '../../../assets/card5.png';
 import card6 from '../../../assets/card6.png';
+import { ReactComponent as ArrowDown } from '../../../assets/arrow-down.svg';
 
 const Section3 = () => {
   return (
@@ -18,6 +19,18 @@ const Section3 = () => {
         >
           이웃과 함께 나누는 동네생활
         </S.Title>
+        <S.ArrowWrapper
+          data-aos="fade-left"
+          data-aos-offset="200"
+          data-aos-mirror={true}
+          data-aos-duration="1000"
+          data-aos-anchor={`#anchor2`}
+          data-aos-easing="ease-out-cubic"
+          data-aos-anchor-placement="top-center"
+        >
+          <ArrowDown width={40} height={40} />
+          <S.Span>Scroll</S.Span>
+        </S.ArrowWrapper>
 
         <S.CardWrapper
           data-aos="fade-right"

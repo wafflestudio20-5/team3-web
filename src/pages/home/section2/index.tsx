@@ -2,6 +2,7 @@ import * as S from './section2.styled';
 import card1 from '../../../assets/card1.png';
 import card2 from '../../../assets/card2.png';
 import card3 from '../../../assets/card3.png';
+import { ReactComponent as ArrowDown } from '../../../assets/arrow-down.svg';
 
 const Section2 = () => {
   return (
@@ -19,6 +20,19 @@ const Section2 = () => {
         >
           우리동네 중고 직거래 마켓
         </S.Title>
+
+        <S.ArrowWrapper
+          data-aos="fade-left"
+          data-aos-offset="200"
+          data-aos-mirror={true}
+          data-aos-duration="1000"
+          data-aos-anchor={`#anchor2`}
+          data-aos-easing="ease-out-cubic"
+          data-aos-anchor-placement="top-center"
+        >
+          <ArrowDown width={40} height={40} />
+          <S.Span>Scroll</S.Span>
+        </S.ArrowWrapper>
 
         <S.CardWrapper
           id="anchor4"

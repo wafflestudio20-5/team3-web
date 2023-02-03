@@ -179,3 +179,35 @@ export const CardSubtitle = styled.h5`
 export const CardSubtitleType2 = styled(CardSubtitle)`
   text-align: right;
 `;
+
+export const ArrowWrapper = styled.div`
+  margin-top: 20px;
+  width: 50%;
+  display: flex;
+  justify-content: flex-start;
+
+  @keyframes updown {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  animation: updown 1.5s infinite;
+
+  @media ${MD_SIZE} {
+    width: 100%;
+    justify-content: center;
+  }
+`;
+
+export const Span = styled.span`
+  font-family: 'Cafe24Ssurround';
+  margin-top: 15px;
+  color: #9d9d9d;
+  font-size: 14px;
+`;
