@@ -63,7 +63,7 @@ export const Title = styled.h1`
 `;
 
 export const Subtitle = styled.h4`
-  margin: 10px 0 0 0;
+  margin: 16px 0 0 0;
   font-size: 14px;
   color: #9f9f9f;
 `;

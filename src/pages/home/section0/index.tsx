@@ -46,12 +46,7 @@ const Section0 = () => {
               <S.Domain>https://www.waffle-market.store</S.Domain>
             </S.Nav>
             <S.Main>
-              <S.Video
-                src="https://user-images.githubusercontent.com/109863663/215331189-00359a1e-51e6-444f-a989-4d7f2baa8199.mov"
-                loop
-                autoPlay
-                playsInline
-              ></S.Video>
+              <S.Video src="" loop autoPlay playsInline></S.Video>
               {/* <S.MockUpImg src={mockup} /> */}
             </S.Main>
           </S.Window>
