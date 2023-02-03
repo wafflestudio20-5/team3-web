@@ -111,6 +111,7 @@ export const Domain = styled.div`
 `;
 
 export const Typing = styled.div`
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -119,14 +120,16 @@ export const Typing = styled.div`
   margin-bottom: 20px;
   padding-right: 20px;
   padding-top: 5px;
+  top: 40px;
+  right: 15px;
   width: 250px;
   height: 50px;
   color: #fff;
   font-weight: 400;
   font-size: 20px;
   font-family: 'Cafe24Ssurround';
-  background: #ff7e36;
-  border-radius: 25px 25px 5px 25px;
+  background: #877d7780;
+  border-radius: 25px 25px 25px 5px;
 
   &::after {
     display: flex;
@@ -153,10 +156,13 @@ export const Typing = styled.div`
       opacity: 0;
     }
   }
-  /* @media ${MD_SIZE} {
-    font-size: 25px;
-    margin-right: 0px;
-  } */
+  @media ${MD_SIZE} {
+    top: 10px;
+    right: 5px;
+    width: 210px;
+    height: 40px;
+    font-size: 16px;
+  }
 `;
 
 export const ScrollWrapper = styled.div`
@@ -165,8 +171,7 @@ export const ScrollWrapper = styled.div`
   align-items: center;
   width: auto;
   height: auto;
-  margin-top: 6vh;
-  cursor: pointer;
+  margin-top: 10vh;
 `;
 
 export const ScrollDown = styled.div`
@@ -217,11 +222,12 @@ export const Video = styled.video`
   object-fit: cover;
 `;
 
-export const MockUpImg = styled.img`
+export const MockUpImg = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 10px;
   object-fit: cover;
+  background-color: #dfdfdf95;
 
   @media ${MD_SIZE} {
     height: 100%;
@@ -233,18 +239,14 @@ export const MockupImg2 = styled.img`
   justify-content: center;
   align-items: center;
   position: absolute;
-  left: 30px;
-  bottom: 50px;
-  width: 180px;
-  height: 122px;
+  left: 80px;
+  top: 110px;
+  width: 300px;
+  height: auto;
   z-index: 9;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
   object-fit: cover;
-
-  @media ${MD_SIZE} {
-    display: none;
-  }
 
   animation: enlarge 3s infinite alternate;
   @keyframes enlarge {
@@ -252,45 +254,78 @@ export const MockupImg2 = styled.img`
       transform: scale(1);
     }
     50% {
-      transform: scale(1.1);
+      transform: scale(1.06);
     }
     100% {
       transform: scale(1);
     }
+  }
+
+  @media ${MD_SIZE} {
+    left: 0px;
+    top: 90px;
+    width: 200px;
+    height: auto;
   }
 `;
 
 export const MockupImg3 = styled.img`
   display: block;
   position: absolute;
-  right: 10px;
-  bottom: 160px;
-  width: 140px;
-  height: 100px;
+  right: 220px;
+  bottom: -15px;
+  width: 240px;
+  height: auto;
   animation: none;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
 
   z-index: 9;
   object-fit: cover;
 
   @media ${MD_SIZE} {
-    display: none;
+    right: 100px;
+    bottom: 0px;
+    width: 160px;
+    height: auto;
+  }
+`;
+
+export const MockupImg4 = styled.img`
+  display: block;
+  position: absolute;
+  right: 40px;
+  top: 140px;
+  width: 250px;
+  height: auto;
+  animation: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+
+  z-index: 9;
+  object-fit: cover;
+
+  @media ${MD_SIZE} {
+    right: 10px;
+    top: 110px;
+    width: 160px;
+    height: auto;
   }
 `;
 
 export const Cursor = styled.img`
   display: block;
   position: absolute;
-  left: 50px;
-  bottom: 40px;
+  left: 120px;
+  bottom: 80px;
   width: 34px;
   height: 38px;
   border: none;
   z-index: 10;
+
   @media ${MD_SIZE} {
     left: 20px;
-    bottom: 20px;
+    bottom: 50px;
     width: 25px;
     height: 30px;
   }
