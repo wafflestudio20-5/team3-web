@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   transition: 1s all;
   cursor: pointer;
   &:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
   }
   font-family: 'Noto Sans';
   

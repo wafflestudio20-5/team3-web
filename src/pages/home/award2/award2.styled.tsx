@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
   margin-top: 121px;
 
   &:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
   }
   font-family: 'Noto Sans';
 
