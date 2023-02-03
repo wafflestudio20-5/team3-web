@@ -24,7 +24,13 @@ export default function PrivateRoute({
     if (!sessionLoading && !isAuthed) {
       normalToast('로그인이 필요합니다.');
     }
-    return !sessionLoading && !isAuthed ? <Navigate to="/login" /> : <Outlet />;
+    return !sessionLoading && !isAuthed ? (
+      <>
+        <Navigate to="/" /> <Navigate to="/login" />
+      </>
+    ) : (
+      <Outlet />
+    );
   } else {
     // DESC: 인증이 반드시 필요 없는 페이지 (로그인, 회원가입)
     return !sessionLoading && isAuthed ? <Navigate to="/" /> : <Outlet />;

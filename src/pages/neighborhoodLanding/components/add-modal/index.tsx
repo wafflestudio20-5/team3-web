@@ -5,6 +5,7 @@ import {
   requestPostNeighborhood,
 } from '../../../../api/neighborhood';
 import { loadItem } from '../../../../utils/storage';
+import useThrottle from '../../../../hooks/useThrottle';
 import { normalToast } from '../../../../utils/basic-toast-modal';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { setPosts } from '../../../../store/slices/neighborhoodPostListSlice';
@@ -18,6 +19,7 @@ interface AddModalProps {
 export const AddModal = ({ handleClose }: AddModalProps) => {
   const dispatch = useAppDispatch();
   const accessToken = loadItem('accessToken');
+  const { isDisabled, throttle } = useThrottle(1000);
   // console.log(accessToken);
   const posts = useAppSelector(state => state.neighborhoodPostList);
   const [inputs, setInputs] = useState({
@@ -72,7 +74,9 @@ export const AddModal = ({ handleClose }: AddModalProps) => {
       <S.TopWrapper>
         <S.SpanClose onClick={handleClose}>닫기</S.SpanClose>
         <S.SpanTitle>동네생활 글쓰기</S.SpanTitle>
-        <S.SpanComplete onClick={handleClick}>완료</S.SpanComplete>
+        <S.SpanComplete onClick={() => throttle(handleClick)}>
+          완료
+        </S.SpanComplete>
       </S.TopWrapper>
 
       <S.DescWrapper>
