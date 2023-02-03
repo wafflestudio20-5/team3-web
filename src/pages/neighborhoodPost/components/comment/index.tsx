@@ -90,7 +90,15 @@ export const Comment = ({
     <>
       <S.CommentWrapper>
         <S.TopWrapper>
-          <S.ProfileWrapper onClick={() => navigate(`/profile/${user?.id}`)}>
+          <S.ProfileWrapper
+            onClick={() => {
+              if (me && me.id === user?.id) {
+                navigate(`/profile/me`);
+              } else {
+                navigate(`/profile/${user?.id}`);
+              }
+            }}
+          >
             <S.ProfileImage
               src={user.imgUrl === null ? defaultProfile : user.imgUrl}
             />
