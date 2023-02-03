@@ -36,7 +36,7 @@ const SellHistoryMyPage = () => {
       )
         .unwrap()
         .then(res => {
-          console.log(res);
+          // console.log(res);
           setData(
             res.posts
               .filter((post: TradeHistory) => {
@@ -94,7 +94,7 @@ const SellHistoryMyPage = () => {
         {isLoading && <Spinner />}
         {!isLoading && (
           <S.List>
-            {data.map(post => {
+            {data?.map(post => {
               return (
                 <ShortCut
                   key={post?.postId}

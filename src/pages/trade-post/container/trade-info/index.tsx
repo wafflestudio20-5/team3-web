@@ -18,7 +18,7 @@ const TradeInfo = () => {
   const { seller } = useAppSelector(state => state.tradePost);
 
   const handleClick = useCallback(() => {
-    if (me && me.id === seller?.id) {
+    if (me && me?.id === seller?.id) {
       navigate('/profile/me');
     } else {
       navigate(`/profile/${seller?.id}`);

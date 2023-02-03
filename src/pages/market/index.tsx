@@ -55,7 +55,12 @@ const MarketPage = () => {
   };
 
   // DESC: 중고거래 글쓰기
-  const [imgObject, setImgObject] = useState<any>([]);
+  const [imgObject, setImgObject] = useState(
+    [] as {
+      id?: number;
+      img?: string | File | null;
+    }[],
+  );
   const [openCreatePost, setOpenCreatePost] = useState(false);
   const [values, setValues] = useState<{
     title: string;
@@ -93,7 +98,12 @@ const MarketPage = () => {
       desc: '',
       price: '' as unknown as number,
     });
-    setImgObject([]);
+    setImgObject(
+      [] as {
+        id?: number;
+        img?: string | File | null;
+      }[],
+    );
   }, []);
 
   const uploadImage = async () => {
@@ -105,20 +115,24 @@ const MarketPage = () => {
     };
     const s3 = new ReactS3Client(s3Config);
 
-    const promises = imgObject.map(async (elem: { img: File | string }) => {
-      if (typeof elem.img === 'string') {
-        return elem.img;
-      } else {
-        return await s3
-          .uploadFile(elem.img)
-          .then(res => {
-            return res.location;
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-    });
+    const promises = imgObject?.map(
+      async (elem: { img?: string | File | null }) => {
+        if (typeof elem?.img === 'string') {
+          return elem?.img;
+        } else {
+          if (elem?.img) {
+            return await s3
+              .uploadFile(elem?.img)
+              .then(res => {
+                return res?.location;
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
+        }
+      },
+    );
     return await Promise.all(promises);
   };
 
@@ -143,7 +157,7 @@ const MarketPage = () => {
     } else if (Number(values.price) % 10 !== 0) {
       normalToast('1원 단위는 입력하실 수 없습니다.');
       return;
-    } else if (imgObject.length < 1) {
+    } else if (imgObject?.length < 1) {
       normalToast('이미지는 최소 한 장 이상 등록해야 합니다.');
       return;
     } else if (values.title.length > 255) {
@@ -288,7 +302,7 @@ const MarketPage = () => {
 
   useEffect(() => {
     if (me) {
-      setDong(getDong(me.location) as string);
+      setDong(getDong(me?.location) as string);
     }
   }, [me, accessToken]);
   const { sessionLoading, isAuthed } = useAuth();
@@ -321,7 +335,7 @@ const MarketPage = () => {
         {isLoading && <Spinner />}
         {!isLoading && (
           <List>
-            {data.map(post => {
+            {data?.map(post => {
               return (
                 <ShortCut
                   key={post?.postId}
@@ -330,7 +344,7 @@ const MarketPage = () => {
                   title={post?.title}
                   tradeStatus={post?.tradeStatus}
                   price={post?.price}
-                  location={shortenLocation(post?.seller.location)}
+                  location={shortenLocation(post?.seller?.location)}
                   likes={post?.likeCount}
                   chats={post?.reservationCount}
                   created_at={UTCtoKST(post?.createdAt)}

@@ -11,7 +11,7 @@ import { getCoordinate } from '../../../../utils/map';
 import { SetEditType, EditType } from '../../../../types/users';
 import { postLocation } from '../../../../store/slices/usersSlice';
 import { loadItem } from '../../../../utils/storage';
-import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { useAppDispatch } from '../../../../store/hooks';
 
 import * as S from './edit-location.styled';
 

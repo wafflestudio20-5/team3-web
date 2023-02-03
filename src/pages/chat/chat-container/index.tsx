@@ -17,6 +17,7 @@ import {
   postReservation,
   postConfirmation,
 } from '../../../store/slices/tradePostSlice';
+import { TradePostType } from '../../../types/tradePost';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { BuySellType, ReviewHistory } from '../../../types/review';
 
@@ -34,7 +35,7 @@ const ChatContainer = () => {
   const client = useRef<any>({});
   const dispatch = useAppDispatch();
 
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<TradePostType | null>(null);
   const [message, setMessage] = useState<string>('');
   const [chatMessages, setChatMessages] = useState<ChatMessageType[]>([]);
   const [meSeller, setMeSeller] = useState(false);
@@ -164,7 +165,7 @@ const ChatContainer = () => {
     client.current.deactivate();
   };
 
-  // DESC: 메시지 받는 길 열어둠 (subscribe)
+  // DESC: 메시지 받는 길 열어둠 (subscribe), TODO: body 타입정보?
   const subscribe = () => {
     client.current.subscribe(`/sub/room/${roomUUID}`, ({ body }: any) => {
       const bodyObj: SubBodyType = JSON.parse(body);

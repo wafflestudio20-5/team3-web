@@ -7,9 +7,9 @@ export type User = {
   location: string;
   temperature: number;
   imgUrl: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  searchScope: SearchScope;
+  createdAt?: Date;
+  updatedAt?: Date;
+  searchScope?: SearchScope;
 };
 
 export enum SearchScope {

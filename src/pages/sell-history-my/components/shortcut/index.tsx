@@ -238,7 +238,7 @@ const ShortCut = ({
 
     uploadImage()
       .then(imgs => {
-        if (accessToken && imgs && imgs.length === imgObject.length) {
+        if (accessToken && imgs && imgs.length === imgObject?.length) {
           dispatch(
             updateTradePost({
               postId: postId,
@@ -284,17 +284,19 @@ const ShortCut = ({
     const s3 = new ReactS3Client(s3Config);
 
     const promises = imgObject.map(async elem => {
-      if (typeof elem.img === 'string') {
-        return elem.img;
+      if (typeof elem?.img === 'string') {
+        return elem?.img;
       } else {
-        return await s3
-          .uploadFile(elem.img)
-          .then(res => {
-            return res.location;
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        if (elem?.img) {
+          return await s3
+            .uploadFile(elem?.img)
+            .then(res => {
+              return res?.location;
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
       }
     });
     return await Promise.all(promises);
@@ -308,7 +310,7 @@ const ShortCut = ({
       price: price,
     });
     setImgObject(
-      imageUrls.map((url: any, index: number) => {
+      imageUrls?.map((url: any, index: number) => {
         return {
           id: index,
           img: url,
@@ -319,7 +321,7 @@ const ShortCut = ({
 
   // 사진
   const [imgObject, setImgObject] = useState<any[]>(
-    imageUrls.map((url: any, index: number) => {
+    imageUrls?.map((url: any, index: number) => {
       return {
         id: index,
         img: url,

@@ -2,16 +2,17 @@ import Moment from 'react-moment';
 import * as S from './chat-item.styled';
 import avatar from '../../../../assets/default-avatar.svg';
 import defaultImg from '../../../../assets/default-others.svg';
+import { ChatType } from '../../../../types/chat';
 
 interface ChatItemProps {
-  chat: any;
+  chat: ChatType;
   handleClick: () => void;
 }
 
 const ChatItem = ({ chat, handleClick }: ChatItemProps) => {
   const chatCondition = chat && chat?.lastChat;
   const imgCondition =
-    chat && chat?.post.imageUrls && chat?.post.imageUrls.length > 0;
+    chat && chat?.post?.imageUrls && chat?.post.imageUrls.length > 0;
 
   return (
     <S.Wrapper onClick={handleClick}>
@@ -22,16 +23,18 @@ const ChatItem = ({ chat, handleClick }: ChatItemProps) => {
           {chatCondition && (
             <S.LastChat>
               {' · '}
-              <Moment fromNow>{chat.lastChat.createdAt}</Moment>
+              <Moment fromNow>{chat?.lastChat?.createdAt}</Moment>
             </S.LastChat>
           )}
         </S.User>
-        {chatCondition && <S.Message>{chat.lastChat.message}</S.Message>}
+        {chatCondition && <S.Message>{chat?.lastChat?.message}</S.Message>}
       </S.ContentWrapper>
 
-      {chat.unreadChatCount > 0 && <S.Unread>{chat.unreadChatCount}</S.Unread>}
+      {chat?.unreadChatCount && chat?.unreadChatCount > 0 && (
+        <S.Unread>{chat?.unreadChatCount}</S.Unread>
+      )}
       <S.PostImg
-        src={imgCondition ? chat.post.imageUrls[0] : defaultImg}
+        src={imgCondition ? chat?.post?.imageUrls[0] : defaultImg}
         alt="post"
       />
     </S.Wrapper>

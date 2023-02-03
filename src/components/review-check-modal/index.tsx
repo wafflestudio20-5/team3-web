@@ -58,7 +58,7 @@ const ReviewCheckModal = ({
             <S.Header>주고받은 후기</S.Header>
             {reviews[0] && (
               <S.List>
-                {sellerReview.id && (
+                {sellerReview?.id && (
                   <ReviewInfo
                     userId={seller.id}
                     img={seller.imgUrl ? seller.imgUrl : defaultImg}
@@ -69,7 +69,7 @@ const ReviewCheckModal = ({
                     content={sellerReview.content}
                   />
                 )}
-                {buyerReview.id && (
+                {buyerReview?.id && (
                   <ReviewInfo
                     userId={buyer.id}
                     img={buyer.imgUrl ? buyer.imgUrl : defaultImg}
