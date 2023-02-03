@@ -58,7 +58,7 @@ const LikeHistoryPage = () => {
     )
       .unwrap()
       .then(res => {
-        console.log(res);
+        // console.log(res);
       })
       .catch(err => {
         if (axios.isAxiosError(err)) {

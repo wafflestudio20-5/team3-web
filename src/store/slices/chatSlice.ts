@@ -4,6 +4,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { auth } from '../../api';
 import { BASE_URL } from '../../constant';
+import { User } from '../../types/users';
 
 export const getUUID = createAsyncThunk(
   'chat/getUUID',
@@ -51,7 +52,7 @@ export const getMyChats = createAsyncThunk(
   'chat/getMyChats',
   async (token: string, { rejectWithValue }) => {
     try {
-      const res = await axiosI.get<any>(`/users/chats`, {
+      const res = await axiosI.get(`/users/chats`, {
         headers: auth(token),
       });
       return res.data;
@@ -63,8 +64,8 @@ export const getMyChats = createAsyncThunk(
 
 interface chatSliceState {
   roomUUID: string | null;
-  you: any;
-  myChats: any;
+  you: User | null | any; // TODO: dependency 걸려있는 곳 찾아서 삭제
+  myChats: any; // TODO: 채팅 정보 확정시
   unreadTotalCount: number;
 }
 const initialState: chatSliceState = {

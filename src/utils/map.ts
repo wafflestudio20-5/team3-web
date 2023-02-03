@@ -11,6 +11,7 @@ export const getCoordinate = (
       if (location && kakao.maps.services && kakao.maps.services.Places) {
         const ps = new kakao.maps.services.Places();
 
+        // TODO: 데이터 타입 파악
         ps.keywordSearch(location, (data: any, status, _pagination) => {
           if (status === kakao.maps.services.Status.OK) {
             if (data.length > 0) {

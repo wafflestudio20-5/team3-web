@@ -15,7 +15,7 @@ const ReviewCheckModal = ({
 }: {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  reviews: ReviewHistory[];
+  reviews: any;
   seller: User;
   buyer: User;
 }) => {
@@ -33,7 +33,7 @@ const ReviewCheckModal = ({
   //     };
   //   }
   // });
-  const getReview = (reviews: ReviewHistory[]) => {
+  const getReview = (reviews: any) => {
     const result = { buyerReview: {} as any, sellerReview: {} as any };
     if (reviews[0]) {
       for (let i = 0; i < reviews.length; i++) {

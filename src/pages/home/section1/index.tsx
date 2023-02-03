@@ -2,6 +2,7 @@ import * as S from './section1.styled';
 
 import slider1 from '../../../assets/landing-slider1.svg';
 import slider2 from '../../../assets/landing-slider2.svg';
+import slider3 from '../../../assets/landing-slider3.svg';
 import appLogo from '../../../assets/app-logo.svg';
 import mypage from '../../../assets/waffle-mypage.svg';
 import neighbor from '../../../assets/waffle-neighbor.svg';
@@ -54,7 +55,7 @@ const Section1 = () => {
           </S.Background2>
           <S.Background1>
             <S.FlexWrapper>
-              <S.SliderImg src={slider1} alt="slider" />
+              <S.SliderImg src={slider3} alt="slider" />
               <S.InfoWrapper>
                 <S.PhraseC1 src={trade} alt="phrase" />
                 <S.PhraseC2>

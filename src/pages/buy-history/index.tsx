@@ -67,7 +67,7 @@ const BuyHistoryPage = () => {
         <S.Wrapper>
           {data[0] && (
             <S.List>
-              {data.map(post => {
+              {data?.map(post => {
                 return (
                   <ShortCut
                     key={post?.postId}

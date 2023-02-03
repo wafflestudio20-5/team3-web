@@ -36,6 +36,7 @@ import editPost from '../../../../assets/edit-post.svg';
 import likeFill from '../../../../assets/like-fill.svg';
 import likeBlank from '../../../../assets/like-blank.svg';
 import { toNumberWithoutComma } from '../../../../utils/price';
+import { TxUser } from '../../../../types/tradePost';
 
 const Description = () => {
   const navigate = useNavigate();
@@ -90,7 +91,7 @@ const Description = () => {
   // DESC: buyer 입장, 찜하기
   const handleToggleLike = useCallback(() => {
     if (accessToken && tradePost) {
-      dispatch(postLike({ accessToken, postId: tradePost.postId }))
+      dispatch(postLike({ accessToken, postId: tradePost?.postId }))
         .unwrap()
         .then(() => {
           // setCandidatesLoading(false);
@@ -115,10 +116,10 @@ const Description = () => {
   }, [accessToken, tradePost, tradeStatus]);
 
   const handleSellerGetChat = useCallback(
-    (candidate: any) => {
+    (candidate?: TxUser) => {
       if (candidate && tradePost) {
         navigate(
-          `/chat/messages/${candidate.roomUUID}/${candidate.id}/${tradePost.postId}`,
+          `/chat/messages/${candidate?.roomUUID}/${candidate?.id}/${tradePost?.postId}`,
         );
       }
     },
@@ -127,12 +128,12 @@ const Description = () => {
 
   const handleBuyerGetChat = useCallback(() => {
     if (accessToken && tradePost) {
-      dispatch(getUUID({ accessToken, postId: tradePost.postId }))
+      dispatch(getUUID({ accessToken, postId: tradePost?.postId }))
         .unwrap()
         .then((res: { roomUUID: string }) => {
           // DESC: 채팅 이동
           navigate(
-            `/chat/messages/${res.roomUUID}/${tradePost.seller?.id}/${tradePost.postId}`,
+            `/chat/messages/${res.roomUUID}/${tradePost?.seller?.id}/${tradePost?.postId}`,
           );
         })
         .catch(err => {
@@ -268,7 +269,7 @@ const Description = () => {
                     id: index,
                     img: url,
                   };
-                }),
+                }) as { id?: number; img?: string | File | null }[],
               );
               toast.success('성공적으로 수정되었습니다.');
             })
@@ -293,20 +294,24 @@ const Description = () => {
     };
     const s3 = new ReactS3Client(s3Config);
 
-    const promises = imgObject.map(async elem => {
-      if (typeof elem.img === 'string') {
-        return elem.img;
-      } else {
-        return await s3
-          .uploadFile(elem.img)
-          .then(res => {
-            return res.location;
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-    });
+    const promises = imgObject.map(
+      async (elem: { img?: string | File | null }) => {
+        if (typeof elem?.img === 'string') {
+          return elem?.img;
+        } else {
+          if (elem?.img) {
+            return await s3
+              .uploadFile(elem?.img)
+              .then(res => {
+                return res?.location;
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
+        }
+      },
+    );
     return await Promise.all(promises);
   };
 
@@ -346,13 +351,16 @@ const Description = () => {
             desc: res?.desc,
             price: res?.price,
           });
-          setImgObject(
-            res?.imageUrls.map((url: any, index: number) => {
+          const newImageUrls = res?.imageUrls?.map(
+            (url: string, index: number) => {
               return {
                 id: index,
                 img: url,
               };
-            }),
+            },
+          );
+          setImgObject(
+            newImageUrls as { id?: number; img?: string | File | null }[],
           );
         })
         .catch(() => {
@@ -369,24 +377,23 @@ const Description = () => {
       price: tradePost?.price,
     });
 
-    setImgObject(
-      imageUrls.map((url: any, index: number) => {
-        return {
-          id: index,
-          img: url,
-        };
-      }),
-    );
-  }, [imageUrls, tradePost]);
-
-  // 사진
-  const [imgObject, setImgObject] = useState<any[]>(
-    imageUrls.map((url: any, index: number) => {
+    const newImageUrls = imageUrls?.map((url: string, index: number) => {
       return {
         id: index,
         img: url,
       };
-    }),
+    });
+    setImgObject(newImageUrls as { id?: number; img?: string | File | null }[]);
+  }, [imageUrls, tradePost]);
+
+  // 사진
+  const [imgObject, setImgObject] = useState(
+    imageUrls?.map((url: string, index: number) => {
+      return {
+        id: index,
+        img: url,
+      };
+    }) as { id?: number; img?: string | File | null }[],
   );
 
   return (
@@ -483,7 +490,7 @@ const Description = () => {
                   key={buyer?.id}
                   animation={true}
                   status={tradeStatus}
-                  youId={buyer.id}
+                  youId={buyer?.id}
                   imgUrl={buyer?.imgUrl}
                   username={buyer?.username}
                   handleChatStart={() => handleSellerGetChat(buyer)}
@@ -491,15 +498,15 @@ const Description = () => {
               )}
               <ul>
                 {candidates &&
-                  candidates?.map((candidate: any) => {
-                    if (buyer?.id !== candidate.id) {
+                  candidates?.map((candidate: TxUser) => {
+                    if (buyer?.id !== candidate?.id) {
                       return (
                         <Candidate
                           isBuyer={false}
                           animation={false}
-                          key={candidate.id}
+                          key={candidate?.id}
                           status={tradeStatus}
-                          youId={candidate.id}
+                          youId={candidate?.id}
                           imgUrl={candidate?.imgUrl}
                           username={candidate?.username}
                           handleChatStart={() => handleSellerGetChat(candidate)}

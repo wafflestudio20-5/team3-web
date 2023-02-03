@@ -18,7 +18,7 @@ const ProfileMap = ({ location }: ProfileMapProps) => {
       if (kakao.maps.services && kakao.maps.services.Places) {
         const ps = new kakao.maps.services.Places();
 
-        // TODO: 타입정보
+        // TODO: data 타입정보
         ps.keywordSearch(location, (data: any, status, _pagination) => {
           if (status === kakao.maps.services.Status.OK) {
             if (data.length > 0) {
