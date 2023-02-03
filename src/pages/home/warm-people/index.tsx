@@ -19,7 +19,6 @@ const WarmPeople = () => {
     axios
       .get(`${BASE_URL}/tradepost/warmest-people`)
       .then(res => {
-        console.log(res.data);
         setUsers(res.data);
       })
       .catch(err => {
