@@ -30,8 +30,10 @@ const ChatItem = ({ chat, handleClick }: ChatItemProps) => {
         {chatCondition && <S.Message>{chat?.lastChat?.message}</S.Message>}
       </S.ContentWrapper>
 
-      {chat?.unreadChatCount && chat?.unreadChatCount > 0 && (
+      {chat?.unreadChatCount && chat?.unreadChatCount > 0 ? (
         <S.Unread>{chat?.unreadChatCount}</S.Unread>
+      ) : (
+        <></>
       )}
       <S.PostImg
         src={imgCondition ? chat?.post?.imageUrls[0] : defaultImg}
