@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Moment from 'react-moment';
 import { toStringNumWithComma } from '../../../../utils/tradePost';
 import {
+  Wrapper,
   Container,
   Img,
   Info,
@@ -73,7 +74,7 @@ const ShortCut = ({
   };
   const isReviewed = checkIsReviewed();
   return (
-    <>
+    <Wrapper>
       <Container>
         <Link to={`/tradepost/${postId}`}>
           <Img
@@ -112,17 +113,17 @@ const ShortCut = ({
             setIsCheckReviewModalOpen={setIsCheckReviewModalOpen}
           />
         )}
-        {!isReviewed && (
-          <ReviewButton onClick={() => navigate(`/tradepost/${postId}/review`)}>
-            후기 보내기
-          </ReviewButton>
-        )}
-        {tradeStatus === 'COMPLETED' && isReviewed && (
-          <ReviewButton onClick={() => setIsCheckReviewModalOpen(true)}>
-            후기 확인하기
-          </ReviewButton>
-        )}
       </Container>
+      {!isReviewed && (
+        <ReviewButton onClick={() => navigate(`/tradepost/${postId}/review`)}>
+          후기 보내기
+        </ReviewButton>
+      )}
+      {tradeStatus === 'COMPLETED' && isReviewed && (
+        <ReviewButton onClick={() => setIsCheckReviewModalOpen(true)}>
+          후기 확인하기
+        </ReviewButton>
+      )}
       {isCheckReviewModalOpen && (
         <ReviewCheckModal
           isModalOpen={isCheckReviewModalOpen}
@@ -132,7 +133,7 @@ const ShortCut = ({
           buyer={buyer}
         />
       )}
-    </>
+    </Wrapper>
   );
 };
 
