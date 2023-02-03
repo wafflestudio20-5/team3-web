@@ -45,7 +45,7 @@ export const NeighborContainer = () => {
         pageNum.current,
         keyword,
       )) as any;
-      console.log(res);
+      // console.log(res);
       setIsLoading(false);
       dispatch(setPosts(res.data.posts));
     } else {
@@ -76,7 +76,7 @@ export const NeighborContainer = () => {
         pageNum.current,
         keyword,
       )) as any;
-      console.log(pageNum.current);
+      // console.log(pageNum.current);
       dispatch(setPosts(res.data.reverse().concat(posts)));
     } else {
       redirectWithMsg(

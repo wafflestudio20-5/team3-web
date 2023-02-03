@@ -70,7 +70,7 @@ const OthersReviewPage = () => {
       dispatch(deleteReview({ accessToken: accessToken, reviewId: reviewId }))
         .unwrap()
         .then(res => {
-          console.log(res);
+          // console.log(res);
           toast('리뷰가 삭제되었습니다.');
         })
         .catch(err => {

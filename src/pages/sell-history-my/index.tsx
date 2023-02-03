@@ -36,7 +36,7 @@ const SellHistoryMyPage = () => {
       )
         .unwrap()
         .then(res => {
-          console.log(res);
+          // console.log(res);
           setData(
             res.posts
               .filter((post: TradeHistory) => {

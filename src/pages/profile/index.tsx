@@ -233,7 +233,6 @@ const ProfilePage = () => {
               <S.ModalInnerWrapper>
                 {myChats && myChats?.length > 0 ? (
                   myChats?.map((chat: ChatType, index: number) => {
-                    console.log(chat);
                     return (
                       <ChatItem
                         chat={chat}
