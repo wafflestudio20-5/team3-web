@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import Moment from 'react-moment';
 import {
@@ -13,6 +13,7 @@ import {
   Content,
   More,
 } from './review-info.styled';
+import { useAppSelector } from '../../store/hooks';
 import { shortenLocation } from '../../utils/location';
 import userImg from '../../assets/default-profile.png';
 
@@ -36,15 +37,23 @@ const ReviewInfo = ({
   content,
 }: ReviewInfo) => {
   const navigate = useNavigate();
+  const { me } = useAppSelector(state => state.users);
+  const handleClick = useCallback(() => {
+    if (me && me?.id === userId) {
+      navigate('/profile/me');
+    } else {
+      navigate(`/profile/${userId}`);
+    }
+  }, [userId]);
   return (
     <Container>
       <Img
         src={img}
         onError={e => ((e.target as HTMLImageElement).src = userImg)}
-        onClick={() => navigate(`/profile/${userId}`)}
+        onClick={handleClick}
       />
       <Info>
-        <User onClick={() => navigate(`/profile/${userId}`)}>{username}</User>
+        <User onClick={handleClick}>{username}</User>
         <Desc>
           <Type>{type === 'BUYER' ? '구매자' : '판매자'} · </Type>
           <Location>{shortenLocation(location)} · </Location>
