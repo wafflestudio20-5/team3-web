@@ -29,7 +29,6 @@ export const ImgWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  filter: drop-shadow(0px 6px 24px rgba(0, 0, 0, 0.19));
 `;
 
 export const ImgUser = styled.img`
@@ -37,6 +36,7 @@ export const ImgUser = styled.img`
   height: 176px;
   border-radius: 50%;
   object-fit: cover;
+  box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.19);
 `;
 
 export const ImgFrame = styled.img`
@@ -102,5 +102,5 @@ export const Temp = styled.div`
   font-size: 22px;
   line-height: 21px;
   text-align: center;
-  color: #FFA927;
+  color: #ffa927;
 `;

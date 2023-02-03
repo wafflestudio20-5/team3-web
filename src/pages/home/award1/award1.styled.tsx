@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
     transform: translateY(-6px);
   }
   font-family: 'Noto Sans';
-  
+
   @media ${MD_SIZE} {
     margin: 30px 0;
   }
@@ -27,7 +27,6 @@ export const ImgWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  filter: drop-shadow(0px 6px 24px rgba(0, 0, 0, 0.19));
 `;
 
 export const ImgUser = styled.img`
@@ -35,6 +34,7 @@ export const ImgUser = styled.img`
   height: 222px;
   border-radius: 50%;
   object-fit: cover;
+  box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.19);
 `;
 
 export const ImgFrame = styled.img`

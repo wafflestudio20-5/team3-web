@@ -77,12 +77,6 @@ const ProfileOtherPage = () => {
             text="판매목록"
             handleClick={() => navigate(`/profile/${userId}/sell`)}
           />
-          <NavigationButton
-            isLoading={isLoading}
-            img={lifeIcon}
-            text="동네생활"
-            handleClick={() => navigate('/')}
-          />
         </S.NavigationWrapper>
       </S.ContentWrapper>
       <ContentFooter />
