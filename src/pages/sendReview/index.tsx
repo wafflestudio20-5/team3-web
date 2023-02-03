@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import Gnb from '../../components/gnb';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import useThrottle from '../../hooks/useThrottle';
 import { loadItem } from '../../utils/storage';
 import { getTradePost } from '../../store/slices/tradePostSlice';
 import { postReview } from '../../store/slices/reviewSlice';
@@ -22,6 +23,7 @@ const SendReview = () => {
   const dispatch = useAppDispatch();
   const { me } = useAppSelector(state => state.users);
   const accessToken = loadItem('accessToken');
+  const { isDisabled, throttle } = useThrottle(1000);
   const defaultEmotion = { bad: false, good: false, great: false };
   const [selected, setSelected] = useState(defaultEmotion);
   const [score, setScore] = useState(0);
@@ -164,7 +166,7 @@ const SendReview = () => {
           value={content}
           onChange={e => setContent(e.target.value)}
         />
-        <S.Button onClick={handleSubmit}>후기 보내기</S.Button>
+        <S.Button onClick={() => throttle(handleSubmit)}>후기 보내기</S.Button>
       </S.Wrapper>
     </>
   );
