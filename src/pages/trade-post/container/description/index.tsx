@@ -78,11 +78,6 @@ const Description = () => {
           if (axios.isAxiosError(err)) {
             if (err.response?.status === 404) {
               redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
-            } else if (err.response?.status === 401) {
-              // TODO: refresh 후 재요청
-              redirectWithMsg(2, err.response?.data.error, () =>
-                navigate('/login'),
-              );
             } else {
               redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
                 navigate('/'),
@@ -145,11 +140,6 @@ const Description = () => {
           if (axios.isAxiosError(err)) {
             if (err.response?.status === 404) {
               redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
-            } else if (err.response?.status === 401) {
-              // TODO: refresh 후 재요청
-              redirectWithMsg(2, err.response?.data.error, () =>
-                navigate('/login'),
-              );
             } else if (err.response?.status === 400) {
               normalToast(err.response?.data.error);
             } else {
@@ -338,11 +328,6 @@ const Description = () => {
           if (axios.isAxiosError(err)) {
             if (err.response?.status === 404) {
               redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
-            } else if (err.response?.status === 401) {
-              // TODO: refresh 후 재요청
-              redirectWithMsg(2, err.response?.data.error, () =>
-                navigate('/login'),
-              );
             } else if (err.response?.status === 400) {
               normalToast(err.response?.data.error);
             } else {
