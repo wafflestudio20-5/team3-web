@@ -3,6 +3,8 @@ import close from '../../assets/close.svg';
 import * as S from './review-check-modal.styled';
 import ReviewInfo from '../review-info';
 import defaultImg from '../../assets/default-profile.png';
+import { ReviewHistory } from '../../types/review';
+import { User } from '../../types/users';
 
 const ReviewCheckModal = ({
   isModalOpen,
@@ -13,9 +15,9 @@ const ReviewCheckModal = ({
 }: {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  reviews: any;
-  seller: any;
-  buyer: any;
+  reviews: ReviewHistory[];
+  seller: User;
+  buyer: User;
 }) => {
   const modalRef = useRef<any>();
   // const clickOutside = (e: MouseEvent) => {
@@ -31,7 +33,7 @@ const ReviewCheckModal = ({
   //     };
   //   }
   // });
-  const getReview = (reviews: any) => {
+  const getReview = (reviews: ReviewHistory[]) => {
     const result = { buyerReview: {} as any, sellerReview: {} as any };
     if (reviews[0]) {
       for (let i = 0; i < reviews.length; i++) {

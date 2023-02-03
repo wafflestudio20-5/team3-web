@@ -11,10 +11,11 @@ import ReviewCheckModal from '../../../../components/review-check-modal';
 import * as S from './dialog.styled';
 import defaultImg from '../../../../assets/default-profile.png';
 import defaultProduct from '../../../../assets/default-product.svg';
+import { User } from '../../../../types/users';
 
 interface DialogProps {
-  to: any;
-  from: any;
+  to: User;
+  from: User;
   product: any;
   message: string;
   publish: (msg: string) => void;
