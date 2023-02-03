@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   margin-bottom: 40px;
 
   @media ${MD_SIZE} {
-    width: 400px;
+    width: 360px;
   }
 `;
 
@@ -30,6 +30,10 @@ export const Info = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
+
+  @media ${MD_SIZE} {
+    font-size: 16px;
+  }
 `;
 
 export const Title = styled.span`
@@ -39,6 +43,10 @@ export const Title = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media ${MD_SIZE} {
+    width: 240px;
+  }
 `;
 
 export const Neighbor = styled.span`

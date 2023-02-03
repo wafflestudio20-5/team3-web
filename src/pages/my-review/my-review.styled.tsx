@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { MD_SIZE } from '../../constant/breakpoint';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -14,6 +15,10 @@ export const Header = styled.h2`
   text-align: center;
   font-size: 24px;
   font-weight: 600;
+
+  @media ${MD_SIZE} {
+    width: 360px;
+  }
 `;
 
 export const List = styled.div`

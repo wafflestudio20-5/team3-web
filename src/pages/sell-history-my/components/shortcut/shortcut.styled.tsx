@@ -5,6 +5,11 @@ import {
   SM_SIZE,
 } from '../../../../constant/breakpoint';
 
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -30,6 +35,10 @@ export const Container = styled.div`
     border-top: 0.5px solid #d1d0d0;
     border-radius: 0;
     gap: 4px;
+
+    &:hover {
+      transform: translateY(0px);
+    }
   }
 `;
 
@@ -90,7 +99,7 @@ export const Title = styled.h3`
   text-overflow: ellipsis;
 
   @media ${MD_SIZE} {
-    width: 100%;
+    width: 90%;
     height: 24px;
     font-size: 16px;
   }
@@ -150,8 +159,8 @@ export const More = styled.img`
   width: 20px;
 
   @media ${MD_SIZE} {
-    top: 20px;
-    right: 16px;
+    top: 22px;
+    right: 4px;
     width: 24px;
   }
 `;
@@ -166,16 +175,10 @@ export const ReviewButton = styled.button`
 
   @media ${MD_SIZE} {
     display: block;
-    position: absolute;
-    right: 30px;
-    bottom: 30px;
-    border-radius: 4px;
-    padding: 4px 10px;
-    line-height: 150%;
-    font-weight: bold;
+    width: 100vw;
+    height: 30px;
+    background-color: #f1f3f5;
+    border-top: 0.5px solid #d1d0d0;
     font-size: 14px;
-    background-color: #ff6f0f;
-    color: rgb(255, 255, 255);
-    margin-left: auto;
   }
 `;

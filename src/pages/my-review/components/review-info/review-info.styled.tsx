@@ -14,6 +14,10 @@ export const Container = styled.div`
   padding: 0 20px;
   gap: 30px;
   margin-bottom: 16px;
+
+  @media ${MD_SIZE} {
+    width: 360px;
+  }
 `;
 
 export const Img = styled.img`
@@ -38,6 +42,7 @@ export const Info = styled.div`
   gap: 6px;
 
   @media ${MD_SIZE} {
+    width: 240px;
     font-size: 14px;
   }
 `;
@@ -61,6 +66,7 @@ export const Desc = styled.div`
   gap: 6px;
 
   @media ${MD_SIZE} {
+    width: 100%;
     font-size: 13px;
   }
 `;
@@ -82,7 +88,7 @@ width: 480px;
 margin-top: 6px;
 
   @media ${MD_SIZE} {
-    width: 360px;
+    width: 100%;
   }
 `;
 

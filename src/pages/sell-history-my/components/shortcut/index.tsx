@@ -19,6 +19,7 @@ import SendReviewModal from '../send-review-modal';
 import ReviewCheckModal from '../../../../components/review-check-modal';
 import TradePostUpdate from '../trade-post-update';
 import {
+  Wrapper,
   Container,
   Img,
   Div,
@@ -320,7 +321,7 @@ const ShortCut = ({
   );
 
   return (
-    <>
+    <Wrapper>
       <Container>
         <Link to={`/tradepost/${postId}`}>
           <Img
@@ -363,17 +364,17 @@ const ShortCut = ({
             setIsCheckReviewModalOpen={setIsCheckReviewModalOpen}
           />
         )}
-        {tradeStatus === 'COMPLETED' && !isReviewed && (
-          <ReviewButton onClick={() => navigate(`/tradepost/${postId}/review`)}>
-            후기 보내기
-          </ReviewButton>
-        )}
-        {tradeStatus === 'COMPLETED' && isReviewed && (
-          <ReviewButton onClick={() => setIsCheckReviewModalOpen(true)}>
-            후기 보기
-          </ReviewButton>
-        )}
       </Container>
+      {tradeStatus === 'COMPLETED' && !isReviewed && (
+        <ReviewButton onClick={() => navigate(`/tradepost/${postId}/review`)}>
+          후기 보내기
+        </ReviewButton>
+      )}
+      {tradeStatus === 'COMPLETED' && isReviewed && (
+        <ReviewButton onClick={() => setIsCheckReviewModalOpen(true)}>
+          후기 보기
+        </ReviewButton>
+      )}
       {openEditPost && (
         <TradePostUpdate
           imgObject={imgObject}
@@ -408,7 +409,7 @@ const ShortCut = ({
           buyer={buyer}
         />
       )}
-    </>
+    </Wrapper>
   );
 };
 
