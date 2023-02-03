@@ -240,7 +240,7 @@ export const MockupImg2 = styled.img`
   align-items: center;
   position: absolute;
   left: 80px;
-  top: 110px;
+  top: 95px;
   width: 300px;
   height: auto;
   z-index: 9;
