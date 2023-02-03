@@ -41,7 +41,7 @@ const ImgCarousel = () => {
         fullHeightHover={false}
       >
         {imgCondition ? (
-          imageUrls.map((url: string) => {
+          imageUrls?.map((url: string) => {
             return (
               <S.ImgItem
                 key={url}

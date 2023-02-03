@@ -51,7 +51,7 @@ export const NeighborhoodPostPage = () => {
     getPost();
   }, [accessToken]);
 
-  if (!post) {
+  if (!post || !comments) {
     return <Spinner />;
   }
 
@@ -91,7 +91,7 @@ export const NeighborhoodPostPage = () => {
         />
         <CommentInput postId={id} refreshPost={getPost} />
         <CommentContainer>
-          {comments.map(comment => (
+          {comments?.map(comment => (
             <Comment
               key={comment.commentId}
               postId={id}

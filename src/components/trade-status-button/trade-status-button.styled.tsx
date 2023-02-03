@@ -2,7 +2,7 @@ import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 interface Button extends HTMLAttributes<HTMLButtonElement> {
-  tradeStatus: string;
+  tradeStatus?: string;
 }
 
 export const Button = styled.button<Button>(

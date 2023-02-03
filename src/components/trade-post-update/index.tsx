@@ -14,8 +14,8 @@ interface TradePostUpdateProps {
   handleChange: (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
-  imgObject: any[];
-  setImgObject: any;
+  imgObject: { id?: number; img?: string | File | null }[];
+  setImgObject: (values: { id?: number; img?: string | File | null }[]) => void;
 }
 
 const TradePostUpdate = ({

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: 백엔드와 타입 합의 후 타입정보 수정
 
-import { ReviewHistory } from "./review";
+import { ReviewHistory } from './review';
 
 export enum TradeStatusType {
   TRADING = 'TRADING',
@@ -17,7 +17,6 @@ export type TradePostType = {
   likeCount: number;
   isLiked: boolean;
   isOwner: boolean;
-  // 수정: seller가 null일 수 있나요? 타입 에러때문에 일단 수정좀 할게요..!
   seller: TxUser;
   buyer: TxUser | null;
   createdAt: Date;
@@ -28,8 +27,8 @@ export type TradePostType = {
 
   // 🥕 later...
   otherPosts: any;
-  imageUrls?: any;
-  reviews: ReviewHistory[]
+  imageUrls: string[] | any; // TODO: dependency 때문에 확인하고 any 제거
+  reviews: ReviewHistory[];
 };
 
 export type TxUser = {

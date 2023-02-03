@@ -4,7 +4,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { auth } from '../../api';
 import { axiosI } from '../../api';
 import { BASE_URL } from '../../constant';
-import { TradePostType, TxUser } from '../../types/tradePost';
+import { TradePostType, TradeStatusType, TxUser } from '../../types/tradePost';
 
 // REFACTOR: request, response 타입 정보 따로 저장
 export const getTradePost = createAsyncThunk(
@@ -52,7 +52,7 @@ export const createTradePost = createAsyncThunk(
         desc?: string;
         price?: number;
       };
-      imgs?: string[];
+      imgs?: (string | void)[];
     },
     { rejectWithValue },
   ) => {
@@ -90,7 +90,7 @@ export const updateTradePost = createAsyncThunk(
       title?: string;
       desc?: string;
       price?: number;
-      imgs?: string[];
+      imgs?: (string | void)[];
     },
     { rejectWithValue },
   ) => {
@@ -209,8 +209,8 @@ interface tradePostSliceState {
   seller: TxUser | null;
   buyer: TxUser | null;
   tradePost: TradePostType | null;
-  candidates: any; // TODO: 타입 정보 수정
-  tradeStatus: any; // TODO: 타입 정보 수정
+  candidates: TxUser[]; // TODO: 타입 정보 수정
+  tradeStatus: TradeStatusType | null; // TODO: 타입 정보 수정
   isLiked: boolean;
   time: Date | null;
   imageUrls: string[];

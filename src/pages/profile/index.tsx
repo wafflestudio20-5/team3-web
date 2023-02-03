@@ -31,6 +31,7 @@ import scopeWide from '../../assets/scopewide.png';
 import scopeNarrow from '../../assets/scopenarrow.png';
 import scopeNormal from '../../assets/scopenormal.png';
 import Spinner from '../../components/spinner';
+import { ChatType } from '../../types/chat';
 
 const ProfilePage = () => {
   const { me, isAuthed, sessionLoading } = useAuth();
@@ -231,7 +232,8 @@ const ProfilePage = () => {
             ) : (
               <S.ModalInnerWrapper>
                 {myChats && myChats?.length > 0 ? (
-                  myChats?.map((chat: any, index: number) => {
+                  myChats?.map((chat: ChatType, index: number) => {
+                    console.log(chat);
                     return (
                       <ChatItem
                         chat={chat}
@@ -242,7 +244,7 @@ const ProfilePage = () => {
                         }
                         handleClick={() =>
                           navigate(
-                            `/chat/messages/${chat.roomUUID}/${chat?.you?.id}/${chat?.post.postId}`,
+                            `/chat/messages/${chat?.roomUUID}/${chat?.you?.id}/${chat?.post?.postId}`,
                           )
                         }
                       />

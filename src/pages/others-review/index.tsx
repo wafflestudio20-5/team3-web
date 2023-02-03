@@ -111,7 +111,7 @@ const OthersReviewPage = () => {
         {isLoading && <Spinner />}
         {!isLoading && (
           <List>
-            {data.map(review => (
+            {data?.map(review => (
               <ReviewInfo
                 key={review.id}
                 id={review.id}

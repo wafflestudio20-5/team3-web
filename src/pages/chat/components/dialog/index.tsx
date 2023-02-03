@@ -5,17 +5,18 @@ import Moment from 'react-moment';
 import { ChatMessageType } from '../../../../types/chat';
 import { toStringNumWithComma } from '../../../../utils/tradePost';
 import { BuySellType, ReviewHistory } from '../../../../types/review';
-import { TradeStatusType } from '../../../../types/tradePost';
+import { TradePostType, TradeStatusType } from '../../../../types/tradePost';
 import ReviewCheckModal from '../../../../components/review-check-modal';
 
 import * as S from './dialog.styled';
 import defaultImg from '../../../../assets/default-profile.png';
 import defaultProduct from '../../../../assets/default-product.svg';
+import { User } from '../../../../types/users';
 
 interface DialogProps {
-  to: any;
-  from: any;
-  product: any;
+  to: User;
+  from: User;
+  product?: TradePostType | null;
   message: string;
   publish: (msg: string) => void;
   setMessage: (msg: string) => void;
@@ -76,7 +77,7 @@ const Dialog = ({
               }
             />
             <S.ProductInfo
-              onClick={() => navigate(`/tradepost/${product.postId}`)}
+              onClick={() => navigate(`/tradepost/${product?.postId}`)}
             >
               <S.ProductTitle>{product?.title}</S.ProductTitle>
               <S.ProductPrice>
@@ -92,7 +93,7 @@ const Dialog = ({
           )}
           {meSeller &&
             product?.tradeStatus === TradeStatusType.RESERVATION &&
-            product?.buyer.id !== to.id && (
+            product?.buyer?.id !== to?.id && (
               <S.TradeButtonM onClick={handleSetReservation}>
                 예약자 변경하기
               </S.TradeButtonM>
@@ -147,19 +148,19 @@ const Dialog = ({
             <>
               <S.ChatAccounce>{`🥕 ${to?.username}님과의 대화를 시작해보세요.`}</S.ChatAccounce>
 
-              {chatMessages.map(
+              {chatMessages?.map(
                 (_chatMessage: ChatMessageType, idx: number) => (
                   // TODO: 키값 unique 값으로 대체 (삭제 로직 없어서 일단 키값)
                   <S.Li key={idx}>
-                    {_chatMessage.senderId === from?.id ? (
+                    {_chatMessage?.senderId === from?.id ? (
                       <S.FromMessageContainer>
                         <S.MessageDate>
                           <Moment format="hh:mm, M월D일">
-                            {_chatMessage.createdAt}
+                            {_chatMessage?.createdAt}
                           </Moment>
                         </S.MessageDate>
                         <S.FromMessageBox>
-                          {_chatMessage.message}
+                          {_chatMessage?.message}
                         </S.FromMessageBox>
                       </S.FromMessageContainer>
                     ) : (
@@ -168,10 +169,10 @@ const Dialog = ({
                           alt="profile"
                           src={to?.imgUrl || defaultImg}
                         />
-                        <S.ToMessageBox>{_chatMessage.message}</S.ToMessageBox>
+                        <S.ToMessageBox>{_chatMessage?.message}</S.ToMessageBox>
                         <S.MessageDate>
                           <Moment format="hh:mm, M월D일">
-                            {_chatMessage.createdAt}
+                            {_chatMessage?.createdAt}
                           </Moment>
                         </S.MessageDate>
                       </S.ToMessageContainer>
@@ -210,7 +211,7 @@ const Dialog = ({
         <ReviewCheckModal
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
-          reviews={product.reviews}
+          reviews={product?.reviews}
           seller={meSeller ? from : to}
           buyer={youBuyer ? to : from}
         />

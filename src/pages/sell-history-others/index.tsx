@@ -99,7 +99,7 @@ const SellHistoryOthersPage = () => {
         {isLoading && <Spinner />}
         {!isLoading && (
           <S.List>
-            {data.map(post => {
+            {data?.map(post => {
               return (
                 <ShortCut
                   key={post?.postId}

@@ -8,15 +8,15 @@ interface TradePostCreateProps {
     title?: string;
     desc?: string;
     price?: number;
-    imgUrls?: any[];
+    imgUrls?: (string | File | null)[];
   };
   handleClose: () => void;
   handleSubmit: () => void;
   handleChange: (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
-  imgObject: any[];
-  setImgObject: any;
+  imgObject: { id?: number; img?: string | File | null }[];
+  setImgObject: (values: { id?: number; img?: string | File | null }[]) => void;
 }
 
 const TradePostCreate = ({
