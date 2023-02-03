@@ -7,6 +7,7 @@ import {
 } from '../../../../api/neighborhood';
 import { loadItem } from '../../../../utils/storage';
 import { normalToast } from '../../../../utils/basic-toast-modal';
+import useThrottle from '../../../../hooks/useThrottle';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import {
   addComment,
@@ -25,10 +26,9 @@ export const CommentInput = ({ postId, refreshPost }: CommentInputProps) => {
   const dispatch = useAppDispatch();
   const comments = useAppSelector(state => state.comments);
   const accessToken = loadItem('accessToken');
+  const { isDisabled, throttle } = useThrottle(1000);
   const [input, setInput] = useState('');
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     if (!input.trim()) {
       normalToast('댓글에는 내용이 있어야 합니다.');
       setInput('');
@@ -53,7 +53,7 @@ export const CommentInput = ({ postId, refreshPost }: CommentInputProps) => {
 
   return (
     <S.Wrapper>
-      <S.Form onSubmit={handleSubmit}>
+      <S.Form>
         <S.Label htmlFor="comment">댓글</S.Label>
         <S.Input
           id="comment"
@@ -63,7 +63,14 @@ export const CommentInput = ({ postId, refreshPost }: CommentInputProps) => {
           }}
           placeholder="댓글을 입력해주세요."
         />
-        <S.Button>등록</S.Button>
+        <S.Button
+          onClick={e => {
+            e.preventDefault();
+            throttle(handleSubmit);
+          }}
+        >
+          등록
+        </S.Button>
       </S.Form>
     </S.Wrapper>
   );

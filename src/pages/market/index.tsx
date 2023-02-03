@@ -219,7 +219,7 @@ const MarketPage = () => {
           keyword: keyword,
           page: page,
           limit: 20,
-          isTrading: false,
+          isTrading: isTrading,
         }),
       )
         .unwrap()

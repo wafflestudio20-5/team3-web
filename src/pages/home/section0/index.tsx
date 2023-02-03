@@ -4,6 +4,7 @@ import * as S from './section0.styled';
 import scroll from '../../../assets/wheel.svg';
 import landing1 from '../../../assets/landing1.svg';
 import landing2 from '../../../assets/landing2.svg';
+import landing3 from '../../../assets/landing3.png';
 import click from '../../../assets/cursor-white.png';
 
 const Section0 = () => {
@@ -36,7 +37,6 @@ const Section0 = () => {
   return (
     <S.Wrapper>
       <S.ContentWrapper>
-        <S.Typing>{text}</S.Typing>
         <S.WindowWrapper>
           <S.Window>
             <S.Nav>
@@ -46,12 +46,13 @@ const Section0 = () => {
               <S.Domain>https://www.waffle-market.store</S.Domain>
             </S.Nav>
             <S.Main>
-              <S.Video src="" loop autoPlay playsInline></S.Video>
-              {/* <S.MockUpImg src={mockup} /> */}
+              <S.MockUpImg />
             </S.Main>
           </S.Window>
+          <S.Typing>{text}</S.Typing>
           <S.MockupImg2 src={landing1} alt="img" />
-          <S.MockupImg3 src={landing2} alt="img" />
+          <S.MockupImg3 src={landing3} alt="img" />
+          <S.MockupImg4 src={landing2} alt="img" />
           <S.Cursor src={click} alt="cursor" />
         </S.WindowWrapper>
 

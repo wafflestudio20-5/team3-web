@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 import * as S from './styles';
 import UploadImage from '../upload-image';
+import useThrottle from '../../hooks/useThrottle';
 import { toStringNumberWithComma } from '../../utils/price';
 
 interface TradePostCreateProps {
@@ -27,13 +28,16 @@ const TradePostCreate = ({
   imgObject,
   setImgObject,
 }: TradePostCreateProps) => {
+  const { isDisabled, throttle } = useThrottle(1000);
   return (
     <S.ModalOuterLayout>
       <S.ModalLayout>
         <S.ModalHeader>
           <S.ModalClose onClick={handleClose}>닫기</S.ModalClose>
           <S.ModalTitle>중고거래 글쓰기</S.ModalTitle>
-          <S.ModalSubmit onClick={handleSubmit}>완료</S.ModalSubmit>
+          <S.ModalSubmit onClick={() => throttle(handleSubmit)}>
+            완료
+          </S.ModalSubmit>
         </S.ModalHeader>
         <S.PostTitle
           placeholder="글제목"
