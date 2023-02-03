@@ -40,6 +40,9 @@ const EditUsername = ({
         '닉네임은 한글, 영어, 숫자 중 하나를 포함한 형태의 2~10자리여야 합니다.',
       );
       return;
+    } else if (currUsername === username) {
+      normalToast('닉네임을 변경해주세요.');
+      return;
     }
 
     if (accessToken) {
