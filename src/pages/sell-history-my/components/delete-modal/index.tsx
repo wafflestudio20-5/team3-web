@@ -14,7 +14,6 @@ const DeleteModal = ({
   const onDelete = () => {
     onDeletePost();
     setIsDeleteModalOpen(false);
-    location.reload();
   };
   const clickOutside = (e: MouseEvent) => {
     if (isDeleteModalOpen && !modalRef.current.contains(e.target)) {
