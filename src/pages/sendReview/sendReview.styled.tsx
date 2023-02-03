@@ -16,6 +16,10 @@ export const Title = styled.h2`
   font-size: 20px;
   font-weight: 600;
   white-space: pre-wrap;
+
+  @media ${MD_SIZE} {
+    font-size: 17px;
+  }
 `;
 
 export const SubTitle = styled.span`
@@ -23,6 +27,10 @@ export const SubTitle = styled.span`
   font-size: 16px;
   font-weight: 400;
   margin-bottom: 20px;
+
+  @media ${MD_SIZE} {
+    font-size: 15px;
+  }
 `;
 
 export const ScoreBox = styled.div`
@@ -35,8 +43,8 @@ export const ScoreBox = styled.div`
   gap: 60px;
 
   @media ${MD_SIZE} {
-    width: 400px;
-    gap: 40px;
+    width: 360px;
+    gap: 32px;
   }
 `;
 
@@ -49,7 +57,7 @@ export const Review = styled.textarea`
   resize: none;
 
   @media ${MD_SIZE} {
-    width: 400px;
+    width: 360px;
     height: 160px;
   }
 `;
@@ -72,6 +80,6 @@ export const Button = styled.div`
   cursor: pointer;
 
   @media ${MD_SIZE} {
-    width: 400px;
+    width: 360px;
   }
 `;
