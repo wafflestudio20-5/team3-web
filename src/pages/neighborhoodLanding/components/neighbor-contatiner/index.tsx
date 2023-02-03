@@ -83,7 +83,7 @@ export const NeighborContainer = () => {
             keyword={keyword}
             setKeyword={setKeyword}
             searchClick={() => {
-              console.log('');
+              // console.log('');
             }}
             dong="내 동네"
           />

@@ -112,11 +112,6 @@ const ShortCut = ({
           if (axios.isAxiosError(err)) {
             if (err.response?.status === 404) {
               redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
-            } else if (err.response?.status === 401) {
-              // TODO: refresh 후 재요청
-              redirectWithMsg(2, err.response?.data.error, () =>
-                navigate('/login'),
-              );
             } else if (err.response?.status === 400) {
               toast.error(err.response?.data.error);
             } else {
@@ -139,11 +134,6 @@ const ShortCut = ({
           if (axios.isAxiosError(err)) {
             if (err.response?.status === 404) {
               redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
-            } else if (err.response?.status === 401) {
-              // TODO: refresh 후 재요청
-              redirectWithMsg(2, err.response?.data.error, () =>
-                navigate('/login'),
-              );
             } else if (err.response?.status === 400) {
               toast.error(err.response?.data.error);
             } else {
@@ -238,7 +228,7 @@ const ShortCut = ({
 
     uploadImage()
       .then(imgs => {
-        if (accessToken && imgs && imgs.length === imgObject.length) {
+        if (accessToken && imgs && imgs.length === imgObject?.length) {
           dispatch(
             updateTradePost({
               postId: postId,
@@ -284,17 +274,19 @@ const ShortCut = ({
     const s3 = new ReactS3Client(s3Config);
 
     const promises = imgObject.map(async elem => {
-      if (typeof elem.img === 'string') {
-        return elem.img;
+      if (typeof elem?.img === 'string') {
+        return elem?.img;
       } else {
-        return await s3
-          .uploadFile(elem.img)
-          .then(res => {
-            return res.location;
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        if (elem?.img) {
+          return await s3
+            .uploadFile(elem?.img)
+            .then(res => {
+              return res?.location;
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
       }
     });
     return await Promise.all(promises);
@@ -308,7 +300,7 @@ const ShortCut = ({
       price: price,
     });
     setImgObject(
-      imageUrls.map((url: any, index: number) => {
+      imageUrls?.map((url: any, index: number) => {
         return {
           id: index,
           img: url,
@@ -319,7 +311,7 @@ const ShortCut = ({
 
   // 사진
   const [imgObject, setImgObject] = useState<any[]>(
-    imageUrls.map((url: any, index: number) => {
+    imageUrls?.map((url: any, index: number) => {
       return {
         id: index,
         img: url,

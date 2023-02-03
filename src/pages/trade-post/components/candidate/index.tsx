@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 interface CandidateProps {
   imgUrl?: string | null;
   username?: string | null;
-  status?: TradeStatusType;
+  status?: TradeStatusType | null;
   isBuyer?: boolean;
   youId?: number;
   handleChatStart: () => void;

@@ -6,11 +6,7 @@ interface ButtonNormal {
   handleClick: () => void;
 }
 
-const ButtonNormal = ({
-  text,
-  bgColor,
-  handleClick,
-}: ButtonNormal) => {
+const ButtonNormal = ({ text, bgColor, handleClick }: ButtonNormal) => {
   return (
     <Button onClick={handleClick} bgColor={bgColor}>
       {text}

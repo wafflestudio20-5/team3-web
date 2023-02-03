@@ -1,6 +1,7 @@
 import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { TradeStatusType } from '../../../../types/tradePost';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -55,7 +56,7 @@ export const EditIcon = styled.img`
 `;
 
 interface TradeStatus extends HTMLAttributes<HTMLElement> {
-  tradeStatus: string;
+  tradeStatus?: TradeStatusType | null;
 }
 
 export const TradeStatus = styled.span<TradeStatus>(

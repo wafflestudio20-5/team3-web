@@ -43,7 +43,7 @@ const DropDown = ({
   });
 
   const onConfirmation = () => {
-    console.log('판매완료로 변경');
+    // console.log('판매완료로 변경');
     onTradeConfirmation();
     setIsSendReviewModalOpen(true);
   };

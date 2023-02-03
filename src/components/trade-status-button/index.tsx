@@ -1,6 +1,6 @@
 import { Button } from './trade-status-button.styled';
 
-const TradeStatusButton = ({ tradeStatus }: { tradeStatus: string }) => {
+const TradeStatusButton = ({ tradeStatus }: { tradeStatus?: string }) => {
   return (
     <>
       {tradeStatus !== 'TRADING' && (

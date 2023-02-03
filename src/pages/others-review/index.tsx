@@ -70,18 +70,13 @@ const OthersReviewPage = () => {
       dispatch(deleteReview({ accessToken: accessToken, reviewId: reviewId }))
         .unwrap()
         .then(res => {
-          console.log(res);
+          // console.log(res);
           toast('리뷰가 삭제되었습니다.');
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
             if (err.response?.status === 404) {
               redirectWithMsg(2, err.response?.data.error, () => navigate(-1));
-            } else if (err.response?.status === 401) {
-              // TODO: refresh 후 재요청
-              redirectWithMsg(2, err.response?.data.error, () =>
-                navigate('/login'),
-              );
             } else {
               redirectWithMsg(2, '요청을 수행할 수 없습니다.', () =>
                 navigate('/'),
@@ -111,7 +106,7 @@ const OthersReviewPage = () => {
         {isLoading && <Spinner />}
         {!isLoading && (
           <List>
-            {data.map(review => (
+            {data?.map(review => (
               <ReviewInfo
                 key={review.id}
                 id={review.id}

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import * as S from './profile.styled';
+import { User } from '../../../types/users';
 import defaultImg from '../../../assets/default-profile.png';
 
 interface ProfileProps {
-  // TODO: 유저 인터페이스 따라 타입 수정하기 user: UserType
-  user: any;
+  user?: User | null;
 }
 
 const Profile = ({ user }: ProfileProps) => {

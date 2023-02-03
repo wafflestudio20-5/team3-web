@@ -7,15 +7,16 @@ import loading from '../../assets/loading-spin.gif';
 import { toast } from 'react-toastify';
 
 interface UploadImageProps {
-  imgObject: any[];
-  setImgObject: any;
+  imgObject: { id?: number; img?: string | File | null }[];
+  setImgObject: (values: { id?: number; img?: string | File | null }[]) => void;
 }
 
 const UploadImage = ({ imgObject, setImgObject }: UploadImageProps) => {
   const imgRef = useRef<HTMLInputElement | null>(null);
   const [imgId, setImgId] = useState(imgObject.length);
   const [uploadLoading, setUploadLoading] = useState(false);
-  const [previews, setPreviews] = useState<any[]>(imgObject);
+  const [previews, setPreviews] =
+    useState<{ id?: number; img?: string | File | null }[]>(imgObject);
 
   const handleSaveImg = () => {
     if (imgObject.length >= 5) {
@@ -41,7 +42,7 @@ const UploadImage = ({ imgObject, setImgObject }: UploadImageProps) => {
     }
   };
 
-  const handleDeleteImg = async (id: number) => {
+  const handleDeleteImg = async (id?: number) => {
     const newPreviews = previews.filter(elem => {
       return elem?.id !== id;
     });
@@ -58,7 +59,7 @@ const UploadImage = ({ imgObject, setImgObject }: UploadImageProps) => {
         <>
           <S.Label htmlFor="profileImg">
             <S.Camera src={camera} alt="camera" />
-            <S.ImgCount>{`${imgObject ? imgObject.length : 0}/5`}</S.ImgCount>
+            <S.ImgCount>{`${imgObject ? imgObject?.length : 0}/5`}</S.ImgCount>
             <S.ImageInput
               ref={imgRef}
               type="file"

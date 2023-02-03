@@ -5,13 +5,12 @@ import { shortenLocation, UTCtoKST } from '../../../../utils/location';
 
 import * as S from './shortcut.styled';
 import alt from '../../../../assets/default-others.svg';
-import { TradeStatusType } from '../../../../types/tradePost';
+import { TradePostType, TradeStatusType } from '../../../../types/tradePost';
 import { toStringNumWithComma } from '../../../../utils/tradePost';
 import TradeStatusButton from '../../../../components/trade-status-button';
 
 interface ShortCut {
-  // TODO: 데이터 내용 파악
-  tradeData?: any;
+  tradeData?: TradePostType;
 }
 
 const ShortCut = ({ tradeData }: ShortCut) => {
@@ -23,7 +22,7 @@ const ShortCut = ({ tradeData }: ShortCut) => {
         <S.Img src={imgCondition ? tradeData?.imageUrls[0] : alt} />
       </Link>
       <S.Info>
-        <Link to={`/tradepost/${tradeData?.id}`}>
+        <Link to={`/tradepost/${tradeData?.postId}`}>
           <S.Title>{tradeData?.title}</S.Title>
         </Link>
         <S.PriceBox>
