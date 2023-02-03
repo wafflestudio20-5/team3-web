@@ -199,7 +199,7 @@ export const ArrowWrapper = styled.div`
   }
   animation: updown 1.5s infinite;
 
-  @media ${LG_SIZE} {
+  @media ${MD_SIZE} {
     width: 100%;
     justify-content: center;
   }
