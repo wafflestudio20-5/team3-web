@@ -2,30 +2,17 @@ import styled from 'styled-components';
 
 export const ModalOuterLayout = styled.div`
   display: flex;
+  position: fixed;
   width: 100vw;
   height: 100vh;
-  position: fixed;
   top: 0;
-  left: 0;
-  background-color: #00000072;
-  z-index: 1000;
   align-items: center;
   justify-content: center;
-  animation: modalBgShow 0.8s;
-  @keyframes modalBgShow {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
 `;
 
 export const ModalLayout = styled.div`
-  position: fixed;
-  z-index: 1005;
-  width: 712px;
+  width: 100%;
+  max-width: 712px;
   min-width: 360px;
   height: auto;
   background: #fff;
@@ -98,21 +85,22 @@ export const PostTitle = styled.input`
   border-bottom: 0.5px solid #a9a9a9;
   font-size: 15px;
   color: #212124;
-  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
-  box-shadow: 0 0 0 1000px #ffffff inset;
+
   &:focus {
     outline: none;
   }
   &::placeholder {
     color: #a1a1a1;
   }
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
 `;
 
 export const PostDesc = styled.textarea`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 350px;
+  height: 250px;
   flex-grow: 1;
   padding: 18px 22px;
   resize: none;
@@ -160,14 +148,15 @@ export const PostPrice = styled.input`
 
   font-size: 15px;
   color: #212124;
-  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
-  box-shadow: 0 0 0 1000px #ffffff inset;
+
   &:focus {
     outline: none;
   }
   &::placeholder {
     color: #a1a1a1;
   }
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
 `;
 
 export const PostAnnounceWrapper = styled.div`
