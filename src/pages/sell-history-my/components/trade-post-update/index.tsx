@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+import useThrottle from '../../../../hooks/useThrottle';
 import UploadImage from '../../../../components/upload-image';
 import * as S from './styles';
 
@@ -25,13 +26,16 @@ const TradePostUpdate = ({
   imgObject,
   setImgObject,
 }: TradePostUpdateProps) => {
+  const { isDisabled, throttle } = useThrottle(1000);
   return (
     <S.ModalOuterLayout>
       <S.ModalLayout>
         <S.ModalHeader>
           <S.ModalClose onClick={handleClose}>닫기</S.ModalClose>
           <S.ModalTitle>중고거래 글 수정</S.ModalTitle>
-          <S.ModalSubmit onClick={handleSubmit}>완료</S.ModalSubmit>
+          <S.ModalSubmit onClick={() => throttle(handleSubmit)}>
+            완료
+          </S.ModalSubmit>
         </S.ModalHeader>
         <S.PostTitle
           placeholder="글제목"

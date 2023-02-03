@@ -359,7 +359,6 @@ const MarketPage = () => {
           handleClose={handleCloseModal}
         />
       )}
-      {/* {!isLoading && <ContentFooter />} */}
     </>
   );
 };
