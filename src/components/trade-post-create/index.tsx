@@ -28,7 +28,7 @@ const TradePostCreate = ({
   imgObject,
   setImgObject,
 }: TradePostCreateProps) => {
-  const { isDisabled, throttle } = useThrottle(1000);
+  const { isDisabled, throttle } = useThrottle(5000);
   return (
     <S.ModalOuterLayout>
       <S.ModalLayout>
