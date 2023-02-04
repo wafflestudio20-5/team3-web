@@ -69,7 +69,7 @@ const Footer = () => {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="https://github.com/orgs/wafflestudio20-5/teams/team3"
+                href="https://understood-weather-f8a.notion.site/Team03-284d3878c7c743a0bad9481b959fe609"
               >
                 <NotionIcon width={26} height={26} />
               </a>
@@ -78,7 +78,7 @@ const Footer = () => {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="https://github.com/orgs/wafflestudio20-5/teams/team3"
+                href="https://api.waffle-market.store/swagger-ui/index.html"
               >
                 <SwaggerIcon width={26} height={26} />
               </a>
