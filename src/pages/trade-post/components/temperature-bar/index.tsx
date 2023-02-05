@@ -26,7 +26,11 @@ const TemperatureBar = ({ temperature }: TemperatureBarProps) => {
 
   useEffect(() => {
     if (temperature) {
-      setWidth(temperature);
+      if (temperature >= 100) {
+        setWidth(100);
+      } else {
+        setWidth(temperature);
+      }
 
       if (temperature < 36.5) {
         setTempIcon(level1Icon);

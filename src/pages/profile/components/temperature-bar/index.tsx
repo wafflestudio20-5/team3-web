@@ -35,7 +35,11 @@ const TemperatureBar = () => {
       dispatch(getMe(loadItem('accessToken')))
         .unwrap()
         .then(res => {
-          setWidth(res?.temperature);
+          if (res?.temperature >= 100) {
+            setWidth(100);
+          } else {
+            setWidth(res?.temperature);
+          }
         })
         .catch(err => {
           if (axios.isAxiosError(err)) {
