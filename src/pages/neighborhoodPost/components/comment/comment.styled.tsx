@@ -9,6 +9,10 @@ export const CommentWrapper = styled.div`
   padding: 8px 0 4px 0;
   height: auto;
   border-top: 0.5px solid rgba(0, 0, 0, 0.2);
+
+  &:first-of-type {
+    margin-top: 0;
+  }
 `;
 
 export const TopWrapper = styled.div`
