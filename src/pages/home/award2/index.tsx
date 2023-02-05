@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { User } from '../../../types/users';
@@ -14,6 +15,13 @@ interface Award2Props {
 
 const Award2 = ({ user }: Award2Props) => {
   const navigate = useNavigate();
+  const [temp, setTemp] = useState(user?.temperature);
+
+  useEffect(() => {
+    if (user?.temperature && user?.temperature >= 100) {
+      setTemp(100);
+    }
+  }, []);
 
   return (
     <S.Wrapper onClick={() => navigate(`/profile/${user?.id}`)}>
@@ -24,7 +32,7 @@ const Award2 = ({ user }: Award2Props) => {
       <S.InfoWrapper>
         <S.Name>{user?.username}</S.Name>
         <S.Logo src={carrot} alt="carrot" />
-        <S.Temp>{`${user?.temperature}°C`}</S.Temp>
+        <S.Temp>{`${temp}°C`}</S.Temp>
       </S.InfoWrapper>
       <S.AddressWrapper>
         {shortenLocation(user?.location || '')}
