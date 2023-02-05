@@ -60,7 +60,7 @@ const Footer = () => {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="https://github.com/orgs/wafflestudio20-5/teams/team3"
+                href="https://github.com/wafflestudio20-5/team3-web"
               >
                 <GithubIcon width={26} height={26} />
               </a>
@@ -69,16 +69,16 @@ const Footer = () => {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="https://github.com/orgs/wafflestudio20-5/teams/team3"
+                href="https://github.com/wafflestudio20-5/team3-server"
               >
-                <NotionIcon width={26} height={26} />
+                <GithubIcon width={26} height={26} />
               </a>
             </S.IconWrapper>
             <S.IconWrapper>
               <a
                 target="_blank"
                 rel="noreferrer"
-                href="https://github.com/orgs/wafflestudio20-5/teams/team3"
+                href="https://api.waffle-market.store/swagger-ui/index.html"
               >
                 <SwaggerIcon width={26} height={26} />
               </a>
@@ -88,7 +88,7 @@ const Footer = () => {
               <div>
                 <S.NoticeTitle>고객문의</S.NoticeTitle>
                 <S.NoticeContent>oh..no</S.NoticeContent>
-                <S.NoticeTitle>고객문의</S.NoticeTitle>
+                <S.NoticeTitle>지역문의</S.NoticeTitle>
                 <S.NoticeContent>no no...</S.NoticeContent>
               </div>
               <div>
