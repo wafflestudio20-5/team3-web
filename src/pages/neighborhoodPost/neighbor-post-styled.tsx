@@ -40,6 +40,12 @@ export const Container = styled.div`
 
 export const CommentContainer = styled.div`
   width: 100%;
-
+  height: auto;
+  max-height: 1000px;
   overflow: auto;
+
+  @media ${MD_SIZE} {
+    max-height: 500px;
+    margin-bottom: 10px;
+  }
 `;
